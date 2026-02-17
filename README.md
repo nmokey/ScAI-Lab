@@ -53,9 +53,49 @@ PET/CT data using two radiotracers:
 
 ---
 
+## Setup
+
+### Environment
+
+The project uses a conda environment (`vlm_env`, Python 3.10). Reproduce it exactly with:
+
+```bash
+conda env create -f environment.yml
+conda activate vlm_env
+```
+
+pip fallback (non-conda users): `pip install -r requirements.txt`
+
+### Configuration
+
+All server-specific paths and tunable parameters live in `config.yaml`, which is **gitignored**. Copy the committed template and fill in your paths before running anything:
+
+```bash
+cp config.yaml.example config.yaml
+# Then edit config.yaml — at minimum set:
+#   paths.data_root  → path to the /Dicom Data/ directory on your server
+#   paths.output_dir → where converted NIfTI files should be written
+```
+
+The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and tolerance are also in `config.yaml` and can be tuned without touching the code.
+
+### Scripts
+
+| File | Purpose | Dependencies |
+|---|---|---|
+| `dicomToNifti.py` | Converts a single DICOM subject folder to NIfTI (`.nii.gz`). Separates PET and CT by file size, sorts slices by Z-position, and writes a `manifest.csv`. Single-subject test mode; reads all settings from `config.yaml`. | `SimpleITK`, `pydicom`, `PyYAML` |
+| `visualizeNifti.py` | QA tool — renders three orthogonal slices (axial, coronal, sagittal) through the center of a NIfTI volume and saves a `_qa.png` alongside the input. Run after conversion to sanity-check the output. | `SimpleITK`, `matplotlib` |
+| `config.yaml.example` | Committed template for `config.yaml`. Documents all available options. | — |
+| `environment.yml` | Full conda environment lockfile (Python 3.10, all packages pinned). Preferred for exact reproducibility. | — |
+| `requirements.txt` | pip-only fallback with pinned versions. Mirrors `environment.yml` for the direct project dependencies. | — |
+
+---
+
 ## Pipeline
 
 ### Step 1: DICOM → NIfTI Conversion
+
+**Script:** `dicomToNifti.py` — run with `python dicomToNifti.py` (configure subject in `config.yaml`).
 
 You cannot load 691 raw slices into a model. Convert each series into a single 3D volume.
 
@@ -66,6 +106,8 @@ You cannot load 691 raw slices into a model. Convert each series into a single 3
 5. Save as **NIfTI** (`.nii.gz`)
 
 Also generate a **manifest CSV** with columns: `SubjectID`, `Week`, `Modality`, `Path`.
+
+**QA:** After conversion, run `python visualizeNifti.py <path/to/output.nii.gz>` to generate a `_qa.png` with orthogonal slice views. Confirm anatomy looks correct before proceeding.
 
 ### Step 2: Preprocessing — 3D Patching
 
