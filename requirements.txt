@@ -1,0 +1,8 @@
+# pip fallback for non-conda users.
+# Conda users: use environment.yml instead (conda env create -f environment.yml).
+# Versions match the conda environment as of Feb 2026.
+SimpleITK==2.5.2
+pydicom==3.0.1
+numpy==2.2.6
+matplotlib==3.10.8
+PyYAML==6.0.3
