@@ -1,31 +1,54 @@
 import os
 import glob
+import csv
+import yaml
 import SimpleITK as sitk
 import pydicom
 import numpy as np
 
-# --- Configuration & Heuristics ---
 
-# Safe output directory specifically for testing
-OUTPUT_DIR = "/data1/Processed_NIfTI_Test/"
+# --- Load Config ---
 
-# --- Single Subject Target ---
-# Update these specific strings to point to ONE subject on your server
-TEST_WEEK = "Week 12"
-TEST_TRACER = "18F-FDG"
-TEST_SUBJECT = "m54253"
-# Point this directly to the lowest-level folder containing the actual slices
-TEST_DICOM_FOLDER = "/data1/Dicom Data/Week 12/18F-FDG/m54253/dicom_m54253"
+def load_config(config_path="config.yaml"):
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(
+            f"Config file '{config_path}' not found. "
+            "Copy config.yaml.example to config.yaml and fill in your paths."
+        )
+    with open(config_path) as f:
+        return yaml.safe_load(f)
 
-# Target File Sizes (Bytes) with ~2% tolerance
-PET_SIZE_TARGET = 115 * 1024
-PET_TOLERANCE = 0.05 * PET_SIZE_TARGET 
+cfg = load_config()
 
-CT_HI_RES_TARGET = 2814 * 1024
-CT_HI_TOLERANCE = 0.05 * CT_HI_RES_TARGET
+OUTPUT_DIR     = cfg['paths']['output_dir']
+MANIFEST_PATH  = os.path.join(OUTPUT_DIR, "manifest.csv")
+IGNORE_EXTENSIONS = {'.im3', '.vol', '.raw'}
 
-CT_LO_RES_TARGET = 705 * 1024
-CT_LO_TOLERANCE = 0.05 * CT_LO_RES_TARGET
+_heuristics = cfg['file_size_heuristics']
+_tol = _heuristics['tolerance']
+
+PET_SIZE_TARGET    = _heuristics['pet_kb'] * 1024
+PET_TOLERANCE      = _tol * PET_SIZE_TARGET
+
+CT_HI_RES_TARGET   = _heuristics['ct_hi_res_kb'] * 1024
+CT_HI_TOLERANCE    = _tol * CT_HI_RES_TARGET
+
+CT_LO_RES_TARGET   = _heuristics['ct_lo_res_kb'] * 1024
+CT_LO_TOLERANCE    = _tol * CT_LO_RES_TARGET
+
+# --- Test Subject (single-subject run only) ---
+_test = cfg['test_subject']
+TEST_WEEK    = _test['week']
+TEST_TRACER  = _test['tracer']
+TEST_SUBJECT = _test['subject_id']
+TEST_DICOM_FOLDER = os.path.join(
+    cfg['paths']['data_root'],
+    TEST_WEEK,
+    TEST_TRACER,
+    TEST_SUBJECT,
+    f"dicom_{TEST_SUBJECT}",
+)
+
 
 def is_size_match(filepath, target, tolerance):
     try:
@@ -34,24 +57,24 @@ def is_size_match(filepath, target, tolerance):
     except OSError:
         return False
 
+
 def convert_dicom_to_nifti_sitk(file_list, subject_id, modality):
     if not file_list:
         return None
 
     print(f"    ... Reading {len(file_list)} files for {modality} via SimpleITK ...")
-    
+
     reader = sitk.ImageSeriesReader()
-    # Explicitly pass our size-filtered list to SimpleITK
     reader.SetFileNames(file_list)
 
     try:
         image = reader.Execute()
-        
+
         spacing = image.GetSpacing()
         print(f"    [i] {modality} Spacing detected: {spacing}")
-        
+
         if not (np.isclose(spacing[0], spacing[1]) and np.isclose(spacing[1], spacing[2])):
-             print(f"        -> Note: Anisotropic voxels detected.")
+            print(f"        -> Note: Anisotropic voxels detected.")
 
         return image
 
@@ -59,43 +82,65 @@ def convert_dicom_to_nifti_sitk(file_list, subject_id, modality):
         print(f"    [!] SITK Error reading {modality}: {e}")
         return None
 
+
+def _append_manifest(subject, week, modality, nifti_path):
+    write_header = not os.path.exists(MANIFEST_PATH)
+    with open(MANIFEST_PATH, 'a', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['SubjectID', 'Week', 'Modality', 'Path'])
+        if write_header:
+            writer.writeheader()
+        writer.writerow({'SubjectID': subject, 'Week': week, 'Modality': modality, 'Path': nifti_path})
+
+
 def save_sitk_image(image, subject, week, tracer, modality):
-    filename = f"{subject}_{week}_{tracer}_{modality}.nii.gz"
+    week_safe   = week.replace(" ", "_")
+    tracer_safe = tracer.replace("-", "_")
+    filename    = f"{subject}_{week_safe}_{tracer_safe}_{modality}.nii.gz"
     output_path = os.path.join(OUTPUT_DIR, filename)
-    
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-    
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
     try:
         sitk.WriteImage(image, output_path)
         print(f"    [+] Saved {filename} to {OUTPUT_DIR}")
+        _append_manifest(subject, week, modality, output_path)
     except Exception as e:
         print(f"    [!] Error saving {filename}: {e}")
+
 
 def sort_slices_by_z(file_list):
     """
     Sorts a list of DICOM files by their physical Z-axis position.
     stop_before_pixels=True ensures this runs instantly without loading image data.
+    Files with unreadable headers are excluded with a warning.
     """
     def get_z_coord(filepath):
         try:
             dcm = pydicom.dcmread(filepath, stop_before_pixels=True)
-            # ImagePositionPatient is [X, Y, Z]. We want Z (index 2).
             return float(dcm.ImagePositionPatient[2])
         except Exception:
-            return 0.0 # Fallback if header is completely corrupt
-            
-    return sorted(file_list, key=get_z_coord)
+            return None
+
+    tagged = [(get_z_coord(f), f) for f in file_list]
+    valid = [(z, f) for z, f in tagged if z is not None]
+    excluded_count = len(tagged) - len(valid)
+    if excluded_count:
+        print(f"    [!] Warning: Excluded {excluded_count} slice(s) with unreadable Z-position.")
+    return [f for _, f in sorted(valid, key=lambda x: x[0])]
+
 
 def process_subject(week, tracer, subject, dicom_folder_path):
     print(f"--> Processing: {week} | {tracer} | {subject}")
-    
-    all_files = glob.glob(os.path.join(dicom_folder_path, "**", "*"), recursive=True)
-    all_files = [f for f in all_files if os.path.isfile(f)]
 
-    pet_files = []
-    ct_hi_files = []
-    ct_lo_files = []
+    all_files = glob.glob(os.path.join(dicom_folder_path, "**", "*"), recursive=True)
+    all_files = [
+        f for f in all_files
+        if os.path.isfile(f) and os.path.splitext(f)[1].lower() not in IGNORE_EXTENSIONS
+    ]
+
+    pet_files    = []
+    ct_hi_files  = []
+    ct_lo_files  = []
 
     for f in all_files:
         if is_size_match(f, PET_SIZE_TARGET, PET_TOLERANCE):
@@ -106,9 +151,8 @@ def process_subject(week, tracer, subject, dicom_folder_path):
             ct_lo_files.append(f)
 
     print(f"    [i] Found {len(pet_files)} PET slices, {len(ct_hi_files)} Hi-Res CT slices, {len(ct_lo_files)} Low-Res CT slices.")
-    
-    # Sort each modality's files by their Z-axis position to ensure correct volume assembly
-    pet_files = sort_slices_by_z(pet_files)
+
+    pet_files   = sort_slices_by_z(pet_files)
     ct_hi_files = sort_slices_by_z(ct_hi_files)
     ct_lo_files = sort_slices_by_z(ct_lo_files)
 
@@ -120,16 +164,15 @@ def process_subject(week, tracer, subject, dicom_folder_path):
     else:
         print(f"    [!] No PET data found.")
 
-    # Process CT
+    # Process CT (Hi-Res preferred; fall back to Low-Res)
     ct_img = None
     ct_modality_label = "CT_HiRes"
 
     if ct_hi_files:
         ct_img = convert_dicom_to_nifti_sitk(ct_hi_files, subject, "CT_HiRes")
-    
-    # Fallback to Low-Res
+
     if ct_img is None and ct_lo_files:
-        print(f"    [i] Switching to Low-Res CT fallback...")
+        print(f"    [i] No Hi-Res CT found — using Low-Res CT fallback.")
         ct_img = convert_dicom_to_nifti_sitk(ct_lo_files, subject, "CT_LowRes")
         ct_modality_label = "CT_LowRes"
 
@@ -138,17 +181,20 @@ def process_subject(week, tracer, subject, dicom_folder_path):
     else:
         print(f"    [!] No valid CT volume could be built.")
 
+
 def main():
     print(f"--- Starting Single Subject Test ---")
     print(f"Target: {TEST_SUBJECT} ({TEST_WEEK}, {TEST_TRACER})")
-    
+    print(f"DICOM folder: {TEST_DICOM_FOLDER}")
+
     if not os.path.exists(TEST_DICOM_FOLDER):
         print(f"[!] Error: The path '{TEST_DICOM_FOLDER}' does not exist.")
-        print("    Please double-check the TEST_DICOM_FOLDER variable.")
+        print("    Check data_root, week, tracer, and subject_id in config.yaml.")
         return
 
     process_subject(TEST_WEEK, TEST_TRACER, TEST_SUBJECT, TEST_DICOM_FOLDER)
     print(f"--- Test Complete ---")
+
 
 if __name__ == "__main__":
     main()

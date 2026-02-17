@@ -47,8 +47,9 @@ PET/CT data using two radiotracers:
 ### Data Heuristics
 
 1. **The `_1` Rule:** If both `m54223` and `m54223_1` exist, **use only `_1`** — it is the corrected, higher-quality scan.
-2. **Modality ID:** Use DICOM tags (`Modality`, `SeriesInstanceUID`) to distinguish CT from PET within a folder. File-size heuristics alone are insufficient at the slice level.
-3. **Ignore:** Files ending in `.im3`, `.vol`, `.raw`.
+2. **Modality ID:** Use **file size** as the primary heuristic to identify slice modality (per PI). See the Modalities table for target sizes; apply a ±5% tolerance window. DICOM tags (`Modality`, `SeriesInstanceUID`) may be used as supplementary validation.
+3. **CT Fallback:** Not all subjects have Hi-Res CT. If no Hi-Res CT slices are found, fall back to Low-Res CT.
+4. **Ignore:** Files ending in `.im3`, `.vol`, `.raw`.
 
 ---
 
