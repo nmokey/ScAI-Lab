@@ -86,6 +86,7 @@ The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and t
 | `scripts/dicom_to_nifti.py` | Converts a single DICOM subject folder to NIfTI (`.nii.gz`). Separates PET and CT by file size, sorts slices by Z-position, and writes a `manifest.csv`. Single-subject test mode; reads all settings from `config.yaml`. | `SimpleITK`, `pydicom`, `PyYAML` |
 | `scripts/visualize_nifti.py` | QA tool — renders three orthogonal slices (axial, coronal, sagittal) through the center of a NIfTI volume and saves a `_qa.png` alongside the input. Run after conversion to sanity-check the output. | `SimpleITK`, `matplotlib` |
 | `scripts/get_colipri_embeddings.py` | Iterates over all CT NIfTI volumes in `manifest.csv`, passes each through COLIPRI, and saves embeddings to `colipri_embeddings.npz`. | `torch`, `colipri`, `torchio`, `PyYAML` |
+| `scripts/evaluate_embeddings.py` | Encoder-agnostic evaluation suite. Accepts any `.npz` conforming to the standard embedding interface and runs a battery of tasks across three tiers (unsupervised, linear probe, longitudinal). Outputs `metrics.csv`, `report.txt`, and dimensionality-reduction plots. | `scikit-learn`, `matplotlib`, `umap-learn` |
 | `config.yaml.example` | Committed template for `config.yaml`. Documents all available options. | — |
 | `environment.yml` | Full conda environment lockfile (Python 3.10, all packages pinned). Preferred for exact reproducibility. | — |
 | `requirements.txt` | pip-only fallback with pinned versions. Mirrors `environment.yml` for the direct project dependencies. | — |
@@ -116,12 +117,62 @@ Also generate a **manifest CSV** with columns: `SubjectID`, `Week`, `Modality`, 
 
 **Solution:** Cut each NIfTI volume into **3D Patches** (e.g., 96×96×96 cubes). This preserves resolution and matches COLIPRI's expected input format.
 
-### Step 3: Baseline — COLIPRI / RadDINO (Zero-Shot Validation)
+### Step 3: Baseline Validation — COLIPRI / RadDINO (Zero-Shot Transfer)
 
 - **Model:** COLIPRI (3D VLM pre-trained on human CTs + reports) or RadDINO (image-only, 3D-friendly)
-- **Input:** Hi-Res CT NIfTIs, fed as 3D patches
-- **Method:** Extract embeddings from the encoder; visualize with t-SNE/UMAP
-- **Success metric:** Week 12 embeddings naturally cluster apart from Week 20 without any fine-tuning ("zero-shot transfer")
+- **Input:** Hi-Res CT NIfTIs → embeddings via `scripts/get_colipri_embeddings.py`
+
+**Core success criterion:** *Week 12 embeddings cluster apart from Week 20 with no training whatsoever* — this is zero-shot transfer. The **Tier 1** tasks in the evaluation suite test this directly and require no labels at inference time: T1a lets you see it visually (t-SNE/UMAP), while T1b (ARI/NMI) and T1c (silhouette score) put a number on it. If a frozen encoder scores near zero on all three, it cannot distinguish early from late disease and is not a viable baseline.
+
+**Why a shared evaluation harness?** The project will compare multiple encoders — COLIPRI, RadDINO, and a custom MAE (Step 4). Rather than writing one-off analysis code for each, `scripts/evaluate_embeddings.py` is a fixed, encoder-agnostic benchmark. Every encoder produces one `metrics.csv` row using the same tasks and the same CV splits. Swapping encoders means only changing the `--embeddings` argument; everything else is held constant.
+
+**Standard embedding interface** — all encoder scripts must produce a `.npz` with these keys so any encoder plugs directly into the evaluation suite:
+
+| Key | Shape | Description |
+|---|---|---|
+| `embeddings` | `(N, D)` float32 | One vector per volume |
+| `subject_ids` | `(N,)` str | Mouse ID, e.g. `m54253` |
+| `weeks` | `(N,)` str | `Week 12` / `Week 15` / `Week 18` / `Week 20` |
+| `modalities` | `(N,)` str | `CT_HiRes` / `CT_LowRes` / `PET_FDG` / `PET_NaF` |
+| `paths` | `(N,)` str | Absolute path to source NIfTI |
+
+**Evaluation tasks** (`scripts/evaluate_embeddings.py`):
+
+*Tier 1 — Zero-shot (no training, no labels):*
+
+| Task | Metric(s) | What it tests |
+|---|---|---|
+| **T1a** t-SNE / UMAP plots | — (visual) | Do Week 12 and Week 20 clusters visually separate? ← primary success criterion |
+| **T1b** k-means cluster alignment | ARI, NMI | Do unsupervised clusters align with week labels? |
+| **T1c** Silhouette by week | Silhouette (cosine) | Are same-week embeddings more cohesive than random? |
+| **T1d** Within-subject consistency | Δ (intra − inter sim) | Does the encoder preserve mouse identity across timepoints? |
+
+*Tier 2 — Linear probe (frozen embeddings + one linear layer, LOSO CV):*
+
+| Task | Metric(s) | What it tests |
+|---|---|---|
+| **T2a** Week classification (4-class) | Accuracy, macro-F1 | Can a linear head predict Week 12/15/18/20? |
+| **T2b** Early vs. late (binary) | Accuracy, AUC-ROC | Can a linear head separate Week 12 vs. Week 20? |
+
+*Tier 3 — Longitudinal / relational:*
+
+| Task | Metric(s) | What it tests |
+|---|---|---|
+| **T3a** Pairwise temporal ordering | Accuracy (chance=0.5) | Do embeddings encode a consistent disease-progression *direction*? |
+| **T3b** Same-subject retrieval | Recall@1/3, MRR | For a query scan, are same-mouse scans the nearest neighbors? |
+| **T3c** Same-week retrieval | mAP@5 | For a query scan, are same-week scans the nearest neighbors? |
+
+All Tier 2–3 supervised tasks use **Leave-One-Subject-Out (LOSO)** CV — the same mouse never appears in both train and test sets.
+
+**Run:**
+```bash
+python scripts/get_colipri_embeddings.py          # produces colipri_embeddings.npz
+python scripts/evaluate_embeddings.py \
+    --embeddings /data1/Processed_NIfTI/colipri_embeddings.npz \
+    --output-dir /data1/Processed_NIfTI/eval/colipri/
+```
+
+**Output:** `metrics.csv` (one row of all metrics per encoder — load multiple rows to compare encoders side by side), `report.txt` (human-readable summary), `plots/` (t-SNE and UMAP scatter plots).
 
 ### Step 4: Custom Model — Train from Scratch
 
