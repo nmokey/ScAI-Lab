@@ -1,8 +1,17 @@
 # pip fallback for non-conda users.
 # Conda users: use environment.yml instead (conda env create -f environment.yml).
 # Versions match the conda environment as of Feb 2026.
+
+# DICOM → NIfTI pipeline
 SimpleITK==2.5.2
 pydicom==3.0.1
 numpy==2.2.6
 matplotlib==3.10.8
 PyYAML==6.0.3
+
+# COLIPRI embedding extraction
+# torch is not listed here — install the CUDA build separately:
+#   https://pytorch.org/get-started/locally/
+torchio==0.19.6
+colipri  # install from HuggingFace: pip install colipri
+transformers==4.46.3  # colipri 0.1.0 is incompatible with transformers>=5.0

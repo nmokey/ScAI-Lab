@@ -221,3 +221,6 @@ config.yaml
 
 # Pipeline outputs
 manifest.csv
+
+# Claude
+.claude/
