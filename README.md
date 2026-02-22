@@ -83,8 +83,9 @@ The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and t
 
 | File | Purpose | Dependencies |
 |---|---|---|
-| `dicomToNifti.py` | Converts a single DICOM subject folder to NIfTI (`.nii.gz`). Separates PET and CT by file size, sorts slices by Z-position, and writes a `manifest.csv`. Single-subject test mode; reads all settings from `config.yaml`. | `SimpleITK`, `pydicom`, `PyYAML` |
-| `visualizeNifti.py` | QA tool — renders three orthogonal slices (axial, coronal, sagittal) through the center of a NIfTI volume and saves a `_qa.png` alongside the input. Run after conversion to sanity-check the output. | `SimpleITK`, `matplotlib` |
+| `scripts/dicom_to_nifti.py` | Converts a single DICOM subject folder to NIfTI (`.nii.gz`). Separates PET and CT by file size, sorts slices by Z-position, and writes a `manifest.csv`. Single-subject test mode; reads all settings from `config.yaml`. | `SimpleITK`, `pydicom`, `PyYAML` |
+| `scripts/visualize_nifti.py` | QA tool — renders three orthogonal slices (axial, coronal, sagittal) through the center of a NIfTI volume and saves a `_qa.png` alongside the input. Run after conversion to sanity-check the output. | `SimpleITK`, `matplotlib` |
+| `scripts/get_colipri_embeddings.py` | Iterates over all CT NIfTI volumes in `manifest.csv`, passes each through COLIPRI, and saves embeddings to `colipri_embeddings.npz`. | `torch`, `colipri`, `torchio`, `PyYAML` |
 | `config.yaml.example` | Committed template for `config.yaml`. Documents all available options. | — |
 | `environment.yml` | Full conda environment lockfile (Python 3.10, all packages pinned). Preferred for exact reproducibility. | — |
 | `requirements.txt` | pip-only fallback with pinned versions. Mirrors `environment.yml` for the direct project dependencies. | — |
@@ -95,7 +96,7 @@ The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and t
 
 ### Step 1: DICOM → NIfTI Conversion
 
-**Script:** `dicomToNifti.py` — run with `python dicomToNifti.py` (configure subject in `config.yaml`).
+**Script:** `scripts/dicom_to_nifti.py` — run with `python scripts/dicom_to_nifti.py` from the repo root (configure subject in `config.yaml`).
 
 You cannot load 691 raw slices into a model. Convert each series into a single 3D volume.
 
@@ -107,7 +108,7 @@ You cannot load 691 raw slices into a model. Convert each series into a single 3
 
 Also generate a **manifest CSV** with columns: `SubjectID`, `Week`, `Modality`, `Path`.
 
-**QA:** After conversion, run `python visualizeNifti.py <path/to/output.nii.gz>` to generate a `_qa.png` with orthogonal slice views. Confirm anatomy looks correct before proceeding.
+**QA:** After conversion, run `python scripts/visualize_nifti.py <path/to/output.nii.gz>` to generate a `_qa.png` with orthogonal slice views. Confirm anatomy looks correct before proceeding.
 
 ### Step 2: Preprocessing — 3D Patching
 
