@@ -21,10 +21,11 @@ Building a **Medical Vision-Language Model (VLM)** ("Medical LLaVA") — a chatb
 
 ### Subjects & Timeline
 
-- **~40 Mice** (IDs like `m54253` to `m54272`)
+- **147 Mice** across 4 cohorts — each week is a **separate group** sacrificed at that timepoint (IDs do not overlap across weeks)
 - **4 Timepoints:** Week 12, 15, 18, 20
   - Week 12 = Early Stage (healthy-ish); Week 20 = Late Stage (diseased)
-  - Not all mice have all timepoints due to attrition
+  - Week 12: 42 subjects · Week 15: 47 · Week 18: 33 · Week 20: 25
+  - Not all subjects have all modalities (see Scan Inventory below)
 - **Folder structure:** `Week X` → `Tracer` → `SubjectID` (e.g., `m54253`)
   - Each subject folder contains a "bag of slices" (e.g., 691 separate `.dcm` files)
 
@@ -50,6 +51,42 @@ PET/CT data using two radiotracers:
 2. **Modality ID:** Use **file size** as the primary heuristic to identify slice modality (per PI). See the Modalities table for target sizes; apply a ±5% tolerance window. DICOM tags (`Modality`, `SeriesInstanceUID`) may be used as supplementary validation.
 3. **CT Fallback:** Not all subjects have Hi-Res CT. If no Hi-Res CT slices are found, fall back to Low-Res CT.
 4. **Ignore:** Files ending in `.im3`, `.vol`, `.raw`.
+
+### Scan Inventory
+
+Each week is a **separate cohort** sacrificed at that timepoint — mouse IDs do not overlap across weeks. Determined by file-size heuristics against the raw DICOM data.
+
+#### Week 12 — 42 subjects  (20 Hi-res CT · 21 Lo-res CT · 40 PET)
+
+| Scan | m54215 | m54216 | m54217 | m54218 | m54219 | m54221 | m54222 | m54223 | m54223_1 | m54224 | m54225 | m54226 | m54227 | m54228 | m54229 | m54231 | m54232 | m54233 | m54234 | m54244 | m54253 | m54254 | m54255 | m54256 | m54257 | m54258 | m54259 | m54260 | m54261 | m54262 | m54263 | m54264 | m54265 | m54266 | m54267 | m54268 | m54269 | m54270 | m54271 | m54272 | m54301 | m54302 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Hi-res CT** |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |
+| **Lo-res CT** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |
+| **PET** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+#### Week 15 — 47 subjects  (24 Hi-res CT · 20 Lo-res CT · 42 PET)
+
+| Scan | m54389 | m54390 | m54391 | m54392 | m54393 | m54394 | m54395 | m54396 | m54397 | m54398 | m54399 | m54400 | m54400_1 | m54400_2 | m54401 | m54402 | m54403 | m54403_1 | m54404 | m54404_1 | m54405 | m54406 | m54407 | m54407_1 | m54407_2 | m54408 | m54408_1 | m54498 | m54499 | m54500 | m54501 | m54502 | m54503 | m54504 | m54505 | m54506 | m54507 | m54515 | m54516 | m54517 | m54518 | m54519 | m54520 | m54521 | m54522 | m54523 | m54524 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Hi-res CT** |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |  | ✓ |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Lo-res CT** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |
+| **PET** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+#### Week 18 — 33 subjects  (10 Hi-res CT · 16 Lo-res CT · 33 PET)
+
+| Scan | m54632 | m54633 | m54634 | m54635 | m54636 | m54637 | m54638 | m54639 | m54640 | m54641 | m54642 | m54643 | m54644 | m54645 | m54646 | m54647 | m54675 | m54676 | m54677 | m54678 | m54679 | m54680 | m54681 | m54682 | m54683 | m54684 | m54685 | m54686 | m54687 | m54688 | m54688_1 | m54689 | m54690 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Hi-res CT** |  |  |  |  | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  | ✓ |  |  |  |  |  |  |  |  | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |  | ✓ |
+| **Lo-res CT** | ✓ | ✓ | ✓ | ✓ |  |  |  |  | ✓ | ✓ | ✓ | ✓ |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |
+| **PET** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+#### Week 20 — 25 subjects  (12 Hi-res CT · 12 Lo-res CT · 24 PET)
+
+| Scan | m54762 | m54763 | m54764 | m54765 | m54766 | m54767 | m54768 | m54769 | m54770 | m54771 | m54772 | m54773 | m54781 | m54782 | m54783_1 | m54784 | m54784_1 | m54785 | m54786 | m54787 | m54788 | m54789 | m54790 | m54791 | m54792 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Hi-res CT** |  |  |  | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Lo-res CT** | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |  |  |  |
+| **PET** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 ---
 
