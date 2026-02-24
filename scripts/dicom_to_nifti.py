@@ -41,13 +41,40 @@ _test = cfg['test_subject']
 TEST_WEEK    = _test['week']
 TEST_TRACER  = _test['tracer']
 TEST_SUBJECT = _test['subject_id']
-TEST_DICOM_FOLDER = os.path.join(
+
+def find_dicom_dir(subject_folder):
+    """
+    Return the DICOM subdirectory to use within a subject folder.
+
+    Most subjects have a single 'dicom_{subject_id}' subfolder, but some have
+    variant names (e.g. 'dicom_m54225_1', 'DICOM', 'dicom_m54773 ct').
+    Strategy: prefer an exact 'dicom_{subject_id}' match; if absent, fall back
+    to any subdirectory whose name starts with 'dicom' (case-insensitive),
+    preferring the one with the '_1' suffix per the _1 Rule if multiples exist.
+    Returns None if no DICOM subdirectory is found.
+    """
+    subject_id = os.path.basename(subject_folder)
+    candidates = [
+        d for d in os.listdir(subject_folder)
+        if d.lower().startswith("dicom")
+        and os.path.isdir(os.path.join(subject_folder, d))
+    ]
+    if not candidates:
+        return None
+    exact = f"dicom_{subject_id}"
+    if exact in candidates:
+        return os.path.join(subject_folder, exact)
+    # Prefer _1 variant over base; otherwise take the first alphabetically
+    candidates.sort(key=lambda d: (not d.endswith("_1"), d))
+    return os.path.join(subject_folder, candidates[0])
+
+_subject_folder = os.path.join(
     cfg['paths']['data_root'],
     TEST_WEEK,
     TEST_TRACER,
     TEST_SUBJECT,
-    f"dicom_{TEST_SUBJECT}",
 )
+TEST_DICOM_FOLDER = find_dicom_dir(_subject_folder)
 
 
 def is_size_match(filepath, target, tolerance):
@@ -187,8 +214,8 @@ def main():
     print(f"Target: {TEST_SUBJECT} ({TEST_WEEK}, {TEST_TRACER})")
     print(f"DICOM folder: {TEST_DICOM_FOLDER}")
 
-    if not os.path.exists(TEST_DICOM_FOLDER):
-        print(f"[!] Error: The path '{TEST_DICOM_FOLDER}' does not exist.")
+    if TEST_DICOM_FOLDER is None or not os.path.exists(TEST_DICOM_FOLDER):
+        print(f"[!] Error: No DICOM subdirectory found for '{TEST_SUBJECT}' in '{_subject_folder}'.")
         print("    Check data_root, week, tracer, and subject_id in config.yaml.")
         return
 

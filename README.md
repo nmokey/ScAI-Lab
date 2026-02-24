@@ -58,14 +58,14 @@ Each week is a **separate cohort** sacrificed at that timepoint — mouse IDs do
 
 **No mouse receives both tracers.** Within each week, the cohort is split cleanly by ID range: lower IDs → NaF (calcification), higher IDs → FDG (inflammation). These are parallel sub-experiments, not multi-modal single-animal scans.
 
-#### Week 12 — 42 subjects  (20 Hi-res CT · 21 Lo-res CT · 20 PET-FDG · 20 PET-NaF)
+#### Week 12 — 42 subjects  (21 Hi-res CT · 21 Lo-res CT · 20 PET-FDG · 21 PET-NaF)
 
 | Scan | m54215 | m54216 | m54217 | m54218 | m54219 | m54221 | m54222 | m54223 | m54223_1 | m54224 | m54225 | m54226 | m54227 | m54228 | m54229 | m54231 | m54232 | m54233 | m54234 | m54244 | m54253 | m54254 | m54255 | m54256 | m54257 | m54258 | m54259 | m54260 | m54261 | m54262 | m54263 | m54264 | m54265 | m54266 | m54267 | m54268 | m54269 | m54270 | m54271 | m54272 | m54301 | m54302 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Hi-res CT** |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |
+| **Hi-res CT** |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |
 | **Lo-res CT** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |
 | **PET (FDG)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |
-| **PET (NaF)** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ |
+| **PET (NaF)** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ |
 
 #### Week 15 — 47 subjects  (24 Hi-res CT · 20 Lo-res CT · 20 PET-FDG · 22 PET-NaF)
 
