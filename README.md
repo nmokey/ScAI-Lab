@@ -17,17 +17,48 @@ Building a **Medical Vision-Language Model (VLM)** ("Medical LLaVA") — a chatb
 
 ---
 
+## Source Study
+
+**Citation:** Tamboline M et al. (2025). "Preclinical evaluation of high-resolution CT, 18F-FDG, and 18F-NaF PET imaging for longitudinal monitoring of atherosclerosis." *European Journal of Nuclear Medicine and Molecular Imaging* 52:4256–4267.
+
+**Study design:** Male Apoe−/− mice placed on a high-fat diet (HFD) starting at 6 weeks of age to induce atherosclerosis; age-matched C57BL/6 wild-type (WT) mice on regular chow served as controls. Mice were imaged longitudinally at 12, 15, 18, and 20 weeks of age — the **same animals are scanned at every timepoint** (not separate sacrificed cohorts).
+
+**Two imaging cohorts (separate animals, never overlap):**
+- **NaF cohort:** n=20 KO (Apoe−/−, HFD) + n=20 WT (C57BL/6, regular chow) → 40 unique mice
+- **FDG cohort:** n=20 KO + n=20 WT → 40 unique mice (different physical animals from NaF cohort)
+- CT acquired on all mice from both cohorts combined (n=40 KO + 40 WT = 80 total)
+
+**Imaging protocol:**
+- **18F-NaF** (calcification tracer): 4.07 MBq i.v. → PET scan at **1h** (6-min, 200µm CT) and **3h** post-injection (9-min, 100µm hi-res CT)
+- **18F-FDG** (inflammation tracer): 8.33 MBq i.v. → PET scan at **3h** (6-min, 200µm CT) and **5h** post-injection (9-min, 100µm hi-res CT)
+- Hi-res CT accompanies the later timepoint scan in each session (3h NaF / 5h FDG)
+
+**Post-imaging sacrifice:** After each imaging session, ~n=3 per group are euthanized for histological validation (Sudan IV staining, CD68-IHC for macrophages, Ferangi Blue for calcium). Cohort size shrinks from 20 → 18 → 15 → 12 per group per cohort across weeks 12–20.
+
+**Key findings (ML context):**
+- **18F-NaF** separates KO from WT across all timepoints; signal peaks at Week 18. Strong correlation with histological disease severity (r²=0.83). Best overall biomarker.
+- **18F-FDG** only distinguishes groups at early stages (Weeks 12–15); KO and WT become indistinguishable by Week 18.
+- **Hi-res CT** effective for late-stage detection (Week 15+); calcified plaques visible as hyperdense regions.
+- **Implication for ML:** Expect NaF and CT embeddings to separate WT from KO consistently; FDG separation may only be detectable at Weeks 12–15. Use this as a sanity check when evaluating encoder quality.
+
+---
+
 ## Data
 
 ### Subjects & Timeline
 
-- **147 Mice** across 4 cohorts — each week is a **separate group** sacrificed at that timepoint (IDs do not overlap across weeks)
+- **80 unique mice** (40 NaF cohort + 40 FDG cohort) imaged **longitudinally** — the **same mice** are rescanned at weeks 12, 15, 18, and 20. After each imaging session, ~3 mice per group are euthanized for histology, so cohort size decreases over time.
+  - **NaF cohort:** 20 WT (Control) + 20 KO (Disease) — separate physical animals from FDG cohort
+  - **FDG cohort:** 20 WT (Control) + 20 KO (Disease) — separate physical animals from NaF cohort
+  - **No mouse receives both tracers.** NaF and FDG cohorts are entirely different animals.
+  - **Persistent mouse IDs:** `NaF_WT_1`–`NaF_WT_20`, `NaF_KO_1`–`NaF_KO_20`, `FDG_WT_1`–`FDG_WT_20`, `FDG_KO_1`–`FDG_KO_20`
 - **4 Timepoints:** Week 12, 15, 18, 20
   - Week 12 = Early Stage (healthy-ish); Week 20 = Late Stage (diseased)
-  - Week 12: 42 subjects · Week 15: 47 · Week 18: 33 · Week 20: 25
-  - Not all subjects have all modalities (see Scan Inventory below)
-- **Folder structure:** `Week X` → `Tracer` → `SubjectID` (e.g., `m54253`)
-  - Each subject folder contains a "bag of slices" (e.g., 691 separate `.dcm` files)
+  - Week 12: 42 scan sessions · Week 15: 47 sessions · Week 18: 33 sessions · Week 20: 25 sessions
+  - Not all sessions have all modalities (see Scan Inventory below)
+- **Folder structure:** `Week X` → `Tracer` → `ScanID` (e.g., `m54253`)
+  - **Scan IDs (m54xxx) identify scanner sessions, not individual mice.** Each session captures 1–4 mice scanned simultaneously.
+  - Each scan folder contains a "bag of slices" (e.g., 691 separate `.dcm` files)
 
 ### Modalities
 
@@ -54,45 +85,281 @@ PET/CT data using two radiotracers:
 
 ### Scan Inventory
 
-Each week is a **separate cohort** sacrificed at that timepoint — mouse IDs do not overlap across weeks. Determined by file-size heuristics against the raw DICOM data.
+Each scanner session (m54xxx) captures 1–4 mice imaged simultaneously. **Mouse IDs persist across weeks** — the same cohort animals are rescanned at weeks 12, 15, 18, and 20. The inventory below was determined by file-size heuristics against the raw DICOM data.
 
-**No mouse receives both tracers.** Within each week, the cohort is split cleanly by ID range: lower IDs → NaF (calcification), higher IDs → FDG (inflammation). These are parallel sub-experiments, not multi-modal single-animal scans.
+**No mouse receives both tracers** — NaF and FDG cohorts are entirely separate animals (~40 unique mice each). Within each week, lower scan ID ranges are NaF sessions and higher ranges are FDG sessions.
 
-#### Week 12 — 42 subjects  (21 Hi-res CT · 21 Lo-res CT · 20 PET-FDG · 21 PET-NaF)
+#### Week 12 — 42 sessions  (21 Hi-res CT · 21 Lo-res CT · 20 PET-FDG · 21 PET-NaF)
 
 | Scan | m54215 | m54216 | m54217 | m54218 | m54219 | m54221 | m54222 | m54223 | m54223_1 | m54224 | m54225 | m54226 | m54227 | m54228 | m54229 | m54231 | m54232 | m54233 | m54234 | m54244 | m54253 | m54254 | m54255 | m54256 | m54257 | m54258 | m54259 | m54260 | m54261 | m54262 | m54263 | m54264 | m54265 | m54266 | m54267 | m54268 | m54269 | m54270 | m54271 | m54272 | m54301 | m54302 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Mice** | WT 1,2 | WT 3-6 | WT 7-10 | WT 11-14 | WT 15-18 | KO 1-4 | KO 5-8 | KO 9-12 | KO 9-12 | KO 13-16 | WT 19,20+1,2 ⚠️ | WT 3-6 | WT 7-10 | WT 11-14 | WT 15-18 | KO 1-4 | KO 5-8 | KO 9-12 | KO 13-16 | WT 19-20 | WT 1-4 | WT 5-8 | WT 9-12 | WT 13-16 | WT 17-20 | KO 1-4 | KO 5-8 | KO 9-12 | KO 13-16 | KO 17-20 | WT 1-4 | WT 5-8 | WT 9-12 | WT 13-16 | WT 17-20 | KO 1-4 | KO 5-8 | KO 9-12 | KO 13-16 | KO 17-20 | KO 17-20 | KO 17-20 |
+| **Group** | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Disease | Disease |
 | **Hi-res CT** |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |
 | **Lo-res CT** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  | ✓ |  |
 | **PET (FDG)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |
 | **PET (NaF)** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ |
 
-#### Week 15 — 47 subjects  (24 Hi-res CT · 20 Lo-res CT · 20 PET-FDG · 22 PET-NaF)
+#### Week 15 — 47 sessions  (24 Hi-res CT · 20 Lo-res CT · 20 PET-FDG · 22 PET-NaF)
 
 | Scan | m54389 | m54390 | m54391 | m54392 | m54393 | m54394 | m54395 | m54396 | m54397 | m54398 | m54399 | m54400 | m54400_1 | m54400_2 | m54401 | m54402 | m54403 | m54403_1 | m54404 | m54404_1 | m54405 | m54406 | m54407 | m54407_1 | m54407_2 | m54408 | m54408_1 | m54498 | m54499 | m54500 | m54501 | m54502 | m54503 | m54504 | m54505 | m54506 | m54507 | m54515 | m54516 | m54517 | m54518 | m54519 | m54520 | m54521 | m54522 | m54523 | m54524 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Mice** | WT 1,2 | WT 3-6 | WT 7-10 | WT 11-14 | WT 15-18 | KO 1-4 | KO 5-8 | KO 9-11 | KO 12-15 | KO 16-18 | WT 1,2 | WT 3-6 | WT 3-6 | WT 3-6 | WT 7-10 | WT 11-14 | WT 15-18 | WT 15-18 | KO 1-4 | KO 1-4 | KO 5-8 | KO 9-11 | KO 12-15 | KO 12-15 | KO 12-15 | KO 16-18 | KO 16-18 | KO 1-4 | KO 5-8 | KO 9-12 | KO 13-15 | KO 16-18 | KO 1-4 | KO 5-8 | KO 9-12 | KO 13-15 | KO 16-18 | WT 1,2 | WT 3-6 | WT 7-10 | WT 11-14 | WT 15-18 | WT 1,2 | WT 3-6 | WT 7-10 | WT 11-14 | WT 15-18 |
+| **Group** | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Control | Control | Control | Control | Control | Control |
 | **Hi-res CT** |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ |  | ✓ |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **Lo-res CT** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |
 | **PET (FDG)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **PET (NaF)** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
-#### Week 18 — 33 subjects  (10 Hi-res CT · 16 Lo-res CT · 17 PET-FDG · 16 PET-NaF)
+#### Week 18 — 33 sessions  (10 Hi-res CT · 16 Lo-res CT · 17 PET-FDG · 16 PET-NaF)
 
 | Scan | m54632 | m54633 | m54634 | m54635 | m54636 | m54637 | m54638 | m54639 | m54640 | m54641 | m54642 | m54643 | m54644 | m54645 | m54646 | m54647 | m54675 | m54676 | m54677 | m54678 | m54679 | m54680 | m54681 | m54682 | m54683 | m54684 | m54685 | m54686 | m54687 | m54688 | m54688_1 | m54689 | m54690 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Mice** | WT 1-4 | WT 5-7 | WT 8-11 | WT 12-15 | WT 1-4 | WT 5-7 | WT 8-11 | WT 12-15 | KO 1-3 | KO 4-7 | KO 8-11 | KO 12-15 | KO 2,3 ⚠️ | KO 5-7 | KO 8-11 | KO 12-15 | WT 1-4 | WT 5-8 | WT 9-12 | WT 13-16 | KO 1-4 | KO 5-8 | KO 9-12 | KO 13-15 | WT 1-4 | WT 5-8 | WT 9-12 | WT 13-16 | KO 1-4 | KO 5-8 | KO 5-8 | KO 9-12 | KO 13-15 |
+| **Group** | Control | Control | Control | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease |
 | **Hi-res CT** |  |  |  |  | ✓ | ✓ |  | ✓ |  |  |  |  |  |  |  | ✓ |  |  |  |  |  |  |  |  | ✓ | ✓ |  | ✓ | ✓ |  | ✓ |  | ✓ |
 | **Lo-res CT** | ✓ | ✓ | ✓ | ✓ |  |  |  |  | ✓ | ✓ | ✓ | ✓ |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |
 | **PET (FDG)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **PET (NaF)** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
-#### Week 20 — 25 subjects  (12 Hi-res CT · 12 Lo-res CT · 12 PET-FDG · 12 PET-NaF)
+#### Week 20 — 25 sessions  (12 Hi-res CT · 12 Lo-res CT · 12 PET-FDG · 12 PET-NaF)
 
 | Scan | m54762 | m54763 | m54764 | m54765 | m54766 | m54767 | m54768 | m54769 | m54770 | m54771 | m54772 | m54773 | m54781 | m54782 | m54783_1 | m54784 | m54784_1 | m54785 | m54786 | m54787 | m54788 | m54789 | m54790 | m54791 | m54792 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Mice** | WT 1-4 | WT 5-8 | WT 9-12 | WT 1-4 | WT 5-8 | WT 9-12 | KO 1-4 | KO 5-8 | KO 9-12 | KO 1-4 | KO 5-8 | KO 9-12 | KO 1-4 | KO 5-8 | KO 9-12 | WT 1-4 | WT 1-4 | WT 5-8 | WT 9-12 | KO 1-4 | KO 5-8 | KO 9,11,12 ⚠️ | WT 1-4 | WT 5-8 | WT 9-12 |
+| **Group** | Control | Control | Control | Control | Control | Control | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Disease | Control | Control | Control | Control | Disease | Disease | Disease | Control | Control | Control |
 | **Hi-res CT** |  |  |  | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **Lo-res CT** | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ |  |  |  | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ |  |  |  |  |  |  |
 | **PET (FDG)** |  |  |  |  |  |  |  |  |  |  |  |  | ✓ | ✓ | ✓ | ✓ |  | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **PET (NaF)** | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |  |  |  |  |  |  |  |  |  |  |  |  |  |
+
+### Per-Scan Mouse Mapping (XIF Annotations)
+
+Per-mouse metadata derived from AMIDE XIF filenames in `/data1/Amgen SUV Data/`. XIF filenames encode: scan ID, genotype (WT/KO), mouse numbers, and post-injection timepoint. **Mouse numbers are persistent longitudinal IDs** — the same number refers to the same physical animal across all four weeks.
+
+#### Week 12 NaF
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54215 | 1, 2 | WT | Control | 1h |
+| m54216 | 3, 4, 5, 6 | WT | Control | 1h |
+| m54217 | 7, 8, 9, 10 | WT | Control | 1h |
+| m54218 | 11, 12, 13, 14 | WT | Control | 1h |
+| m54219 | 15, 16, 17, 18 | WT | Control | 1h |
+| m54221 | 1, 2, 3, 4 | KO | Disease | 1h |
+| m54222 | 5, 6, 7, 8 | KO | Disease | 1h |
+| m54223 | 9, 10, 11, 12 | KO | Disease | 1h |
+| m54223_1 | 9, 10, 11, 12 | KO | Disease | 1h (corrected re-scan) |
+| m54224 | 13, 14, 15, 16 | KO | Disease | 1h |
+| m54225 ⚠️ | WT 19,20 @1h + WT 1,2 @3h | WT | Control | 1h + 3h mixed |
+| m54226 | 3, 4, 5, 6 | WT | Control | 3h |
+| m54227 | 7, 8, 9, 10 | WT | Control | 3h |
+| m54228 | 11, 12, 13, 14 | WT | Control | 3h |
+| m54229 | 15, 16, 17, 18 | WT | Control | 3h |
+| m54231 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54232 ⚠️ | 5, 6, 7, 8 | KO | Disease | 3h (XIF lists range m54232-m54250) |
+| m54233 | 9, 10, 11, 12 | KO | Disease | 3h |
+| m54234 | 13, 14, 15, 16 | KO | Disease | 3h |
+| m54244 | 19, 20 | WT | Control | 3h |
+| m54301 | 17, 18, 19, 20 | KO | Disease | 1h |
+| m54302 | 17, 18, 19, 20 | KO | Disease | 3h |
+
+#### Week 12 FDG
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54253 | 1, 2, 3, 4 | WT | Control | 3h |
+| m54254 | 5, 6, 7, 8 | WT | Control | 3h |
+| m54255 | 9, 10, 11, 12 | WT | Control | 3h |
+| m54256 | 13, 14, 15, 16 | WT | Control | 3h |
+| m54257 | 17, 18, 19, 20 | WT | Control | 3h |
+| m54258 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54259 | 5, 6, 7, 8 | KO | Disease | 3h |
+| m54260 | 9, 10, 11, 12 | KO | Disease | 3h |
+| m54261 | 13, 14, 15, 16 | KO | Disease | 3h |
+| m54262 | 17, 18, 19, 20 | KO | Disease | 3h |
+| m54263 | 1, 2, 3, 4 | WT | Control | 5h |
+| m54264 | 5, 6, 7, 8 | WT | Control | 5h |
+| m54265 | 9, 10, 11, 12 | WT | Control | 5h |
+| m54266 | 13, 14, 15, 16 | WT | Control | 5h |
+| m54267 | 17, 18, 19, 20 | WT | Control | 5h |
+| m54268 | 1, 2, 3, 4 | KO | Disease | 5h |
+| m54269 | 5, 6, 7, 8 | KO | Disease | 5h |
+| m54270 | 9, 10, 11, 12 | KO | Disease | 5h |
+| m54271 | 13, 14, 15, 16 | KO | Disease | 5h |
+| m54272 | 17, 18, 19, 20 | KO | Disease | 5h |
+
+#### Week 15 NaF (mice 19–20 sacrificed after Week 12)
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54389 | 1, 2 | WT | Control | 1h |
+| m54390 | 3, 4, 5, 6 | WT | Control | 1h |
+| m54391 | 7, 8, 9, 10 | WT | Control | 1h |
+| m54392 | 11, 12, 13, 14 | WT | Control | 1h |
+| m54393 | 15, 16, 17, 18 | WT | Control | 1h |
+| m54394 | 1, 2, 3, 4 | KO | Disease | 1h |
+| m54395 | 5, 6, 7, 8 | KO | Disease | 1h |
+| m54396 | 9, 10, 11 | KO | Disease | 1h |
+| m54397 | 12, 13, 14, 15 | KO | Disease | 1h |
+| m54398 | 16, 17, 18 | KO | Disease | 1h |
+| m54399 | 1, 2 | WT | Control | 3h |
+| m54400 | 3, 4, 5, 6 | WT | Control | 3h |
+| m54400_1 | 3, 4, 5, 6 | WT | Control | 3h (re-scan) |
+| m54400_2 | 3, 4, 5, 6 | WT | Control | 3h (re-scan) |
+| m54401 | 7, 8, 9, 10 | WT | Control | 3h |
+| m54402 | 11, 12, 13, 14 | WT | Control | 3h |
+| m54403 | 15, 16, 17, 18 | WT | Control | 3h |
+| m54403_1 | 15, 16, 17, 18 | WT | Control | 3h (re-scan) |
+| m54404 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54404_1 | 1, 2, 3, 4 | KO | Disease | 3h (re-scan) |
+| m54405 | 5, 6, 7, 8 | KO | Disease | 3h |
+| m54406 | 9, 10, 11 | KO | Disease | 3h |
+| m54407 | 12, 13, 14, 15 | KO | Disease | 3h |
+| m54407_1 | 12, 13, 14, 15 | KO | Disease | 3h (re-scan) |
+| m54407_2 | 12, 13, 14, 15 | KO | Disease | 3h (re-scan) |
+| m54408 | 16, 17, 18 | KO | Disease | 3h |
+| m54408_1 | 16, 17, 18 | KO | Disease | 3h (re-scan) |
+
+#### Week 15 FDG (mice 19–20 sacrificed after Week 12)
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54498 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54499 | 5, 6, 7, 8 | KO | Disease | 3h |
+| m54500 | 9, 10, 11, 12 | KO | Disease | 3h |
+| m54501 | 13, 14, 15 | KO | Disease | 3h |
+| m54502 | 16, 17, 18 | KO | Disease | 3h |
+| m54503 | 1, 2, 3, 4 | KO | Disease | 5h |
+| m54504 | 5, 6, 7, 8 | KO | Disease | 5h |
+| m54505 | 9, 10, 11, 12 | KO | Disease | 5h |
+| m54506 | 13, 14, 15 | KO | Disease | 5h |
+| m54507 | 16, 17, 18 | KO | Disease | 5h |
+| m54515 | 1, 2 | WT | Control | 3h |
+| m54516 | 3, 4, 5, 6 | WT | Control | 3h |
+| m54517 | 7, 8, 9, 10 | WT | Control | 3h |
+| m54518 | 11, 12, 13, 14 | WT | Control | 3h |
+| m54519 | 15, 16, 17, 18 | WT | Control | 3h |
+| m54520 | 1, 2 | WT | Control | 5h |
+| m54521 | 3, 4, 5, 6 | WT | Control | 5h |
+| m54522 | 7, 8, 9, 10 | WT | Control | 5h |
+| m54523 | 11, 12, 13, 14 | WT | Control | 5h |
+| m54524 | 15, 16, 17, 18 | WT | Control | 5h |
+
+#### Week 18 NaF (mice 16–18 sacrificed after Week 15)
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54632 | 1, 2, 3, 4 | WT | Control | 1h |
+| m54633 | 5, 6, 7 | WT | Control | 1h |
+| m54634 | 8, 9, 10, 11 | WT | Control | 1h |
+| m54635 | 12, 13, 14, 15 | WT | Control | 1h |
+| m54636 | 1, 2, 3, 4 | WT | Control | 3h |
+| m54637 | 5, 6, 7 | WT | Control | 3h |
+| m54638 | 8, 9, 10, 11 | WT | Control | 3h |
+| m54639 | 12, 13, 14, 15 | WT | Control | 3h |
+| m54640 | 1, 2, 3 | KO | Disease | 1h |
+| m54641 | 4, 5, 6, 7 | KO | Disease | 1h |
+| m54642 | 8, 9, 10, 11 | KO | Disease | 1h |
+| m54643 | 12, 13, 14, 15 | KO | Disease | 1h |
+| m54644 ⚠️ | 2, 3 | KO | Disease | 3h (KO 1 and 4 absent) |
+| m54645 | 5, 6, 7 | KO | Disease | 3h |
+| m54646 | 8, 9, 10, 11 | KO | Disease | 3h |
+| m54647 | 12, 13, 14, 15 | KO | Disease | 3h |
+
+⚠️ KO mice 1 and 4 appear at 1h (m54640, m54641) but are absent from all Week 18 3h scans — reason unknown (death, equipment issue, or exclusion).
+
+#### Week 18 FDG (mice 16–18 sacrificed after Week 15)
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54675 | 1, 2, 3, 4 | WT | Control | 3h |
+| m54676 | 5, 6, 7, 8 | WT | Control | 3h |
+| m54677 | 9, 10, 11, 12 | WT | Control | 3h |
+| m54678 | 13, 14, 15, 16 | WT | Control | 3h |
+| m54679 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54680 | 5, 6, 7, 8 | KO | Disease | 3h |
+| m54681 | 9, 10, 11, 12 | KO | Disease | 3h |
+| m54682 | 13, 14, 15 | KO | Disease | 3h |
+| m54683 | 1, 2, 3, 4 | WT | Control | 5h |
+| m54684 | 5, 6, 7, 8 | WT | Control | 5h |
+| m54685 | 9, 10, 11, 12 | WT | Control | 5h |
+| m54686 | 13, 14, 15, 16 | WT | Control | 5h |
+| m54687 | 1, 2, 3, 4 | KO | Disease | 5h |
+| m54688 | 5, 6, 7, 8 | KO | Disease | 5h (superseded by m54688_1) |
+| m54688_1 | 5, 6, 7, 8 | KO | Disease | 5h (corrected re-scan) |
+| m54689 | 9, 10, 11, 12 | KO | Disease | 5h |
+| m54690 | 13, 14, 15 | KO | Disease | 5h |
+
+Note: WT cohort shows 16 mice at Week 18 (expected 15 from 3 sacrificed; may reflect 1 prior death in WT 17–18 group but WT 16 surviving). KO drops from 18→15 (3 sacrificed as expected).
+
+#### Week 20 NaF (mice 13–15 sacrificed after Week 18)
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54762 | 1, 2, 3, 4 | WT | Control | 1h |
+| m54763 | 5, 6, 7, 8 | WT | Control | 1h |
+| m54764 | 9, 10, 11, 12 | WT | Control | 1h |
+| m54765 | 1, 2, 3, 4 | WT | Control | 3h |
+| m54766 | 5, 6, 7, 8 | WT | Control | 3h |
+| m54767 | 9, 10, 11, 12 | WT | Control | 3h |
+| m54768 | 1, 2, 3, 4 | KO | Disease | 1h |
+| m54769 | 5, 6, 7, 8 | KO | Disease | 1h |
+| m54770 | 9, 10, 11, 12 | KO | Disease | 1h |
+| m54771 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54772 | 5, 6, 7, 8 | KO | Disease | 3h |
+| m54773 | 9, 10, 11, 12 | KO | Disease | 3h |
+
+#### Week 20 FDG (mice 13–15 sacrificed after Week 18)
+
+| Scan ID | Mice | Genotype | Group | Timepoint |
+|---------|------|----------|-------|-----------|
+| m54781 | 1, 2, 3, 4 | KO | Disease | 3h |
+| m54782 | 5, 6, 7, 8 | KO | Disease | 3h |
+| m54783_1 | 9, 10, 11, 12 | KO | Disease | 3h (corrected re-scan) |
+| m54784 | 1, 2, 3, 4 | WT | Control | 3h |
+| m54784_1 | 1, 2, 3, 4 | WT | Control | 3h (re-scan) |
+| m54785 | 5, 6, 7, 8 | WT | Control | 3h |
+| m54786 | 9, 10, 11, 12 | WT | Control | 3h |
+| m54787 | 1, 2, 3, 4 | KO | Disease | 5h |
+| m54788 | 5, 6, 7, 8 | KO | Disease | 5h |
+| m54789 ⚠️ | 9, 11, 12 | KO | Disease | 5h (KO 10 absent) |
+| m54790 | 1, 2, 3, 4 | WT | Control | 5h |
+| m54791 | 5, 6, 7, 8 | WT | Control | 5h |
+| m54792 | 9, 10, 11, 12 | WT | Control | 5h |
+
+⚠️ KO mouse 10 appears at 3h (m54782) but is absent from 5h (m54789 shows mice 9, 11, 12 only). Reason unknown.
+
+### Per-Mouse Longitudinal Attendance
+
+Mouse numbers are persistent longitudinal IDs within each cohort. WT = Control (C57BL/6, regular chow). KO = Disease (Apoe−/−, high-fat diet). NaF and FDG cohorts are entirely different physical animals.
+
+#### NaF Cohort
+
+| Mouse ID(s) | Week 12 | Week 15 | Week 18 | Week 20 | Notes |
+|-------------|---------|---------|---------|---------|-------|
+| NaF_WT_1–12 | ✓ | ✓ | ✓ | ✓ | Full longitudinal |
+| NaF_WT_13–15 | ✓ | ✓ | ✓ | ✗ | Sacrificed after Week 18 |
+| NaF_WT_16–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
+| NaF_WT_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
+| NaF_KO_1–12 | ✓ | ✓ | ✓* | ✓ | *KO 1 and KO 4 absent at Week 18 3h scan |
+| NaF_KO_13–15 | ✓ | ✓ | ✓ | ✗ | Sacrificed after Week 18 |
+| NaF_KO_16–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
+| NaF_KO_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
+
+#### FDG Cohort
+
+| Mouse ID(s) | Week 12 | Week 15 | Week 18 | Week 20 | Notes |
+|-------------|---------|---------|---------|---------|-------|
+| FDG_WT_1–12 | ✓ | ✓ | ✓ | ✓ | Full longitudinal |
+| FDG_WT_13–16 | ✓ | ✓ | ✓ | ✗ | Sacrificed/died after Week 18 |
+| FDG_WT_17–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
+| FDG_WT_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
+| FDG_KO_1–9, 11–12 | ✓ | ✓ | ✓ | ✓ (3h+5h) | Full longitudinal |
+| FDG_KO_10 | ✓ | ✓ | ✓ | ✓ (3h only) | Present at Week 20 3h; absent at 5h |
+| FDG_KO_13–15 | ✓ | ✓ | ✓ | ✗ | Sacrificed after Week 18 |
+| FDG_KO_16–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
+| FDG_KO_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
 
 ---
 
