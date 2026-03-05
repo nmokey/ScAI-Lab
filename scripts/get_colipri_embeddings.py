@@ -1,8 +1,9 @@
 """
-getColipriEmbeddings.py
+get_colipri_embeddings.py
 
-Iterates over all CT NIfTI volumes in manifest.csv, passes each through
-Microsoft's COLIPRI 3D vision encoder, and saves the resulting embeddings.
+Iterates over all per-mouse CT-Hi NIfTI crops in mouse_manifest.csv, passes
+each through Microsoft's COLIPRI 3D vision encoder, and saves the resulting
+embeddings in the standard .npz format consumed by evaluate_embeddings.py.
 
 Installation (one-time):
     pip install colipri torchio
@@ -10,12 +11,17 @@ Installation (one-time):
     # https://huggingface.co/microsoft/colipri
 
 Output:
-    <output_dir>/colipri_embeddings.npz
-        embeddings  : float32 array of shape (N, 768) — one 768-d vector per volume
-        subject_ids : string array of shape (N,)
-        weeks       : string array of shape (N,)
-        modalities  : string array of shape (N,)
-        paths       : string array of shape (N,) — path to source NIfTI
+    <output_dir>/embeddings/colipri/colipri_embeddings.npz
+        embeddings  : float32 array of shape (N, 768) — one 768-d vector per crop
+        subject_ids : string array of shape (N,) — e.g. "NaF_WT_03"
+        weeks       : string array of shape (N,) — e.g. "Week 12"
+        modalities  : string array of shape (N,) — always "CT_HiRes" here
+        paths       : string array of shape (N,) — absolute path to source NIfTI
+
+    Evaluation outputs (from evaluate_embeddings.py) go alongside:
+        <output_dir>/embeddings/colipri/metrics.csv
+        <output_dir>/embeddings/colipri/report.txt
+        <output_dir>/embeddings/colipri/plots/
 
 Why CT only?
     COLIPRI was pre-trained on human chest CT using Hounsfield Unit (HU)
@@ -44,26 +50,19 @@ def load_config(config_path="config.yaml"):
 
 
 # --- Manifest ---
-CT_MODALITIES = {"CT_HiRes", "CT_LowRes"}
-
 def load_ct_rows(manifest_path):
-    """Read manifest.csv and return only CT rows (HiRes preferred; LowRes as fallback)."""
+    """
+    Read mouse_manifest.csv and return one entry per CT-Hi crop.
+    Skips rows where ct_hi_nifti is missing or the file does not exist.
+    """
     rows = []
     with open(manifest_path, newline="") as f:
         for row in csv.DictReader(f):
-            if row["Modality"] in CT_MODALITIES:
+            ct_path = row.get("ct_hi_nifti", "").strip()
+            if ct_path:
                 rows.append(row)
-
-    # If a subject+week has both HiRes and LowRes, keep only HiRes
-    seen = {}
-    for row in rows:
-        key = (row["SubjectID"], row["Week"])
-        if key not in seen or row["Modality"] == "CT_HiRes":
-            seen[key] = row
-    deduplicated = list(seen.values())
-
-    print(f"[i] Found {len(deduplicated)} CT volumes in manifest ({len(rows)} total, {len(rows) - len(deduplicated)} LowRes shadowed by HiRes).")
-    return deduplicated
+    print(f"[i] Found {len(rows)} CT-Hi crops in mouse_manifest.csv.")
+    return rows
 
 
 # --- Embedding Extraction ---
@@ -95,12 +94,14 @@ def extract_embedding(nifti_path, model, processor, device):
 def main():
     cfg = load_config()
     output_dir    = cfg["paths"]["output_dir"]
-    manifest_path = os.path.join(output_dir, "manifest.csv")
-    output_path   = os.path.join(output_dir, "colipri_embeddings.npz")
+    manifest_path = os.path.join(output_dir, "mouse_manifest.csv")
+    embed_dir     = os.path.join(output_dir, "embeddings", "colipri")
+    output_path   = os.path.join(embed_dir, "colipri_embeddings.npz")
+    os.makedirs(embed_dir, exist_ok=True)
 
     if not os.path.exists(manifest_path):
-        print(f"[!] manifest.csv not found at {manifest_path}")
-        print("    Run dicomToNifti.py first to generate the manifest.")
+        print(f"[!] mouse_manifest.csv not found at {manifest_path}")
+        print("    Run build_nifti_dataset.py --stage 3 first.")
         return
 
     # Device
@@ -119,7 +120,7 @@ def main():
     # Load manifest
     rows = load_ct_rows(manifest_path)
     if not rows:
-        print("[!] No CT volumes found in manifest. Exiting.")
+        print("[!] No CT crops found in manifest. Exiting.")
         return
 
     # Extract embeddings
@@ -131,8 +132,10 @@ def main():
     failed      = []
 
     for i, row in enumerate(rows):
-        nifti_path = row["Path"]
-        label = f"{row['SubjectID']} | {row['Week']} | {row['Modality']}"
+        nifti_path = row["ct_hi_nifti"]
+        # Normalise week to "Week N" format expected by evaluate_embeddings.py
+        week_label = f"Week {row['week']}"
+        label = f"{row['mouse_id']} | {week_label}"
         print(f"[{i+1}/{len(rows)}] {label}")
 
         if not os.path.exists(nifti_path):
@@ -143,9 +146,9 @@ def main():
         try:
             emb = extract_embedding(nifti_path, model, processor, device)
             embeddings.append(emb)
-            subject_ids.append(row["SubjectID"])
-            weeks.append(row["Week"])
-            modalities.append(row["Modality"])
+            subject_ids.append(row["mouse_id"])
+            weeks.append(week_label)
+            modalities.append("CT_HiRes")
             paths.append(nifti_path)
             print(f"    [+] OK  (embedding shape: {emb.shape})")
         except Exception as e:
@@ -168,10 +171,14 @@ def main():
     )
 
     print(f"\n[+] Saved {len(embeddings)} embeddings → {output_path}")
-    print(f"    Array shape: {embeddings_array.shape}  (N volumes × 768 dimensions)")
+    print(f"    Array shape: {embeddings_array.shape}  (N crops × 768 dimensions)")
+    print(f"\n    To evaluate, run:")
+    print(f"    python scripts/evaluate_embeddings.py \\")
+    print(f"        --embeddings {output_path} \\")
+    print(f"        --output-dir {embed_dir}")
 
     if failed:
-        print(f"\n[!] {len(failed)} volume(s) failed or were skipped:")
+        print(f"\n[!] {len(failed)} crop(s) failed or were skipped:")
         for f in failed:
             print(f"    - {f}")
 
