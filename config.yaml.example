@@ -7,10 +7,8 @@ paths:
   data_root: "/data1/Dicom Data"
   # Root of the Amgen SUV data directory (XIF files, read-only)
   amgen_data_root: "/data1/Amgen SUV Data"
-  # Where single-subject test NIfTI files are written (dicom_to_nifti.py)
-  output_dir: "/data1/Processed_NIfTI"
   # Root of the processed per-mouse NIfTI dataset (build_nifti_dataset.py)
-  nifti_output_dir: "/data1/Processed_NIfTI_Dataset"
+  output_dir: "/data1/Processed_NIfTI_Dataset"
 
 # Parameters for the single-subject test run (dicomToNifti.py)
 test_subject:

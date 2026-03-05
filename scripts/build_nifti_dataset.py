@@ -24,6 +24,7 @@ Reads paths from config.yaml. NEVER modifies original DICOM data.
 import os
 import csv
 import glob
+import math
 import argparse
 import yaml
 import numpy as np
@@ -50,7 +51,7 @@ def init_config():
     cfg = load_config()
     return {
         "data_root": cfg["paths"]["data_root"],
-        "nifti_output_dir": cfg["paths"]["nifti_output_dir"],
+        "nifti_output_dir": cfg["paths"]["output_dir"],
         "pet_target": cfg["file_size_heuristics"]["pet_kb"] * 1024,
         "ct_hi_target": cfg["file_size_heuristics"]["ct_hi_res_kb"] * 1024,
         "ct_lo_target": cfg["file_size_heuristics"]["ct_lo_res_kb"] * 1024,
@@ -331,107 +332,136 @@ def segment_animals(ct_sitk, n_mice_expected, session_id):
     Segment individual mouse bounding boxes from a combined multi-animal CT volume.
 
     Strategy:
-      1. Threshold CT ≥ -200 HU to get soft-tissue + bone mask
-      2. Binary closing to fill internal air pockets
-      3. Find connected components
-      4. Sort by (Y-centroid ascending, X-centroid ascending) to get spatial positions:
-            position 1 = lower-left,  2 = lower-right
-            position 3 = upper-left,  4 = upper-right
-      5. Map position index → mouse number (1-indexed) from manifest mouse_nums
+      1. Downsample to ~1 mm/voxel for fast morphological ops
+      2. Threshold at ≥300 HU (bone only) — cleanly isolated within each mouse body;
+         scanner bed foam/carbon-fibre is always below this threshold so mice never merge
+      3. Binary closing at 5 mm to bridge intra-mouse bone gaps (ribs, spine, limbs)
+      4. Connected components; discard fragments < 1 mL bone volume
+      5. Take the N largest clusters, one per expected mouse
+      6. Sort by (Y-centroid ascending, X-centroid ascending) → spatial positions:
+             position 1 = lower-left,  2 = lower-right
+             position 3 = upper-left,  4 = upper-right
 
-    Returns:
-      list of bounding boxes in physical (mm) coords, one per animal, sorted by position.
-      Each bbox is a dict: {voxel_min: (i,j,k), voxel_max: (i,j,k), centroid_xyz: (x,y,z)}
-      Returns None if segmentation fails or component count doesn't match.
+    Bboxes are bone-derived; crop_to_physical_bbox must use generous padding (~20 mm)
+    to capture the full soft-tissue body around each skeleton.
+
+    Returns a list of bbox dicts (one per animal) or None on failure.
     """
-    ct_array = sitk.GetArrayFromImage(ct_sitk)  # shape (Z, Y, X) in voxel coords
-    spacing = ct_sitk.GetSpacing()               # (x_spacing, y_spacing, z_spacing) in mm
-    origin = ct_sitk.GetOrigin()
+    ct_array = sitk.GetArrayFromImage(ct_sitk)  # (Z, Y, X)
+    spacing = ct_sitk.GetSpacing()              # (x_sp, y_sp, z_sp) in mm
 
-    # Threshold
-    mask = ct_array >= -200
+    # --- Downsample to ~1 mm/voxel ---
+    SEG_MM = 1.0
+    fx = max(1, int(round(SEG_MM / spacing[0])))
+    fy = max(1, int(round(SEG_MM / spacing[1])))
+    fz = max(1, int(round(SEG_MM / spacing[2])))
+    # ct_array axes are (Z, Y, X); downsample each axis by its own factor
+    bone_ds = (ct_array[::fz, ::fy, ::fx] >= 300)
+    ds_sp = (spacing[0] * fx, spacing[1] * fy, spacing[2] * fz)  # effective mm/vox
+    print(f"    [i] Seg: downsampled {ct_array.shape} -> {bone_ds.shape} "
+          f"(factors {fz},{fy},{fx}; spacing ~{ds_sp[0]:.1f} mm)")
 
-    # Morphological closing (fills small gaps); radius in voxels
-    closing_radius = max(1, int(3.0 / min(spacing)))
+    # --- Morphological closing: 3 mm physical to bridge intra-mouse bone gaps ---
+    # 3 mm bridges ribs/vertebrae gaps within one mouse (~1-2 mm) while staying
+    # below the inter-mouse skin+muscle gap (~5-10 mm when closely packed).
+    closing_radius = max(1, int(3.0 / min(ds_sp)))
     struct_el = ndimage.generate_binary_structure(3, 2)
-    mask_closed = ndimage.binary_closing(mask, structure=struct_el, iterations=closing_radius)
+    bone_closed = ndimage.binary_closing(bone_ds, structure=struct_el, iterations=closing_radius)
 
-    # Connected components
-    labeled, n_components = ndimage.label(mask_closed)
-
+    # --- Connected components ---
+    labeled, n_components = ndimage.label(bone_closed)
     if n_components == 0:
-        print(f"    [!] Segmentation: no tissue found in {session_id}")
+        print(f"    [!] Segmentation: no bone tissue found in {session_id}")
         return None
 
-    # Filter out tiny components (scanner bed artifacts) — keep only the N largest
-    component_sizes = ndimage.sum(mask_closed, labeled, range(1, n_components + 1))
-    # Sort by size descending
-    sorted_indices = np.argsort(component_sizes)[::-1]
+    # --- Discard fragments below 1 mL of bone volume ---
+    vox_vol_mm3 = ds_sp[0] * ds_sp[1] * ds_sp[2]
+    min_voxels = int(1000.0 / vox_vol_mm3)  # 1000 mm3 = 1 mL
+    sizes = ndimage.sum(bone_closed, labeled, range(1, n_components + 1))
+    valid = [i for i, s in enumerate(sizes) if s >= min_voxels]
 
-    if n_components < n_mice_expected:
-        print(f"    [!] Segmentation: found {n_components} components, expected {n_mice_expected} in {session_id}")
-        print(f"        Proceeding with {n_components} crops; mouse assignment may be incomplete.")
+    if len(valid) < n_mice_expected:
+        print(f"    [!] Segmentation: {len(valid)} bone clusters >=1 mL, "
+              f"expected {n_mice_expected} in {session_id}")
 
-    n_to_use = min(n_components, n_mice_expected)
-    top_indices = sorted_indices[:n_to_use]  # indices into component_sizes (0-indexed)
+    # Take the N largest valid clusters
+    valid_sorted = sorted(valid, key=lambda i: sizes[i], reverse=True)
+    top = valid_sorted[:min(len(valid_sorted), n_mice_expected)]
 
     bboxes = []
-    for comp_idx in top_indices:
-        label_val = comp_idx + 1  # component labels are 1-indexed
-        component_mask = labeled == label_val
-        zz, yy, xx = np.where(component_mask)
+    for comp_idx in top:
+        label_val = comp_idx + 1
+        zz_ds, yy_ds, xx_ds = np.where(labeled == label_val)
 
-        vox_min = (int(zz.min()), int(yy.min()), int(xx.min()))
-        vox_max = (int(zz.max()), int(yy.max()), int(xx.max()))
+        # Scale downsampled voxel indices back to original full-res voxel space
+        z_lo, y_lo, x_lo = int(zz_ds.min()) * fz, int(yy_ds.min()) * fy, int(xx_ds.min()) * fx
+        z_hi, y_hi, x_hi = int(zz_ds.max()) * fz, int(yy_ds.max()) * fy, int(xx_ds.max()) * fx
 
-        # Centroid in voxel coords
-        centroid_z = float(zz.mean())
-        centroid_y = float(yy.mean())
-        centroid_x = float(xx.mean())
+        # Centroid in original voxel space (for position sorting)
+        cx = float(xx_ds.mean()) * fx
+        cy = float(yy_ds.mean()) * fy
+        cz = float(zz_ds.mean()) * fz
 
-        # Convert centroid to physical coords for sorting
-        # SimpleITK axis order for GetSpacing: (x, y, z) but array is (Z, Y, X)
-        phys_x = origin[0] + centroid_x * spacing[0]
-        phys_y = origin[1] + centroid_y * spacing[1]
+        # Physical coords via SimpleITK (handles origin + direction matrix correctly).
+        # TransformIndexToPhysicalPoint takes (X, Y, Z) index order.
+        centroid_phys = ct_sitk.TransformIndexToPhysicalPoint(
+            [int(round(cx)), int(round(cy)), int(round(cz))]
+        )
+        phys_min = ct_sitk.TransformIndexToPhysicalPoint([x_lo, y_lo, z_lo])
+        phys_max = ct_sitk.TransformIndexToPhysicalPoint([x_hi, y_hi, z_hi])
 
         bboxes.append({
-            "vox_min": vox_min,
-            "vox_max": vox_max,
-            "centroid_x": phys_x,
-            "centroid_y": phys_y,
+            "vox_min": (z_lo, y_lo, x_lo),
+            "vox_max": (z_hi, y_hi, x_hi),
+            "phys_min": phys_min,   # (X, Y, Z) mm -- bone extent; padded generously in stage 3
+            "phys_max": phys_max,   # (X, Y, Z) mm
+            "centroid_x": centroid_phys[0],
+            "centroid_y": centroid_phys[1],
         })
 
-    # Sort by spatial position: (Y ascending = lower first, X ascending = left-first per row)
-    # Lower Y = lower in image = positions 1,2; Higher Y = upper = positions 3,4
+    # Sort by spatial position: Y ascending (lower = pos 1/2), X ascending (left = pos 1/3)
     bboxes.sort(key=lambda b: (b["centroid_y"], b["centroid_x"]))
-
-    # Assign position labels 1, 2, 3, 4
     for i, bbox in enumerate(bboxes):
-        bbox["position"] = i + 1  # 1-indexed
+        bbox["position"] = i + 1
 
-    print(f"    [i] Segmentation: {len(bboxes)} animals found (expected {n_mice_expected})")
+    print(f"    [i] Segmentation: {len(bboxes)} bone clusters found (expected {n_mice_expected})")
     return bboxes
 
 
-def apply_bbox_with_padding(img_sitk, vox_min, vox_max, padding_vox=5):
+def crop_to_physical_bbox(img_sitk, phys_min, phys_max, padding_mm=5.0):
     """
-    Crop a SimpleITK image to the given voxel bounding box with padding.
-    img_sitk uses (X, Y, Z) axes; vox_min/max are in array (Z, Y, X) order.
+    Crop img_sitk to the physical bounding box [phys_min, phys_max] (mm, X/Y/Z order).
+
+    Uses SimpleITK's coordinate transform so this works correctly on any image regardless
+    of its voxel spacing or origin — in particular, PET and CT can have different grids
+    and both are correctly cropped from the same physical bbox derived from CT segmentation.
+
+    padding_mm is added on all six faces in physical space, then converted to per-axis
+    voxel counts using that image's spacing.
     """
-    size = img_sitk.GetSize()  # (x_size, y_size, z_size)
+    size = img_sitk.GetSize()      # (X, Y, Z) voxel counts
+    spacing = img_sitk.GetSpacing()  # (X, Y, Z) mm/voxel
 
-    z_min, y_min, x_min = vox_min
-    z_max, y_max, x_max = vox_max
+    # Map physical corners into this image's voxel index space.
+    # TransformPhysicalPointToIndex handles origin + direction matrix.
+    idx_min = img_sitk.TransformPhysicalPointToIndex(phys_min)  # (X, Y, Z) ints
+    idx_max = img_sitk.TransformPhysicalPointToIndex(phys_max)  # (X, Y, Z) ints
 
-    # Apply padding and clamp to image bounds
-    x_start = max(0, x_min - padding_vox)
-    y_start = max(0, y_min - padding_vox)
-    z_start = max(0, z_min - padding_vox)
-    x_end = min(size[0], x_max + padding_vox + 1)
-    y_end = min(size[1], y_max + padding_vox + 1)
-    z_end = min(size[2], z_max + padding_vox + 1)
+    # Per-axis padding in voxels (ceil so we never under-pad)
+    pad_x = int(math.ceil(padding_mm / spacing[0]))
+    pad_y = int(math.ceil(padding_mm / spacing[1]))
+    pad_z = int(math.ceil(padding_mm / spacing[2]))
 
-    # SimpleITK crop: RegionOfInterest takes (index, size) in (X, Y, Z) order
+    # Sort lo/hi per axis: flipped coordinate axes (negative direction cosines) can
+    # make idx_min > idx_max for that axis.
+    x_start = max(0,       min(idx_min[0], idx_max[0]) - pad_x)
+    y_start = max(0,       min(idx_min[1], idx_max[1]) - pad_y)
+    z_start = max(0,       min(idx_min[2], idx_max[2]) - pad_z)
+    x_end   = min(size[0], max(idx_min[0], idx_max[0]) + pad_x + 1)
+    y_end   = min(size[1], max(idx_min[1], idx_max[1]) + pad_y + 1)
+    z_end   = min(size[2], max(idx_min[2], idx_max[2]) + pad_z + 1)
+
+    # RegionOfInterestImageFilter takes (index, size) in (X, Y, Z) order
     extract = sitk.RegionOfInterestImageFilter()
     extract.SetIndex([x_start, y_start, z_start])
     extract.SetSize([x_end - x_start, y_end - y_start, z_end - z_start])
@@ -486,13 +516,14 @@ def stage3_crop_and_write(session, nifti_paths, bboxes, output_root, dry_run=Fal
 
         os.makedirs(week_dir, exist_ok=True)
 
-        ct_crop = apply_bbox_with_padding(ct_sitk, bbox["vox_min"], bbox["vox_max"])
+        # padding_mm=20: adds 20 mm around the bone bbox to capture full soft-tissue body
+        ct_crop = crop_to_physical_bbox(ct_sitk, bbox["phys_min"], bbox["phys_max"], padding_mm=20.0)
         sitk.WriteImage(ct_crop, ct_out)
         print(f"    [+] {mouse_id}/week_{week}/ct_hi.nii.gz")
 
         actual_pet_out = None
         if pet_sitk is not None:
-            pet_crop = apply_bbox_with_padding(pet_sitk, bbox["vox_min"], bbox["vox_max"])
+            pet_crop = crop_to_physical_bbox(pet_sitk, bbox["phys_min"], bbox["phys_max"], padding_mm=20.0)
             sitk.WriteImage(pet_crop, pet_out)
             print(f"    [+] {mouse_id}/week_{week}/pet_{tracer_label}.nii.gz")
             actual_pet_out = pet_out
@@ -550,16 +581,23 @@ def write_mouse_manifest(rows, output_root):
 # Main pipeline
 # ---------------------------------------------------------------------------
 
-def run_pipeline(stage_filter, dry_run, cfg, output_root):
+def run_pipeline(stage_filter, dry_run, cfg, output_root, session_filter=None):
     print(f"\n{'='*60}")
     print(f"  build_nifti_dataset.py")
     print(f"  data_root:       {cfg['data_root']}")
     print(f"  nifti_output_dir: {output_root}")
     print(f"  stage:           {stage_filter}  |  dry_run: {dry_run}")
+    if session_filter:
+        print(f"  session filter:  {sorted(session_filter)}")
     print(f"{'='*60}\n")
 
     rows = load_manifest()
     sessions = consolidate_sessions(rows)
+    if session_filter:
+        sessions = [s for s in sessions if s["base_id"] in session_filter]
+        unknown = session_filter - {s["base_id"] for s in sessions}
+        if unknown:
+            print(f"[!] Unknown session IDs (not in manifest): {sorted(unknown)}")
     print(f"Manifest: {len(rows)} session rows → {len(sessions)} consolidated CT-Hi sessions after filtering.\n")
 
     mouse_manifest_rows = []
@@ -596,6 +634,7 @@ def run_pipeline(stage_filter, dry_run, cfg, output_root):
                 print(f"  [dry-run] Stage 2: would segment {session['n_mice']} animals from {session['base_id']}")
                 # Create dummy bboxes for dry-run manifest preview
                 bboxes = [{"vox_min": (0,0,0), "vox_max": (10,10,10),
+                           "phys_min": (0.0, 0.0, 0.0), "phys_max": (10.0, 10.0, 10.0),
                            "centroid_x": float(i), "centroid_y": float(i % 2),
                            "position": i+1} for i in range(session["n_mice"])]
             else:
@@ -628,6 +667,8 @@ def main():
     )
     parser.add_argument("--dry-run", action="store_true",
                         help="Preview actions without writing any files.")
+    parser.add_argument("--session", nargs="+", metavar="SCAN_ID",
+                        help="Only process these session IDs (e.g. --session m54226 m54399).")
     args = parser.parse_args()
 
     # Parse stage argument
@@ -643,7 +684,8 @@ def main():
     if not args.dry_run:
         os.makedirs(output_root, exist_ok=True)
 
-    run_pipeline(stage_filter, args.dry_run, cfg, output_root)
+    session_filter = set(args.session) if args.session else None
+    run_pipeline(stage_filter, args.dry_run, cfg, output_root, session_filter)
     print("\nDone.")
 
 
