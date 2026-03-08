@@ -90,6 +90,8 @@ The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and t
 | `scripts/build_nifti_dataset.py` | **Batch conversion pipeline (3 stages).** Reads `manifest.csv`, applies per-modality consolidation, converts sessions to NIfTIs, segments and crops per-mouse volumes. Generates `mouse_manifest.csv`. Flags: `--dry-run`, `--stage {1,2,3,all}`, `--session <id> [<id> ...]`. | `SimpleITK`, `pydicom`, `scipy`, `PyYAML` |
 | `scripts/visualize_nifti.py` | QA tool — renders three orthogonal slices through the center of a NIfTI volume and saves a `_qa.png`. Run after conversion to sanity-check output. | `SimpleITK`, `matplotlib` |
 | `scripts/get_colipri_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through COLIPRI, and saves embeddings to `{output_dir}/embeddings/colipri/colipri_embeddings.npz`. | `torch`, `colipri`, `torchio`, `PyYAML` |
+| `scripts/get_merlin_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through Merlin (Stanford MIMI, `ImageEmbedding=True`), and saves embeddings to `{output_dir}/embeddings/merlin/merlin_embeddings.npz`. Preprocessed tensors are cached to `{output_dir}/embeddings/merlin/cache/` for fast re-runs. | `torch`, `merlin-vlm`, `PyYAML` |
+| `scripts/get_raddino_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through RAD-DINO (Microsoft, 2D ViT-B/14). Samples 32 evenly-spaced axial slices per volume, extracts a 768-d CLS token per slice, and mean-pools to a single volume embedding. Saves to `{output_dir}/embeddings/raddino/raddino_embeddings.npz`. | `torch`, `rad-dino`, `nibabel`, `PyYAML` |
 | `scripts/evaluate_embeddings.py` | Encoder-agnostic evaluation suite. Accepts any `.npz` conforming to the standard embedding interface and runs unsupervised, linear probe, and longitudinal tasks. Outputs `metrics.csv`, `report.txt`, and dimensionality-reduction plots. | `scikit-learn`, `matplotlib`, `umap-learn` |
 
 ---
@@ -216,10 +218,23 @@ All Tier 2–3 supervised tasks use **Leave-One-Subject-Out (LOSO)** CV — the 
 
 **Run:**
 ```bash
+# COLIPRI
 python scripts/get_colipri_embeddings.py          # produces {output_dir}/embeddings/colipri/colipri_embeddings.npz
 python scripts/evaluate_embeddings.py \
     --embeddings {output_dir}/embeddings/colipri/colipri_embeddings.npz \
     --output-dir {output_dir}/eval/colipri/
+
+# Merlin
+python scripts/get_merlin_embeddings.py           # produces {output_dir}/embeddings/merlin/merlin_embeddings.npz
+python scripts/evaluate_embeddings.py \
+    --embeddings {output_dir}/embeddings/merlin/merlin_embeddings.npz \
+    --output-dir {output_dir}/eval/merlin/
+
+# RAD-DINO
+python scripts/get_raddino_embeddings.py          # produces {output_dir}/embeddings/raddino/raddino_embeddings.npz
+python scripts/evaluate_embeddings.py \
+    --embeddings {output_dir}/embeddings/raddino/raddino_embeddings.npz \
+    --output-dir {output_dir}/eval/raddino/
 ```
 
 **Output:** `metrics.csv` (one row per encoder — load multiple to compare), `report.txt`, `plots/`.

@@ -91,14 +91,14 @@ Faulty original scans (superseded by a `_1` or `_2` re-scan) are excluded from t
 | m54228 | 11, 12, 13, 14 | WT | Control | 3h | CT-Hi, NaF |
 | m54229 | 15, 16, 17, 18 | WT | Control | 3h | CT-Hi, NaF |
 | m54231 | 1, 2, 3, 4 | KO | Disease | 3h | CT-Hi, NaF |
-| m54232 ⚠️ | 5, 6, 7, 8 | KO | Disease | 3h | CT-Hi, NaF |
+| m54232 ⚠️ | 5, 6, 7, 8 | KO | Disease | 3h | CT-Hi ⚠️, NaF |
 | m54233 | 9, 10, 11, 12 | KO | Disease | 3h | CT-Hi, NaF |
 | m54234 | 13, 14, 15, 16 | KO | Disease | 3h | CT-Hi, NaF |
 | m54244 | 19, 20 | WT | Control | 3h | CT-Hi, NaF |
 | m54301 | 17, 18, 19, 20 | KO | Disease | 1h | CT-Lo, NaF |
 | m54302 | 17, 18, 19, 20 | KO | Disease | 3h | CT-Hi, NaF |
 
-*Excluded: m54223 (faulty original; superseded by m54223_1).* ⚠️ m54223_1: NaF PET not detected in DICOM — only CT-Lo found; may need manual investigation. ⚠️ m54225: mixed-timepoint session. ⚠️ m54232: XIF uses range notation "m54232-m54250"; DICOM folder is m54232.
+*Excluded: m54223 (faulty original; superseded by m54223_1), m54232 (invalid — CT-Hi DICOMs are a blank attenuation correction scan with no animals; mean HU −1015; NaF PET present but no usable CT).* ⚠️ m54223_1: NaF PET not detected in DICOM — only CT-Lo found; may need manual investigation. ⚠️ m54225: mixed-timepoint session. ⚠️ m54232: CT-Hi DICOMs confirmed blank (no anatomical content); NaF_KO_05–08 have no CT-Hi crop in the processed dataset for Week 12.
 
 #### Week 12 FDG
 
@@ -118,14 +118,14 @@ Faulty original scans (superseded by a `_1` or `_2` re-scan) are excluded from t
 | m54264 | 5, 6, 7, 8 | WT | Control | 5h | CT-Hi, FDG |
 | m54265 | 9, 10, 11, 12 | WT | Control | 5h | CT-Hi, FDG |
 | m54266 | 13, 14, 15, 16 | WT | Control | 5h | CT-Hi, FDG |
-| m54267 | 17, 18, 19, 20 | WT | Control | 5h | CT-Hi, FDG |
+| m54267 ⚠️ | 17, 18, 19, 20 | WT | Control | 5h | CT-Hi ⚠️, FDG |
 | m54268 | 1, 2, 3, 4 | KO | Disease | 5h | CT-Hi, FDG |
 | m54269 | 5, 6, 7, 8 | KO | Disease | 5h | CT-Hi, FDG |
 | m54270 | 9, 10, 11, 12 | KO | Disease | 5h | CT-Hi, FDG |
 | m54271 | 13, 14, 15, 16 | KO | Disease | 5h | CT-Hi, FDG |
 | m54272 | 17, 18, 19, 20 | KO | Disease | 5h | CT-Hi, FDG |
 
-*No re-scans in Week 12 FDG.*
+*No re-scans in Week 12 FDG. Excluded: m54267 (invalid — CT-Hi DICOMs are a blank attenuation correction scan with no animals; mean HU −1026; FDG PET present but no usable CT). FDG_WT_17–20 therefore have no CT-Hi crop in the processed dataset for Week 12.*
 
 #### Week 15 NaF (mice 19–20 sacrificed after Week 12)
 
@@ -281,7 +281,8 @@ Mouse numbers are persistent longitudinal IDs within each cohort. WT = Control (
 | NaF_WT_13–15 | ✓ | ✓ | ✓ | ✗ | Sacrificed after Week 18 |
 | NaF_WT_16–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
 | NaF_WT_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
-| NaF_KO_1–12 | ✓ | ✓ | ✓* | ✓ | *KO 1 and KO 4 absent at Week 18 3h scan |
+| NaF_KO_1–4, 9–12 | ✓ | ✓ | ✓* | ✓ | *KO 1 and KO 4 absent at Week 18 3h scan |
+| NaF_KO_5–8 | ✓† | ✓ | ✓* | ✓ | †Week 12 NaF PET present but CT-Hi blank (m54232 invalid); no CT-Hi crop in processed dataset |
 | NaF_KO_13–15 | ✓ | ✓ | ✓ | ✗ | Sacrificed after Week 18 |
 | NaF_KO_16–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
 | NaF_KO_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
@@ -293,7 +294,7 @@ Mouse numbers are persistent longitudinal IDs within each cohort. WT = Control (
 | FDG_WT_1–12 | ✓ | ✓ | ✓ | ✓ | Full longitudinal |
 | FDG_WT_13–16 | ✓ | ✓ | ✓ | ✗ | Sacrificed/died after Week 18 |
 | FDG_WT_17–18 | ✓ | ✓ | ✗ | ✗ | Sacrificed after Week 15 |
-| FDG_WT_19–20 | ✓ | ✗ | ✗ | ✗ | Sacrificed after Week 12 |
+| FDG_WT_19–20 | ✓† | ✗ | ✗ | ✗ | Sacrificed after Week 12; †Week 12 FDG PET present but CT-Hi blank (m54267 invalid); no CT-Hi crop in processed dataset |
 | FDG_KO_1–9, 11–12 | ✓ | ✓ | ✓ | ✓ (3h+5h) | Full longitudinal |
 | FDG_KO_10 | ✓ | ✓ | ✓ | ✓ (3h only) | Present at Week 20 3h; absent at 5h |
 | FDG_KO_13–15 | ✓ | ✓ | ✓ | ✗ | Sacrificed after Week 18 |

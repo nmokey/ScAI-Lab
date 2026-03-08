@@ -6,12 +6,24 @@
 SimpleITK==2.5.2
 pydicom==3.0.1
 numpy==2.2.6
+scipy==1.15.3
 matplotlib==3.10.8
 PyYAML==6.0.3
 
-# COLIPRI embedding extraction
+# Embedding extraction
 # torch is not listed here — install the CUDA build separately:
 #   https://pytorch.org/get-started/locally/
-torchio==0.19.6
-colipri  # install from HuggingFace: pip install colipri
+torchio==0.21.3
+colipri==0.1.0      # install from HuggingFace: pip install colipri
+merlin-vlm==0.0.6   # install from PyPI: pip install merlin-vlm
+rad-dino==0.1.1     # install from PyPI: pip install rad-dino
 transformers==4.46.3  # colipri 0.1.0 is incompatible with transformers>=5.0
+
+# Embedding evaluation + notebooks
+scikit-learn==1.7.2
+umap-learn==0.5.11
+ipykernel  # register vlm_env as a Jupyter kernel: python -m ipykernel install --user --name vlm_env
+
+# libstdc++ workaround (headless Linux servers with old system libstdc++)
+# When running scripts, prefix with:
+#   LD_PRELOAD=$CONDA_PREFIX/lib/libstdc++.so.6 python ...
