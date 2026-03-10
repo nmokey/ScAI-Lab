@@ -25,7 +25,7 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 | **T2c AUC-ROC** (WT vs KO, LOSO) | Confidence-based separation of genotypes | 0.50 | 0.282 ⚠️ | 0.491 | **0.869** ⭐ |
 | **T2d Accuracy** (NaF vs FDG, LOSO) | Are scanner/radiotracer differences linearly separable? (confounder check) | 0.50 | 0.515 | 0.520 | **0.646** ⭐ |
 | **T2d AUC-ROC** (NaF vs FDG, LOSO) | Confidence-based cohort separation | 0.50 | 0.488 | 0.476 | **0.709** ⭐ |
-| **T2e Accuracy** (WT vs KO+stage, LOSO) | 5-class task: WT or KO at which disease stage? | 0.20 | **0.520** ⭐ | 0.515 | 0.729 |
+| **T2e Accuracy** (WT vs KO+stage, LOSO) | 5-class task: WT or KO at which disease stage? | 0.20 | 0.520 | 0.515 | **0.729** ⭐ |
 | **T2e macro-F1** (WT vs KO+stage, LOSO) | Same, balanced across all five classes | — | 0.137 | 0.136 | **0.621** ⭐ |
 | **T2e OvR AUC** (WT vs KO+stage, LOSO) | Confidence-based disease staging | — | 0.497 | 0.652 | **0.915** ⭐ |
 | **T3a** Pairwise temporal ordering | For same-mouse pairs, can a linear classifier tell which scan came later? | 0.50 | 0.685 | 0.770 | **0.926** ⭐ |
