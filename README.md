@@ -11,7 +11,7 @@ Building a **Medical Vision-Language Model (VLM)** ("Medical LLaVA") — a chatb
 - **Input:** Longitudinal 3D scans of mice
 - **Output:** Embeddings that capture disease progression (calcification & inflammation)
 
-**The core research question:** Can a generic, human-centric encoder (**COLIPRI**) understand mouse disease, or do we need to train a custom model from scratch on mouse data to beat it?
+**The core research question:** Can a generic, human-centric encoder understand mouse disease, or do we need to train a custom model from scratch on mouse data to beat it? **Current answer (zero-shot baselines complete):** RAD-DINO dominates supervised tasks (T2b AUC = 1.000, T2c AUC = 0.869); M3D leads on unsupervised geometry; all 3D encoders fail at genotype discrimination. A custom encoder is needed to close the subject retrieval gap (T3b Recall@1 < 5% across all encoders).
 
 **The challenge:** Most current VLMs are trained on 2D natural images. Medical data is **3D** (volumetric CT/MRI), **multi-modal** (different scan types per subject), and **longitudinal** (scans over months to track treatment). The first priority is developing a reasonable vision encoder baseline — important for the vision-language project and for a future self-supervised paper.
 
@@ -89,10 +89,12 @@ The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and t
 |---|---|---|
 | `scripts/build_nifti_dataset.py` | **Batch conversion pipeline (3 stages).** Reads `manifest.csv`, applies per-modality consolidation, converts sessions to NIfTIs, segments and crops per-mouse volumes. Generates `mouse_manifest.csv`. Flags: `--dry-run`, `--stage {1,2,3,all}`, `--session <id> [<id> ...]`. | `SimpleITK`, `pydicom`, `scipy`, `PyYAML` |
 | `scripts/visualize_nifti.py` | QA tool — renders three orthogonal slices through the center of a NIfTI volume and saves a `_qa.png`. Run after conversion to sanity-check output. | `SimpleITK`, `matplotlib` |
+| `scripts/qa_visualize_all.py` | Batch QA — runs `visualize_nifti.py` across all volumes in `mouse_manifest.csv` and organises output PNGs by cohort/week. | `SimpleITK`, `matplotlib` |
 | `scripts/get_colipri_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through COLIPRI, and saves embeddings to `{output_dir}/embeddings/colipri/colipri_embeddings.npz`. | `torch`, `colipri`, `torchio`, `PyYAML` |
 | `scripts/get_merlin_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through Merlin (Stanford MIMI, `ImageEmbedding=True`), and saves embeddings to `{output_dir}/embeddings/merlin/merlin_embeddings.npz`. Preprocessed tensors are cached to `{output_dir}/embeddings/merlin/cache/` for fast re-runs. | `torch`, `merlin-vlm`, `PyYAML` |
 | `scripts/get_raddino_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through RAD-DINO (Microsoft, 2D ViT-B/14). Samples 32 evenly-spaced axial slices per volume, extracts a 768-d CLS token per slice, and mean-pools to a single volume embedding. Saves to `{output_dir}/embeddings/raddino/raddino_embeddings.npz`. | `torch`, `rad-dino`, `nibabel`, `PyYAML` |
-| `scripts/evaluate_embeddings.py` | Encoder-agnostic evaluation suite. Accepts any `.npz` conforming to the standard embedding interface and runs unsupervised, linear probe, and longitudinal tasks. Outputs `metrics.csv`, `report.txt`, and dimensionality-reduction plots. | `scikit-learn`, `matplotlib`, `umap-learn` |
+| `scripts/get_m3d_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through M3D-CLIP (`GoodBaiBai88/M3D-CLIP`, 3D ViT-B, CLIP-trained on 11 medical modalities). HU clips to [-160, 240], trilinearly resamples to (32, 256, 256), min-max normalises, and extracts the 768-d CLS token. Saves to `{output_dir}/embeddings/m3d/m3d_embeddings.npz`. | `torch`, `transformers`, `nibabel`, `scipy`, `PyYAML` |
+| `scripts/evaluate_embeddings.py` | Encoder-agnostic evaluation suite. Accepts any `.npz` conforming to the standard embedding interface and runs T1–T3 tasks including genotype (T2c), cohort (T2d), disease staging (T2e), and per-cohort conditioned analysis. Outputs `metrics.csv`, `report.txt`, and dimensionality-reduction plots. | `scikit-learn`, `matplotlib`, `umap-learn` |
 
 ---
 
@@ -165,18 +167,24 @@ The dataset inventory lives in two CSVs:
 
 **QA:** After conversion, run `python scripts/visualize_nifti.py <path/to/output.nii.gz>` to generate a `_qa.png`. Confirm anatomy looks correct before proceeding.
 
-### Step 2: Preprocessing — 3D Patching
+### Step 2: Preprocessing — 3D Patching (COLIPRI only)
 
 **Constraint:** Do not globally resize/downsample (e.g., 512 → 128) — this blurs the tiny calcifications that are the primary signal.
 
-**Solution:** Cut each NIfTI volume into **3D patches** (e.g., 96×96×96 cubes). This preserves resolution and matches COLIPRI's expected input format.
+**Solution:** Cut each NIfTI volume into **3D patches** (e.g., 96×96×96 cubes). This preserves resolution and matches COLIPRI's expected input format. Other encoders handle their own preprocessing internally (Merlin via `DataLoader`, RAD-DINO via 2D slice extraction, M3D via trilinear resampling to 32×256×256).
 
-### Step 3: Baseline Validation — COLIPRI / RadDINO (Zero-Shot Transfer)
+### Step 3: Baseline Validation — Zero-Shot Transfer (✅ Complete)
 
-- **Model:** COLIPRI (3D VLM pre-trained on human CTs + reports) or RadDINO (image-only, 3D-friendly)
-- **Input:** Hi-Res CT NIfTIs → embeddings via `scripts/get_colipri_embeddings.py`
+Four encoders evaluated zero-shot on all 229 CT-Hi volumes. No fine-tuning.
 
-**Core success criterion:** *Week 12 embeddings cluster apart from Week 20 with no training whatsoever* — zero-shot transfer. The Tier 1 tasks test this directly.
+| Encoder | Architecture | Input | Dim | Status |
+|---|---|---|---|---|
+| COLIPRI | 3D ViT, human chest CT + reports | 3D volume (192³) | 768 | ✅ done |
+| Merlin | 3D ViT, human abdominal CT + EHR | 3D volume | 2048 | ✅ done |
+| RAD-DINO | 2D ViT-B/14, 882k chest X-rays (DINOv2) | 32 axial slices, mean-pool | 768 | ✅ done |
+| M3D-CLIP | 3D ViT, 120k multi-modal medical images (CLIP) | 3D volume (32×256×256) | 768 | ✅ done |
+
+**Core success criterion:** *Week 12 embeddings cluster apart from Week 20 with no training whatsoever* — zero-shot transfer. The Tier 1 tasks test this directly. **Result:** All encoders show temporal separation; RAD-DINO achieves T2b AUC = 1.000 (perfect early vs. late).
 
 **Standard embedding interface** — all encoder scripts must produce a `.npz` with these keys:
 
@@ -203,8 +211,12 @@ The dataset inventory lives in two CSVs:
 
 | Task | Metric(s) | What it tests |
 |---|---|---|
-| **T2a** Week classification (4-class) | Accuracy, macro-F1 | Can a linear head predict Week 12/15/18/20? |
+| **T2a** Week classification (4-class) | Accuracy, macro-F1, OvR AUC | Can a linear head predict Week 12/15/18/20? |
 | **T2b** Early vs. late (binary) | Accuracy, AUC-ROC | Can a linear head separate Week 12 vs. Week 20? |
+| **T2c** WT vs. KO (binary) | Accuracy, AUC-ROC | Does the embedding encode genotype / disease presence? |
+| **T2d** NaF vs. FDG cohort (binary) | Accuracy, AUC-ROC | Confounder check — are scanner/tracer differences linearly separable? |
+| **T2e** WT vs. KO+stage (5-class) | Accuracy, macro-F1, OvR AUC | Can the embedding distinguish WT from KO at each disease stage? |
+| **A5** Per-cohort conditioned analysis | T2a + T2b metrics per cohort | Run T2a/T2b separately within NaF and FDG to disentangle biology from scanner drift |
 
 *Tier 3 — Longitudinal / relational:*
 
@@ -219,32 +231,44 @@ All Tier 2–3 supervised tasks use **Leave-One-Subject-Out (LOSO)** CV — the 
 **Run:**
 ```bash
 # COLIPRI
-python scripts/get_colipri_embeddings.py          # produces {output_dir}/embeddings/colipri/colipri_embeddings.npz
+python scripts/get_colipri_embeddings.py
 python scripts/evaluate_embeddings.py \
     --embeddings {output_dir}/embeddings/colipri/colipri_embeddings.npz \
-    --output-dir {output_dir}/eval/colipri/
+    --output-dir {output_dir}/embeddings/colipri/
 
 # Merlin
-python scripts/get_merlin_embeddings.py           # produces {output_dir}/embeddings/merlin/merlin_embeddings.npz
+python scripts/get_merlin_embeddings.py
 python scripts/evaluate_embeddings.py \
     --embeddings {output_dir}/embeddings/merlin/merlin_embeddings.npz \
-    --output-dir {output_dir}/eval/merlin/
+    --output-dir {output_dir}/embeddings/merlin/
 
 # RAD-DINO
-python scripts/get_raddino_embeddings.py          # produces {output_dir}/embeddings/raddino/raddino_embeddings.npz
+python scripts/get_raddino_embeddings.py
 python scripts/evaluate_embeddings.py \
     --embeddings {output_dir}/embeddings/raddino/raddino_embeddings.npz \
-    --output-dir {output_dir}/eval/raddino/
+    --output-dir {output_dir}/embeddings/raddino/
+
+# M3D-CLIP
+python scripts/get_m3d_embeddings.py
+python scripts/evaluate_embeddings.py \
+    --embeddings {output_dir}/embeddings/m3d/m3d_embeddings.npz \
+    --output-dir {output_dir}/embeddings/m3d/
 ```
 
 **Output:** `metrics.csv` (one row per encoder — load multiple to compare), `report.txt`, `plots/`.
+
+**Zero-shot baseline results (all four encoders complete):** See [results.md](results.md) for the full comparison table and interpretation. Summary: RAD-DINO dominates all supervised tasks; M3D leads on unsupervised geometry; no encoder achieves useful subject retrieval (T3b Recall@1 < 5%).
+
+**Note on MONAI compatibility:** M3D-CLIP's model code was written for MONAI < 1.4. With MONAI ≥ 1.4, `PatchEmbeddingBlock` renamed `pos_embed` → `proj_type`. The fix is applied automatically via a one-line patch to the HuggingFace cached model file — see `scripts/get_m3d_embeddings.py` for details.
 
 ### Step 4: Custom Model — Train from Scratch
 
 - **Model:** **Masked Autoencoder (MAE)** with a 3D Vision Transformer (ViT) backbone
 - **Input:** PET data (FDG + NaF) + CT patches
 - **Method:** Mask 75% of the volume and force the model to reconstruct it (Masked Image Modeling / MIM)
-- **Rationale:** Existing models (e.g., RadDINO) are trained on human X-rays/CTs and likely cannot understand mouse PET scans. Training from scratch lets the model learn mouse-specific inflammation and calcification features. Cross-modal masking (using CT to predict PET, or vice versa) is also worth exploring given paired CT/PET data.
+- **Rationale:** Zero-shot baselines reveal two critical gaps: (1) no encoder achieves useful subject retrieval (T3b Recall@1 < 5%) — a longitudinal contrastive loss is needed to pull same-mouse scans together; (2) only RAD-DINO has meaningful genotype signal, suggesting the other encoders' training domains are too mismatched. Training from scratch on this dataset directly targets both gaps.
+- **Planned objectives:** MAE reconstruction loss + longitudinal contrastive loss (same-mouse scans as positives across weeks). Cross-modal masking (CT → PET prediction) is also worth exploring.
+- **See also:** [results.md — Future Directions](results.md#future-directions) for the full roadmap including DINO-style self-distillation on the RAD-DINO backbone.
 
 ---
 
