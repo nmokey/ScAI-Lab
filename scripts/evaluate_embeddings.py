@@ -24,8 +24,12 @@ Tier 1 — Unsupervised (no labels required):
   T1d  Within-subject cosine similarity vs. cross-subject (Δ = intra − inter)
 
 Tier 2 — Linear probe (Leave-One-Subject-Out cross-validation):
-  T2a  4-class week classification (accuracy, macro-F1)
+  T2a  4-class week classification (accuracy, macro-F1, OvR AUC)
   T2b  Binary early (Week 12) vs. late (Week 20) classification (accuracy, AUC-ROC)
+  T2c  Binary WT vs. KO genotype classification (accuracy, AUC-ROC)
+  T2d  Binary NaF vs. FDG cohort classification (accuracy, AUC-ROC)
+  T2e  5-class WT vs. (KO + stage) disease-staging (accuracy, macro-F1, OvR AUC)
+  A5   Per-cohort conditioned analysis: T2a and T2b run separately for NaF and FDG
 
 Tier 3 — Longitudinal / relational:
   T3a  Pairwise temporal ordering — can embeddings order two scans of the same
@@ -162,7 +166,7 @@ def run_t1a_plots(embs, weeks, subject_ids, plots_dir):
 
     print(f"    t-SNE (perplexity={perplexity}, n={n})...")
     tsne_coords = TSNE(n_components=2, perplexity=perplexity,
-                       random_state=42, n_iter=1000).fit_transform(embs)
+                       random_state=42, max_iter=1000).fit_transform(embs)
     _scatter_2d(tsne_coords, list(weeks), "week",
                 os.path.join(plots_dir, "tsne_by_week.png"),
                 "t-SNE — colored by Week")
@@ -256,10 +260,13 @@ def run_t1d_subject_consistency(embs, subject_ids):
 # Shared LOSO logistic regression helper
 # ---------------------------------------------------------------------------
 
-def _loso_logistic(X, y, groups, task_name, *, return_proba=False):
+def _loso_logistic(X, y, groups, task_name, *, return_proba=False, multiclass=False):
     """
     Leave-One-Subject-Out logistic regression.
+
     Returns (accuracy, macro-F1) and optionally (y_true, y_prob) for AUC.
+    When multiclass=True, y_prob is a 2-D array (n_samples, n_classes) for OvR AUC.
+    When multiclass=False (binary), y_prob is a 1-D array of positive-class probabilities.
     """
     loso = LeaveOneGroupOut()
     y_true_all, y_pred_all, y_prob_all = [], [], []
@@ -277,7 +284,11 @@ def _loso_logistic(X, y, groups, task_name, *, return_proba=False):
         y_pred_all.extend(clf.predict(X_te))
         y_true_all.extend(y_te)
         if return_proba:
-            y_prob_all.extend(clf.predict_proba(X_te)[:, 1])
+            proba = clf.predict_proba(X_te)
+            if multiclass:
+                y_prob_all.extend(proba.tolist())
+            else:
+                y_prob_all.extend(proba[:, 1])
 
     if not y_true_all:
         print(f"    [!] {task_name}: no valid LOSO folds — not enough subjects?")
@@ -300,14 +311,20 @@ def run_t2a_week_classification(embs, weeks, subject_ids):
     n_weeks = len(set(weeks))
     if n_weeks < 2:
         print("    [!] Only one week label — skipping.")
-        return {"T2a_accuracy": float("nan"), "T2a_macro_f1": float("nan"), "T2a_chance": float("nan")}
+        return {"T2a_accuracy": float("nan"), "T2a_macro_f1": float("nan"),
+                "T2a_ovr_auc": float("nan"), "T2a_chance": float("nan")}
 
     le = LabelEncoder()
     y  = le.fit_transform(weeks)
-    acc, f1 = _loso_logistic(embs, y, subject_ids, "Week (4-class)")
+    acc, f1, y_true, y_prob = _loso_logistic(embs, y, subject_ids, "Week (4-class)",
+                                              return_proba=True, multiclass=True)
+    try:
+        ovr_auc = roc_auc_score(y_true, np.array(y_prob), multi_class="ovr", average="macro")
+    except ValueError:
+        ovr_auc = float("nan")
     chance = 1.0 / n_weeks
-    print(f"    Chance baseline = {chance:.4f}")
-    return {"T2a_accuracy": acc, "T2a_macro_f1": f1, "T2a_chance": chance}
+    print(f"    OvR AUC = {ovr_auc:.4f}  |  Chance baseline = {chance:.4f}")
+    return {"T2a_accuracy": acc, "T2a_macro_f1": f1, "T2a_ovr_auc": ovr_auc, "T2a_chance": chance}
 
 
 # ---------------------------------------------------------------------------
@@ -335,6 +352,132 @@ def run_t2b_early_vs_late(embs, weeks, subject_ids):
 
     print(f"    AUC-ROC = {auc:.4f}  (chance = 0.50)")
     return {"T2b_accuracy": acc, "T2b_auc": auc}
+
+
+# ---------------------------------------------------------------------------
+# T2c — WT vs KO genotype classification (binary LOSO)
+# ---------------------------------------------------------------------------
+
+def run_t2c_wt_vs_ko(embs, subject_ids, genotypes):
+    print("\n[T2c] WT vs KO genotype classification (binary LOSO)...")
+    y = (genotypes == "KO").astype(int)
+    n_wt = int((y == 0).sum()); n_ko = int((y == 1).sum())
+    print(f"    Class balance: WT={n_wt}, KO={n_ko}")
+    if n_wt == 0 or n_ko == 0:
+        print("    [!] Only one genotype present — skipping.")
+        return {"T2c_accuracy": float("nan"), "T2c_auc": float("nan")}
+
+    acc, _, y_true, y_prob = _loso_logistic(embs, y, subject_ids, "WT vs KO", return_proba=True)
+    try:
+        auc = roc_auc_score(y_true, y_prob) if len(set(y_true)) > 1 else float("nan")
+    except ValueError:
+        auc = float("nan")
+    print(f"    AUC-ROC = {auc:.4f}  (chance = 0.50)")
+    return {"T2c_accuracy": acc, "T2c_auc": auc}
+
+
+# ---------------------------------------------------------------------------
+# T2d — NaF vs FDG cohort classification (binary LOSO)
+# ---------------------------------------------------------------------------
+
+def run_t2d_naf_vs_fdg(embs, subject_ids, cohorts):
+    print("\n[T2d] NaF vs FDG cohort classification (binary LOSO)...")
+    y = (cohorts == "FDG").astype(int)
+    n_naf = int((y == 0).sum()); n_fdg = int((y == 1).sum())
+    print(f"    Class balance: NaF={n_naf}, FDG={n_fdg}")
+    if n_naf == 0 or n_fdg == 0:
+        print("    [!] Only one cohort present — skipping.")
+        return {"T2d_accuracy": float("nan"), "T2d_auc": float("nan")}
+
+    acc, _, y_true, y_prob = _loso_logistic(embs, y, subject_ids, "NaF vs FDG", return_proba=True)
+    try:
+        auc = roc_auc_score(y_true, y_prob) if len(set(y_true)) > 1 else float("nan")
+    except ValueError:
+        auc = float("nan")
+    print(f"    AUC-ROC = {auc:.4f}  (chance = 0.50)")
+    return {"T2d_accuracy": acc, "T2d_auc": auc}
+
+
+# ---------------------------------------------------------------------------
+# T2e — WT vs (KO + stage): 5-class disease-staging task
+# ---------------------------------------------------------------------------
+
+def run_t2e_staging(embs, subject_ids, genotypes, weeks):
+    print("\n[T2e] WT vs (KO + stage) disease-staging (5-class, LOSO)...")
+    stage_labels = np.array([
+        "WT" if g == "WT" else f"KO_{w}"
+        for g, w in zip(genotypes, weeks)
+    ])
+    for cls in sorted(set(stage_labels)):
+        print(f"    {cls}: {(stage_labels == cls).sum()} samples")
+
+    le = LabelEncoder()
+    y  = le.fit_transform(stage_labels)
+    acc, f1, y_true, y_prob = _loso_logistic(embs, y, subject_ids, "WT vs KO+stage",
+                                              return_proba=True, multiclass=True)
+    try:
+        ovr_auc = roc_auc_score(y_true, np.array(y_prob), multi_class="ovr", average="macro")
+    except ValueError:
+        ovr_auc = float("nan")
+    print(f"    OvR AUC = {ovr_auc:.4f}  (chance ≈ 0.20)")
+    return {"T2e_accuracy": acc, "T2e_macro_f1": f1, "T2e_ovr_auc": ovr_auc}
+
+
+# ---------------------------------------------------------------------------
+# A5 — Per-cohort conditioned analysis
+# ---------------------------------------------------------------------------
+
+def run_conditioned_analysis(embs, subject_ids, weeks, cohorts):
+    """Run T2a and T2b separately within each cohort to disentangle biological
+    signal from scanner/tracer confounds."""
+    print("\n[A5] Per-cohort conditioned analysis...")
+    results = {}
+    loso = LeaveOneGroupOut()
+
+    for cohort in ["NaF", "FDG"]:
+        mask_c  = cohorts == cohort
+        X_c     = embs[mask_c]
+        weeks_c = weeks[mask_c]
+        sids_c  = subject_ids[mask_c]
+        n_subj  = len(set(sids_c))
+        print(f"\n    [{cohort}]  subjects={n_subj}, scans={mask_c.sum()}")
+
+        # T2a conditioned
+        le_c = LabelEncoder()
+        y_c  = le_c.fit_transform(weeks_c)
+        acc_a, f1_a, yt_a, yp_a = _loso_logistic(X_c, y_c, sids_c, f"T2a [{cohort}]",
+                                                   return_proba=True, multiclass=True)
+        try:
+            auc_a = roc_auc_score(yt_a, np.array(yp_a), multi_class="ovr", average="macro")
+        except ValueError:
+            auc_a = float("nan")
+        print(f"      T2a  acc={acc_a:.4f}  F1={f1_a:.4f}  OvR AUC={auc_a:.4f}")
+
+        # T2b conditioned
+        mask_el = np.isin(weeks_c, ["Week 12", "Week 20"])
+        acc_b, auc_b = float("nan"), float("nan")
+        if mask_el.sum() >= 4:
+            X_el = X_c[mask_el]
+            y_el = (weeks_c[mask_el] == "Week 20").astype(int)
+            g_el = sids_c[mask_el]
+            acc_b, _, yt_b, yp_b = _loso_logistic(X_el, y_el, g_el, f"T2b [{cohort}]",
+                                                    return_proba=True)
+            try:
+                auc_b = roc_auc_score(yt_b, yp_b) if len(set(yt_b)) > 1 else float("nan")
+            except ValueError:
+                auc_b = float("nan")
+        print(f"      T2b  acc={acc_b:.4f}  AUC={auc_b:.4f}")
+
+        results[cohort] = {
+            f"A5_{cohort}_T2a_acc": acc_a, f"A5_{cohort}_T2a_f1": f1_a,
+            f"A5_{cohort}_T2a_auc": auc_a, f"A5_{cohort}_T2b_acc": acc_b,
+            f"A5_{cohort}_T2b_auc": auc_b,
+        }
+
+    merged = {}
+    for v in results.values():
+        merged.update(v)
+    return merged
 
 
 # ---------------------------------------------------------------------------
@@ -505,8 +648,24 @@ def save_report(metrics, output_dir, npz_path, n_samples, emb_dim):
         "-" * 62,
         f"  T2a  Week (4-class) accuracy        : {_fmt(m.get('T2a_accuracy'))}  (chance={_fmt(m.get('T2a_chance'), '.2f')})",
         f"  T2a  Week (4-class) macro-F1        : {_fmt(m.get('T2a_macro_f1'))}",
+        f"  T2a  Week (4-class) OvR AUC         : {_fmt(m.get('T2a_ovr_auc'))}",
         f"  T2b  Early vs Late accuracy         : {_fmt(m.get('T2b_accuracy'))}  (chance=0.50)",
         f"  T2b  Early vs Late AUC-ROC          : {_fmt(m.get('T2b_auc'))}",
+        f"  T2c  WT vs KO accuracy              : {_fmt(m.get('T2c_accuracy'))}  (chance=0.50)",
+        f"  T2c  WT vs KO AUC-ROC               : {_fmt(m.get('T2c_auc'))}",
+        f"  T2d  NaF vs FDG accuracy            : {_fmt(m.get('T2d_accuracy'))}  (chance=0.50)",
+        f"  T2d  NaF vs FDG AUC-ROC             : {_fmt(m.get('T2d_auc'))}",
+        f"  T2e  WT vs KO+stage accuracy        : {_fmt(m.get('T2e_accuracy'))}  (chance≈0.20)",
+        f"  T2e  WT vs KO+stage macro-F1        : {_fmt(m.get('T2e_macro_f1'))}",
+        f"  T2e  WT vs KO+stage OvR AUC         : {_fmt(m.get('T2e_ovr_auc'))}",
+        "",
+        "  CONDITIONED ANALYSIS (per cohort)",
+        "-" * 62,
+    ] + [
+        f"  [NaF]  T2a acc={_fmt(m.get('A5_NaF_T2a_acc'))}  F1={_fmt(m.get('A5_NaF_T2a_f1'))}  AUC={_fmt(m.get('A5_NaF_T2a_auc'))}",
+        f"         T2b acc={_fmt(m.get('A5_NaF_T2b_acc'))}  AUC={_fmt(m.get('A5_NaF_T2b_auc'))}",
+        f"  [FDG]  T2a acc={_fmt(m.get('A5_FDG_T2a_acc'))}  F1={_fmt(m.get('A5_FDG_T2a_f1'))}  AUC={_fmt(m.get('A5_FDG_T2a_auc'))}",
+        f"         T2b acc={_fmt(m.get('A5_FDG_T2b_acc'))}  AUC={_fmt(m.get('A5_FDG_T2b_auc'))}",
         "",
         "  TIER 3 — LONGITUDINAL / RELATIONAL",
         "-" * 62,
@@ -549,6 +708,10 @@ def main():
 
     embs, subject_ids, weeks, modalities, paths = load_embeddings(args.embeddings)
 
+    # Parse cohort / genotype from subject_id strings (e.g. "NaF_WT_03")
+    cohorts   = np.array([s.split("_")[0] for s in subject_ids])
+    genotypes = np.array([s.split("_")[1] for s in subject_ids])
+
     all_metrics = {}
 
     # Tier 1 — unsupervised
@@ -560,6 +723,10 @@ def main():
     # Tier 2 — linear probe
     all_metrics.update(run_t2a_week_classification(embs, weeks, subject_ids))
     all_metrics.update(run_t2b_early_vs_late(embs, weeks, subject_ids))
+    all_metrics.update(run_t2c_wt_vs_ko(embs, subject_ids, genotypes))
+    all_metrics.update(run_t2d_naf_vs_fdg(embs, subject_ids, cohorts))
+    all_metrics.update(run_t2e_staging(embs, subject_ids, genotypes, weeks))
+    all_metrics.update(run_conditioned_analysis(embs, subject_ids, weeks, cohorts))
 
     # Tier 3 — longitudinal
     all_metrics.update(run_t3a_temporal_ordering(embs, weeks, subject_ids))
