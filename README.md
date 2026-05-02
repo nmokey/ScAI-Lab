@@ -261,14 +261,44 @@ python scripts/evaluate_embeddings.py \
 
 **Note on MONAI compatibility:** M3D-CLIP's model code was written for MONAI < 1.4. With MONAI ≥ 1.4, `PatchEmbeddingBlock` renamed `pos_embed` → `proj_type`. The fix is applied automatically via a one-line patch to the HuggingFace cached model file — see `scripts/get_m3d_embeddings.py` for details.
 
-### Step 4: Custom Model — Train from Scratch
+### Step 4: Longitudinal Trajectory Prediction (Current Focus)
 
-- **Model:** **Masked Autoencoder (MAE)** with a 3D Vision Transformer (ViT) backbone
-- **Input:** PET data (FDG + NaF) + CT patches
-- **Method:** Mask 75% of the volume and force the model to reconstruct it (Masked Image Modeling / MIM)
-- **Rationale:** Zero-shot baselines reveal two critical gaps: (1) no encoder achieves useful subject retrieval (T3b Recall@1 < 5%) — a longitudinal contrastive loss is needed to pull same-mouse scans together; (2) only RAD-DINO has meaningful genotype signal, suggesting the other encoders' training domains are too mismatched. Training from scratch on this dataset directly targets both gaps.
-- **Planned objectives:** MAE reconstruction loss + longitudinal contrastive loss (same-mouse scans as positives across weeks). Cross-modal masking (CT → PET prediction) is also worth exploring.
-- **See also:** [results.md — Future Directions](results.md#future-directions) for the full roadmap including DINO-style self-distillation on the RAD-DINO backbone.
+**Pivot (April 2026):** The project has shifted from encoder benchmarking to **longitudinal disease state prediction** — the core novelty for the eventual paper. RAD-DINO is confirmed as the best encoder (T2b AUC = 1.000) and is now used frozen as a feature extractor. The new question is: given a mouse's disease state at T0, can we predict where it will be at TN?
+
+**Architecture:**
+1. **Vision encoder (frozen):** RAD-DINO extracts a 768-d disease-state token per scan per timepoint. No fine-tuning.
+2. **Longitudinal encoder (trainable):** A lightweight model (MLP → GRU → Transformer, in order of complexity) takes the T0 state token and predicts the TN state token.
+3. **Language model (future):** Predicted state tokens become the "eyes" for a multimodal LLM that answers clinical questions about disease progression.
+
+**Validation sequence:**
+- **Step A (immediate):** T0 → TN — given only Week 12 embedding, predict Week 20. Simplest end-to-end sanity check.
+- **Step B:** T_i → T_{i+1} — next-step prediction across all consecutive timepoint pairs.
+- **Step C:** Full trajectory — T0 as seed, autoregressively predict T1 → T2 → T3.
+
+**Non-imaging features:** Genotype (WT/KO) and cohort (NaF/FDG) can be incorporated as one-hot conditioning signals — critical because genotype determines whether disease develops at all.
+
+**Novelty angle:** The task itself (longitudinal disease trajectory prediction from a single baseline scan) is the primary paper contribution. Technical architecture decisions follow once task validity is confirmed.
+
+**New evaluation tasks (T4):**
+
+| Task | Metric | What it tests |
+|---|---|---|
+| **T4a** T0→TN embedding prediction | MSE, cosine similarity | How close is the predicted TN to actual TN? |
+| **T4b** Predicted embedding classification | AUC-ROC (WT vs KO) | Does the predicted TN preserve genotype signal? |
+| **T4c** Trajectory ordering | Spearman ρ | Does predicted progression direction match actual temporal order? |
+
+**Script:** `scripts/train_longitudinal.py` — loads existing RAD-DINO `.npz`, builds per-subject trajectories, trains/evaluates with LOSO CV, outputs `longitudinal_metrics.csv` and trajectory UMAP plots.
+
+**Multi-repo context:** This repo owns vision encoding and trajectory prediction. A separate Nephrology KG codebase handles multimodal LLM integration (plug-and-play via the `.npz` embedding interface). VQA datasets (deterministic first, then augmented) bridge the two. These repositories will converge into a medical visual-language model.
+
+### Step 5: Custom Encoder — Train from Scratch (Deferred)
+
+If trajectory prediction reveals that RAD-DINO's frozen embeddings are insufficient (e.g., T4b AUC degrades toward chance), a custom encoder becomes necessary:
+
+- **Model:** Masked Autoencoder (MAE) with a 3D ViT backbone
+- **Input:** PET (FDG + NaF) + CT patches
+- **Method:** Mask 75% of the volume + longitudinal contrastive loss (same-mouse positives across weeks) + cross-modal masking (CT → PET prediction)
+- **See also:** [results.md — Future Directions](results.md#future-directions)
 
 ---
 

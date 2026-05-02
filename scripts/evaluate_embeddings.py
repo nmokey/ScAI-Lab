@@ -612,6 +612,109 @@ def run_t3c_week_retrieval(embs, weeks, k=5):
 
 
 # ---------------------------------------------------------------------------
+# T4 — Longitudinal prediction tasks (optional; requires --predicted-embeddings)
+# ---------------------------------------------------------------------------
+
+def run_t4_longitudinal(pred_npz_path, embs, subject_ids, weeks):
+    """
+    Load predictions from train_longitudinal.py and run T4a/T4b/T4c.
+
+    Expected .npz keys (written by train_longitudinal.py --save-predictions):
+        predicted_embeddings : (M, D) float32 — one per subject
+        subject_ids          : (M,) str
+        actual_embeddings    : (M, D) float32 — actual Week 20 embeddings
+        genotypes            : (M,) int  — 0=WT, 1=KO
+    """
+    from scipy.stats import spearmanr
+
+    print(f"\n[T4] Longitudinal prediction tasks (from {pred_npz_path})...")
+
+    if not os.path.exists(pred_npz_path):
+        print(f"    [!] Predicted embeddings file not found — skipping T4 tasks.")
+        return {}
+
+    data      = np.load(pred_npz_path, allow_pickle=True)
+    Y_pred    = data["predicted_embeddings"].astype(np.float32)
+    Y_true    = data["actual_embeddings"].astype(np.float32)
+    pred_sids = data["subject_ids"].astype(str)
+    pred_geno = data["genotypes"].astype(int)
+
+    WEEK_ORDER_LOCAL = ["Week 12", "Week 15", "Week 18", "Week 20"]
+
+    # T4a — embedding prediction quality
+    print("\n[T4a] Embedding prediction quality...")
+    mse  = float(np.mean((Y_true - Y_pred) ** 2))
+    sims = []
+    for i in range(len(Y_true)):
+        a, b = Y_true[i], Y_pred[i]
+        sims.append(float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8)))
+    mean_cos = float(np.mean(sims))
+    print(f"    MSE              = {mse:.6f}")
+    print(f"    Cosine sim (mean)= {mean_cos:.4f}")
+
+    # T4b — genotype classification from predicted TN
+    print("\n[T4b] Genotype classification from predicted TN (LOSO)...")
+    from sklearn.model_selection import LeaveOneGroupOut
+    logo = LeaveOneGroupOut()
+    y_true_all, y_prob_all = [], []
+    for train_idx, test_idx in logo.split(Y_pred, pred_geno, pred_sids):
+        if len(set(pred_geno[train_idx])) < 2:
+            continue
+        clf = __import__("sklearn.linear_model", fromlist=["LogisticRegression"]).LogisticRegression(max_iter=1000)
+        clf.fit(Y_pred[train_idx], pred_geno[train_idx])
+        prob = clf.predict_proba(Y_pred[test_idx])[:, 1]
+        y_true_all.extend(pred_geno[test_idx].tolist())
+        y_prob_all.extend(prob.tolist())
+
+    if len(set(y_true_all)) < 2:
+        t4b_auc, t4b_acc = float("nan"), float("nan")
+    else:
+        from sklearn.metrics import roc_auc_score, accuracy_score
+        t4b_auc = roc_auc_score(y_true_all, y_prob_all)
+        t4b_acc = accuracy_score(y_true_all, [1 if p > 0.5 else 0 for p in y_prob_all])
+    print(f"    AUC-ROC (WT vs KO) = {t4b_auc:.4f}")
+    print(f"    Accuracy           = {t4b_acc:.4f}")
+
+    # T4c — trajectory ordering consistency
+    print("\n[T4c] Trajectory ordering consistency (Spearman ρ)...")
+    # Build per-subject week map from the full embedding set
+    all_embs_by_sub = {}
+    for i, (sid, wk) in enumerate(zip(subject_ids, weeks)):
+        all_embs_by_sub.setdefault(sid, {})[wk] = embs[i]
+
+    pred_map = {pred_sids[i]: Y_pred[i] for i in range(len(pred_sids))}
+    rhos = []
+    for sid, week_map in all_embs_by_sub.items():
+        if sid not in pred_map:
+            continue
+        p_tn = pred_map[sid]
+        present = [wk for wk in WEEK_ORDER_LOCAL if wk in week_map]
+        if len(present) < 3:
+            continue
+        ranks = [WEEK_ORDER_LOCAL.index(wk) for wk in present]
+        cosines = []
+        for wk in present:
+            a, b = week_map[wk], p_tn
+            cosines.append(float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8)))
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            rho, _ = spearmanr(ranks, cosines)
+        if not np.isnan(rho):
+            rhos.append(rho)
+
+    t4c_rho = float(np.mean(rhos)) if rhos else float("nan")
+    print(f"    Mean Spearman ρ = {t4c_rho:.4f}  (n={len(rhos)} subjects)")
+
+    return {
+        "T4a_cosine_sim": mean_cos,
+        "T4a_mse": mse,
+        "T4b_genotype_auc": t4b_auc,
+        "T4b_genotype_acc": t4b_acc,
+        "T4c_spearman_rho": t4c_rho,
+    }
+
+
+# ---------------------------------------------------------------------------
 # Output: metrics.csv and report.txt
 # ---------------------------------------------------------------------------
 
@@ -674,6 +777,21 @@ def save_report(metrics, output_dir, npz_path, n_samples, emb_dim):
         f"  T3b  Subject retrieval Recall@3     : {_fmt(m.get('T3b_recall_at_3'))}",
         f"  T3b  Subject retrieval MRR          : {_fmt(m.get('T3b_mrr'))}",
         f"  T3c  Week retrieval mAP@5           : {_fmt(m.get('T3c_map_at_5'))}",
+    ]
+
+    if any(k.startswith("T4") for k in m):
+        lines += [
+            "",
+            "  TIER 4 — LONGITUDINAL PREDICTION  (T0→TN, LOSO CV)",
+            "-" * 62,
+            f"  T4a  Cosine sim (predicted vs actual TN): {_fmt(m.get('T4a_cosine_sim'))}  [1=perfect]",
+            f"  T4a  MSE (predicted vs actual TN)       : {_fmt(m.get('T4a_mse'))}",
+            f"  T4b  WT vs KO AUC from predicted TN     : {_fmt(m.get('T4b_genotype_auc'))}",
+            f"  T4b  WT vs KO accuracy from predicted TN: {_fmt(m.get('T4b_genotype_acc'))}",
+            f"  T4c  Trajectory Spearman ρ              : {_fmt(m.get('T4c_spearman_rho'))}  [>0 = correct order]",
+        ]
+
+    lines += [
         "",
         "  PLOTS: see plots/ subdirectory",
         "=" * 62,
@@ -700,6 +818,9 @@ def main():
                         help="Path to .npz embeddings file (standard interface).")
     parser.add_argument("--output-dir", required=True,
                         help="Directory to write metrics.csv, report.txt, and plots/.")
+    parser.add_argument("--predicted-embeddings", default=None,
+                        help="Optional path to longitudinal_predictions.npz from "
+                             "train_longitudinal.py; enables T4a/T4b/T4c tasks.")
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
@@ -732,6 +853,10 @@ def main():
     all_metrics.update(run_t3a_temporal_ordering(embs, weeks, subject_ids))
     all_metrics.update(run_t3b_subject_retrieval(embs, subject_ids))
     all_metrics.update(run_t3c_week_retrieval(embs, weeks, k=5))
+
+    # Tier 4 — longitudinal prediction (optional)
+    if args.predicted_embeddings:
+        all_metrics.update(run_t4_longitudinal(args.predicted_embeddings, embs, subject_ids, weeks))
 
     save_metrics(all_metrics, args.output_dir, args.embeddings)
     save_report(all_metrics, args.output_dir, args.embeddings, len(embs), embs.shape[1])
