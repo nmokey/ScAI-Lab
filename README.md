@@ -261,35 +261,53 @@ python scripts/evaluate_embeddings.py \
 
 **Note on MONAI compatibility:** M3D-CLIP's model code was written for MONAI < 1.4. With MONAI ≥ 1.4, `PatchEmbeddingBlock` renamed `pos_embed` → `proj_type`. The fix is applied automatically via a one-line patch to the HuggingFace cached model file — see `scripts/get_m3d_embeddings.py` for details.
 
-### Step 4: Longitudinal Trajectory Prediction (Current Focus)
+### Step 4: Vision-Language Model — Longitudinal TBR Prediction (Current Focus)
 
-**Pivot (April 2026):** The project has shifted from encoder benchmarking to **longitudinal disease state prediction** — the core novelty for the eventual paper. RAD-DINO is confirmed as the best encoder (T2b AUC = 1.000) and is now used frozen as a feature extractor. The new question is: given a mouse's disease state at T0, can we predict where it will be at TN?
+**Pivot (May 2026):** The project has advanced from embedding benchmarking to training a **Medical VLM** ("Medical LLaVA") that can answer clinical questions about longitudinal disease progression. RAD-DINO is confirmed as the best encoder (T2b AUC = 1.000) and is used frozen as a feature extractor. The VLM is trained end-to-end with a LoRA-finetuned LLM and a lightweight projection layer.
 
 **Architecture:**
-1. **Vision encoder (frozen):** RAD-DINO extracts a 768-d disease-state token per scan per timepoint. No fine-tuning.
-2. **Longitudinal encoder (trainable):** A lightweight model (MLP → GRU → Transformer, in order of complexity) takes the T0 state token and predicts the TN state token.
-3. **Language model (future):** Predicted state tokens become the "eyes" for a multimodal LLM that answers clinical questions about disease progression.
+1. **Vision encoder (frozen):** RAD-DINO extracts a 768-d CLS token per scan (32 axial slices, mean-pooled). Pre-saved as `.safetensors` per subject per week — no runtime inference needed.
+2. **Projection layer (trainable):** Single linear layer mapping 768-d → LLM hidden dim (4096 for LLaMA-8B).
+3. **LLM decoder (LoRA fine-tuned):** LLaMA-3.1-8B-Instruct (pending HuggingFace access approval); currently running with `zephyr-7b-beta` for pipeline validation. LoRA: r=16, α=32, all projection layers.
 
-**Validation sequence:**
-- **Step A (immediate):** T0 → TN — given only Week 12 embedding, predict Week 20. Simplest end-to-end sanity check.
-- **Step B:** T_i → T_{i+1} — next-step prediction across all consecutive timepoint pairs.
-- **Step C:** Full trajectory — T0 as seed, autoregressively predict T1 → T2 → T3.
+**Task:** Trajectory VQA — given a scan from **any** timepoint (W12/15/18/20), predict future TBR values and/or genotype. Three question types per (subject, input_week) pair:
+- **Genotype-only:** "Is this mouse WT or KO?"
+- **TBR-only:** "What will the TBR be at future weeks?"
+- **Combined:** Both genotype and TBR trajectory.
 
-**Non-imaging features:** Genotype (WT/KO) and cohort (NaF/FDG) can be incorporated as one-hot conditioning signals — critical because genotype determines whether disease develops at all.
+**Dataset (NaF cohort only — TBR available):**
+- 36 subjects × multiple input weeks = **213 VQA records** across 229 `.safetensors` embedding files
+- Random 80/10/10 subject split: 177 train / 18 val / 18 test
+- TBR values from `tbr_features_NaF.csv`, column `tbr2_p95_median`
+- Splits: `/data1/Processed_NIfTI_Test/embeddings/vlm/mouse_{train,val,test,all}_vqa_traj.json`
+- Embeddings: `/data1/Processed_NIfTI_Test/embeddings/vlm/embeddings/{sid}_{tag}.safetensors`
 
-**Novelty angle:** The task itself (longitudinal disease trajectory prediction from a single baseline scan) is the primary paper contribution. Technical architecture decisions follow once task validity is confirmed.
+**Status:**
+- ✅ Dataset created (`vlm/create_mouse_traj_dataset.py`)
+- ✅ Full VLM training pipeline implemented (`vlm/`)
+- ✅ Pipeline verified end-to-end (training starts, loss computing, model saves)
+- ⏳ LLaMA-3.1-8B-Instruct access pending Meta approval — using `zephyr-7b-beta` in the interim
+- ⏳ Full training run in progress
 
-**New evaluation tasks (T4):**
+**Code structure (`vlm/`):** Self-contained — no modifications to external repos. Adapted from NephrologyKG with mouse-specific changes applied directly.
 
-| Task | Metric | What it tests |
-|---|---|---|
-| **T4a** T0→TN embedding prediction | MSE, cosine similarity | How close is the predicted TN to actual TN? |
-| **T4b** Predicted embedding classification | AUC-ROC (WT vs KO) | Does the predicted TN preserve genotype signal? |
-| **T4c** Trajectory ordering | Spearman ρ | Does predicted progression direction match actual temporal order? |
+| Path | Purpose |
+|---|---|
+| `vlm/run/run_mouse_vlm.py` | Entry point — setup, train, evaluate |
+| `vlm/yaml/viz_emb_params_mouse.yml` | All hyperparameters and paths |
+| `vlm/model/viz_emb_trainer.py` | Train + evaluate loop |
+| `vlm/model/vision_language_model.py` | VLM forward/generate (768-d fix for RAD-DINO) |
+| `vlm/data/vqa_dataset.py` | `MouseTrajDataset` — loads `.safetensors` embeddings |
+| `vlm/data/eval.py` | Genotype accuracy + TBR metrics |
+| `vlm/create_mouse_traj_dataset.py` | Builds VQA JSONs + per-scan `.safetensors` from `.npz` + TBR CSV |
 
-**Script:** `scripts/train_longitudinal.py` — loads existing RAD-DINO `.npz`, builds per-subject trajectories, trains/evaluates with LOSO CV, outputs `longitudinal_metrics.csv` and trajectory UMAP plots.
+**Run:**
+```bash
+cd ~/ScAI-Lab/vlm
+CUDA_VISIBLE_DEVICES=0 /home/ryab/miniconda3/envs/vlm_env/bin/python run/run_mouse_vlm.py
+```
 
-**Multi-repo context:** This repo owns vision encoding and trajectory prediction. A separate Nephrology KG codebase handles multimodal LLM integration (plug-and-play via the `.npz` embedding interface). VQA datasets (deterministic first, then augmented) bridge the two. These repositories will converge into a medical visual-language model.
+**Output:** Model saved to `/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_no_multitask/mouse_vlm_mdl`; predictions and metrics to `vqa.json` / `val.json` in the same directory.
 
 ### Step 5: Custom Encoder — Train from Scratch (Deferred)
 
