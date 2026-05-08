@@ -85,6 +85,9 @@ class BaseLLM(BaseModel):
             trainer.add_callback(cb)
         trainer.train(resume_from_checkpoint=self.params["train"]["resume_from_checkpoint"])
         self.save_model(model)
+        # Free training model from GPU before inference loads a fresh copy
+        del model, trainer
+        torch.cuda.empty_cache()
 
     def get_training_args(self):
         p = self.params["train"]
