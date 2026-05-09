@@ -1,59 +1,73 @@
-# ScAI Lab — Vision Encoder (Jan 2026 – present)
+# Longitudinal Vision Encoder for Mouse Atherosclerosis Imaging
 
-## Project Overview
-
-Building a **Medical Vision-Language Model (VLM)** ("Medical LLaVA") — a chatbot-style system where researchers can ask longitudinal questions about a subject, such as *"How much weight will this mouse lose over the next 4 weeks?"* or *"Describe the progression of atherosclerosis."*
-
-**Your role:** Build and validate the **Vision Encoder** — the neural network that converts 3D mouse scans into embeddings the Language Model can understand. A VLM is only as good as its eyes.
-
-**Biological focus:** Tracking **Atherosclerosis** (hardening of arteries) in mice — specifically **vascular calcification** and **inflammation** over time.
-
-- **Input:** Longitudinal 3D scans of mice
-- **Output:** Embeddings that capture disease progression (calcification & inflammation)
-
-**The core research question:** Can a generic, human-centric encoder understand mouse disease, or do we need to train a custom model from scratch on mouse data to beat it? **Current answer (zero-shot baselines complete):** RAD-DINO dominates supervised tasks (T2b AUC = 1.000, T2c AUC = 0.869); M3D leads on unsupervised geometry; all 3D encoders fail at genotype discrimination. A custom encoder is needed to close the subject retrieval gap (T3b Recall@1 < 5% across all encoders).
-
-**The challenge:** Most current VLMs are trained on 2D natural images. Medical data is **3D** (volumetric CT/MRI), **multi-modal** (different scan types per subject), and **longitudinal** (scans over months to track treatment). The first priority is developing a reasonable vision encoder baseline — important for the vision-language project and for a future self-supervised paper.
+A **Medical Vision-Language Model (VLM)** pipeline for longitudinal atherosclerosis monitoring in mice — benchmarking pretrained 3D/2D vision encoders and training a trajectory-prediction VLM on multi-modal PET/CT data.
 
 ---
 
-## Source Study
+## Motivation
 
-**Citation:** Tamboline M et al. (2025). "Preclinical evaluation of high-resolution CT, 18F-FDG, and 18F-NaF PET imaging for longitudinal monitoring of atherosclerosis." *European Journal of Nuclear Medicine and Molecular Imaging* 52:4256–4267.
+Atherosclerosis (arterial plaque build-up) is the leading cause of cardiovascular disease. Tracking its progression non-invasively with PET/CT imaging is clinically valuable, but existing vision encoders are trained on human 2D data and have never been evaluated on longitudinal 3D mouse preclinical studies.
 
-**Study design:** Male Apoe−/− mice on a high-fat diet (HFD) to induce atherosclerosis; age-matched C57BL/6 wild-type (WT) mice on regular chow as controls. The **same animals** are scanned longitudinally at weeks 12, 15, 18, and 20. After each session, ~3 mice per group are euthanized for histology.
-
-**Two imaging cohorts (separate animals, never overlap):**
-- **NaF cohort:** n=20 KO + n=20 WT — 18F-NaF tracer (calcification)
-- **FDG cohort:** n=20 KO + n=20 WT — 18F-FDG tracer (inflammation)
-- CT acquired on all mice from both cohorts (80 total)
-
-**Key findings (ML context):**
-- **18F-NaF** separates KO from WT across all timepoints; strong correlation with histology (r²=0.83). Best overall biomarker.
-- **18F-FDG** only distinguishes groups at early stages (Weeks 12–15); indistinguishable by Week 18.
-- **Hi-res CT** effective for late-stage detection (Week 15+); calcified plaques visible as hyperdense regions.
-- **Implication for ML:** Expect NaF and CT embeddings to separate WT from KO consistently; FDG separation may only be detectable at Weeks 12–15. Use this as a sanity check when evaluating encoder quality.
+**Research question:** Can a generic, human-centric encoder understand mouse disease, or is a custom model required? And can a VLM answer clinical questions (*"What will the TBR be at Week 20?"*) directly from scan embeddings?
 
 ---
 
-## Data
+## Dataset
 
-**80 unique mice** across two cohorts, imaged at 4 timepoints (weeks 12, 15, 18, 20). Persistent mouse IDs: `NaF_WT_1`–`NaF_WT_20`, `NaF_KO_1`–`NaF_KO_20`, `FDG_WT_1`–`FDG_WT_20`, `FDG_KO_1`–`FDG_KO_20`. No mouse receives both tracers.
+**Source study:** Tamboline M et al. (2025). *Preclinical evaluation of high-resolution CT, 18F-FDG, and 18F-NaF PET imaging for longitudinal monitoring of atherosclerosis.* European Journal of Nuclear Medicine and Molecular Imaging 52:4256–4267.
 
-Each scanner session (`m54xxx`) captures 1–4 mice simultaneously, producing a bag of DICOM slices. Folder structure: `Week X` → `Tracer` → `ScanID`.
+80 unique male mice (Apoe−/− KO on high-fat diet vs. C57BL/6 WT controls), scanned longitudinally at **weeks 12, 15, 18, and 20** across two separate cohorts:
 
-**Modalities:**
+| Cohort | Tracer | Signal | n (KO + WT) |
+|--------|--------|--------|-------------|
+| NaF | 18F-NaF | Vascular calcification | 20 + 20 |
+| FDG | 18F-FDG | Inflammation | 20 + 20 |
 
-| Modality | File Size | What it Measures | Project Role |
-|---|---|---|---|
-| **CT (Hi-Res)** | ~2814 KB | Anatomy / Calcification | Baseline — use for RadDINO/COLIPRI validation |
-| **CT (Low-Res)** | ~705 KB | Anatomy (attenuation correction) | Ignore |
-| **PET (FDG)** | ~115 KB | Glucose / Inflammation | Novelty — target for custom MAE training |
-| **PET (NaF)** | ~115 KB | Calcium / Bone | Critical — measures calcification |
+Each session acquires Hi-Res CT (~2814 KB/slice) and PET for 1–4 mice simultaneously. **229 CT-Hi volumes** used for encoder evaluation after filtering Lo-Res CT sessions.
 
-**Formats:** Use `/Dicom Data/` (raw DICOM). The `/Amgen SUV Data/ (.xif)` files are a proprietary format — not needed.
+Full scan inventory, per-scan mouse mappings, data heuristics, and longitudinal attendance tables: [docs/DATA_MANIFEST.md](docs/DATA_MANIFEST.md).
 
-For full scan-level inventory, per-scan mouse mappings, data heuristics, and longitudinal attendance tables, see [DATA_MANIFEST.md](DATA_MANIFEST.md).
+---
+
+## Methods
+
+### Pipeline Overview
+
+```
+Raw DICOM  →  NIfTI Conversion  →  Encoder Embeddings  →  Evaluation / VLM Training
+```
+
+1. **DICOM → NIfTI** (`scripts/build_nifti_dataset.py`): file-size heuristic modality classification, per-modality re-scan consolidation, quadrant-based per-mouse segmentation and cropping to RAS-oriented volumes.
+2. **Encoder Embeddings**: four pretrained encoders evaluated zero-shot, each producing a standardised `.npz` (N × D embeddings + metadata).
+3. **Evaluation** (`scripts/evaluate_embeddings.py`): T1 unsupervised, T2 linear-probe (LOSO CV), T3 longitudinal/retrieval tasks.
+4. **VLM Training** (`vlm/`): frozen RAD-DINO features + linear projection + LoRA-finetuned LLaMA-3.1-8B for trajectory TBR prediction.
+
+### Encoders Evaluated
+
+| Encoder | Architecture | Trained on | Embedding dim |
+|---------|-------------|------------|---------------|
+| COLIPRI | 3D ViT | Human chest CT + reports | 768 |
+| Merlin | 3D ViT | Human abdominal CT + EHR | 2048 |
+| RAD-DINO | 2D ViT-B/14 (32-slice mean-pool) | 882k chest X-rays (DINOv2) | 768 |
+| M3D-CLIP | 3D ViT | 120k multi-modal medical images (CLIP) | 768 |
+
+---
+
+## Results
+
+Zero-shot evaluation on 229 CT-Hi volumes, 78 mice. Full table and per-encoder analysis: [docs/results.md](docs/results.md).
+
+| Metric | COLIPRI | Merlin | RAD-DINO | M3D |
+|--------|---------|--------|----------|-----|
+| T2b AUC (early vs. late) | 0.683 | 0.852 | **1.000** | 0.963 |
+| T2c AUC (WT vs. KO) | 0.282 | 0.491 | **0.869** | 0.567 |
+| T3b Recall@1 (subject retrieval) | 0.018 | **0.044** | 0.013 | 0.022 |
+| T1b ARI (unsupervised week clusters) | 0.033 | 0.011 | −0.010 | **0.114** |
+
+**Key findings:**
+- **RAD-DINO** dominates all supervised tasks — perfect early/late separation (T2b AUC = 1.000) and best genotype discrimination (T2c AUC = 0.869). Selected as the frozen backbone for VLM training.
+- **M3D** leads on unsupervised geometry (T1b ARI = 0.114), but weak genotype signal (T2c ≈ chance).
+- **Subject retrieval is universally poor** (T3b Recall@1 < 5% across all encoders) — a custom encoder with longitudinal contrastive loss is needed to close this gap.
 
 ---
 
@@ -61,269 +75,70 @@ For full scan-level inventory, per-scan mouse mappings, data heuristics, and lon
 
 ### Environment
 
-The project uses a conda environment (`vlm_env`, Python 3.10). Reproduce it exactly with:
-
 ```bash
 conda env create -f environment.yml
 conda activate vlm_env
 ```
 
-pip fallback (non-conda users): `pip install -r requirements.txt`
+Or with pip: `pip install -r requirements.txt`
 
 ### Configuration
 
-All server-specific paths and tunable parameters live in `config.yaml`, which is **gitignored**. Copy the committed template and fill in your paths before running anything:
+All server-specific paths live in `config.yaml` (gitignored). Copy the template and fill in your paths:
 
 ```bash
 cp config.yaml.example config.yaml
-# Then edit config.yaml — at minimum set:
-#   paths.data_root  → path to the /Dicom Data/ directory on your server
-#   paths.output_dir → where converted NIfTI files should be written
+# Set paths.data_root  → /path/to/Dicom Data/
+#     paths.output_dir → where NIfTI files should be written
 ```
 
-The file size heuristic targets (`pet_kb`, `ct_hi_res_kb`, `ct_lo_res_kb`) and tolerance are also in `config.yaml` and can be tuned without touching the code.
-
-### Scripts
-
-| File | Purpose | Dependencies |
-|---|---|---|
-| `scripts/build_nifti_dataset.py` | **Batch conversion pipeline (3 stages).** Reads `manifest.csv`, applies per-modality consolidation, converts sessions to NIfTIs, segments and crops per-mouse volumes. Generates `mouse_manifest.csv`. Flags: `--dry-run`, `--stage {1,2,3,all}`, `--session <id> [<id> ...]`. | `SimpleITK`, `pydicom`, `scipy`, `PyYAML` |
-| `scripts/visualize_nifti.py` | QA tool — renders three orthogonal slices through the center of a NIfTI volume and saves a `_qa.png`. Run after conversion to sanity-check output. | `SimpleITK`, `matplotlib` |
-| `scripts/qa_visualize_all.py` | Batch QA — runs `visualize_nifti.py` across all volumes in `mouse_manifest.csv` and organises output PNGs by cohort/week. | `SimpleITK`, `matplotlib` |
-| `scripts/get_colipri_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through COLIPRI, and saves embeddings to `{output_dir}/embeddings/colipri/colipri_embeddings.npz`. | `torch`, `colipri`, `torchio`, `PyYAML` |
-| `scripts/get_merlin_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through Merlin (Stanford MIMI, `ImageEmbedding=True`), and saves embeddings to `{output_dir}/embeddings/merlin/merlin_embeddings.npz`. Preprocessed tensors are cached to `{output_dir}/embeddings/merlin/cache/` for fast re-runs. | `torch`, `merlin-vlm`, `PyYAML` |
-| `scripts/get_raddino_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through RAD-DINO (Microsoft, 2D ViT-B/14). Samples 32 evenly-spaced axial slices per volume, extracts a 768-d CLS token per slice, and mean-pools to a single volume embedding. Saves to `{output_dir}/embeddings/raddino/raddino_embeddings.npz`. | `torch`, `rad-dino`, `nibabel`, `PyYAML` |
-| `scripts/get_m3d_embeddings.py` | Iterates over all CT NIfTI volumes in `mouse_manifest.csv`, passes each through M3D-CLIP (`GoodBaiBai88/M3D-CLIP`, 3D ViT-B, CLIP-trained on 11 medical modalities). HU clips to [-160, 240], trilinearly resamples to (32, 256, 256), min-max normalises, and extracts the 768-d CLS token. Saves to `{output_dir}/embeddings/m3d/m3d_embeddings.npz`. | `torch`, `transformers`, `nibabel`, `scipy`, `PyYAML` |
-| `scripts/evaluate_embeddings.py` | Encoder-agnostic evaluation suite. Accepts any `.npz` conforming to the standard embedding interface and runs T1–T3 tasks including genotype (T2c), cohort (T2d), disease staging (T2e), and per-cohort conditioned analysis. Outputs `metrics.csv`, `report.txt`, and dimensionality-reduction plots. | `scikit-learn`, `matplotlib`, `umap-learn` |
-
----
-
-## Pipeline
-
-### Step 1: DICOM → NIfTI Conversion
-
-**Batch conversion:** `scripts/build_nifti_dataset.py` reads `manifest.csv` and `config.yaml`; writes to `{output_dir}/`. Use `--dry-run` to verify session selection without writing files.
+### Reproducing the Pipeline
 
 ```bash
-python scripts/build_nifti_dataset.py --dry-run           # preview all 63 sessions
-python scripts/build_nifti_dataset.py --stage 1           # DICOM → session NIfTIs only
-python scripts/build_nifti_dataset.py --stage 2           # segment animals from session NIfTIs
-python scripts/build_nifti_dataset.py --stage 3           # crop and write per-mouse NIfTIs
-python scripts/build_nifti_dataset.py                     # all stages (default)
-python scripts/build_nifti_dataset.py --session m54226    # process one session only
-python scripts/build_nifti_dataset.py --session m54226 m54399 --stage 2  # filter + stage
-```
+# 1. Convert DICOM to NIfTI (all sessions)
+python scripts/build_nifti_dataset.py
 
-The dataset inventory lives in two CSVs:
-- **`manifest.csv`** — session-level DICOM inventory (147 rows, 63 valid sessions after filtering `is_valid=False`). Never modified by the pipeline.
-- **`mouse_manifest.csv`** — per-mouse NIfTI index generated by the pipeline. One row per (mouse × week) pair, with paths to cropped `ct_hi.nii.gz` and `pet_*.nii.gz`. This is the ML-facing index.
+# 2. Extract embeddings
+python scripts/get_raddino_embeddings.py    # or colipri / merlin / m3d
 
-**Known data gaps (not pipeline bugs):**
-
-| Session / Mouse | Week | Issue |
-|---|---|---|
-| `m54232` | 12 | CT-Hi DICOMs are blank attenuation-correction scan (mean HU −1015, max 366). Marked `is_valid=False`. |
-| `m54267` | 12 | Same as m54232 (mean HU −1026). Marked `is_valid=False`. |
-| `m54215`, `m54222`, `m54257` | 12 | CT-Lo only sessions — no CT-Hi DICOM exists for these scans. |
-| `NaF_KO_05`–`NaF_KO_08` | 12 | Affected by the m54232/m54267/m54257 gaps above — no CT-Hi available. |
-| `FDG_WT_17`–`FDG_WT_20` | 12 | Affected by the m54215/m54222 gaps — no CT-Hi available. |
-
-**Three-stage pipeline:**
-
-**Stage 1 — DICOM → session NIfTI:**
-1. Classify DICOM slices by file-size heuristic (PET ~115 KB, CT-Hi ~2814 KB, CT-Lo ~705 KB; ±5% tolerance)
-2. Apply per-modality version consolidation (`_1`/`_2` re-scan suffixes — take highest valid version per modality)
-3. Sort slices by `ImagePositionPatient` Z-coordinate and stack into a 3D NIfTI
-4. Write combined (all-mice) volumes to `sessions/{week}/{tracer}/{scan_id}/ct_hi.nii.gz` and `pet_*.nii.gz`
-
-**Stage 2 — Animal segmentation (quadrant-based):**
-1. Downsample CT to ~1 mm/voxel isotropic and threshold at ≥ 300 HU (bone only)
-2. Compute the physical X/Y coordinates of every bone voxel using the image direction cosines — vectorised, no voxel-direction assumptions
-3. Use the **FOV geometric centre** (image centre voxel → physical mm) as the quadrant dividing line
-4. Split bone voxels into four quadrants (lower-left, lower-right, upper-left, upper-right) in physical space
-5. Each populated quadrant = one mouse; position assigned unambiguously by quadrant — no sorting required
-6. Record each mouse's bone centroid (in physical mm) as a degenerate point bbox (`phys_min = phys_max = centroid`)
-7. **Lower-row mice only (positions 1 & 2):** shift centroid 5 mm toward the FOV Y centre to add padding toward the scan midline (upper-row mice are unaffected)
-
-**Stage 3 — Per-mouse crop:**
-1. Map the point bbox to each image's voxel space via `TransformPhysicalPointToIndex` (handles different CT/PET spacings and origins correctly)
-2. Expand symmetrically by fixed padding: **20 mm XY** (transaxial) + **70 mm Z** (longitudinal) — produces identical crop dimensions for every mouse
-3. Reorient to **RAS** convention (`sitk.DICOMOrient(..., "RAS")`) for consistent axis ordering across all viewers
-4. Write cropped volumes to `mice/{cohort}_{genotype}_{num:02d}/week_{N}/ct_hi.nii.gz` and `pet_*.nii.gz`
-
-**Segmentation approach history — methods tried and abandoned:**
-
-| Approach | Problem |
-|---|---|
-| **Connected components + centroid sort** (original) | Sorting by `(centroid_y, centroid_x)` broke when two same-row mice had nearly identical Y centroids (< 2 mm apart). The lower-left/lower-right assignment flipped unpredictably depending on which mouse happened to have a slightly lower centroid. |
-| **X-axis inversion fix** | Physical X is inverted relative to visual left (higher physical X = visually left). Fixing the sort key to `(centroid_y, -centroid_x)` corrected upper-row mice but did not fix the same-row Y-tie problem. |
-| **Half-split sort** (rank by Y, then sort each half by X) | Partially mitigated same-row ties but still produced wrong assignments when one mouse's bone mass extended slightly into the other mouse's half. |
-| **Connected components + bone-centroid quadrant split** | Using the overall bone centroid as the quadrant divider is biased when < 4 mice are scanned — the centroid shifts toward occupied positions, misplacing the dividing line. |
-| **n_mice-based branching** (≤2 X-only, ==3 partial, ==4 quadrant) | Required knowing the expected number of mice in advance; brittle when detection returned the wrong count. |
-| **Fixed padding too large (35 mm XY)** | Produced 701-voxel (70 mm) crops at 0.1 mm/voxel spacing, including adjacent mice. Reduced to 20 mm (401-voxel / 40 mm crops). |
-| **Centroid point bbox with no bias** | Lower-row mice had nearly zero padding toward the scan midline (inner edge), cutting off medial anatomy. Fixed by shifting lower-row centroids 5 mm toward the FOV Y centre. |
-
-**Current approach rationale:** The FOV geometric centre is always the midpoint between the four scanner bed positions regardless of how many mice are present, so it never drifts toward occupied positions. Empty quadrants produce no bbox and are silently skipped. All four positions use a single unified code path — no `n_mice` branching required.
-
-**QA:** After conversion, run `python scripts/visualize_nifti.py <path/to/output.nii.gz>` to generate a `_qa.png`. Confirm anatomy looks correct before proceeding.
-
-### Step 2: Preprocessing — 3D Patching (COLIPRI only)
-
-**Constraint:** Do not globally resize/downsample (e.g., 512 → 128) — this blurs the tiny calcifications that are the primary signal.
-
-**Solution:** Cut each NIfTI volume into **3D patches** (e.g., 96×96×96 cubes). This preserves resolution and matches COLIPRI's expected input format. Other encoders handle their own preprocessing internally (Merlin via `DataLoader`, RAD-DINO via 2D slice extraction, M3D via trilinear resampling to 32×256×256).
-
-### Step 3: Baseline Validation — Zero-Shot Transfer (✅ Complete)
-
-Four encoders evaluated zero-shot on all 229 CT-Hi volumes. No fine-tuning.
-
-| Encoder | Architecture | Input | Dim | Status |
-|---|---|---|---|---|
-| COLIPRI | 3D ViT, human chest CT + reports | 3D volume (192³) | 768 | ✅ done |
-| Merlin | 3D ViT, human abdominal CT + EHR | 3D volume | 2048 | ✅ done |
-| RAD-DINO | 2D ViT-B/14, 882k chest X-rays (DINOv2) | 32 axial slices, mean-pool | 768 | ✅ done |
-| M3D-CLIP | 3D ViT, 120k multi-modal medical images (CLIP) | 3D volume (32×256×256) | 768 | ✅ done |
-
-**Core success criterion:** *Week 12 embeddings cluster apart from Week 20 with no training whatsoever* — zero-shot transfer. The Tier 1 tasks test this directly. **Result:** All encoders show temporal separation; RAD-DINO achieves T2b AUC = 1.000 (perfect early vs. late).
-
-**Standard embedding interface** — all encoder scripts must produce a `.npz` with these keys:
-
-| Key | Shape | Description |
-|---|---|---|
-| `embeddings` | `(N, D)` float32 | One vector per volume |
-| `subject_ids` | `(N,)` str | Mouse ID, e.g. `NaF_WT_03` |
-| `weeks` | `(N,)` str | `Week 12` / `Week 15` / `Week 18` / `Week 20` |
-| `modalities` | `(N,)` str | `CT_HiRes` / `CT_LowRes` / `PET_FDG` / `PET_NaF` |
-| `paths` | `(N,)` str | Absolute path to source NIfTI |
-
-**Evaluation tasks** (`scripts/evaluate_embeddings.py`):
-
-*Tier 1 — Zero-shot (no training, no labels):*
-
-| Task | Metric(s) | What it tests |
-|---|---|---|
-| **T1a** t-SNE / UMAP plots | — (visual) | Do Week 12 and Week 20 clusters visually separate? ← primary success criterion |
-| **T1b** k-means cluster alignment | ARI, NMI | Do unsupervised clusters align with week labels? |
-| **T1c** Silhouette by week | Silhouette (cosine) | Are same-week embeddings more cohesive than random? |
-| **T1d** Within-subject consistency | Δ (intra − inter sim) | Does the encoder preserve mouse identity across timepoints? |
-
-*Tier 2 — Linear probe (frozen embeddings + one linear layer, LOSO CV):*
-
-| Task | Metric(s) | What it tests |
-|---|---|---|
-| **T2a** Week classification (4-class) | Accuracy, macro-F1, OvR AUC | Can a linear head predict Week 12/15/18/20? |
-| **T2b** Early vs. late (binary) | Accuracy, AUC-ROC | Can a linear head separate Week 12 vs. Week 20? |
-| **T2c** WT vs. KO (binary) | Accuracy, AUC-ROC | Does the embedding encode genotype / disease presence? |
-| **T2d** NaF vs. FDG cohort (binary) | Accuracy, AUC-ROC | Confounder check — are scanner/tracer differences linearly separable? |
-| **T2e** WT vs. KO+stage (5-class) | Accuracy, macro-F1, OvR AUC | Can the embedding distinguish WT from KO at each disease stage? |
-| **A5** Per-cohort conditioned analysis | T2a + T2b metrics per cohort | Run T2a/T2b separately within NaF and FDG to disentangle biology from scanner drift |
-
-*Tier 3 — Longitudinal / relational:*
-
-| Task | Metric(s) | What it tests |
-|---|---|---|
-| **T3a** Pairwise temporal ordering | Accuracy (chance=0.5) | Do embeddings encode a consistent disease-progression direction? |
-| **T3b** Same-subject retrieval | Recall@1/3, MRR | For a query scan, are same-mouse scans the nearest neighbors? |
-| **T3c** Same-week retrieval | mAP@5 | For a query scan, are same-week scans the nearest neighbors? |
-
-All Tier 2–3 supervised tasks use **Leave-One-Subject-Out (LOSO)** CV — the same mouse never appears in both train and test sets.
-
-**Run:**
-```bash
-# COLIPRI
-python scripts/get_colipri_embeddings.py
-python scripts/evaluate_embeddings.py \
-    --embeddings {output_dir}/embeddings/colipri/colipri_embeddings.npz \
-    --output-dir {output_dir}/embeddings/colipri/
-
-# Merlin
-python scripts/get_merlin_embeddings.py
-python scripts/evaluate_embeddings.py \
-    --embeddings {output_dir}/embeddings/merlin/merlin_embeddings.npz \
-    --output-dir {output_dir}/embeddings/merlin/
-
-# RAD-DINO
-python scripts/get_raddino_embeddings.py
+# 3. Evaluate
 python scripts/evaluate_embeddings.py \
     --embeddings {output_dir}/embeddings/raddino/raddino_embeddings.npz \
     --output-dir {output_dir}/embeddings/raddino/
 
-# M3D-CLIP
-python scripts/get_m3d_embeddings.py
-python scripts/evaluate_embeddings.py \
-    --embeddings {output_dir}/embeddings/m3d/m3d_embeddings.npz \
-    --output-dir {output_dir}/embeddings/m3d/
+# 4. Train VLM (NaF cohort, TBR trajectory prediction)
+cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm.py
 ```
-
-**Output:** `metrics.csv` (one row per encoder — load multiple to compare), `report.txt`, `plots/`.
-
-**Zero-shot baseline results (all four encoders complete):** See [results.md](results.md) for the full comparison table and interpretation. Summary: RAD-DINO dominates all supervised tasks; M3D leads on unsupervised geometry; no encoder achieves useful subject retrieval (T3b Recall@1 < 5%).
-
-**Note on MONAI compatibility:** M3D-CLIP's model code was written for MONAI < 1.4. With MONAI ≥ 1.4, `PatchEmbeddingBlock` renamed `pos_embed` → `proj_type`. The fix is applied automatically via a one-line patch to the HuggingFace cached model file — see `scripts/get_m3d_embeddings.py` for details.
-
-### Step 4: Vision-Language Model — Longitudinal TBR Prediction (Current Focus)
-
-**Pivot (May 2026):** The project has advanced from embedding benchmarking to training a **Medical VLM** ("Medical LLaVA") that can answer clinical questions about longitudinal disease progression. RAD-DINO is confirmed as the best encoder (T2b AUC = 1.000) and is used frozen as a feature extractor. The VLM is trained end-to-end with a LoRA-finetuned LLM and a lightweight projection layer.
-
-**Architecture:**
-1. **Vision encoder (frozen):** RAD-DINO extracts a 768-d CLS token per scan (32 axial slices, mean-pooled). Pre-saved as `.safetensors` per subject per week — no runtime inference needed.
-2. **Projection layer (trainable):** Single linear layer mapping 768-d → LLM hidden dim (4096 for LLaMA-8B).
-3. **LLM decoder (LoRA fine-tuned):** LLaMA-3.1-8B-Instruct (pending HuggingFace access approval); currently running with `zephyr-7b-beta` for pipeline validation. LoRA: r=16, α=32, all projection layers.
-
-**Task:** Trajectory VQA — given a scan from **any** timepoint (W12/15/18/20), predict future TBR values and/or genotype. Three question types per (subject, input_week) pair:
-- **Genotype-only:** "Is this mouse WT or KO?"
-- **TBR-only:** "What will the TBR be at future weeks?"
-- **Combined:** Both genotype and TBR trajectory.
-
-**Dataset (NaF cohort only — TBR available):**
-- 36 subjects × multiple input weeks = **213 VQA records** across 229 `.safetensors` embedding files
-- Random 80/10/10 subject split: 177 train / 18 val / 18 test
-- TBR values from `tbr_features_NaF.csv`, column `tbr2_p95_median`
-- Splits: `/data1/Processed_NIfTI_Test/embeddings/vlm/mouse_{train,val,test,all}_vqa_traj.json`
-- Embeddings: `/data1/Processed_NIfTI_Test/embeddings/vlm/embeddings/{sid}_{tag}.safetensors`
-
-**Status:**
-- ✅ Dataset created (`vlm/create_mouse_traj_dataset.py`)
-- ✅ Full VLM training pipeline implemented (`vlm/`)
-- ✅ Pipeline verified end-to-end (training starts, loss computing, model saves)
-- ⏳ LLaMA-3.1-8B-Instruct access pending Meta approval — using `zephyr-7b-beta` in the interim
-- ⏳ Full training run in progress
-
-**Code structure (`vlm/`):** Self-contained — no modifications to external repos. Adapted from NephrologyKG with mouse-specific changes applied directly.
-
-| Path | Purpose |
-|---|---|
-| `vlm/run/run_mouse_vlm.py` | Entry point — setup, train, evaluate |
-| `vlm/yaml/viz_emb_params_mouse.yml` | All hyperparameters and paths |
-| `vlm/model/viz_emb_trainer.py` | Train + evaluate loop |
-| `vlm/model/vision_language_model.py` | VLM forward/generate (768-d fix for RAD-DINO) |
-| `vlm/data/vqa_dataset.py` | `MouseTrajDataset` — loads `.safetensors` embeddings |
-| `vlm/data/eval.py` | Genotype accuracy + TBR metrics |
-| `vlm/create_mouse_traj_dataset.py` | Builds VQA JSONs + per-scan `.safetensors` from `.npz` + TBR CSV |
-
-**Run:**
-```bash
-cd ~/ScAI-Lab/vlm
-CUDA_VISIBLE_DEVICES=0 /home/ryab/miniconda3/envs/vlm_env/bin/python run/run_mouse_vlm.py
-```
-
-**Output:** Model saved to `/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_no_multitask/mouse_vlm_mdl`; predictions and metrics to `vqa.json` / `val.json` in the same directory.
-
-### Step 5: Custom Encoder — Train from Scratch (Deferred)
-
-If trajectory prediction reveals that RAD-DINO's frozen embeddings are insufficient (e.g., T4b AUC degrades toward chance), a custom encoder becomes necessary:
-
-- **Model:** Masked Autoencoder (MAE) with a 3D ViT backbone
-- **Input:** PET (FDG + NaF) + CT patches
-- **Method:** Mask 75% of the volume + longitudinal contrastive loss (same-mouse positives across weeks) + cross-modal masking (CT → PET prediction)
-- **See also:** [results.md — Future Directions](results.md#future-directions)
 
 ---
 
-## Key Papers
+## Repository Structure
 
-| Paper | Relevance |
-|---|---|
-| **COLIPRI** | Engineering blueprint for 3D patching. Confirms chunk-based processing preserves resolution without resizing. Primary baseline encoder candidate. |
-| **RAD-DINO** | "North Star" for the baseline. Proves image-only pre-training (no text reports) works well — important since metadata is sparse (only Week # and Tracer). |
-| **BrainMVP** | Validates **cross-modal masking** (using CT to predict PET and vice versa). Directly relevant for the custom MAE given paired CT/PET data. |
+```
+scripts/                  DICOM conversion, embedding extraction, evaluation
+vlm/                      VLM training pipeline (dataset builder, model, trainer)
+docs/
+  DATA_MANIFEST.md        Full scan inventory, mouse mappings, data heuristics
+  results.md              Zero-shot encoder evaluation — full tables and analysis
+  QA_REPORT.md            Dataset QA verification report
+manifest.csv              Session-level DICOM inventory (147 rows)
+mouse_manifest.csv        Per-mouse NIfTI index (generated by build_nifti_dataset.py)
+config.yaml.example       Path and parameter template
+environment.yml           Conda environment
+```
+
+---
+
+## Citation
+
+```bibtex
+@article{tamboline2025preclinical,
+  title={Preclinical evaluation of high-resolution CT, 18F-FDG, and 18F-NaF PET imaging
+         for longitudinal monitoring of atherosclerosis},
+  author={Tamboline, M and others},
+  journal={European Journal of Nuclear Medicine and Molecular Imaging},
+  volume={52},
+  pages={4256--4267},
+  year={2025}
+}
+```
