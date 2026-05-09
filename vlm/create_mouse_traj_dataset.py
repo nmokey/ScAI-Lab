@@ -135,7 +135,7 @@ def export_safetensors(emb_map, out_emb_dir, dry_run=False):
 # ---------------------------------------------------------------------------
 
 def _tbr_str(val):
-    return f"{val:.2f}"
+    return f"{val:.1f}"
 
 
 def _genotype(sid):

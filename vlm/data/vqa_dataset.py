@@ -90,6 +90,7 @@ class MouseTrajDataset(Dataset):
             item["input_ids"]      = tok_qa
             item["attention_mask"] = mask
             item["labels"]         = labels
+            item["tbr_targets"]    = self._tbr_targets(record)
 
         elif self.mode == "test":
             item = dict(record)
@@ -101,6 +102,20 @@ class MouseTrajDataset(Dataset):
     def _load_embedding(self, record):
         """Load the input scan embedding from .safetensors, shape → (1, 768)."""
         return load_file(record["embedding_path_ts0"])["embeddings"]
+
+    def _tbr_targets(self, record):
+        """Pack future TBR values into a fixed-length (4,) tensor, padded with -1."""
+        import re
+        tbr_re = re.compile(r"Week\s+\d+:\s*(\d+(?:\.\d+)?)")
+        answer = record.get("answer", "")
+        # Only TBR and combined questions have numeric TBR in the answer
+        if "TBR" not in record.get("question", ""):
+            return torch.full((4,), -1.0)
+        vals = [float(m.group(1)) for m in tbr_re.finditer(answer)]
+        t = torch.full((4,), -1.0)
+        for i, v in enumerate(vals[:4]):
+            t[i] = v
+        return t
 
     def _add_prompt(self, question, answer):
         bos = self.tokenizer.bos_token or ""

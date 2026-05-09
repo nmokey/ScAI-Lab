@@ -57,12 +57,12 @@ train:
   save_total_limit: 1
   logging_steps: 1
   num_proj_layers: 1
-  label_names: ["labels"]
+  label_names: ["labels", "tbr_targets"]
   save_strategy: epoch
   evaluation_strategy: epoch
   eval_steps: null
   save_steps: null
-  add_multitask: False
+  add_multitask: True
   add_multitask_unknown: False
   multitask_wt: 1.0
   evaluate_start: False

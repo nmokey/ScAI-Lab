@@ -7,7 +7,7 @@ Adapted from NephrologyKG/model/vision_language_model.py with one key change:
 import os
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+import torch.nn.functional as F  # noqa: F401 — used in forward
 from safetensors import safe_open
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from utils.huggingface_utils import convert_meta_to_tensor
@@ -38,6 +38,16 @@ class VisionLanguageModel(nn.Module):
         self.language_projection = None
         if create_projection_layer:
             self._build_projection(num_proj_layers)
+
+        # Regression head: predict TBR values directly from the image embedding
+        # Output dim=4 covers up to 4 future timepoints (W15/18/20 + padding)
+        self.tbr_regression_head = None
+        if add_multitask:
+            self.tbr_regression_head = nn.Sequential(
+                nn.Linear(self.vision_hidden_dim, 256),
+                nn.GELU(),
+                nn.Linear(256, 4),
+            )
 
         print(f"VisionLanguageModel: vision_dim={self.vision_hidden_dim}, "
               f"llm_dim={self.language_model.config.hidden_size}, "
@@ -94,7 +104,10 @@ class VisionLanguageModel(nn.Module):
         return combined, attention_mask, labels
 
     def forward(self, input_ids, pixel_values=None, image_features=None,
-                attention_mask=None, labels=None, **kwargs):
+                attention_mask=None, labels=None, tbr_targets=None, **kwargs):
+        # Stash raw embedding before projection for the regression head
+        raw_image_features = image_features
+
         combined, attention_mask, labels = self.get_image_and_text_embeddings(
             input_ids=input_ids, image_features=image_features,
             attention_mask=attention_mask, labels=labels,
@@ -102,8 +115,22 @@ class VisionLanguageModel(nn.Module):
         outputs = self.language_model(
             inputs_embeds=combined, attention_mask=attention_mask, labels=labels,
         )
+        loss = outputs.loss
+
+        # Add MSE regression loss when tbr_targets are provided
+        if self.tbr_regression_head is not None and tbr_targets is not None:
+            # raw_image_features: (B, 1, 768) → squeeze to (B, 768)
+            emb = raw_image_features.squeeze(1)
+            tbr_pred = self.tbr_regression_head(emb)           # (B, 4)
+            tbr_targets = tbr_targets.to(emb.device, dtype=emb.dtype)
+            # Mask out padding (-1 targets)
+            mask = (tbr_targets >= 0).float()
+            mse = F.mse_loss(tbr_pred * mask, tbr_targets * mask, reduction="sum")
+            mse = mse / mask.sum().clamp(min=1)
+            loss = loss + self.multitask_wt * mse
+
         return CausalLMOutputWithPast(
-            loss=outputs.loss,
+            loss=loss,
             logits=outputs.logits,
             past_key_values=outputs.past_key_values,
             hidden_states=outputs.hidden_states,

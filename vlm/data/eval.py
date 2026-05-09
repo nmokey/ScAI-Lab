@@ -28,6 +28,16 @@ def _pearson(xs, ys):
     return num / den if den > 0 else float("nan")
 
 
+def _r2(ys_true, ys_pred):
+    n = len(ys_true)
+    if n < 2:
+        return float("nan")
+    mean_true = sum(ys_true) / n
+    ss_tot = sum((y - mean_true) ** 2 for y in ys_true)
+    ss_res = sum((t - p) ** 2 for t, p in zip(ys_true, ys_pred))
+    return 1 - ss_res / ss_tot if ss_tot > 0 else float("nan")
+
+
 def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     with open(pred_file) as f:
         preds = json.load(f)
@@ -72,13 +82,17 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
         pred = tbr_pairs[wk]["pred"]
         mae  = sum(abs(g - p) for g, p in zip(gt, pred)) / len(gt)
         r    = _pearson(gt, pred)
-        tbr_results[f"week_{wk}"] = {"mae": round(mae, 3), "pearson_r": round(r, 3), "n": len(gt)}
+        r2   = _r2(gt, pred)
+        tbr_results[f"week_{wk}"] = {
+            "mae": round(mae, 3), "pearson_r": round(r, 3), "r2": round(r2, 3), "n": len(gt)
+        }
         all_gt.extend(gt)
         all_pred.extend(pred)
 
     overall_mae = (sum(abs(g - p) for g, p in zip(all_gt, all_pred)) / len(all_gt)
                    if all_gt else float("nan"))
     overall_r   = _pearson(all_gt, all_pred)
+    overall_r2  = _r2(all_gt, all_pred)
 
     results = {
         "total":            total,
@@ -88,6 +102,7 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
         "combined_n":       combined_q_n,
         "tbr_overall_mae":  round(overall_mae, 3) if all_gt else None,
         "tbr_overall_r":    round(overall_r, 3)   if len(all_gt) >= 2 else None,
+        "tbr_overall_r2":   round(overall_r2, 3)  if len(all_gt) >= 2 else None,
         "tbr_by_week":      tbr_results,
     }
 
@@ -96,8 +111,9 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     if all_gt:
         print(f"  TBR overall MAE   : {results['tbr_overall_mae']:.3f}  (n={len(all_gt)} predictions)")
         print(f"  TBR overall r     : {results['tbr_overall_r']}")
+        print(f"  TBR overall R²    : {results['tbr_overall_r2']}")
         for wk, m in tbr_results.items():
-            print(f"    {wk}: MAE={m['mae']:.3f}, r={m['pearson_r']}, n={m['n']}")
+            print(f"    {wk}: MAE={m['mae']:.3f}, r={m['pearson_r']}, R²={m['r2']}, n={m['n']}")
     else:
         print(f"  TBR questions     : {tbr_q_n}  (no parseable predictions)")
     print(f"  Combined questions: {combined_q_n}")
