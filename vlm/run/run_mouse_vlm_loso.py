@@ -92,6 +92,12 @@ def run_fold(sid, fold_idx, all_records, output_dir, base_params):
         # Free GPU memory between folds
         torch.cuda.empty_cache()
 
+    # Delete model weights and checkpoints — only vqa.json/val.json are needed
+    for name in os.listdir(fold_out):
+        full = os.path.join(fold_out, name)
+        if name in ("mouse_vlm_mdl", "runs") or name.startswith("checkpoint-"):
+            shutil.rmtree(full, ignore_errors=True)
+
     pred_path = os.path.join(fold_out, "vqa.json")
     if os.path.exists(pred_path):
         with open(pred_path) as f:
