@@ -13,10 +13,9 @@ Analogous to MedTrinity-25M/create_nlst_3d_traj_dataset.py but adapted for:
   - Input: any timepoint with at least one future timepoint available
   - Splits: random 80/10/10 by subject
 
-One VQA record is generated per (subject, input_timepoint) pair where at least
-one future timepoint exists. A subject with W12/W15/W18/W20 contributes 3
-records (W12→future, W15→future, W18→future). This lets the model answer
-trajectory questions from any point in the disease timeline, not just baseline.
+All VQA records use Week 12 as the fixed input timepoint. A subject with
+W12/W15/W18/W20 contributes records (W12→W15/W18/W20). Using only Week 12
+ensures a consistent baseline across all subjects.
 
 Outputs (written to --output-dir):
   embeddings/
@@ -134,6 +133,12 @@ def export_safetensors(emb_map, out_emb_dir, dry_run=False):
 # Question / answer formatting
 # ---------------------------------------------------------------------------
 
+INPUT_WEEK = "Week 12"   # fixed input timepoint for all VQA records
+
+LONG_FEATURE  = "aortic TBR"
+SHORT_FEATURE = "atherosclerosis"
+
+
 def _tbr_str(val):
     return f"{val:.2f}"
 
@@ -143,65 +148,70 @@ def _genotype(sid):
     return parts[1] if len(parts) >= 2 else "unknown"
 
 
-def _week_delta_str(input_wk, future_weeks):
-    """E.g. 'over the next 3 and 8 weeks' from Week 12 → [Week 15, Week 20]."""
-    deltas = [WEEK_NUM[wk] - WEEK_NUM[input_wk] for wk in future_weeks]
-    delta_strs = [f"{d} week{'s' if d != 1 else ''}" for d in deltas]
-    if len(delta_strs) == 1:
-        return f"over the next {delta_strs[0]}"
-    return "over the next " + ", ".join(delta_strs[:-1]) + f" and {delta_strs[-1]}"
+def _max_delta_weeks(input_wk, future_weeks):
+    """Total span from input week to the last future week."""
+    return WEEK_NUM[future_weeks[-1]] - WEEK_NUM[input_wk]
+
+
+def _tbr_trajectory_str(input_wk, future_weeks, tbr_by_week):
+    """
+    Build the trajectory clause: 'Week 0: X, Week 3: Y, Week 8: Z'
+    where week labels are relative deltas from the input week.
+    All future weeks are included; weeks missing TBR data show 'NA'.
+    """
+    parts = []
+    for wk in future_weeks:
+        delta = WEEK_NUM[wk] - WEEK_NUM[input_wk]
+        val   = tbr_by_week.get(wk)
+        parts.append(f"Week {delta}: {_tbr_str(val) if val is not None else 'NA'}")
+    return ", ".join(parts)
 
 
 def format_tbr_qa(sid, input_wk, future_weeks, tbr_map):
-    """Long topic: TBR trajectory from input_wk into future_weeks."""
+    """Long topic: TBR trajectory from input_wk over all future_weeks."""
     tbr_by_week = tbr_map.get(sid, {})
-    future_tbr_weeks = [wk for wk in future_weeks if wk in tbr_by_week]
+    # Require at least one future week with actual TBR data
+    if not any(wk in tbr_by_week for wk in future_weeks):
+        return None, None
 
-    if not future_tbr_weeks:
-        return None, None  # no TBR data for future weeks — skip
-
-    delta_str = _week_delta_str(input_wk, future_tbr_weeks)
-    question  = (f"Given the scan at week {WEEK_NUM[input_wk]}, predict the mouse's "
-                 f"aortic TBR trajectory {delta_str}?")
-
-    parts = [f"Week {WEEK_NUM[wk]}: {_tbr_str(tbr_by_week[wk])}"
-             for wk in future_tbr_weeks]
-    answer = f"The predicted aortic TBR trajectory: {', '.join(parts)}."
+    n_weeks  = _max_delta_weeks(input_wk, future_weeks)
+    traj_str = _tbr_trajectory_str(input_wk, future_weeks, tbr_by_week)
+    question = f"Predict the mouse's trajectory of {LONG_FEATURE} over the next {n_weeks} weeks?"
+    answer   = f"The predicted trajectory for {LONG_FEATURE} - {traj_str}."
     return question, answer
 
 
-def format_genotype_qa(sid, input_wk):
-    """Short topic: genotype."""
+def format_genotype_qa(sid):
+    """Short topic: eventual atherosclerosis status."""
     geno     = _genotype(sid)
-    question = (f"Given the scan at week {WEEK_NUM[input_wk]}, "
-                f"what is the genotype of this mouse (WT or KO)?")
+    question = f"What will be the eventual mouse status for {SHORT_FEATURE}?"
     if geno == "KO":
-        answer = "The mouse is KO (ApoE knockout on high-fat diet), predisposed to atherosclerosis."
+        answer = f"The eventual mouse status: the mouse will develop {SHORT_FEATURE}."
     else:
-        answer = "The mouse is WT (wild-type), on regular chow with no induced atherosclerosis."
+        answer = f"The eventual mouse status: the mouse will not develop {SHORT_FEATURE}."
     return question, answer
 
 
 def format_combined_qa(sid, input_wk, future_weeks, tbr_map):
-    """Combined: TBR trajectory + genotype."""
-    tbr_by_week      = tbr_map.get(sid, {})
-    future_tbr_weeks = [wk for wk in future_weeks if wk in tbr_by_week]
-
-    if not future_tbr_weeks:
+    """Combined: TBR trajectory + eventual atherosclerosis status."""
+    tbr_by_week = tbr_map.get(sid, {})
+    if not any(wk in tbr_by_week for wk in future_weeks):
         return None, None
 
-    geno      = _genotype(sid)
-    delta_str = _week_delta_str(input_wk, future_tbr_weeks)
-    question  = (f"Given the scan at week {WEEK_NUM[input_wk]}, predict the mouse's "
-                 f"aortic TBR trajectory {delta_str} and describe its genotype?")
+    geno     = _genotype(sid)
+    n_weeks  = _max_delta_weeks(input_wk, future_weeks)
+    traj_str = _tbr_trajectory_str(input_wk, future_weeks, tbr_by_week)
 
-    tbr_parts = [f"Week {WEEK_NUM[wk]}: {_tbr_str(tbr_by_week[wk])}"
-                 for wk in future_tbr_weeks]
-    geno_str  = ("KO (ApoE knockout), predisposed to atherosclerosis."
-                 if geno == "KO" else
-                 "WT (wild-type), no induced atherosclerosis.")
-    answer = (f"The predicted aortic TBR trajectory: {', '.join(tbr_parts)}. "
-              f"The mouse is {geno_str}")
+    question = (f"Predict the mouse's trajectory of {LONG_FEATURE} over the next {n_weeks} weeks "
+                f"and the eventual status of {SHORT_FEATURE}?")
+
+    if geno == "KO":
+        status_str = f"the mouse will develop {SHORT_FEATURE}."
+    else:
+        status_str = f"the mouse will not develop {SHORT_FEATURE}."
+
+    answer = (f"The predicted trajectory for {LONG_FEATURE} - {traj_str}. "
+              f"The eventual status: {status_str}")
     return question, answer
 
 
@@ -239,32 +249,38 @@ def build_record(pid, input_wk, future_weeks, question, answer, path_map, qid):
 
 def get_records_for_subject(sid, emb_map, tbr_map, path_map, qid):
     """
-    One record per (subject, input_week) pair where future timepoints exist.
-    For each input week, generate: genotype-only, TBR-only (if TBR available),
-    and combined (if TBR available).
+    All records use Week 12 as the fixed input timepoint.
+    Generates: genotype-only, TBR-only (if future TBR data exists),
+    and combined (if future TBR data exists).
+    Skips subjects without a Week 12 scan.
     """
+    if INPUT_WEEK not in emb_map[sid]:
+        return [], qid
+
     available_weeks = [wk for wk in WEEK_ORDER if wk in emb_map[sid]]
+    future_weeks    = [wk for wk in available_weeks if wk != INPUT_WEEK]
+
+    if not future_weeks:
+        return [], qid
+
     records = []
 
-    for i, input_wk in enumerate(available_weeks[:-1]):      # exclude last — no future
-        future_weeks = available_weeks[i + 1:]               # all subsequent weeks
+    # 1. Genotype / eventual status (always)
+    q, a = format_genotype_qa(sid)
+    records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid))
+    qid += 1
 
-        # 1. Genotype (always)
-        q, a = format_genotype_qa(sid, input_wk)
-        records.append(build_record(sid, input_wk, future_weeks, q, a, path_map, qid))
+    # 2. TBR trajectory (only if future TBR data exists)
+    q, a = format_tbr_qa(sid, INPUT_WEEK, future_weeks, tbr_map)
+    if q is not None:
+        records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid))
         qid += 1
 
-        # 2. TBR trajectory (only if future TBR data exists)
-        q, a = format_tbr_qa(sid, input_wk, future_weeks, tbr_map)
-        if q is not None:
-            records.append(build_record(sid, input_wk, future_weeks, q, a, path_map, qid))
-            qid += 1
-
-        # 3. Combined TBR + genotype
-        q, a = format_combined_qa(sid, input_wk, future_weeks, tbr_map)
-        if q is not None:
-            records.append(build_record(sid, input_wk, future_weeks, q, a, path_map, qid))
-            qid += 1
+    # 3. Combined TBR trajectory + eventual status
+    q, a = format_combined_qa(sid, INPUT_WEEK, future_weeks, tbr_map)
+    if q is not None:
+        records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid))
+        qid += 1
 
     return records, qid
 
@@ -328,15 +344,14 @@ def main():
     if args.dry_run:
         total_records = 0
         for sid in valid_sids:
-            available = [wk for wk in WEEK_ORDER if wk in emb_map[sid]]
-            tbr_wks   = sorted(tbr_map.get(sid, {}).keys())
-            n_input   = len(available) - 1   # number of (input, future) pairs
-            # estimate records: per input_wk: 1 genotype + up to 2 TBR-based
-            has_tbr_future = any(
-                any(wk in tbr_map.get(sid, {}) for wk in available[i+1:])
-                for i in range(n_input)
-            )
-            est = n_input * (3 if has_tbr_future else 1)
+            available  = [wk for wk in WEEK_ORDER if wk in emb_map[sid]]
+            tbr_wks    = sorted(tbr_map.get(sid, {}).keys())
+            if INPUT_WEEK not in available:
+                print(f"    {sid:20s}  weeks: {available}  tbr: {tbr_wks}  ~0 records (no Week 12)")
+                continue
+            future     = [wk for wk in available if wk != INPUT_WEEK]
+            has_tbr    = any(wk in tbr_map.get(sid, {}) for wk in future)
+            est        = 1 + (2 if has_tbr else 0)   # genotype + TBR + combined
             total_records += est
             print(f"    {sid:20s}  weeks: {available}  tbr: {tbr_wks}  ~{est} records")
         print(f"\n[dry-run] Estimated total records: {total_records}")
