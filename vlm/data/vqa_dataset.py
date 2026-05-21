@@ -5,6 +5,7 @@ class is needed for this project. All other dataset classes removed.
 """
 
 import json
+import os
 import numpy as np
 import torch
 from torch.utils.data import Dataset
@@ -23,30 +24,38 @@ class MouseTrajDataset(Dataset):
       - answer_vqa_numeric  — dict with 'genotype' key (0=WT, 1=KO)
 
     The model receives:
-      - image_features  : (1, 768) float tensor from the input scan embedding
+      - image_features  : (img_tokens, 768) float tensor
+                          ts0 (observed Week 12) + up to 3 longitudinal-encoder
+                          predicted future embeddings (ts1/ts2/ts3), zero-padded
+                          when a predicted embedding is unavailable.
       - input_ids       : tokenized prompt
       - attention_mask
       - labels          : causal LM targets (question tokens masked with -100)
+
+    Pass predicted_emb_dir=<path> to enable multi-token longitudinal input.
+    When None, falls back to ts0-only (single token, original behaviour).
     """
 
     def __init__(self, tokenizer, prompt_type, beg_prompt, mid_prompt, end_prompt,
                  data_path, replace_prompt=None, img_dir="", img_tokens=1,
                  pad_token_str="<|finetune_right_pad_id|>", img_token_str="<image>",
                  seq_length=150, mode="train", height=224, width=224, num_channels=3,
-                 filter_key=None, filter_cond=None, calculate_mae=False, **kwargs):
-        self.prompt_type    = prompt_type
-        self.beg_prompt     = beg_prompt
-        self.mid_prompt     = mid_prompt
-        self.end_prompt     = end_prompt
-        self.replace_prompt = replace_prompt
-        self.tokenizer      = tokenizer
-        self.pad_token_id   = self.tokenizer.convert_tokens_to_ids(pad_token_str)
-        self.ignore_token_id = -100
-        self.img_token_str  = img_token_str
-        self.img_tokens     = img_tokens
-        self.seq_length     = seq_length
-        self.mode           = mode
-        self.data           = self._load(data_path)
+                 filter_key=None, filter_cond=None, calculate_mae=False,
+                 predicted_emb_dir=None, **kwargs):
+        self.prompt_type      = prompt_type
+        self.beg_prompt       = beg_prompt
+        self.mid_prompt       = mid_prompt
+        self.end_prompt       = end_prompt
+        self.replace_prompt   = replace_prompt
+        self.tokenizer        = tokenizer
+        self.pad_token_id     = self.tokenizer.convert_tokens_to_ids(pad_token_str)
+        self.ignore_token_id  = -100
+        self.img_token_str    = img_token_str
+        self.img_tokens       = img_tokens
+        self.seq_length       = seq_length
+        self.mode             = mode
+        self.predicted_emb_dir = predicted_emb_dir
+        self.data             = self._load(data_path)
 
     def _load(self, data_path):
         with open(data_path) as f:
@@ -100,8 +109,40 @@ class MouseTrajDataset(Dataset):
         return item
 
     def _load_embedding(self, record):
-        """Load the input scan embedding from .safetensors, shape → (1, 768)."""
-        return load_file(record["embedding_path_ts0"])["embeddings"]
+        """
+        Load scan embeddings as (img_tokens, 768).
+
+        Token 0 is always the observed Week 12 RAD-DINO embedding (ts0).
+        Tokens 1-3 are LOSO-predicted future embeddings from the longitudinal
+        MLP (ts1/ts2/ts3), loaded from predicted_emb_dir as .npy files.
+        Missing predictions are filled with zeros.
+
+        When predicted_emb_dir is None, returns (1, 768) — original behaviour.
+        """
+        ts0 = load_file(record["embedding_path_ts0"])["embeddings"]  # (1, 768)
+
+        if self.predicted_emb_dir is None:
+            return ts0
+
+        emb_dim  = ts0.shape[-1]
+        tokens   = [ts0.squeeze(0)]  # list of (768,) tensors
+        pid      = record["pid"]
+        week_tag = {"Week 15": "ts1", "Week 18": "ts2", "Week 20": "ts3"}
+
+        for week, tag in week_tag.items():
+            path = os.path.join(self.predicted_emb_dir, f"{pid}_{tag}.npy")
+            if os.path.exists(path):
+                arr = np.load(path).astype(np.float32)
+                tokens.append(torch.from_numpy(arr))
+            else:
+                tokens.append(torch.zeros(emb_dim))
+
+        # Pad or trim to exactly img_tokens
+        while len(tokens) < self.img_tokens:
+            tokens.append(torch.zeros(emb_dim))
+        tokens = tokens[: self.img_tokens]
+
+        return torch.stack(tokens)  # (img_tokens, 768)
 
     def _tbr_targets(self, record):
         """Pack future TBR values into a fixed-length (4,) tensor, padded with -1."""

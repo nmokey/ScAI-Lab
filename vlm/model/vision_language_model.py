@@ -119,8 +119,8 @@ class VisionLanguageModel(nn.Module):
 
         # Add MSE regression loss when tbr_targets are provided
         if self.tbr_regression_head is not None and tbr_targets is not None:
-            # raw_image_features: (B, 1, 768) → squeeze to (B, 768)
-            emb = raw_image_features.squeeze(1)
+            # raw_image_features: (B, img_tokens, 768) → mean-pool to (B, 768)
+            emb = raw_image_features.mean(dim=1)
             tbr_pred = self.tbr_regression_head(emb)           # (B, 4)
             tbr_targets = tbr_targets.to(emb.device, dtype=emb.dtype)
             # Mask out padding (-1 targets)

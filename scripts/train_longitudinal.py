@@ -463,6 +463,28 @@ def plot_umap(embs, weeks, subject_ids, Y_pred, meta, plots_dir):
 # Output
 # ---------------------------------------------------------------------------
 
+def save_predicted_embeddings(Y_pred, meta, output_dir):
+    """
+    Save LOSO-predicted T_{k+1} embeddings as .npy files, one per (subject, week_to).
+
+    Files are written to output_dir/predicted_embeddings/<sid>_<week_tag>.npy.
+    These are used by the VLM dataset to provide the longitudinal encoder's
+    predictions as additional image tokens alongside the observed ts0 embedding.
+    """
+    emb_dir = os.path.join(output_dir, "predicted_embeddings")
+    os.makedirs(emb_dir, exist_ok=True)
+
+    week_tag = {"Week 12": "ts0", "Week 15": "ts1", "Week 18": "ts2", "Week 20": "ts3"}
+    saved = 0
+    for i, m in enumerate(meta):
+        tag  = week_tag.get(m["week_to"], m["week_to"].replace(" ", "_").lower())
+        path = os.path.join(emb_dir, f"{m['sid']}_{tag}.npy")
+        np.save(path, Y_pred[i])
+        saved += 1
+
+    print(f"[+] Saved {saved} predicted embeddings → {emb_dir}/")
+
+
 def save_metrics(metrics, output_dir):
     path = os.path.join(output_dir, "longitudinal_metrics.csv")
     with open(path, "w", newline="") as f:
@@ -582,6 +604,7 @@ def main():
     plot_cosine_improvement(Y, Y_pred, X, meta, plots_dir)
     plot_umap(embs, weeks, subject_ids, list(Y_pred), meta, plots_dir)
 
+    save_predicted_embeddings(Y_pred, meta, args.output_dir)
     save_metrics(metrics, args.output_dir)
     save_report(metrics, args.output_dir, n_pairs, n_subjects, model_desc, cond_desc)
 

@@ -102,6 +102,7 @@ class VizEmbTrainer(BaseLLM):
             pad_token_str=self.pad_token,
             img_token_str=self.img_token,
             seq_length=self.params["data"]["seq_length"],
+            predicted_emb_dir=self.params["data"].get("predicted_emb_dir"),
         )
         train_data = factory.create_dataset(
             data_path=self.params["data"]["data_path"], mode="train", **shared_kw
@@ -125,6 +126,7 @@ class VizEmbTrainer(BaseLLM):
             img_tokens=self.params["data"]["img_tokens"],
             img_token_str=self.img_token if self.params["inf"]["include_img"] else "",
             seq_length=self.params["data"]["seq_length"],
+            predicted_emb_dir=self.params["data"].get("predicted_emb_dir"),
             mode="test",
         )
 

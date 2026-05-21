@@ -2,7 +2,7 @@
 # Adapted from NephrologyKG/yaml/viz_emb_params_nlst.yml
 
 exp:
-  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_no_multitask
+  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_longitudinal
 
 data:
   train_dataset: mouse_traj_vqa
@@ -18,7 +18,8 @@ data:
   height: 224
   width: 224
   num_channels: 3
-  img_tokens: 1
+  img_tokens: 4
+  predicted_emb_dir: /data1/Processed_NIfTI_Test/embeddings/longitudinal/predicted_embeddings
   seq_length: 150
   kg_embedder_params: null
   prompt_type: "standard"
@@ -71,7 +72,7 @@ train:
   resume_from_checkpoint: False
 
 inf:
-  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_no_multitask/mouse_vlm_mdl
+  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_longitudinal/mouse_vlm_mdl
   llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   load_projection_matrix: False
   use_quantization: False
