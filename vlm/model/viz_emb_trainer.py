@@ -156,8 +156,8 @@ class VizEmbTrainer(BaseLLM):
                     max_new_tokens=self.params["inf"]["max_new_tokens"],
                     **decoding_kwargs,
                 )
-            gen_ids     = out["sequences"]
-            answer_raw  = self.tokenizer.batch_decode(gen_ids, skip_special_tokens=False)[0]
+            gen_ids      = out["sequences"]
+            answer_raw   = self.tokenizer.batch_decode(gen_ids, skip_special_tokens=False)[0]
             answer_clean = self.tokenizer.batch_decode(gen_ids, skip_special_tokens=True)[0]
             answer_raw_wo_q = answer_raw.split(question)[-1]
 
@@ -173,6 +173,12 @@ class VizEmbTrainer(BaseLLM):
                 "model_raw_answer_wo_question": answer_raw_wo_q,
                 "content_type":             sample.get("content_type"),
             }
+
+            # Save genotype head logit and ground-truth label when multitask is on
+            if "genotype_logits" in out:
+                result["genotype_logit"] = float(out["genotype_logits"][0].cpu())
+                result["genotype_label"] = sample.get("answer_vqa_numeric", {}).get("genotype")
+
             content.append(result)
             print(f"[{i+1}/{len(inf_data)}] {answer_clean[:80]}")
 

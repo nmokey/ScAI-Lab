@@ -39,15 +39,21 @@ class VisionLanguageModel(nn.Module):
         if create_projection_layer:
             self._build_projection(num_proj_layers)
 
-        # Regression head: predict TBR values directly from the image embedding
-        # Output dim=4 covers up to 4 future timepoints (W15/18/20 + padding)
-        self.tbr_regression_head = None
+        # Multitask heads: trained jointly with the language model.
+        # Both heads operate on the LLM last-hidden-state at the EOS token position,
+        # following the pattern in NephrologyKG/nlst_trainer.
+        self.tbr_regression_head  = None
+        self.genotype_head        = None
         if add_multitask:
+            llm_dim = self.language_model.config.hidden_size
+            # Regression: predict up to 4 future TBR values (W15/18/20 + padding slot)
             self.tbr_regression_head = nn.Sequential(
-                nn.Linear(self.vision_hidden_dim, 256),
+                nn.Linear(llm_dim, 256),
                 nn.GELU(),
                 nn.Linear(256, 4),
             )
+            # Classification: predict genotype (0=WT, 1=KO) — binary BCE
+            self.genotype_head = nn.Linear(llm_dim, 1)
 
         print(f"VisionLanguageModel: vision_dim={self.vision_hidden_dim}, "
               f"llm_dim={self.language_model.config.hidden_size}, "
@@ -65,6 +71,21 @@ class VisionLanguageModel(nn.Module):
             )
         else:
             raise ValueError(f"num_proj_layers must be 1 or 2, got {num_proj_layers}")
+
+    def _eos_hidden_state(self, input_ids, hidden_states):
+        """
+        Extract the LLM last-hidden-state at each sequence's first EOS token.
+
+        The combined sequence seen by the LLM has img_tokens extra positions
+        inserted where the single <image> token was, so the EOS position in the
+        combined sequence is offset by (img_tokens - 1) relative to input_ids.
+
+        Returns feat: (B, llm_dim)
+        """
+        eos_mask      = (input_ids == self.tokenizer.eos_token_id)   # (B, L)
+        first_eos_idx = (eos_mask.float().argmax(dim=1) + (self.img_tokens - 1)).long()
+        batch_idx     = torch.arange(input_ids.size(0), device=input_ids.device)
+        return hidden_states[-1][batch_idx, first_eos_idx]           # (B, llm_dim)
 
     def get_image_and_text_embeddings(self, input_ids, pixel_values=None,
                                       image_features=None, attention_mask=None, labels=None):
@@ -104,30 +125,36 @@ class VisionLanguageModel(nn.Module):
         return combined, attention_mask, labels
 
     def forward(self, input_ids, pixel_values=None, image_features=None,
-                attention_mask=None, labels=None, tbr_targets=None, **kwargs):
-        # Stash raw embedding before projection for the regression head
-        raw_image_features = image_features
-
+                attention_mask=None, labels=None, tbr_targets=None,
+                genotype_label=None, **kwargs):
         combined, attention_mask, labels = self.get_image_and_text_embeddings(
             input_ids=input_ids, image_features=image_features,
             attention_mask=attention_mask, labels=labels,
         )
         outputs = self.language_model(
             inputs_embeds=combined, attention_mask=attention_mask, labels=labels,
+            output_hidden_states=self.add_multitask,
         )
         loss = outputs.loss
 
-        # Add MSE regression loss when tbr_targets are provided
-        if self.tbr_regression_head is not None and tbr_targets is not None:
-            # raw_image_features: (B, img_tokens, 768) → mean-pool to (B, 768)
-            emb = raw_image_features.mean(dim=1)
-            tbr_pred = self.tbr_regression_head(emb)           # (B, 4)
-            tbr_targets = tbr_targets.to(emb.device, dtype=emb.dtype)
-            # Mask out padding (-1 targets)
-            mask = (tbr_targets >= 0).float()
-            mse = F.mse_loss(tbr_pred * mask, tbr_targets * mask, reduction="sum")
-            mse = mse / mask.sum().clamp(min=1)
-            loss = loss + self.multitask_wt * mse
+        if self.add_multitask:
+            feat = self._eos_hidden_state(input_ids, outputs.hidden_states)  # (B, llm_dim)
+
+            # TBR regression (MSE, masked)
+            if self.tbr_regression_head is not None and tbr_targets is not None:
+                tbr_pred    = self.tbr_regression_head(feat)               # (B, 4)
+                tbr_targets = tbr_targets.to(feat.device, dtype=feat.dtype)
+                mask        = (tbr_targets >= 0).float()
+                mse         = F.mse_loss(tbr_pred * mask, tbr_targets * mask, reduction="sum")
+                mse         = mse / mask.sum().clamp(min=1)
+                loss        = loss + self.multitask_wt * mse
+
+            # Genotype classification (BCE)
+            if self.genotype_head is not None and genotype_label is not None:
+                geno_logits = self.genotype_head(feat).squeeze(-1)          # (B,)
+                geno_label  = genotype_label.to(feat.device, dtype=feat.dtype)
+                bce         = F.binary_cross_entropy_with_logits(geno_logits, geno_label)
+                loss        = loss + self.multitask_wt * bce
 
         return CausalLMOutputWithPast(
             loss=loss,
@@ -148,7 +175,24 @@ class VisionLanguageModel(nn.Module):
                 inputs_embeds=combined, attention_mask=attention_mask,
                 max_new_tokens=max_new_tokens, use_cache=False, **decoding_kwargs,
             )
-        return {"sequences": gen_out}
+
+            if not self.add_multitask:
+                return {"sequences": gen_out}
+
+            # Second forward pass to obtain hidden states for multitask head logits
+            lm_out = self.language_model(
+                inputs_embeds=combined,
+                attention_mask=attention_mask,
+                output_hidden_states=True,
+                use_cache=False,
+            )
+            feat = self._eos_hidden_state(input_ids, lm_out.hidden_states)  # (B, llm_dim)
+
+            return {
+                "sequences":       gen_out,
+                "genotype_logits": self.genotype_head(feat).squeeze(-1),    # (B,)
+                "tbr_logits":      self.tbr_regression_head(feat),          # (B, 4)
+            }
 
     def save_pretrained(self, save_directory):
         os.makedirs(save_directory, exist_ok=True)

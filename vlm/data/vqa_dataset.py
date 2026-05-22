@@ -95,11 +95,14 @@ class MouseTrajDataset(Dataset):
                 mask   = mask[:-trunc]
                 labels = labels[:-trunc]
 
-            item["image_features"] = image_features
-            item["input_ids"]      = tok_qa
-            item["attention_mask"] = mask
-            item["labels"]         = labels
-            item["tbr_targets"]    = self._tbr_targets(record)
+            item["image_features"]  = image_features
+            item["input_ids"]       = tok_qa
+            item["attention_mask"]  = mask
+            item["labels"]          = labels
+            item["tbr_targets"]     = self._tbr_targets(record)
+            item["genotype_label"]  = torch.tensor(
+                float(record.get("answer_vqa_numeric", {}).get("genotype", -1))
+            )
 
         elif self.mode == "test":
             item = dict(record)
