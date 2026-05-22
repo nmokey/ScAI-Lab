@@ -1,4 +1,4 @@
-# Mouse atherosclerosis trajectory VLM — text generation only (no multitask head)
+# Mouse atherosclerosis trajectory VLM — text generation + multitask heads (TBR regression, genotype classification)
 # Adapted from NephrologyKG/yaml/viz_emb_params_nlst.yml
 
 exp:

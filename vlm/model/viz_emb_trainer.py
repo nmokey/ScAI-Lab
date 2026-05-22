@@ -174,10 +174,13 @@ class VizEmbTrainer(BaseLLM):
                 "content_type":             sample.get("content_type"),
             }
 
-            # Save genotype head logit and ground-truth label when multitask is on
+            # Save multitask head outputs when present
             if "genotype_logits" in out:
                 result["genotype_logit"] = float(out["genotype_logits"][0].cpu())
                 result["genotype_label"] = sample.get("answer_vqa_numeric", {}).get("genotype")
+            if "tbr_logits" in out:
+                result["tbr_regression"] = out["tbr_logits"][0].cpu().tolist()
+                result["tbr_targets"]    = sample.get("answer_vqa_numeric", {}).get("tbr")
 
             content.append(result)
             print(f"[{i+1}/{len(inf_data)}] {answer_clean[:80]}")

@@ -55,6 +55,7 @@ class MouseTrajDataset(Dataset):
         self.seq_length       = seq_length
         self.mode             = mode
         self.predicted_emb_dir = predicted_emb_dir
+        self.data_path        = data_path
         self.data             = self._load(data_path)
 
     def _load(self, data_path):

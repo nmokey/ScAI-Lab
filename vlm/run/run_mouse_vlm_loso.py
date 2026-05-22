@@ -1,8 +1,8 @@
 """
 LOSO (Leave-One-Subject-Out) cross-validation for the mouse trajectory VLM.
 
-For each of the 36 NaF subjects:
-  - Train on the remaining 35 subjects
+For each of the 32 NaF subjects:
+  - Train on the remaining 31 subjects
   - Evaluate on the held-out subject
   - Collect predictions into a single aggregated output file
 
