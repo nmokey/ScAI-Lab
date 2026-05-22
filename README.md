@@ -8,7 +8,10 @@ A **Medical Vision-Language Model (VLM)** pipeline for longitudinal atherosclero
 
 Atherosclerosis (arterial plaque build-up) is the leading cause of cardiovascular disease. Tracking its progression non-invasively with PET/CT imaging is clinically valuable, but existing vision encoders are trained on human 2D data and have never been evaluated on longitudinal 3D mouse preclinical studies.
 
-**Research question:** Can a generic, human-centric encoder understand mouse disease, or is a custom model required? And can a VLM answer clinical questions (*"What will the TBR be at Week 20?"*) directly from scan embeddings?
+**Research questions:**
+1. Can a generic, human-centric encoder understand mouse disease progression?
+2. Can a VLM predict future aortic TBR trajectory and genotype from a single baseline scan embedding?
+3. Does feeding longitudinal encoder predictions as additional image tokens improve VLM performance?
 
 ---
 
@@ -35,12 +38,14 @@ Full scan inventory, per-scan mouse mappings, data heuristics, and longitudinal 
 
 ```
 Raw DICOM  →  NIfTI Conversion  →  Encoder Embeddings  →  Evaluation / VLM Training
+                                                      ↘  Longitudinal Encoder
 ```
 
 1. **DICOM → NIfTI** (`scripts/build_nifti_dataset.py`): file-size heuristic modality classification, per-modality re-scan consolidation, quadrant-based per-mouse segmentation and cropping to RAS-oriented volumes.
 2. **Encoder Embeddings**: four pretrained encoders evaluated zero-shot, each producing a standardised `.npz` (N × D embeddings + metadata).
 3. **Evaluation** (`scripts/evaluate_embeddings.py`): T1 unsupervised, T2 linear-probe (LOSO CV), T3 longitudinal/retrieval tasks.
-4. **VLM Training** (`vlm/`): frozen RAD-DINO features + linear projection + LoRA-finetuned LLaMA-3.1-8B for trajectory TBR prediction.
+4. **Longitudinal Encoder** (`scripts/train_longitudinal.py`): MLP trained under LOSO CV to predict T_{k+1} embeddings from T_k; predicted future embeddings saved for VLM input.
+5. **VLM Training** (`vlm/`): frozen RAD-DINO features (up to 4 tokens: observed Week 12 + longitudinal-predicted Week 15/18/20) + linear projection + LoRA-finetuned LLaMA-3.1-8B. Two multitask heads trained jointly on LLM hidden state: TBR regression (MSE) and genotype classification (BCE).
 
 ### Encoders Evaluated
 
@@ -55,6 +60,8 @@ Raw DICOM  →  NIfTI Conversion  →  Encoder Embeddings  →  Evaluation / VLM
 
 ## Results
 
+### Encoder Evaluation
+
 Zero-shot evaluation on 229 CT-Hi volumes, 78 mice. Full table and per-encoder analysis: [docs/results.md](docs/results.md).
 
 | Metric | COLIPRI | Merlin | RAD-DINO | M3D |
@@ -68,6 +75,28 @@ Zero-shot evaluation on 229 CT-Hi volumes, 78 mice. Full table and per-encoder a
 - **RAD-DINO** dominates all supervised tasks — perfect early/late separation (T2b AUC = 1.000) and best genotype discrimination (T2c AUC = 0.869). Selected as the frozen backbone for VLM training.
 - **M3D** leads on unsupervised geometry (T1b ARI = 0.114), but weak genotype signal (T2c ≈ chance).
 - **Subject retrieval is universally poor** (T3b Recall@1 < 5% across all encoders) — a custom encoder with longitudinal contrastive loss is needed to close this gap.
+
+### Longitudinal Encoder (LOSO CV, RAD-DINO embeddings, 32 NaF subjects)
+
+MLP (768+7 conditioned input → 768 output) trained to predict T_{k+1} from T_k across 129 consecutive pairs.
+
+| Metric | Value | Notes |
+|--------|-------|-------|
+| T4a cosine sim | 0.983 | High directional accuracy; expected given embedding cluster tightness |
+| T4b Recall@1 | 0.031 | Near-chance subject retrieval — predicts week cluster, not individual identity |
+| T4b MRR | 0.177 | Correct subject ranks ~6th out of 66 on average |
+| T4c improvement rate | 0.682 | Predictor beats returning T_k unchanged 68% of the time |
+
+### VLM (baseline: single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
+
+| Metric | Value |
+|--------|-------|
+| Genotype accuracy (text-match) | 0.69 |
+| TBR overall MAE | 4.634 |
+| TBR overall Pearson r | 0.086 |
+| TBR overall R² | −0.176 |
+
+TBR r ≈ 0 and R² < 0 indicate the model predicts near-population-average TBR rather than subject-specific trajectories — consistent with the encoder's known weakness on subject identity (T3b). The longitudinal 4-token run (in progress) will test whether adding predicted future embeddings improves these numbers.
 
 ---
 
@@ -101,13 +130,21 @@ python scripts/build_nifti_dataset.py
 # 2. Extract embeddings
 python scripts/get_raddino_embeddings.py    # or colipri / merlin / m3d
 
-# 3. Evaluate
+# 3. Evaluate encoders
 python scripts/evaluate_embeddings.py \
     --embeddings {output_dir}/embeddings/raddino/raddino_embeddings.npz \
     --output-dir {output_dir}/embeddings/raddino/
 
-# 4. Train VLM (NaF cohort, TBR trajectory prediction)
-cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm.py
+# 4. Train longitudinal encoder and export predicted embeddings
+python scripts/train_longitudinal.py
+# → writes longitudinal/predicted_embeddings/NaF_*_ts{1,2,3}.npy
+
+# 5. Build VQA dataset (run once; outputs already committed to data dir)
+cd vlm && python create_mouse_traj_dataset.py
+
+# 6. Train VLM with LOSO CV (longitudinal 4-token input + multitask heads)
+cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm_loso.py
+# → results in vlm/runs/mouse_vlm_longitudinal/loso_results.json
 ```
 
 ---
@@ -116,10 +153,17 @@ cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm.py
 
 ```
 scripts/                  DICOM conversion, embedding extraction, evaluation
-vlm/                      VLM training pipeline (dataset builder, model, trainer)
+  train_longitudinal.py   Longitudinal MLP encoder: T_k → T_{k+1} prediction (LOSO CV)
+vlm/
+  create_mouse_traj_dataset.py  Builds VQA JSON + per-scan .safetensors embeddings
+  data/                   Dataset and evaluation code
+  model/                  VisionLanguageModel, multitask heads, trainer
+  run/                    Single-run and LOSO CV entry points
+  yaml/                   Training hyperparameter configs
 docs/
   DATA_MANIFEST.md        Full scan inventory, mouse mappings, data heuristics
   results.md              Zero-shot encoder evaluation — full tables and analysis
+  design_decisions.md     Non-obvious design choices and known limitations
   QA_REPORT.md            Dataset QA verification report
 manifest.csv              Session-level DICOM inventory (147 rows)
 mouse_manifest.csv        Per-mouse NIfTI index (generated by build_nifti_dataset.py)

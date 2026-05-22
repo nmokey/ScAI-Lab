@@ -102,11 +102,46 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 ---
 
+## VLM Results (baseline: single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
+
+| Metric | Value | Notes |
+|---|---|---|
+| Genotype accuracy | 0.69 | Text-match ("KO"/"WT" in generated output); classification head run pending |
+| TBR overall MAE | 4.634 | Moderate absolute error across all future weeks |
+| TBR overall Pearson r | 0.086 | Near-zero — predictions uncorrelated with ground truth across subjects |
+| TBR overall R² | −0.176 | Negative — worse than predicting population mean; no subject-specific signal |
+| Week 15 MAE / r | 6.909 / 0.254 | Worst MAE; slight positive correlation |
+| Week 18 MAE / r | 6.147 / −0.223 | Anti-correlated |
+| Week 20 MAE / r | 2.433 / −0.039 | Best MAE (high sample count, lower variance); near-zero correlation |
+
+The near-zero r and negative R² are consistent with the encoder evaluation: RAD-DINO's
+mean-pooled embedding encodes *when* (timepoint) but not *who* (subject identity), leaving
+the VLM unable to differentiate individual TBR trajectories. The longitudinal 4-token run
+(in progress) tests whether predicted future embeddings and the genotype classification
+head improve these numbers.
+
+## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 66 subjects, 129 pairs)
+
+MLP (768+7 conditioned → 512 → 768) predicting T_{k+1} from T_k with cosine similarity loss.
+
+| Metric | Value | Notes |
+|---|---|---|
+| T4a cosine sim | 0.983 | High directional accuracy; reflects tight embedding cluster geometry |
+| T4b Recall@1 | 0.031 | Near-chance subject retrieval; predicts week cluster, not individual identity |
+| T4b MRR | 0.177 | Correct subject ranks ~6th out of 66 on average |
+| T4c improvement rate | 0.682 | Beats returning T_k unchanged 68% of the time |
+
+---
+
 ## Future Directions
 
 ### Near-term (run next)
 - [x] **Run notebook on all 3 encoders** — all T2a OvR AUC, T2c, T2d, T2e, conditioned analysis complete
 - [x] **M3D encoder** (`GoodBaiBai88/M3D-CLIP`) — implemented `get_m3d_embeddings.py`, extracted 229 embeddings, full evaluation complete
+- [x] **Longitudinal MLP encoder** — LOSO CV complete, predicted embeddings exported for VLM input
+- [x] **VLM baseline** — LOSO CV complete (single ts0 token, text-match genotype)
+- [x] **Genotype classification head** — implemented on LLM hidden state with BCE loss; replaces text-match
+- [ ] **VLM with longitudinal 4-token input + classification head** — re-run LOSO with `img_tokens=4`; compare genotype acc (head) and TBR R² against baseline
 
 ### Medium-term
 - [ ] **Custom encoder — MAE baseline**: 3D ViT trained from scratch on this dataset with masked autoencoder objective; cheap to train and directly comparable to Merlin

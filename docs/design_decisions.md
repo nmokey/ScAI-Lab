@@ -46,7 +46,7 @@ This is a known limitation to state in the paper.
 TBR (Target-to-Background Ratio for 18F-NaF) measures vascular calcification and is only
 meaningful for the NaF tracer. FDG mice (inflammation cohort) are excluded from the VLM
 dataset entirely — they have no TBR ground truth. The VLM therefore trains and evaluates
-on 36 NaF subjects only (20 KO + 16 WT with ≥2 timepoints).
+on 32 NaF subjects (those with a Week 12 scan and at least one future timepoint).
 
 ---
 
@@ -70,71 +70,142 @@ medical datasets.
 
 ## VLM Architecture
 
+### Input: multi-token longitudinal embeddings
+
+The VLM receives up to 4 image tokens per record:
+- **ts0**: observed RAD-DINO embedding for Week 12 (always present)
+- **ts1/ts2/ts3**: LOSO-predicted future embeddings (Week 15/18/20) from the longitudinal
+  MLP encoder, loaded from `longitudinal/predicted_embeddings/<pid>_ts{1,2,3}.npy`
+
+Missing predicted embeddings are zero-padded. Using predicted embeddings (not actual future
+scan embeddings) avoids data leakage — the model cannot see future scans it is supposed
+to predict TBR for. The longitudinal MLP predictions are generated under LOSO CV (the
+held-out subject's predictions come from a fold that never trained on that subject).
+
+This replaces the original single-token design (`img_tokens=1`, ts0 only).
+
 ### Projection layer
 
-A single linear layer maps the 768-d RAD-DINO embedding into the LLM's 4096-d token
-embedding space. This projected vector replaces the `<image>` token in the prompt.
+A single linear layer maps each 768-d token into the LLM's 4096-d embedding space (one
+projection applied independently to each token). The `img_tokens` projected vectors
+collectively replace the single `<image>` placeholder in the prompt sequence.
 `num_proj_layers=2` (linear→GELU→linear) is also supported but not used by default.
 
 ### Language model
 
-LLaMA-3.1-8B-Instruct, LoRA fine-tuned (r=16, α=32) on all projection layers
-(q/k/v/o/gate/up/down_proj). The base LLM weights are frozen except for the LoRA adapters.
+LLaMA-3.1-8B-Instruct, LoRA fine-tuned (r=16, α=32) on all attention and MLP projection
+layers (q/k/v/o/gate/up/down_proj). The base LLM weights are frozen except for the LoRA
+adapters.
 
-### Regression head (multitask)
+### Multitask heads
 
-A parallel MLP (768→256→4) sits directly on the raw RAD-DINO embedding and predicts
-up to 4 future TBR values as real numbers. MSE loss is computed against ground-truth TBR
-values and added to the LM cross-entropy loss:
+Two auxiliary heads are trained jointly with the language model. Both operate on the
+**LLM last hidden state at the EOS token position** — following the pattern in the
+advisor's NephrologyKG/nlst_trainer branch. This gives the heads access to the full
+image+question context after LLM processing.
 
+The EOS position in the combined sequence is offset by `(img_tokens - 1)` relative to the
+input_ids to account for image tokens expanding the single `<image>` placeholder.
+
+**TBR regression head** — `nn.Linear(llm_dim, 256) → GELU → nn.Linear(256, 4)`:
+Predicts up to 4 future TBR values as real numbers. MSE loss against ground-truth TBR,
+masked for padding slots (−1 sentinel).
+
+**Genotype classification head** — `nn.Linear(llm_dim, 1)`:
+Binary classification (KO=1, WT=0) with BCE loss. At inference, `sigmoid(logit) > 0.5`
+is the prediction. This is the **primary genotype metric** — it replaces the previous
+text-match approach ("KO"/"WT" string search on the generated output), which had no
+gradient signal and was susceptible to generation formatting.
+
+Combined training loss:
 ```
-total_loss = lm_cross_entropy + multitask_wt × mse_regression
+total_loss = lm_cross_entropy + multitask_wt × (mse_regression + bce_genotype)
 ```
 
-The regression head operates independently of the LLM — it never interacts with the
-text generation path. Its purpose is to provide direct numeric supervision that
-cross-entropy over digit tokens cannot capture (predicting "25.00" vs "22.71" gets the
-same large CE penalty regardless of numeric proximity).
+### Why heads on LLM hidden state, not image embedding
 
-The LLM's TBR predictions (from text generation) and the regression head's predictions
-are evaluated separately. Both are reported in the paper as complementary outputs.
+An earlier implementation placed the TBR regression head directly on the raw RAD-DINO
+embedding. This was moved to the LLM hidden state because:
+1. The LLM hidden state encodes both image and question context — the head can see the
+   question type (TBR vs. genotype), giving it richer, task-conditioned features.
+2. It matches the advisor's established pattern from the NephrologyKG NLST experiments.
 
-### Loss for TBR
+### Loss for TBR text generation
 
-The LM cross-entropy loss treats TBR as a text generation problem — the model generates
-digit tokens one at a time. This is numerically blind (no notion of "close" vs "far").
-The regression head addresses this with MSE directly on the embedding, but does not
-improve what the LLM generates. A more integrated approach (embedding-space supervision
-or constrained decoding) is left as future work.
+The LM cross-entropy loss treats TBR as a text generation problem — digit tokens generated
+one at a time. This is numerically blind: predicting "25.00" vs "22.71" incurs the same
+large CE penalty regardless of numeric proximity. The regression head addresses this with
+direct MSE supervision, but operates on the LLM hidden state and does not constrain what
+tokens the LLM generates. A more integrated approach (constrained decoding or
+embedding-space numeric supervision) is left as future work.
 
 ---
 
 ## Dataset Construction
 
+### Input timepoint
+
+All VQA records use **Week 12 as the fixed input scan**. Earlier versions generated
+records from any timepoint with at least one future scan (yielding 213 records from
+36 subjects). The redesign fixes the input to Week 12 for two reasons:
+1. Consistent baseline — every subject is seen at the same disease stage.
+2. Avoids leaking disease state — a mouse seen at Week 18 has already progressed, which
+   would contaminate the question framing.
+
 ### Record generation
 
-One VQA record is generated per (subject, input_timepoint) pair where at least one future
-timepoint exists. Three question types per pair:
-1. Genotype-only (always generated)
-2. TBR-only (only if future TBR data exists for that subject)
-3. Combined TBR + genotype (same condition as above)
+Three question types per subject (32 NaF subjects with a Week 12 scan + ≥1 future scan):
+1. **Genotype-only**: "What will be the eventual mouse status for atherosclerosis?"
+   → "The mouse will develop atherosclerosis." (KO) or not (WT)
+2. **TBR trajectory**: "Predict the mouse's trajectory of aortic TBR over the next N weeks?"
+   → relative week deltas from Week 12 (Week 3, Week 6, Week 8) with TBR values
+3. **Combined**: TBR trajectory + genotype in one question/answer
 
-A subject with W12/W15/W18/W20 contributes 3 input weeks × 3 question types = up to 9
-records. Total: 213 records across 36 subjects.
+Total: **96 records** (32 subjects × 3 question types).
+Split: 84 train / 6 val / 6 test, stratified by genotype at the **subject level**.
+
+### TBR answer format: relative weeks
+
+TBR answers use relative week offsets from the input scan (Week 3, Week 6, Week 8) rather
+than absolute calendar weeks (15, 18, 20). This forces the model to learn temporal
+offsets rather than memorising absolute week numbers, which would not generalise to
+different input timepoints.
 
 ### Split strategy
 
-Subjects are split 80/10/10 at the **subject level** (not record level) with stratification
-by genotype — WT and KO subjects are split independently to ensure both genotypes appear
-in every split. Using record-level splits would leak future timepoints of a held-out
-subject into training.
+Subjects are split at the **subject level** (not record level) with stratification by
+genotype — WT and KO subjects are split independently. Record-level splits would leak
+future timepoints of a held-out subject into training.
 
 ### LOSO CV
 
-The primary evaluation is Leave-One-Subject-Out cross-validation: train on 35 subjects,
-evaluate on 1, rotate across all 36. This gives 213 held-out predictions (every record
+The primary evaluation is Leave-One-Subject-Out cross-validation: train on 31 subjects,
+evaluate on 1, rotate across all 32. This gives 96 held-out predictions (every record
 evaluated exactly once) and is the correct protocol given the small dataset size.
-The 80/10/10 split is used only for quick single-run development checks.
+The 84/6/6 split is used only for quick single-run development checks.
+
+---
+
+## Longitudinal Encoder
+
+### Architecture and training
+
+An MLP (input: 768-d embedding + 7-d conditioning vector; hidden: 512; output: 768-d)
+is trained to predict T_{k+1} from T_k using cosine similarity loss. The conditioning
+vector encodes genotype (2-d one-hot), cohort (2-d one-hot), and transition step
+(3-d one-hot for W12→15, W15→18, W18→20). Training uses all 129 consecutive pairs
+across 66 subjects (NaF + FDG, all four timepoints where available) under LOSO CV.
+
+### Why predicted embeddings avoid leakage
+
+The VLM trains on Week 12 scans and predicts future TBR. If we fed the actual future scan
+embeddings (ts1/ts2/ts3) as input tokens, the model could learn to read off TBR from the
+future scan embedding directly — complete leakage. The longitudinal MLP produces predicted
+future embeddings using only past information (T_k + conditioning), so feeding these to
+the VLM is valid: the model receives a *forecast* of the future, not the future itself.
+
+LOSO CV is applied to the longitudinal MLP independently: each subject's ts1/ts2/ts3
+predictions come from a fold that never trained on that subject.
 
 ---
 
@@ -143,7 +214,8 @@ The 80/10/10 split is used only for quick single-run development checks.
 | Issue | Impact | Notes |
 |---|---|---|
 | TBR ground truth is programmatic, not manual ROI | Noisy labels, especially for individual mice | Population-level trends should still hold |
-| Only 36 subjects (NaF cohort) | Small training set; high variance in LOSO metrics | FDG cohort excluded (no TBR available) |
-| RAD-DINO extracts from CT, not PET | Embedding may not capture PET signal (inflammation, calcification) directly | CT correlates with late-stage calcification but not early NaF signal |
-| LM cross-entropy loss is numerically blind for TBR | Model may generate plausible-looking but numerically wrong TBR values | Regression head partially addresses this but operates independently |
-| Val set (2 subjects) too small for single-run evaluation | Metrics from single runs (60% genotype acc, MAE ~5-6) are unreliable | LOSO is the correct evaluation |
+| Only 32 NaF subjects with Week 12 baseline | Small training set; high variance in LOSO metrics | FDG cohort excluded (no TBR available) |
+| RAD-DINO extracts from CT, not PET | Embedding may not capture PET signal directly | CT correlates with late-stage calcification but not early NaF signal |
+| LM cross-entropy is numerically blind for TBR | Model generates plausible-looking but numerically wrong TBR values | Regression head partially addresses this but does not constrain generation |
+| Longitudinal MLP Recall@1 = 0.031 | Predicted embeddings encode week cluster, not subject identity | Limits how much ts1/ts2/ts3 tokens help the VLM differentiate between mice |
+| Val set (2 subjects) too small for single-run evaluation | Metrics from single runs are unreliable | LOSO over 32 subjects is the correct evaluation |
