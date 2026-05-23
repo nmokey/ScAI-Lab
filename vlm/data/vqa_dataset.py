@@ -109,6 +109,12 @@ class MouseTrajDataset(Dataset):
             item = dict(record)
             item["question"]       = question_text
             item["image_features"] = image_features.unsqueeze(0)
+            # Augment answer_vqa_numeric with parsed TBR targets so the evaluator
+            # can compute regression-head metrics at inference time.
+            tbr_t = self._tbr_targets(record)
+            avq   = dict(item.get("answer_vqa_numeric") or {})
+            avq["tbr"] = tbr_t.tolist()
+            item["answer_vqa_numeric"] = avq
 
         return item
 

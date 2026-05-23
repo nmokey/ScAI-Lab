@@ -9,7 +9,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F  # noqa: F401 — used in forward
 from safetensors import safe_open
+from safetensors.torch import save_file as safetensors_save_file
 from transformers.modeling_outputs import CausalLMOutputWithPast
+from peft import PeftModel
 from utils.huggingface_utils import convert_meta_to_tensor
 
 
@@ -195,8 +197,48 @@ class VisionLanguageModel(nn.Module):
             }
 
     def save_pretrained(self, save_directory):
+        """
+        Save the model checkpoint.
+
+        LoRA adapter weights are saved via PEFT's save_pretrained into a
+        'lora_adapter' subdirectory — this is the only reliable way to checkpoint
+        a 4-bit quantized model, because bitsandbytes quantization tensors cannot
+        be serialized and reloaded into a non-quantized shell.
+
+        The projection layer and multitask heads (non-LLM weights) are saved
+        separately in 'other_weights.bin'.
+        """
         os.makedirs(save_directory, exist_ok=True)
-        torch.save(self.state_dict(), os.path.join(save_directory, "pytorch_model.bin"))
+
+        # Save LoRA adapter weights only. PEFT's save_pretrained on a quantized
+        # model still emits bitsandbytes state keys (absmax, quant_map, etc.) into
+        # adapter_model.bin, which then can't be loaded into a fresh fp16/bf16 shell.
+        # We filter them out by saving only the lora_ keys manually.
+        lora_dir = os.path.join(save_directory, "lora_adapter")
+        os.makedirs(lora_dir, exist_ok=True)
+        # First let PEFT write its config files (adapter_config.json, etc.)
+        self.language_model.save_pretrained(lora_dir)
+        # Overwrite both adapter weight files with only the LoRA delta tensors,
+        # stripping the bitsandbytes quantization state keys that PEFT includes
+        # when saving a 4-bit model (absmax, quant_map, quant_state, etc.).
+        lora_state = {k: v.contiguous().cpu()
+                      for k, v in self.language_model.state_dict().items()
+                      if "lora_" in k}
+        torch.save(lora_state, os.path.join(lora_dir, "adapter_model.bin"))
+        safetensors_save_file(lora_state, os.path.join(lora_dir, "adapter_model.safetensors"))
+
+        # Save projection layer + multitask heads
+        other = {}
+        if self.language_projection is not None:
+            for k, v in self.language_projection.state_dict().items():
+                other[f"language_projection.{k}"] = v.cpu()
+        if self.tbr_regression_head is not None:
+            for k, v in self.tbr_regression_head.state_dict().items():
+                other[f"tbr_regression_head.{k}"] = v.cpu()
+        if self.genotype_head is not None:
+            for k, v in self.genotype_head.state_dict().items():
+                other[f"genotype_head.{k}"] = v.cpu()
+        torch.save(other, os.path.join(save_directory, "other_weights.bin"))
 
     @classmethod
     def from_pretrained(cls, save_directory, vision_model, language_model, img_token_id,
@@ -205,6 +247,19 @@ class VisionLanguageModel(nn.Module):
                         add_attn_mlp=True, num_x_attn_heads=12, add_x_attn_mlp=True,
                         x_attn_query="text", add_multitask=False, add_multitask_unknown=False,
                         multitask_wt=1.0, load_projection_matrix=False, tokenizer=None):
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        lora_dir       = os.path.join(save_directory, "lora_adapter") if save_directory else None
+        other_bin      = os.path.join(save_directory, "other_weights.bin") if save_directory else None
+        use_peft_load  = lora_dir is not None and os.path.isdir(lora_dir)
+
+        if use_peft_load:
+            # Reload the LoRA adapter onto the already-quantized base model (language_model
+            # passed in is the fresh quantized+LoRA shell from _load_llm).  We discard
+            # that shell's LoRA weights and replace them with the saved adapter.
+            base_llm = language_model.base_model.model  # unwrap PeftModel → base LLM
+            language_model = PeftModel.from_pretrained(base_llm, lora_dir)
+
         model = cls(
             vision_model=vision_model, language_model=language_model,
             img_token_id=img_token_id, img_tokens=img_tokens,
@@ -212,28 +267,26 @@ class VisionLanguageModel(nn.Module):
             add_multitask_unknown=add_multitask_unknown, multitask_wt=multitask_wt,
             tokenizer=tokenizer,
         )
-        model.to("cuda" if torch.cuda.is_available() else "cpu")
 
-        if save_directory is not None:
-            if "checkpoint" in os.path.basename(save_directory):
-                state_dict = {}
-                with safe_open(os.path.join(save_directory, "model.safetensors"), framework="pt") as f:
-                    for key in f.keys():
-                        state_dict[key] = f.get_tensor(key)
-            else:
-                state_dict = torch.load(
-                    os.path.join(save_directory, "pytorch_model.bin"), map_location="cpu"
-                )
-            state_dict = convert_meta_to_tensor(state_dict, device="cuda" if torch.cuda.is_available() else "cpu")
+        if other_bin is not None and os.path.exists(other_bin):
+            other = torch.load(other_bin, map_location=device)
+            other = convert_meta_to_tensor(other, device=device)
 
-            if load_projection_matrix:
-                proj_state = {
-                    "weight": state_dict.get("language_projection.weight"),
-                    "bias":   state_dict.get("language_projection.bias"),
-                }
-                if proj_state["weight"] is not None:
-                    model.language_projection.load_state_dict(proj_state)
-            else:
-                model.load_state_dict(state_dict)
+            proj_sd = {k[len("language_projection."):]: v
+                       for k, v in other.items() if k.startswith("language_projection.")}
+            tbr_sd  = {k[len("tbr_regression_head."):]: v
+                       for k, v in other.items() if k.startswith("tbr_regression_head.")}
+            geno_sd = {k[len("genotype_head."):]: v
+                       for k, v in other.items() if k.startswith("genotype_head.")}
+
+            if proj_sd and model.language_projection is not None:
+                model.language_projection.load_state_dict(proj_sd, strict=True)
+                model.language_projection.to(device)
+            if tbr_sd and model.tbr_regression_head is not None:
+                model.tbr_regression_head.load_state_dict(tbr_sd, strict=True)
+                model.tbr_regression_head.to(device)
+            if geno_sd and model.genotype_head is not None:
+                model.genotype_head.load_state_dict(geno_sd, strict=True)
+                model.genotype_head.to(device)
 
         return model

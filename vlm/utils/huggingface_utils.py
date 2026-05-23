@@ -25,7 +25,7 @@ def load_llm_from_huggingface(model_name, use_quantization=False, r=16, lora_alp
         )
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            device_map="cuda" if torch.cuda.is_available() else "cpu",
+            device_map={"": "cuda:0"} if torch.cuda.is_available() else "cpu",
             trust_remote_code=True,
             quantization_config=bnb_config,
         )
@@ -33,7 +33,7 @@ def load_llm_from_huggingface(model_name, use_quantization=False, r=16, lora_alp
     else:
         model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            device_map="cuda" if torch.cuda.is_available() else "cpu",
+            device_map={"": "cuda:0"} if torch.cuda.is_available() else "cpu",
             trust_remote_code=True,
         )
     model.gradient_checkpointing_enable()

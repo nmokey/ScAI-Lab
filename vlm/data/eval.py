@@ -60,9 +60,9 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
         question  = p.get("orig_question", p.get("question", ""))
         total += 1
 
-        is_geno     = "genotype" in question.lower() and "TBR" not in question
-        is_tbr      = "TBR" in question and "genotype" not in question.lower()
-        is_combined = "TBR" in question and "genotype" in question.lower()
+        is_geno     = "status" in question.lower() and "TBR" not in question
+        is_tbr      = "TBR" in question and "status" not in question.lower()
+        is_combined = "TBR" in question and "status" in question.lower()
 
         if is_geno:
             gt_label = 1 if "KO" in answer else 0
