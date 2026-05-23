@@ -102,11 +102,13 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 ---
 
-## VLM Results (baseline: single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
+## VLM Results
+
+### Baseline (single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
 
 | Metric | Value | Notes |
 |---|---|---|
-| Genotype accuracy | 0.69 | Text-match ("KO"/"WT" in generated output); classification head run pending |
+| Genotype accuracy | 0.69 | Text-match ("KO"/"WT" in generated output) |
 | TBR overall MAE | 4.634 | Moderate absolute error across all future weeks |
 | TBR overall Pearson r | 0.086 | Near-zero — predictions uncorrelated with ground truth across subjects |
 | TBR overall R² | −0.176 | Negative — worse than predicting population mean; no subject-specific signal |
@@ -116,9 +118,44 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 The near-zero r and negative R² are consistent with the encoder evaluation: RAD-DINO's
 mean-pooled embedding encodes *when* (timepoint) but not *who* (subject identity), leaving
-the VLM unable to differentiate individual TBR trajectories. The longitudinal 4-token run
-(in progress) tests whether predicted future embeddings and the genotype classification
-head improve these numbers.
+the VLM unable to differentiate individual TBR trajectories.
+
+### Longitudinal (4-token input + multitask heads, LOSO CV, 32 NaF subjects)
+
+Adds predicted future embeddings (ts1/ts2/ts3 from the longitudinal MLP encoder) as additional image tokens alongside the observed Week 12 embedding. Two multitask heads trained jointly on the LLM EOS hidden state: TBR regression (MSE, up to 4 future slots) and genotype classification (BCE).
+
+**Genotype classification (multitask head, sigmoid threshold 0.5):**
+
+| Metric | Value |
+|---|---|
+| Accuracy | 0.625 (n=32) |
+| Source | Multitask head logits |
+
+Above chance (50%); head is calibrated via sigmoid, replacing fragile text-match.
+
+**TBR text generation:**
+
+| Metric | Value | Notes |
+|---|---|---|
+| Overall MAE | 18.702 | Poor — model generates incoherent numeric text |
+| Overall r | 0.080 | Near-zero |
+| Overall R² | −40.132 | Very negative — text path is unreliable |
+| Week 3 MAE / r | 17.630 / 0.207 | n=14 |
+| Week 6 MAE / r | 23.098 / −0.924 | n=4 — too few to trust |
+| Week 8 MAE / r | 18.380 / −0.407 | n=8 |
+
+Text generation quality degraded relative to baseline — the model prioritises the regression head and produces malformed numeric output. The regression head is the primary TBR output path.
+
+**TBR regression head (primary metric):**
+
+| Slot | MAE | Pearson r | R² | n |
+|---|---|---|---|---|
+| Δ3wk (Week 15) | 4.501 | **0.838** | 0.450 | 64 |
+| Δ6wk (Week 18) | 3.526 | 0.680 | 0.325 | 52 |
+| Δ8wk (Week 20) | 1.920 | 0.049 | −0.380 | 18 |
+| **Overall** | **3.776** | **0.767** | **0.407** | **134** |
+
+The regression head achieves r = 0.767, R² = 0.407 overall — a substantial improvement over the text-based baseline (r = 0.086). Δ3wk is strongest (r = 0.838, n = 64); Δ8wk is weak (r = 0.049, n = 18) due to limited training data at the longest horizon. Full results: `/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_loso/loso_results.json`.
 
 ## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 66 subjects, 129 pairs)
 
@@ -141,7 +178,7 @@ MLP (768+7 conditioned → 512 → 768) predicting T_{k+1} from T_k with cosine 
 - [x] **Longitudinal MLP encoder** — LOSO CV complete, predicted embeddings exported for VLM input
 - [x] **VLM baseline** — LOSO CV complete (single ts0 token, text-match genotype)
 - [x] **Genotype classification head** — implemented on LLM hidden state with BCE loss; replaces text-match
-- [ ] **VLM with longitudinal 4-token input + classification head** — re-run LOSO with `img_tokens=4`; compare genotype acc (head) and TBR R² against baseline
+- [x] **VLM with longitudinal 4-token input + classification head** — LOSO CV complete; regression head r=0.767, R²=0.407; genotype acc=0.625 (head-based)
 
 ### Medium-term
 - [ ] **Custom encoder — MAE baseline**: 3D ViT trained from scratch on this dataset with masked autoencoder objective; cheap to train and directly comparable to Merlin

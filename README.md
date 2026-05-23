@@ -87,7 +87,7 @@ MLP (768+7 conditioned input → 768 output) trained to predict T_{k+1} from T_k
 | T4b MRR | 0.177 | Correct subject ranks ~6th out of 66 on average |
 | T4c improvement rate | 0.682 | Predictor beats returning T_k unchanged 68% of the time |
 
-### VLM (baseline: single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
+### VLM — baseline (single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
 
 | Metric | Value |
 |--------|-------|
@@ -96,7 +96,20 @@ MLP (768+7 conditioned input → 768 output) trained to predict T_{k+1} from T_k
 | TBR overall Pearson r | 0.086 |
 | TBR overall R² | −0.176 |
 
-TBR r ≈ 0 and R² < 0 indicate the model predicts near-population-average TBR rather than subject-specific trajectories — consistent with the encoder's known weakness on subject identity (T3b). The longitudinal 4-token run (in progress) will test whether adding predicted future embeddings improves these numbers.
+### VLM — longitudinal (4-token input + multitask heads, LOSO CV, 32 NaF subjects)
+
+Adds predicted future embeddings (ts1/ts2/ts3) as additional image tokens and trains TBR regression and genotype classification heads jointly on the LLM hidden state.
+
+| Metric | Value | vs. baseline |
+|--------|-------|-------------|
+| Genotype accuracy (head) | **0.625** | −0.065 (head-based; baseline used text-match) |
+| TBR (text) overall MAE | 18.702 | worse — model generates incoherent text |
+| TBR (text) overall r | 0.080 | ≈ same |
+| TBR regression head MAE | **3.776** | — (new metric) |
+| TBR regression head r | **0.767** | — (new metric) |
+| TBR regression head R² | **0.407** | — (new metric) |
+
+The regression head (r = 0.767, R² = 0.407) is the primary TBR output — it substantially outperforms the text-generation path. Δ3wk is the strongest slot (r = 0.838, n = 64); Δ8wk is weak (r = 0.049, n = 18) due to limited data. Genotype accuracy at 62.5% is above chance (50%) from a calibrated sigmoid head. See [docs/results.md](docs/results.md) for full per-slot breakdown.
 
 ---
 
