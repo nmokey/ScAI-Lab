@@ -115,7 +115,11 @@ input_ids to account for image tokens expanding the single `<image>` placeholder
 
 **TBR regression head** — `nn.Linear(llm_dim, 256) → GELU → nn.Linear(256, 4)`:
 Predicts up to 4 future TBR values as real numbers. MSE loss against ground-truth TBR,
-masked for padding slots (−1 sentinel).
+masked for padding slots (−1 sentinel). Slot assignment uses `week_to_slot = {3:0, 6:1, 8:2}`
+keyed on the relative week delta parsed from the answer string — this correctly handles
+subjects with only Week 15 + Week 20 scans (answer "Week 3: X, Week 8: Y" maps X→slot 0,
+Y→slot 2, leaving slot 1 as −1). Positional assignment (prior implementation) mislabeled Y
+as slot 1 for 11/32 subjects.
 
 **Genotype classification head** — `nn.Linear(llm_dim, 1)`:
 Binary classification (KO=1, WT=0) with BCE loss. At inference, `sigmoid(logit) > 0.5`
@@ -168,7 +172,7 @@ Three question types per subject (32 NaF subjects with a Week 12 scan + ≥1 fut
 3. **Combined**: TBR trajectory + genotype in one question/answer
 
 Total: **96 records** (32 subjects × 3 question types).
-Split: 84 train / 6 val / 6 test, stratified by genotype at the **subject level**.
+The primary evaluation is LOSO CV (see below). A fixed 84/6/6 train/val/test split is used only for single-run development checks (`train_single_fold.py`); it is not used for reported results.
 
 ### TBR answer format: relative weeks
 
