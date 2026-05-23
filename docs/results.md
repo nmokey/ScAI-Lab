@@ -157,9 +157,9 @@ Text generation quality degraded relative to baseline — the model prioritises 
 
 The regression head achieves r = 0.767, R² = 0.407 overall — a substantial improvement over the text-based baseline (r = 0.086). Δ3wk is strongest (r = 0.838, n = 64); Δ8wk is weak (r = 0.049, n = 18) due to limited training data at the longest horizon. Full results: `/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_loso/loso_results.json`.
 
-## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 66 subjects, 129 pairs)
+## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 78 subjects, 129 pairs)
 
-MLP (768+7 conditioned → 512 → 768) predicting T_{k+1} from T_k with cosine similarity loss.
+MLP (775 → 512 → 512 → 768, two hidden layers with LayerNorm+GELU) predicting T_{k+1} from T_k with cosine similarity loss.
 
 | Metric | Value | Notes |
 |---|---|---|

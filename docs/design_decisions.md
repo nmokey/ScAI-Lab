@@ -100,9 +100,15 @@ adapters.
 ### Multitask heads
 
 Two auxiliary heads are trained jointly with the language model. Both operate on the
-**LLM last hidden state at the EOS token position** — following the pattern in the
+**LLM last hidden state at the last EOS token position** — following the pattern in the
 advisor's NephrologyKG/nlst_trainer branch. This gives the heads access to the full
-image+question context after LLM processing.
+image+question+answer context after LLM processing.
+
+During training, `input_ids` is the full question+answer sequence. `_add_prompt` appends
+EOS to both question and answer, so two EOS tokens appear in the sequence — we extract
+the **last** EOS (answer-end), not the first (question-end), to ensure the heads read
+context that includes the generated answer. During inference, input_ids is question-only,
+so last == first and the behaviour is unchanged.
 
 The EOS position in the combined sequence is offset by `(img_tokens - 1)` relative to the
 input_ids to account for image tokens expanding the single `<image>` placeholder.
@@ -190,11 +196,12 @@ The 84/6/6 split is used only for quick single-run development checks.
 
 ### Architecture and training
 
-An MLP (input: 768-d embedding + 7-d conditioning vector; hidden: 512; output: 768-d)
+An MLP (input: 768-d embedding + 7-d conditioning vector; two hidden layers of 512;
+output: 768-d; architecture: Linear→LayerNorm→GELU→Linear→LayerNorm→GELU→Linear)
 is trained to predict T_{k+1} from T_k using cosine similarity loss. The conditioning
 vector encodes genotype (2-d one-hot), cohort (2-d one-hot), and transition step
 (3-d one-hot for W12→15, W15→18, W18→20). Training uses all 129 consecutive pairs
-across 66 subjects (NaF + FDG, all four timepoints where available) under LOSO CV.
+across 78 subjects (NaF + FDG, all four timepoints where available) under LOSO CV.
 
 ### Why predicted embeddings avoid leakage
 

@@ -76,18 +76,28 @@ class VisionLanguageModel(nn.Module):
 
     def _eos_hidden_state(self, input_ids, hidden_states):
         """
-        Extract the LLM last-hidden-state at each sequence's first EOS token.
+        Extract the LLM last-hidden-state at each sequence's LAST EOS token.
 
-        The combined sequence seen by the LLM has img_tokens extra positions
+        During training input_ids is question+answer, each wrapped with bos+eos by
+        _add_prompt, so there are two EOS tokens per sequence — one at the question
+        end and one at the answer end. We want the answer-end EOS so the heads see
+        the full processed context, not just the question.
+
+        During inference input_ids is question-only (single EOS), so last == first.
+
+        The combined sequence seen by the LLM has (img_tokens - 1) extra positions
         inserted where the single <image> token was, so the EOS position in the
-        combined sequence is offset by (img_tokens - 1) relative to input_ids.
+        combined sequence is offset accordingly.
 
         Returns feat: (B, llm_dim)
         """
-        eos_mask      = (input_ids == self.tokenizer.eos_token_id)   # (B, L)
-        first_eos_idx = (eos_mask.float().argmax(dim=1) + (self.img_tokens - 1)).long()
+        eos_mask = (input_ids == self.tokenizer.eos_token_id)        # (B, L)
+        # argmax on reversed mask → position of last EOS in original sequence
+        L             = input_ids.size(1)
+        last_eos_idx  = (L - 1 - eos_mask.flip(dims=[1]).float().argmax(dim=1) +
+                         (self.img_tokens - 1)).long()
         batch_idx     = torch.arange(input_ids.size(0), device=input_ids.device)
-        return hidden_states[-1][batch_idx, first_eos_idx]           # (B, llm_dim)
+        return hidden_states[-1][batch_idx, last_eos_idx]            # (B, llm_dim)
 
     def get_image_and_text_embeddings(self, input_ids, pixel_values=None,
                                       image_features=None, attention_mask=None, labels=None):
@@ -151,12 +161,16 @@ class VisionLanguageModel(nn.Module):
                 mse         = mse / mask.sum().clamp(min=1)
                 loss        = loss + self.multitask_wt * mse
 
-            # Genotype classification (BCE)
+            # Genotype classification (BCE, masked — label == -1 for non-genotype records)
             if self.genotype_head is not None and genotype_label is not None:
                 geno_logits = self.genotype_head(feat).squeeze(-1)          # (B,)
                 geno_label  = genotype_label.to(feat.device, dtype=feat.dtype)
-                bce         = F.binary_cross_entropy_with_logits(geno_logits, geno_label)
-                loss        = loss + self.multitask_wt * bce
+                geno_valid  = (geno_label >= 0)
+                if geno_valid.any():
+                    bce  = F.binary_cross_entropy_with_logits(
+                        geno_logits[geno_valid], geno_label[geno_valid]
+                    )
+                    loss = loss + self.multitask_wt * bce
 
         return CausalLMOutputWithPast(
             loss=loss,
