@@ -8,6 +8,8 @@ Run from vlm/ directory:
 
 import sys
 import os
+# Entry-point path setup: add vlm/ to sys.path so bare imports (utils, data, model)
+# resolve when this script is run as `cd vlm && python run/run_mouse_vlm.py`.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.run_utils import get_model
