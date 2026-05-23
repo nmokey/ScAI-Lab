@@ -99,6 +99,7 @@ class BaseLLM(BaseModel):
             num_train_epochs=p["num_train_epochs"],
             learning_rate=p["learning_rate"],
             fp16=p["fp16"],
+            bf16=p.get("bf16", False),
             save_total_limit=p["save_total_limit"],
             logging_steps=p["logging_steps"],
             label_names=p["label_names"],
