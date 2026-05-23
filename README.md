@@ -153,7 +153,7 @@ python scripts/train_longitudinal.py
 # → writes longitudinal/predicted_embeddings/NaF_*_ts{1,2,3}.npy
 
 # 5. Build VQA dataset (run once; outputs already committed to data dir)
-cd vlm && python create_mouse_traj_dataset.py
+python scripts/create_mouse_traj_dataset.py
 
 # 6. Train VLM with LOSO CV (longitudinal 4-token input + multitask heads)
 cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm_loso.py
@@ -167,8 +167,8 @@ cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm_loso.py
 ```
 scripts/                  DICOM conversion, embedding extraction, evaluation
   train_longitudinal.py   Longitudinal MLP encoder: T_k → T_{k+1} prediction (LOSO CV)
-vlm/
   create_mouse_traj_dataset.py  Builds VQA JSON + per-scan .safetensors embeddings
+vlm/
   data/                   Dataset and evaluation code
   model/                  VisionLanguageModel, multitask heads, trainer
   run/                    Single-run and LOSO CV entry points
