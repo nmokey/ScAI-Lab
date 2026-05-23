@@ -39,9 +39,7 @@ class MouseTrajDataset(Dataset):
     def __init__(self, tokenizer, prompt_type, beg_prompt, mid_prompt, end_prompt,
                  data_path, replace_prompt=None, img_dir="", img_tokens=1,
                  pad_token_str="<|finetune_right_pad_id|>", img_token_str="<image>",
-                 seq_length=150, mode="train", height=224, width=224, num_channels=3,
-                 filter_key=None, filter_cond=None, calculate_mae=False,
-                 predicted_emb_dir=None, **kwargs):
+                 seq_length=150, mode="train", predicted_emb_dir=None):
         self.prompt_type      = prompt_type
         self.beg_prompt       = beg_prompt
         self.mid_prompt       = mid_prompt
@@ -162,10 +160,13 @@ class MouseTrajDataset(Dataset):
         # Only TBR and combined questions have numeric TBR in the answer
         if "TBR" not in record.get("question", ""):
             return torch.full((4,), -1.0)
-        vals = [float(m.group(1)) for m in tbr_re.finditer(answer)]
+        week_to_slot = {3: 0, 6: 1, 8: 2}
+        tbr_re_wk = re.compile(r"Week\s+(\d+):\s*(\d+(?:\.\d+)?)")
         t = torch.full((4,), -1.0)
-        for i, v in enumerate(vals[:4]):
-            t[i] = v
+        for m in tbr_re_wk.finditer(answer):
+            wk_delta = int(m.group(1))
+            if wk_delta in week_to_slot:
+                t[week_to_slot[wk_delta]] = float(m.group(2))
         return t
 
     def _add_prompt(self, question, answer):

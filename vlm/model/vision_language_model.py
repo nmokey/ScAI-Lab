@@ -8,7 +8,6 @@ import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F  # noqa: F401 — used in forward
-from safetensors import safe_open
 from safetensors.torch import save_file as safetensors_save_file
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from peft import PeftModel
