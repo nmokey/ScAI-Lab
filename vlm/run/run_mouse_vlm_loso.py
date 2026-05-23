@@ -45,6 +45,8 @@ def parse_args():
                    help="Resume from this fold index (0-based)")
     p.add_argument("--all-data", default=ALL_DATA)
     p.add_argument("--output-dir", default=LOSO_DIR)
+    p.add_argument("--yaml", default=YAML_FILE,
+                   help="Path to YAML config (default: viz_emb_params_mouse.yml)")
     return p.parse_args()
 
 
@@ -120,7 +122,7 @@ def main():
     print(f"[i] {len(subjects)} subjects, {len(all_records)} total records")
     print(f"[i] Running {len(subjects)} LOSO folds")
 
-    base_params = load_yaml(YAML_FILE)
+    base_params = load_yaml(args.yaml)
 
     # Aggregate predictions file (append across folds for resumability)
     agg_path = os.path.join(args.output_dir, "vqa_loso.json")
