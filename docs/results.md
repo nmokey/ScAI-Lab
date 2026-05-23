@@ -104,58 +104,36 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 ## VLM Results
 
-### Baseline (single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
+### ⚠️ VLM results pending re-run (2026-05-23)
+
+Two bugs were found during pre-publication audit and fixed. Both runs (longitudinal and baseline) were restarted from fold 1. Results below are **invalidated** — do not cite them. New results will replace this section when the 32-fold runs complete.
+
+**Bug 1 (eval.py):** Genotype ground-truth label was text-matched on `"KO"` in the answer string. Answer strings are natural language ("The mouse will develop atherosclerosis") and never contain `"KO"`. `gt_label` was always 0, making all reported genotype accuracies meaningless. Fixed: `gt_label` now reads from the saved `genotype_label` field (0/1 numeric).
+
+**Bug 2 (vqa_dataset.py `_tbr_targets`):** TBR regression targets were assigned to slots by position in the answer string rather than by the relative week delta. For the 11 subjects (34%) with only Week 15 + Week 20 scans (no Week 18), answer text is "Week 3: X, Week 8: Y" — positional assignment stored Y (Δ8wk) in slot 1 (Δ6wk) and left slot 2 (Δ8wk) as −1. Fixed: slot assignment now uses `week_to_slot = {3:0, 6:1, 8:2}` keyed on the parsed relative-week integer.
+
+---
+
+### Baseline (single ts0 token, multitask heads, LOSO CV, 32 NaF subjects) — INVALIDATED
+
+> Results from prior run with both bugs active. Do not cite.
 
 | Metric | Value | Notes |
 |---|---|---|
-| Genotype accuracy | 0.69 | Text-match ("KO"/"WT" in generated output) |
-| TBR overall MAE | 4.634 | Moderate absolute error across all future weeks |
-| TBR overall Pearson r | 0.086 | Near-zero — predictions uncorrelated with ground truth across subjects |
-| TBR overall R² | −0.176 | Negative — worse than predicting population mean; no subject-specific signal |
-| Week 15 MAE / r | 6.909 / 0.254 | Worst MAE; slight positive correlation |
-| Week 18 MAE / r | 6.147 / −0.223 | Anti-correlated |
-| Week 20 MAE / r | 2.433 / −0.039 | Best MAE (high sample count, lower variance); near-zero correlation |
+| Genotype accuracy | 0.69 | ❌ Bug 1: gt_label always 0 |
+| TBR overall MAE | 4.634 | ❌ Bug 2: slot mismatch for 11/32 subjects |
+| TBR overall Pearson r | 0.086 | ❌ |
+| TBR overall R² | −0.176 | ❌ |
 
-The near-zero r and negative R² are consistent with the encoder evaluation: RAD-DINO's
-mean-pooled embedding encodes *when* (timepoint) but not *who* (subject identity), leaving
-the VLM unable to differentiate individual TBR trajectories.
+### Longitudinal (4-token input + multitask heads, LOSO CV, 32 NaF subjects) — INVALIDATED
 
-### Longitudinal (4-token input + multitask heads, LOSO CV, 32 NaF subjects)
-
-Adds predicted future embeddings (ts1/ts2/ts3 from the longitudinal MLP encoder) as additional image tokens alongside the observed Week 12 embedding. Two multitask heads trained jointly on the LLM EOS hidden state: TBR regression (MSE, up to 4 future slots) and genotype classification (BCE).
-
-**Genotype classification (multitask head, sigmoid threshold 0.5):**
-
-| Metric | Value |
-|---|---|
-| Accuracy | 0.625 (n=32) |
-| Source | Multitask head logits |
-
-Above chance (50%); head is calibrated via sigmoid, replacing fragile text-match.
-
-**TBR text generation:**
+> Results from prior run with both bugs active. Do not cite.
 
 | Metric | Value | Notes |
 |---|---|---|
-| Overall MAE | 18.702 | Poor — model generates incoherent numeric text |
-| Overall r | 0.080 | Near-zero |
-| Overall R² | −40.132 | Very negative — text path is unreliable |
-| Week 3 MAE / r | 17.630 / 0.207 | n=14 |
-| Week 6 MAE / r | 23.098 / −0.924 | n=4 — too few to trust |
-| Week 8 MAE / r | 18.380 / −0.407 | n=8 |
-
-Text generation quality degraded relative to baseline — the model prioritises the regression head and produces malformed numeric output. The regression head is the primary TBR output path.
-
-**TBR regression head (primary metric):**
-
-| Slot | MAE | Pearson r | R² | n |
-|---|---|---|---|---|
-| Δ3wk (Week 15) | 4.501 | **0.838** | 0.450 | 64 |
-| Δ6wk (Week 18) | 3.526 | 0.680 | 0.325 | 52 |
-| Δ8wk (Week 20) | 1.920 | 0.049 | −0.380 | 18 |
-| **Overall** | **3.776** | **0.767** | **0.407** | **134** |
-
-The regression head achieves r = 0.767, R² = 0.407 overall — a substantial improvement over the text-based baseline (r = 0.086). Δ3wk is strongest (r = 0.838, n = 64); Δ8wk is weak (r = 0.049, n = 18) due to limited training data at the longest horizon. Full results: `/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_loso/loso_results.json`.
+| Genotype accuracy | 0.625 | ❌ Bug 1: gt_label always 0 |
+| TBR reg overall r | 0.767 | ❌ Bug 2: slot mismatch for 11/32 subjects |
+| TBR reg overall R² | 0.407 | ❌ |
 
 ## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 78 subjects, 129 pairs)
 
