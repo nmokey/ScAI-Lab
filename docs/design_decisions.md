@@ -145,8 +145,9 @@ embedding. This was moved to the LLM hidden state because:
 The LM cross-entropy loss treats TBR as a text generation problem — digit tokens generated
 one at a time. This is numerically blind: predicting "25.00" vs "22.71" incurs the same
 large CE penalty regardless of numeric proximity. The regression head addresses this with
-direct MSE supervision, but operates on the LLM hidden state and does not constrain what
-tokens the LLM generates. A more integrated approach (constrained decoding or
+direct MSE supervision. In practice, the LLM generated well-formatted TBR text in fewer
+than 2% of LOSO held-out records (1 parseable prediction out of 96), so the regression
+head is the sole reported TBR metric. A more integrated approach (constrained decoding or
 embedding-space numeric supervision) is left as future work.
 
 ---

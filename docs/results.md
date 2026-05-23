@@ -104,36 +104,40 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 ## VLM Results
 
-### ⚠️ VLM results pending re-run (2026-05-23)
+LOSO CV over 32 NaF subjects × 3 question types = 96 records. Each fold trains on 31 subjects, evaluates on the held-out subject. All metrics are from multitask heads (genotype classification head, TBR regression head) — text-match and text-parsed TBR are omitted as the LLM did not generate well-formatted output under the small per-fold training set.
 
-Two bugs were found during pre-publication audit and fixed. Both runs (longitudinal and baseline) were restarted from fold 1. Results below are **invalidated** — do not cite them. New results will replace this section when the 32-fold runs complete.
+### Genotype Classification (multitask head, n=32 subjects)
 
-**Bug 1 (eval.py):** Genotype ground-truth label was text-matched on `"KO"` in the answer string. Answer strings are natural language ("The mouse will develop atherosclerosis") and never contain `"KO"`. `gt_label` was always 0, making all reported genotype accuracies meaningless. Fixed: `gt_label` now reads from the saved `genotype_label` field (0/1 numeric).
+Binary prediction: KO=1, WT=0. Head reads LLM last hidden state at answer-end EOS. Threshold: sigmoid(logit) > 0.5.
 
-**Bug 2 (vqa_dataset.py `_tbr_targets`):** TBR regression targets were assigned to slots by position in the answer string rather than by the relative week delta. For the 11 subjects (34%) with only Week 15 + Week 20 scans (no Week 18), answer text is "Week 3: X, Week 8: Y" — positional assignment stored Y (Δ8wk) in slot 1 (Δ6wk) and left slot 2 (Δ8wk) as −1. Fixed: slot assignment now uses `week_to_slot = {3:0, 6:1, 8:2}` keyed on the parsed relative-week integer.
+| Model | Accuracy |
+|---|---|
+| Longitudinal (4-token: ts0 + ts1/ts2/ts3) | **0.531** |
+| Baseline (1-token: ts0 only) | 0.219 |
+| Chance | 0.500 |
 
----
+The longitudinal model sits just above chance. The baseline falls well below chance (0.219), indicating the genotype head learned an inverted signal from ts0 alone — consistent with the embedding anisotropy noted in the encoder evaluation (RAD-DINO embeddings are primarily organised by timepoint, not genotype).
 
-### Baseline (single ts0 token, multitask heads, LOSO CV, 32 NaF subjects) — INVALIDATED
+### TBR Regression Head (multitask head, MSE-trained)
 
-> Results from prior run with both bugs active. Do not cite.
+Predicts up to 3 future TBR values (Δ3wk/Δ6wk/Δ8wk relative to Week 12 input). Slot counts: Δ3wk n=64 (all subjects), Δ6wk n=30 (subjects with Week 18), Δ8wk n=40 (subjects with Week 20).
 
-| Metric | Value | Notes |
+| Metric | Longitudinal (4-token) | Baseline (1-token) |
 |---|---|---|
-| Genotype accuracy | 0.69 | ❌ Bug 1: gt_label always 0 |
-| TBR overall MAE | 4.634 | ❌ Bug 2: slot mismatch for 11/32 subjects |
-| TBR overall Pearson r | 0.086 | ❌ |
-| TBR overall R² | −0.176 | ❌ |
+| Overall MAE | **5.393** | 6.241 |
+| Overall Pearson r | **0.276** | −0.054 |
+| Overall R² | −0.076 | −0.357 |
+| Δ3wk MAE | **6.123** | 6.806 |
+| Δ3wk Pearson r | **0.447** | −0.090 |
+| Δ3wk R² | **0.131** | −0.088 |
+| Δ6wk MAE | **6.855** | 7.568 |
+| Δ6wk Pearson r | **−0.093** | −0.243 |
+| Δ6wk R² | −0.722 | −0.957 |
+| Δ8wk MAE | **3.127** | 4.340 |
+| Δ8wk Pearson r | **0.207** | 0.069 |
+| Δ8wk R² | −1.826 | −4.421 |
 
-### Longitudinal (4-token input + multitask heads, LOSO CV, 32 NaF subjects) — INVALIDATED
-
-> Results from prior run with both bugs active. Do not cite.
-
-| Metric | Value | Notes |
-|---|---|---|
-| Genotype accuracy | 0.625 | ❌ Bug 1: gt_label always 0 |
-| TBR reg overall r | 0.767 | ❌ Bug 2: slot mismatch for 11/32 subjects |
-| TBR reg overall R² | 0.407 | ❌ |
+The longitudinal model outperforms the baseline on every metric. The most populated slot (Δ3wk, n=64) shows the strongest signal: r=0.447, R²=0.131 — modest but positive correlation. Negative R² overall indicates neither model beats a constant mean predictor across all slots, consistent with the noisy programmatic TBR labels (see design_decisions.md). Δ6wk and Δ8wk metrics are weaker, partly due to smaller sample sizes (n=30/40) and missing-Week-18 zero-padding introducing noise.
 
 ## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 78 subjects, 129 pairs)
 
@@ -154,9 +158,9 @@ MLP (775 → 512 → 512 → 768, two hidden layers with LayerNorm+GELU) predict
 - [x] **Run notebook on all 3 encoders** — all T2a OvR AUC, T2c, T2d, T2e, conditioned analysis complete
 - [x] **M3D encoder** (`GoodBaiBai88/M3D-CLIP`) — implemented `get_m3d_embeddings.py`, extracted 229 embeddings, full evaluation complete
 - [x] **Longitudinal MLP encoder** — LOSO CV complete, predicted embeddings exported for VLM input
-- [x] **VLM baseline** — LOSO CV complete (single ts0 token, text-match genotype)
+- [x] **VLM baseline** — LOSO CV complete (single ts0 token); genotype acc=0.219, TBR Δ3wk r=−0.090
 - [x] **Genotype classification head** — implemented on LLM hidden state with BCE loss; replaces text-match
-- [x] **VLM with longitudinal 4-token input + classification head** — LOSO CV complete; regression head r=0.767, R²=0.407; genotype acc=0.625 (head-based)
+- [x] **VLM with longitudinal 4-token input + classification head** — LOSO CV complete; genotype acc=0.531, TBR Δ3wk r=0.447, overall TBR r=0.276
 
 ### Medium-term
 - [ ] **Custom encoder — MAE baseline**: 3D ViT trained from scratch on this dataset with masked autoencoder objective; cheap to train and directly comparable to Merlin

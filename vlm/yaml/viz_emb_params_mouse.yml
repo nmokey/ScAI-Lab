@@ -71,6 +71,7 @@ train:
   gen_train_outputs: False
   gen_llava_med_train_outputs: False
   resume_from_checkpoint: False
+  report_to: "none"
 
 inf:
   model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_longitudinal/mouse_vlm_mdl

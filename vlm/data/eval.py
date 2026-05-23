@@ -65,9 +65,12 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
         is_combined = "TBR" in question and "status" in question.lower()
 
         if is_geno:
-            gt_label = 1 if "KO" in answer else 0
+            raw_gl = p.get("genotype_label")
+            if raw_gl is None:
+                continue
+            gt_label = int(raw_gl)
 
-            if "genotype_logit" in p and p.get("genotype_label") is not None:
+            if "genotype_logit" in p:
                 # Primary: sigmoid(logit) > 0.5 → KO
                 pred_label = 1 if p["genotype_logit"] > 0.0 else 0
                 head_correct += int(gt_label == pred_label)
