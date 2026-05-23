@@ -1,23 +1,188 @@
 """
 Trainer for the mouse trajectory VLM using pre-saved RAD-DINO embeddings.
 Adapted from NephrologyKG/model/viz_emb_trainer.py.
+
+BaseModel and BaseLLM have been merged into this file — only VizEmbTrainer
+exists, so the intermediate base classes are not needed.
 """
 
 import os
 import json
-import numpy as np
+import shutil
 import torch
-from model.base_model import BaseLLM
+import transformers
+from transformers import TrainerCallback
 from model.vision_language_model import VisionLanguageModel
 from data.dataset_factory import get_dataset_factory
+from utils.misc_utils import load_yaml, assert_required_params_list
+from utils.huggingface_utils import load_tokenizer_from_huggingface, load_llm_from_huggingface
 
 
-class VizEmbTrainer(BaseLLM):
+class EvalAtStartCallback(TrainerCallback):
+    def on_train_begin(self, args, state, control, **kwargs):
+        print("Running evaluation at start of training...")
+        self.trainer.evaluate()
 
-    def setup_tokenizer(self):
-        super().setup_tokenizer()
+
+class VizEmbTrainer:
+
+    def __init__(self, exp_file=None):
+        self.exp_file = exp_file
+        self.params = load_yaml(exp_file)
+        print("params:", self.params)
+        self._check_params()
+
+    def setup(self):
+        self._setup_exp_dir()
+        self._setup_tokenizer()
+
+    def run(self):
+        self.train()
+
+    # ------------------------------------------------------------------
+    # Setup helpers (formerly BaseModel / BaseLLM)
+    # ------------------------------------------------------------------
+
+    def _setup_exp_dir(self):
+        output_dir = self.params["exp"]["output_dir"]
+        self.output_dir = output_dir
+        os.makedirs(output_dir, exist_ok=True)
+        if self.exp_file is not None:
+            dst = os.path.join(output_dir, "exp.yml")
+            try:
+                shutil.copyfile(self.exp_file, dst)
+            except shutil.SameFileError:
+                pass
+
+    def _check_params(self):
+        assert isinstance(self.params, dict)
+        rp = self._required_params()
+        required_sections = list(rp.keys())
+        assert_required_params_list(required_sections, list(self.params.keys()))
+        for section in required_sections:
+            assert_required_params_list(rp[section], self.params[section], header=section)
+
+    def _required_params(self):
+        return {
+            "exp": ["output_dir"],
+            "data": [
+                "tokenizer_name", "data_path", "test_size", "data_seed",
+                "train_dataset", "inf_dataset", "base_dir", "img_dir", "inf_img_dir",
+                "height", "width", "num_channels", "img_tokens", "seq_length",
+                "inf_data_path", "kg_embedder_params", "prompt_type",
+            ],
+            "train": [
+                "model_name", "save_model_name", "use_quantization", "r", "lora_alpha",
+                "target_modules", "lora_dropout", "bias", "task_type",
+                "per_device_train_batch_size", "per_device_eval_batch_size",
+                "gradient_accumulation_steps", "num_train_epochs", "learning_rate", "fp16",
+                "save_total_limit", "logging_steps", "save_strategy", "evaluation_strategy",
+                "eval_steps", "save_steps", "optim", "lr_scheduler_type", "warmup_ratio",
+                "resume_from_checkpoint", "evaluate_start", "gen_train_outputs",
+                "gen_llava_med_train_outputs", "label_names",
+                "vision_model_name", "freeze_llm_model", "freeze_vision_model", "pretrained",
+                "load_projection_matrix", "num_proj_layers", "create_self_attn_block",
+                "create_x_attn_block", "num_attn_layers", "num_attn_heads", "add_x_attn_mlp",
+                "x_attn_query", "add_multitask", "add_multitask_unknown", "multitask_wt",
+            ],
+            "inf": [
+                "model_name", "beg_prompt", "mid_prompt", "end_prompt",
+                "llm_model_name", "use_quantization", "r", "lora_alpha", "target_modules",
+                "lora_dropout", "bias", "task_type", "load_projection_matrix",
+                "context_prompt", "replace_prompt", "max_new_tokens", "top_k",
+                "similarity_threshold", "decoding_kwargs", "clean_mc", "include_img",
+                "save_file", "results_file", "llm_only", "train_gt_file",
+            ],
+        }
+
+    def _setup_tokenizer(self):
+        self.tokenizer = load_tokenizer_from_huggingface(self.params["data"]["tokenizer_name"])
+        self.tokenizer.add_bos_token = False
         self.tokenizer.add_tokens([self.img_token])
         self.img_token_id = self.tokenizer.convert_tokens_to_ids(self.img_token)
+
+    def get_data_collator(self):
+        from transformers import DefaultDataCollator
+        return DefaultDataCollator()
+
+    def prepare_question(self, question):
+        return question
+
+    def apply_tokenizer(self, text):
+        return self.tokenizer(text, return_tensors="pt")
+
+    def load_llm_model(self, **kwargs):
+        return load_llm_from_huggingface(**kwargs)
+
+    def get_training_args(self):
+        p = self.params["train"]
+        return transformers.TrainingArguments(
+            output_dir=self.output_dir,
+            per_device_train_batch_size=p["per_device_train_batch_size"],
+            per_device_eval_batch_size=p["per_device_eval_batch_size"],
+            gradient_accumulation_steps=p["gradient_accumulation_steps"],
+            num_train_epochs=p["num_train_epochs"],
+            learning_rate=p["learning_rate"],
+            fp16=p["fp16"],
+            bf16=p.get("bf16", False),
+            save_total_limit=p["save_total_limit"],
+            logging_steps=p["logging_steps"],
+            label_names=p["label_names"],
+            save_strategy=p["save_strategy"],
+            evaluation_strategy=p["evaluation_strategy"],
+            eval_steps=p["eval_steps"],
+            save_steps=p["save_steps"],
+            optim=p["optim"],
+            lr_scheduler_type=p["lr_scheduler_type"],
+            warmup_ratio=p["warmup_ratio"],
+            load_best_model_at_end=True,
+            report_to="tensorboard",
+        )
+
+    def save_model(self, model):
+        model.save_pretrained(os.path.join(self.output_dir, self.params["train"]["save_model_name"]))
+
+    @property
+    def img_token(self):
+        return "<image>"
+
+    @property
+    def pad_token(self):
+        return "<|finetune_right_pad_id|>"
+
+    @property
+    def pixel_values_dtype(self):
+        return torch.float
+
+    # ------------------------------------------------------------------
+    # Training
+    # ------------------------------------------------------------------
+
+    def train(self):
+        data = self.get_train_data()
+        print(f"Train samples: {len(data['train'])}, Val samples: {len(data['test'])}")
+        data_collator = self.get_data_collator()
+        model, image_processor = self.load_train_model()
+        data["train"].update_transforms_w_processor(image_processor)
+        data["test"].update_transforms_w_processor(image_processor)
+        training_args = self.get_training_args()
+        trainer = transformers.Trainer(
+            model=model,
+            tokenizer=self.tokenizer,
+            train_dataset=data["train"],
+            eval_dataset=data["test"],
+            args=training_args,
+            data_collator=data_collator,
+        )
+        if self.params["train"].get("evaluate_start"):
+            cb = EvalAtStartCallback()
+            cb.trainer = trainer
+            trainer.add_callback(cb)
+        trainer.train(resume_from_checkpoint=self.params["train"]["resume_from_checkpoint"])
+        self.save_model(model)
+        # Free training model from GPU before inference loads a fresh copy
+        del model, trainer
+        torch.cuda.empty_cache()
 
     # ------------------------------------------------------------------
     # Model loading
@@ -203,30 +368,3 @@ class VizEmbTrainer(BaseLLM):
             pred_file=pred_file,
             results_file=results_file,
         )
-
-    # ------------------------------------------------------------------
-    # Required params declaration
-    # ------------------------------------------------------------------
-
-    @property
-    def required_params(self):
-        rp = super().required_params
-        rp["data"] = rp["data"] + [
-            "train_dataset", "inf_dataset", "base_dir", "img_dir", "inf_img_dir",
-            "height", "width", "num_channels", "img_tokens", "seq_length",
-            "inf_data_path", "kg_embedder_params", "prompt_type",
-        ]
-        rp["train"] = rp["train"] + [
-            "vision_model_name", "freeze_llm_model", "freeze_vision_model", "pretrained",
-            "load_projection_matrix", "num_proj_layers", "create_self_attn_block",
-            "create_x_attn_block", "num_attn_layers", "num_attn_heads", "add_x_attn_mlp",
-            "x_attn_query", "add_multitask", "add_multitask_unknown", "multitask_wt",
-        ]
-        rp["inf"] = rp["inf"] + [
-            "llm_model_name", "use_quantization", "r", "lora_alpha", "target_modules",
-            "lora_dropout", "bias", "task_type", "load_projection_matrix",
-            "context_prompt", "replace_prompt", "max_new_tokens", "top_k",
-            "similarity_threshold", "decoding_kwargs", "clean_mc", "include_img",
-            "save_file", "results_file", "llm_only", "train_gt_file",
-        ]
-        return rp
