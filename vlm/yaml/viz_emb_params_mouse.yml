@@ -33,7 +33,7 @@ train:
   llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   pretrained: False
   load_projection_matrix: False
-  use_quantization: False
+  use_quantization: True
   r: 16
   lora_alpha: 32
   target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
@@ -51,7 +51,8 @@ train:
   gradient_accumulation_steps: 4
   num_train_epochs: 10
   learning_rate: 2.0e-4
-  fp16: True
+  fp16: False
+  bf16: True
   optim: adamw_torch_fused
   lr_scheduler_type: cosine
   warmup_ratio: 0.05
@@ -75,7 +76,7 @@ inf:
   model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_longitudinal/mouse_vlm_mdl
   llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   load_projection_matrix: False
-  use_quantization: False
+  use_quantization: True
   r: 16
   lora_alpha: 32
   target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]

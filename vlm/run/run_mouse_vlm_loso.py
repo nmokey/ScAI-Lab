@@ -24,6 +24,10 @@ import shutil
 import torch
 import transformers
 
+# Pin to logical device 0 (the physical GPU selected by CUDA_VISIBLE_DEVICES).
+# This ensures every from_pretrained call inside each fold lands on the same device.
+torch.cuda.set_device(0)
+
 from utils.misc_utils import load_yaml
 from utils.run_utils import get_model
 from data.eval import calculate_mouse_metrics
