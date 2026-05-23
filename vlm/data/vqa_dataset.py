@@ -155,7 +155,6 @@ class MouseTrajDataset(Dataset):
     def _tbr_targets(self, record):
         """Pack future TBR values into a fixed-length (4,) tensor, padded with -1."""
         import re
-        tbr_re = re.compile(r"Week\s+\d+:\s*(\d+(?:\.\d+)?)")
         answer = record.get("answer", "")
         # Only TBR and combined questions have numeric TBR in the answer
         if "TBR" not in record.get("question", ""):
