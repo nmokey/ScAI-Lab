@@ -6,32 +6,37 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 ---
 
-## Summary Table
+## Summary Table (Paper-Relevant Results)
 
-| Metric | What it measures | Chance | COLIPRI | Merlin | RAD-DINO | M3D |
+**Scope:** 32 NaF subjects, LOSO CV, chance = 0.5. This is the primary evaluation cohort for the paper — all encoder and VLM results below use the same subjects and the same tasks. Encoder-only results use a linear probe (LogisticRegression for genotype, Ridge for TBR); the VLM uses its multitask head on LLM last hidden state.
+
+> **Critical evaluation consistency requirement:** Encoder-only tasks and VLM tasks must be evaluated identically. The original encoder benchmarks (T2c/full encoder comparison table) used 78 subjects across both cohorts and all 4 timepoints — those numbers are not directly comparable to the VLM, which is restricted to 32 NaF subjects with Week 12 as fixed input. The table below is the authoritative comparison; do not cite T2c=0.869 from the full encoder table alongside VLM results without noting the population mismatch.
+
+| Condition | Input | Geno acc | Geno AUC | TBR overall r | TBR Δ3wk r | TBR Δ3wk R² |
 |---|---|---|---|---|---|---|
-| **Embedding dim** | — | — | 768 | 2048 | 768 | 768 |
-| **Input type** | — | — | 3D volume | 3D volume | 32 axial slices (mean-pooled) | 3D volume (32×256×256) |
-| **T1b ARI** (k-means vs week) | Do unsupervised clusters align with timepoints, without any labels? | 0 | 0.033 | 0.011 | −0.010 | **0.114** ⭐ |
-| **T1b NMI** (k-means vs week) | Same as ARI but less sensitive to cluster size imbalance | 0 | 0.047 | 0.017 | 0.013 | **0.150** ⭐ |
-| **T1c Silhouette** (cosine, by week) | Are same-week embeddings geometrically tighter than cross-week embeddings? | 0 | −0.074 | −0.050 | **+0.020** ⭐ | −0.009 |
-| **T1d Δ** (intra − inter cosine sim) | Are the same mouse's scans more similar to each other than to other mice? | 0 | 0.0003 | 0.0006 | 0.0055 | **0.0261** ⭐ |
-| **T2a Accuracy** (4-class week, LOSO) | Can a linear classifier predict which of 4 timepoints a scan came from? | 0.25 | 0.454 | 0.563 | **0.878** ⭐ | 0.607 |
-| **T2a macro-F1** (4-class week, LOSO) | Same as above, averaged equally across all four weeks (penalises class imbalance) | — | 0.279 | 0.444 | **0.854** ⭐ | 0.397 |
-| **T2a OvR AUC** (4-class week, LOSO) | Macro-averaged one-vs-rest AUC for week classification confidence | — | 0.694 | 0.776 | **0.979** ⭐ | 0.785 |
-| **T2b Accuracy** (early vs late, LOSO) | Can a linear classifier distinguish Week 12 from Week 20? | 0.50 | 0.605 | 0.748 | **1.000** ⭐ | 0.899 |
-| **T2b AUC-ROC** (early vs late, LOSO) | How well does the classifier's confidence score rank early scans above late ones? | 0.50 | 0.683 | 0.852 | **1.000** ⭐ | 0.963 |
-| **T2c Accuracy** (WT vs KO, LOSO) | Can a linear classifier distinguish healthy (WT) from disease (KO) mice? | 0.50 | 0.411 | 0.459 | **0.786** ⭐ | 0.563 |
-| **T2c AUC-ROC** (WT vs KO, LOSO) | Confidence-based separation of genotypes | 0.50 | 0.282 ⚠️ | 0.491 | **0.869** ⭐ | 0.567 |
-| **T2d Accuracy** (NaF vs FDG, LOSO) | Are scanner/radiotracer differences linearly separable? (confounder check) | 0.50 | 0.515 | 0.520 | **0.646** ⭐ | 0.489 |
-| **T2d AUC-ROC** (NaF vs FDG, LOSO) | Confidence-based cohort separation | 0.50 | 0.488 | 0.476 | **0.709** ⭐ | 0.502 |
-| **T2e Accuracy** (WT vs KO+stage, LOSO) | 5-class task: WT or KO at which disease stage? | 0.20 | 0.520 | 0.515 | **0.729** ⭐ | 0.515 |
-| **T2e macro-F1** (WT vs KO+stage, LOSO) | Same, balanced across all five classes | — | 0.137 | 0.136 | **0.621** ⭐ | 0.156 |
-| **T2e OvR AUC** (WT vs KO+stage, LOSO) | Confidence-based disease staging | — | 0.497 | 0.652 | **0.915** ⭐ | 0.701 |
-| **T3a** Pairwise temporal ordering | For same-mouse pairs, can a linear classifier tell which scan came later? | 0.50 | 0.685 | 0.770 | **0.926** ⭐ | 0.755 |
-| **T3b** Subject retrieval Recall@1 | Is the nearest neighbour (by cosine sim) a scan of the same mouse? | — | 0.018 | **0.044** ⭐ | 0.013 | 0.022 |
-| **T3b** Subject retrieval MRR | On average, how highly ranked is the first same-mouse scan in the similarity list? | — | 0.066 | **0.096** ⭐ | 0.072 | 0.069 |
-| **T3c** Week retrieval mAP@5 | What fraction of the 5 nearest neighbours share the same timepoint? | — | 0.659 | 0.692 | **0.844** ⭐ | 0.690 |
+| **A1** RAD-DINO linear probe | ts0 only (real) | 0.406 | 0.353 | −0.153 | −0.250 | −0.200 |
+| **A2** RAD-DINO linear probe | ts0+ts1+ts2+ts3 (all real) | 0.406 | 0.401 | **0.432** | 0.350 | 0.085 |
+| **B** Longitudinal linear probe | ts0 real + ts1/ts2/ts3 MLP-predicted | **0.750** | **0.718** | 0.225 | 0.030 | −0.323 |
+| **VLM baseline** | ts0 only | 0.219 | — | −0.054 | −0.090 | −0.088 |
+| **VLM longitudinal** | ts0 real + ts1/ts2/ts3 MLP-predicted | 0.531 | — | 0.276 | **0.447** | **0.131** |
+
+**Notes on condition B:** The longitudinal linear probe (B) genotype acc=0.750/AUC=0.718 is likely inflated. The longitudinal MLP conditioning vector includes genotype as an explicit input feature, so MLP-predicted embeddings implicitly encode the label. This is not signal the VLM can equivalently exploit. Condition B should be treated as an upper-bound reference, not a fair comparison. The MLP was retrained on the 32 NaF subjects only (matching the VLM population) to remove an additional source of advantage from the prior 78-subject mixed-cohort training.
+
+**The key discrepancy:** The VLM longitudinal model (genotype acc=0.531) underperforms condition B (acc=0.750, AUC=0.718) by ~19 AUC points despite receiving the same MLP-predicted ts1/ts2/ts3 embeddings as input. This gap — image domain signal surviving in a linear probe but degrading through the LLM pathway — is an open investigation question (see signal loss investigation system prompt).
+
+---
+
+## Full Encoder Comparison Table (historical — 78 subjects, both cohorts)
+
+> **Warning:** These results use 78 subjects (NaF + FDG), all 4 timepoints, and are NOT directly comparable to the 32-subject VLM evaluation above. They are retained for encoder selection justification only.
+
+| Metric | Chance | COLIPRI | Merlin | RAD-DINO | M3D |
+|---|---|---|---|---|---|
+| **T2a Accuracy** (4-class week, LOSO) | 0.25 | 0.454 | 0.563 | **0.878** ⭐ | 0.607 |
+| **T2b AUC-ROC** (early vs late, LOSO) | 0.50 | 0.683 | 0.852 | **1.000** ⭐ | 0.963 |
+| **T2c Accuracy** (WT vs KO, LOSO) | 0.50 | 0.411 | 0.459 | **0.786** ⭐ | 0.563 |
+| **T2c AUC-ROC** (WT vs KO, LOSO) | 0.50 | 0.282 | 0.491 | **0.869** ⭐ | 0.567 |
+| **T3b** Subject retrieval Recall@1 | — | 0.018 | **0.044** ⭐ | 0.013 | 0.022 |
 
 ---
 
@@ -104,23 +109,13 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 ## VLM Results
 
-LOSO CV over 32 NaF subjects × 3 question types = 96 records. Each fold trains on 31 subjects, evaluates on the held-out subject. All metrics are from multitask heads (genotype classification head, TBR regression head) — text-match and text-parsed TBR are omitted as the LLM did not generate well-formatted output under the small per-fold training set.
+See Summary Table above for primary reported metrics. Detailed breakdown below.
 
-### Genotype Classification (multitask head, n=32 subjects)
+**Setup:** LOSO CV over 32 NaF subjects × 3 question types = 96 records. All metrics are from multitask heads — text-match and text-parsed TBR are omitted (LLM did not generate well-formatted output in <2% of held-out records). Genotype: sigmoid(logit) > 0.5 threshold on the Linear(4096,1) head. TBR: Linear(4096,256)→GELU→Linear(256,4) regression head, MSE-trained with slot masking (−1 sentinel for missing future weeks).
 
-Binary prediction: KO=1, WT=0. Head reads LLM last hidden state at answer-end EOS. Threshold: sigmoid(logit) > 0.5.
+### TBR Regression Head — Full Breakdown
 
-| Model | Accuracy |
-|---|---|
-| Longitudinal (4-token: ts0 + ts1/ts2/ts3) | **0.531** |
-| Baseline (1-token: ts0 only) | 0.219 |
-| Chance | 0.500 |
-
-The longitudinal model sits just above chance. The baseline falls well below chance (0.219), indicating the genotype head learned an inverted signal from ts0 alone — consistent with the embedding anisotropy noted in the encoder evaluation (RAD-DINO embeddings are primarily organised by timepoint, not genotype).
-
-### TBR Regression Head (multitask head, MSE-trained)
-
-Predicts up to 3 future TBR values (Δ3wk/Δ6wk/Δ8wk relative to Week 12 input). Slot counts: Δ3wk n=64 (all subjects), Δ6wk n=30 (subjects with Week 18), Δ8wk n=40 (subjects with Week 20).
+Slot counts: Δ3wk n=64 (all subjects with Week 15), Δ6wk n=30 (subjects with Week 18), Δ8wk n=40 (subjects with Week 20).
 
 | Metric | Longitudinal (4-token) | Baseline (1-token) |
 |---|---|---|
@@ -130,25 +125,21 @@ Predicts up to 3 future TBR values (Δ3wk/Δ6wk/Δ8wk relative to Week 12 input)
 | Δ3wk MAE | **6.123** | 6.806 |
 | Δ3wk Pearson r | **0.447** | −0.090 |
 | Δ3wk R² | **0.131** | −0.088 |
-| Δ6wk MAE | **6.855** | 7.568 |
 | Δ6wk Pearson r | **−0.093** | −0.243 |
-| Δ6wk R² | −0.722 | −0.957 |
-| Δ8wk MAE | **3.127** | 4.340 |
 | Δ8wk Pearson r | **0.207** | 0.069 |
-| Δ8wk R² | −1.826 | −4.421 |
 
-The longitudinal model outperforms the baseline on every metric. The most populated slot (Δ3wk, n=64) shows the strongest signal: r=0.447, R²=0.131 — modest but positive correlation. Negative R² overall indicates neither model beats a constant mean predictor across all slots, consistent with the noisy programmatic TBR labels (see design_decisions.md). Δ6wk and Δ8wk metrics are weaker, partly due to smaller sample sizes (n=30/40) and missing-Week-18 zero-padding introducing noise.
+Δ6wk and Δ8wk metrics are weaker, partly due to smaller sample sizes and zero-padding for missing weeks introducing noise. Negative R² overall indicates neither model beats a constant mean predictor across all slots — consistent with noisy programmatic TBR labels (see design_decisions.md).
 
-## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 78 subjects, 129 pairs)
+## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 32 NaF subjects, 56 pairs)
 
-MLP (775 → 512 → 512 → 768, two hidden layers with LayerNorm+GELU) predicting T_{k+1} from T_k with cosine similarity loss.
+MLP (775 → 512 → 512 → 768, two hidden layers with LayerNorm+GELU) predicting T_{k+1} from T_k with cosine similarity loss. Retrained on 32 NaF subjects only to match the VLM evaluation population (previously 78 subjects across both cohorts).
 
 | Metric | Value | Notes |
 |---|---|---|
-| T4a cosine sim | 0.983 | High directional accuracy; reflects tight embedding cluster geometry |
-| T4b Recall@1 | 0.031 | Near-chance subject retrieval; predicts week cluster, not individual identity |
-| T4b MRR | 0.177 | Correct subject ranks ~6th out of 66 on average |
-| T4c improvement rate | 0.682 | Beats returning T_k unchanged 68% of the time |
+| T4a cosine sim | 0.981 | High directional accuracy; reflects tight embedding cluster geometry |
+| T4b Recall@1 | 0.036 | Near-chance subject retrieval; predicts week cluster, not individual identity |
+| T4b MRR | 0.185 | Correct subject ranks ~5th out of 32 on average |
+| T4c improvement rate | 0.661 | Beats returning T_k unchanged 66% of the time |
 
 ---
 

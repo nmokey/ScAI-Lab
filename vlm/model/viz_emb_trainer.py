@@ -158,11 +158,28 @@ class VizEmbTrainer:
     # Training
     # ------------------------------------------------------------------
 
+    def _tbr_norm_stats(self, train_dataset):
+        """Compute per-slot mean and std of valid TBR targets across the training fold."""
+        import torch
+        all_tbr = torch.stack([train_dataset[i]["tbr_targets"] for i in range(len(train_dataset))])
+        mean = torch.zeros(4)
+        std  = torch.ones(4)
+        for slot in range(4):
+            valid = all_tbr[:, slot][all_tbr[:, slot] >= 0]
+            if len(valid) > 1:
+                mean[slot] = valid.mean()
+                std[slot]  = valid.std().clamp(min=1e-6)
+        return mean, std
+
     def train(self):
         data = self.get_train_data()
         print(f"Train samples: {len(data['train'])}, Val samples: {len(data['test'])}")
         data_collator = self.get_data_collator()
         model, image_processor = self.load_train_model()
+        tbr_mean, tbr_std = self._tbr_norm_stats(data["train"])
+        model.tbr_mean = tbr_mean
+        model.tbr_std  = tbr_std
+        print(f"TBR norm stats — mean: {tbr_mean.tolist()}, std: {tbr_std.tolist()}")
         data["train"].update_transforms_w_processor(image_processor)
         data["test"].update_transforms_w_processor(image_processor)
         training_args = self.get_training_args()

@@ -101,11 +101,16 @@ def parse_args():
 # Data loading
 # ---------------------------------------------------------------------------
 
-def load_embeddings(path):
+def load_embeddings(path, cohort_filter=None):
+    """Load embeddings. cohort_filter: if set (e.g. "NaF"), keep only that cohort."""
     data        = np.load(path, allow_pickle=True)
     embs        = data["embeddings"].astype(np.float32)
     subject_ids = data["subject_ids"].astype(str)
     weeks       = data["weeks"].astype(str)
+    if cohort_filter is not None:
+        mask = np.array([sid.startswith(cohort_filter) for sid in subject_ids])
+        embs, subject_ids, weeks = embs[mask], subject_ids[mask], weeks[mask]
+        print(f"[i] Cohort filter '{cohort_filter}': kept {mask.sum()}/{len(mask)} embeddings")
     print(f"[i] Loaded {len(embs)} embeddings  (dim={embs.shape[1]})")
     print(f"    Subjects  : {len(set(subject_ids))} unique")
     print(f"    Weeks     : {sorted(set(weeks))}")
@@ -150,6 +155,8 @@ def build_pairs(embs, subject_ids, weeks, use_conditioning=True):
         week_map = idx[sid]
         cohort, genotype = parse_subject_meta(sid)
 
+        # One-hot encoding: [KO, WT] and [NaF, FDG] — index 0 is the positive class.
+        # Note: scalar genotype elsewhere uses 1=KO; this one-hot is consistent (KO→[1,0]).
         geno_vec   = np.array([1, 0], dtype=np.float32) if genotype == "KO" else np.array([0, 1], dtype=np.float32)
         cohort_vec = np.array([1, 0], dtype=np.float32) if cohort   == "NaF" else np.array([0, 1], dtype=np.float32)
 
@@ -318,9 +325,13 @@ def run_t4b(Y_true, Y_pred, subjects, meta):
     r3  = float(np.mean(r3_list))
     mrr = float(np.mean(mrr_list))
     n   = len(r1_list)
-    chance_r1 = 1.0 / len(set(m["sid"] for m in meta if m["week_to"] == meta[0]["week_to"]))
+    # Chance varies by step because pool size differs per week_to.
+    pool_sizes = {wt: len(set(sid for (sid, wt2) in actual_pool if wt2 == wt))
+                  for wt in set(m["week_to"] for m in meta)}
+    avg_pool_size = sum(pool_sizes.values()) / len(pool_sizes)
+    chance_r1 = 1.0 / avg_pool_size
 
-    print(f"    Recall@1 = {r1:.4f}  (chance ≈ {chance_r1:.3f})")
+    print(f"    Recall@1 = {r1:.4f}  (chance ≈ {chance_r1:.3f}, avg pool size={avg_pool_size:.0f})")
     print(f"    Recall@3 = {r3:.4f}")
     print(f"    MRR      = {mrr:.4f}")
     print(f"    n pairs  = {n}")
@@ -550,7 +561,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[i] Device: {device}")
 
-    embs, subject_ids, weeks = load_embeddings(args.embeddings)
+    embs, subject_ids, weeks = load_embeddings(args.embeddings, cohort_filter="NaF")
 
     X, Y, subjects, genotypes, meta = build_pairs(
         embs, subject_ids, weeks, use_conditioning=use_conditioning

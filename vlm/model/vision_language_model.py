@@ -33,6 +33,12 @@ class VisionLanguageModel(nn.Module):
         self.multitask_wt   = multitask_wt
         self.tokenizer      = tokenizer
 
+        # Per-fold TBR normalization stats (shape: 4,). Set by the trainer after
+        # computing mean/std over valid training-fold TBR slots. Registered as
+        # buffers so they move with .to(device) and are saved in other_weights.bin.
+        self.register_buffer("tbr_mean", torch.zeros(4))
+        self.register_buffer("tbr_std",  torch.ones(4))
+
         # RAD-DINO produces 768-d embeddings
         self.vision_hidden_dim = 768
 
@@ -151,12 +157,15 @@ class VisionLanguageModel(nn.Module):
         if self.add_multitask:
             feat = self._eos_hidden_state(input_ids, outputs.hidden_states)  # (B, llm_dim)
 
-            # TBR regression (MSE, masked)
+            # TBR regression (MSE on z-scored targets, masked)
             if self.tbr_regression_head is not None and tbr_targets is not None:
                 tbr_pred    = self.tbr_regression_head(feat)               # (B, 4)
                 tbr_targets = tbr_targets.to(feat.device, dtype=feat.dtype)
                 mask        = (tbr_targets >= 0).float()
-                mse         = F.mse_loss(tbr_pred * mask, tbr_targets * mask, reduction="sum")
+                # Normalize valid targets to ~N(0,1) using fold-level stats so
+                # MSE stays O(1) regardless of raw TBR scale or multitask_wt.
+                tbr_norm    = (tbr_targets - self.tbr_mean) / self.tbr_std.clamp(min=1e-6)
+                mse         = F.mse_loss(tbr_pred * mask, tbr_norm * mask, reduction="sum")
                 mse         = mse / mask.sum().clamp(min=1)
                 loss        = loss + self.multitask_wt * mse
 
@@ -240,7 +249,7 @@ class VisionLanguageModel(nn.Module):
         torch.save(lora_state, os.path.join(lora_dir, "adapter_model.bin"))
         safetensors_save_file(lora_state, os.path.join(lora_dir, "adapter_model.safetensors"))
 
-        # Save projection layer + multitask heads
+        # Save projection layer, multitask heads, and TBR normalization stats
         other = {}
         if self.language_projection is not None:
             for k, v in self.language_projection.state_dict().items():
@@ -251,6 +260,8 @@ class VisionLanguageModel(nn.Module):
         if self.genotype_head is not None:
             for k, v in self.genotype_head.state_dict().items():
                 other[f"genotype_head.{k}"] = v.cpu()
+        other["tbr_mean"] = self.tbr_mean.cpu()
+        other["tbr_std"]  = self.tbr_std.cpu()
         torch.save(other, os.path.join(save_directory, "other_weights.bin"))
 
     @classmethod
@@ -301,5 +312,8 @@ class VisionLanguageModel(nn.Module):
             if geno_sd and model.genotype_head is not None:
                 model.genotype_head.load_state_dict(geno_sd, strict=True)
                 model.genotype_head.to(device)
+            if "tbr_mean" in other:
+                model.tbr_mean = other["tbr_mean"].to(device)
+                model.tbr_std  = other["tbr_std"].to(device)
 
         return model
