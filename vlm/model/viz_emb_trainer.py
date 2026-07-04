@@ -84,6 +84,7 @@ class VizEmbTrainer:
                 "load_projection_matrix", "num_proj_layers", "create_self_attn_block",
                 "create_x_attn_block", "num_attn_layers", "num_attn_heads", "add_x_attn_mlp",
                 "x_attn_query", "add_multitask", "add_multitask_unknown", "multitask_wt",
+                "report_to", "bf16",
             ],
             "inf": [
                 "model_name", "beg_prompt", "mid_prompt", "end_prompt",
@@ -116,6 +117,9 @@ class VizEmbTrainer:
 
     def get_training_args(self):
         p = self.params["train"]
+        # TB logs go to a sibling dir so the LOSO runner's model-weight cleanup
+        # doesn't wipe them along with checkpoints.
+        tb_log_dir = os.path.join(self.output_dir, "tb_logs")
         return transformers.TrainingArguments(
             output_dir=self.output_dir,
             per_device_train_batch_size=p["per_device_train_batch_size"],
@@ -136,7 +140,8 @@ class VizEmbTrainer:
             lr_scheduler_type=p["lr_scheduler_type"],
             warmup_ratio=p["warmup_ratio"],
             load_best_model_at_end=True,
-            report_to="tensorboard",
+            report_to=p.get("report_to", "tensorboard"),
+            logging_dir=tb_log_dir,
         )
 
     def save_model(self, model):

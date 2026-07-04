@@ -1,15 +1,13 @@
-# TinyLlama ablation: swap LLaMA-3.1-8B for TinyLlama-1.1B.
-# All other settings identical to exp3 (r=4, q/v LoRA, multitask_wt=5, z-scored TBR, 10 epochs).
-# Purpose: test whether a much smaller LLM can close the signal loss gap, and whether
-# the 8B model's capacity is wasted (or harmful) for this structured embedding task.
+# Exp 2: freeze_llm_model=True — trains only projection (~3.1M params) + heads (~1M params).
+# Tests whether LoRA fine-tuning on 93 records/fold is net-negative vs. frozen LLM.
 
 exp:
-  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_tinyllama
+  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp2_freeze_llm
 
 data:
   train_dataset: mouse_traj_vqa
   inf_dataset: mouse_traj_vqa
-  tokenizer_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  tokenizer_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   base_dir: ""
   img_dir: ""
   inf_img_dir: ""
@@ -31,14 +29,14 @@ train:
   model_name: null
   vision_model_name: None
   freeze_vision_model: True
-  freeze_llm_model: False
-  llm_model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  freeze_llm_model: True
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   pretrained: False
   load_projection_matrix: False
   use_quantization: True
-  r: 4
-  lora_alpha: 16
-  target_modules: ["q_proj", "v_proj"]
+  r: 16
+  lora_alpha: 32
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
   lora_dropout: 0.1
   bias: "none"
   task_type: "CAUSAL_LM"
@@ -68,7 +66,7 @@ train:
   save_steps: null
   add_multitask: True
   add_multitask_unknown: False
-  multitask_wt: 5.0
+  multitask_wt: 1.0
   evaluate_start: False
   gen_train_outputs: False
   gen_llava_med_train_outputs: False
@@ -76,13 +74,13 @@ train:
   report_to: "tensorboard"
 
 inf:
-  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_tinyllama/mouse_vlm_mdl
-  llm_model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp2_freeze_llm/mouse_vlm_mdl
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   load_projection_matrix: False
   use_quantization: True
-  r: 4
-  lora_alpha: 16
-  target_modules: ["q_proj", "v_proj"]
+  r: 16
+  lora_alpha: 32
+  target_modules: ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
   lora_dropout: 0.1
   bias: "none"
   task_type: "CAUSAL_LM"

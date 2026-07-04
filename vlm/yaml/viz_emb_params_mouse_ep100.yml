@@ -72,7 +72,7 @@ train:
   gen_train_outputs: False
   gen_llava_med_train_outputs: False
   resume_from_checkpoint: False
-  report_to: "none"
+  report_to: "tensorboard"
 
 inf:
   model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep100/mouse_vlm_mdl

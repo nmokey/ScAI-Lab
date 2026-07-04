@@ -1,15 +1,14 @@
-# TinyLlama ablation: swap LLaMA-3.1-8B for TinyLlama-1.1B.
-# All other settings identical to exp3 (r=4, q/v LoRA, multitask_wt=5, z-scored TBR, 10 epochs).
-# Purpose: test whether a much smaller LLM can close the signal loss gap, and whether
-# the 8B model's capacity is wasted (or harmful) for this structured embedding task.
+# Exp 3: r=4, q/v LoRA only, multitask_wt=5, normalized TBR targets.
+# Reduces LoRA params ~8x vs baseline (r=16, 7 modules). multitask_wt=5 is now
+# safe because viz_emb_trainer._tbr_norm_stats z-scores targets before MSE.
 
 exp:
-  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_tinyllama
+  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp3_combined
 
 data:
   train_dataset: mouse_traj_vqa
   inf_dataset: mouse_traj_vqa
-  tokenizer_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  tokenizer_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   base_dir: ""
   img_dir: ""
   inf_img_dir: ""
@@ -32,7 +31,7 @@ train:
   vision_model_name: None
   freeze_vision_model: True
   freeze_llm_model: False
-  llm_model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   pretrained: False
   load_projection_matrix: False
   use_quantization: True
@@ -76,8 +75,8 @@ train:
   report_to: "tensorboard"
 
 inf:
-  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_tinyllama/mouse_vlm_mdl
-  llm_model_name: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp3_combined/mouse_vlm_mdl
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   load_projection_matrix: False
   use_quantization: True
   r: 4
