@@ -366,7 +366,10 @@ class VizEmbTrainer:
                 result["genotype_logit"] = float(out["genotype_logits"][0].cpu())
                 result["genotype_label"] = sample.get("answer_vqa_numeric", {}).get("genotype")
             if "tbr_logits" in out:
-                result["tbr_regression"] = out["tbr_logits"][0].cpu().tolist()
+                # Denormalize: head predicts z-scored values; convert back to raw TBR scale
+                tbr_pred = out["tbr_logits"][0].cpu()
+                tbr_pred = tbr_pred * model.tbr_std.cpu() + model.tbr_mean.cpu()
+                result["tbr_regression"] = tbr_pred.tolist()
                 result["tbr_targets"]    = sample.get("answer_vqa_numeric", {}).get("tbr")
 
             content.append(result)
