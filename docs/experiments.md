@@ -7,6 +7,25 @@ and TBR regression MAE (Δ3wk). r and R² are reported for analysis only.
 All experiments use: 32 NaF subjects, LOSO CV, RAD-DINO embeddings (768-d),
 multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
 
+> **TBR MAE validity note:** A denormalization bug was present in inference code
+> prior to commit `1f5704f`. The regression head outputs z-scored predictions;
+> without denormalization, MAE is computed against raw TBR values (~22–33) producing
+> nonsense MAEs of ~25. Results marked ⚠️ are affected. Only runs after `1f5704f`
+> have valid TBR MAE; genotype acc is unaffected.
+
+---
+
+## Summary table
+
+| Experiment | Epochs | LLM | Geno acc | TBR MAE (Δ3wk) | TBR r (Δ3wk) | TBR MAE valid? |
+|---|---|---|---|---|---|---|
+| Baseline (ts0 only) | 10 | LLaMA-3.1-8B | 0.219 | 6.806 | −0.090 | ✓ |
+| **Longitudinal 10ep** | 10 | LLaMA-3.1-8B | 0.531 | 6.123 | 0.447 | ✓ |
+| Longitudinal 20ep | 20 | LLaMA-3.1-8B | **0.719** | ⚠️ 24.751 | 0.500 | ✗ rerunning |
+| Longitudinal 50ep | 50 | LLaMA-3.1-8B | 0.656 | ⚠️ 24.553 | 0.279 | ✗ rerunning |
+| Longitudinal 100ep | 100 | LLaMA-3.1-8B | 0.625 | ⚠️ 24.481 | 0.323 | ✗ rerunning |
+| TinyLlama 10ep | 10 | TinyLlama-1.1B | 0.344 | 6.294 | 0.548 | ✓ |
+
 ---
 
 ## Completed experiments
@@ -33,6 +52,55 @@ multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
   - TBR reg MAE (Δ3wk): 6.123, r=0.447, R²=0.131, n=64
   - TBR reg MAE (Δ6wk): 6.855, r=−0.093, R²=−0.722, n=30
   - TBR reg MAE (Δ8wk): 3.127, r=0.207, R²=−1.826, n=40
+
+### `mouse_vlm_tinyllama` — TinyLlama-1.1B backbone ✓
+- **YAML:** `viz_emb_params_mouse_tinyllama.yml`
+- **Change:** `llm_model_name` + `tokenizer_name` → `TinyLlama/TinyLlama-1.1B-Chat-v1.0`
+- **Hypothesis:** LLaMA-3.1-8B may be overparameterized for this structured embedding regression task;
+  a smaller LLM may overfit less and better preserve the linear signal that the probe can decode
+- **Results** (post-fix, valid):
+  - Genotype acc: 0.344 *(below chance — TinyLlama lacks capacity for genotype signal)*
+  - TBR reg MAE (overall): **4.794**, r=0.492, R²=**0.220**
+  - TBR reg MAE (Δ3wk): 6.294, r=0.548, R²=0.193, n=64
+  - TBR reg MAE (Δ6wk): **5.631**, r=0.557, R²=0.233, n=30
+  - TBR reg MAE (Δ8wk): **1.766**, r=−0.020, R²=−0.143, n=40
+- **Observation:** TBR regression better than 8B baseline overall (R²=0.220 vs −0.076);
+  genotype badly worse (0.344 vs 0.531). Smaller model overfits less on regression but
+  lacks capacity for genotype discrimination.
+
+---
+
+## Signal-loss investigation experiments (rerunning with denorm fix)
+
+These all use the `mouse_vlm_loso` config as the baseline and change **one variable only**.
+First runs had invalid TBR MAE due to denorm bug; reruns in progress (GPU 0: ep50→ep100, GPU 1: done).
+
+### `mouse_vlm_ep20` — epoch ablation: 20 epochs ⚠️
+- **YAML:** `viz_emb_params_mouse_ep20.yml`
+- **Change:** `num_train_epochs: 20` (was 10)
+- **Hypothesis:** model is underfitting at 10 epochs; more training should improve genotype acc and TBR MAE
+- **Results (TBR MAE invalid — pre-fix run, rerun needed):**
+  - Genotype acc: **0.719** *(valid — unaffected by denorm bug)*
+  - TBR reg MAE (Δ3wk): ~~24.751~~ *(invalid)*
+  - TBR reg r (Δ3wk): 0.500 *(valid)*
+
+### `mouse_vlm_ep50` — epoch ablation: 50 epochs ⚠️
+- **YAML:** `viz_emb_params_mouse_ep50.yml`
+- **Change:** `num_train_epochs: 50` (was 10)
+- **Hypothesis:** continued underfitting past 20 epochs
+- **Results (TBR MAE invalid — rerunning):**
+  - Genotype acc: 0.656 *(valid)*
+  - TBR reg MAE (Δ3wk): ~~24.553~~ *(invalid)*
+  - TBR reg r (Δ3wk): 0.279 *(valid)*
+
+### `mouse_vlm_ep100` — epoch ablation: 100 epochs ⚠️
+- **YAML:** `viz_emb_params_mouse_ep100.yml`
+- **Change:** `num_train_epochs: 100` (was 10)
+- **Hypothesis:** upper bound on epoch scaling; may reveal overfitting on this small dataset (32 subjects)
+- **Results (TBR MAE invalid — rerunning):**
+  - Genotype acc: 0.625 *(valid)*
+  - TBR reg MAE (Δ3wk): ~~24.481~~ *(invalid)*
+  - TBR reg r (Δ3wk): 0.323 *(valid)*
 
 ---
 
@@ -65,43 +133,6 @@ or were invalidated by the TBR z-score bug fix. Documented for provenance only.
   - Genotype acc: 0.625 *(inflated — TBR normalization was not yet applied correctly)*
   - TBR reg MAE (Δ3wk): 24.41 *(unnormalized scale, not comparable)*
   - Superseded by `mouse_vlm_loso` rerun after fixes
-
----
-
-## Signal-loss investigation experiments (pending)
-
-These all use the `mouse_vlm_loso` config as the baseline and change **one variable only**.
-
-Run with:
-```bash
-cd ~/ScAI-Lab/vlm
-CUDA_VISIBLE_DEVICES=0 bash run/run_signal_loss_experiments.sh
-```
-
-### `mouse_vlm_ep20` — epoch ablation: 20 epochs
-- **YAML:** `viz_emb_params_mouse_ep20.yml`
-- **Change:** `num_train_epochs: 20` (was 10)
-- **Hypothesis:** model is underfitting at 10 epochs; more training should improve genotype acc and TBR MAE
-- **Results:** *(pending)*
-
-### `mouse_vlm_ep50` — epoch ablation: 50 epochs
-- **YAML:** `viz_emb_params_mouse_ep50.yml`
-- **Change:** `num_train_epochs: 50` (was 10)
-- **Hypothesis:** continued underfitting past 20 epochs
-- **Results:** *(pending)*
-
-### `mouse_vlm_ep100` — epoch ablation: 100 epochs
-- **YAML:** `viz_emb_params_mouse_ep100.yml`
-- **Change:** `num_train_epochs: 100` (was 10)
-- **Hypothesis:** upper bound on epoch scaling; may reveal overfitting on this small dataset (32 subjects)
-- **Results:** *(pending)*
-
-### `mouse_vlm_tinyllama` — TinyLlama-1.1B backbone
-- **YAML:** `viz_emb_params_mouse_tinyllama.yml`
-- **Change:** `llm_model_name` + `tokenizer_name` → `TinyLlama/TinyLlama-1.1B-Chat-v1.0`
-- **Hypothesis:** LLaMA-3.1-8B may be overparameterized for this structured embedding regression task;
-  a smaller LLM may overfit less and better preserve the linear signal that the probe can decode
-- **Results:** *(pending)*
 
 ---
 
