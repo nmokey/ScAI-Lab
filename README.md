@@ -78,38 +78,30 @@ Zero-shot evaluation on 229 CT-Hi volumes, 78 mice. Full table and per-encoder a
 
 ### Longitudinal Encoder (LOSO CV, RAD-DINO embeddings, 32 NaF subjects)
 
-MLP (768+7 conditioned input → 768 output) trained to predict T_{k+1} from T_k across 129 consecutive pairs.
+MLP (768-d embedding + 7-d conditioning → 768-d output; two hidden layers with LayerNorm+GELU) trained to predict T_{k+1} from T_k across 56 consecutive pairs. Retrained on the 32 NaF subjects only to match the VLM evaluation population.
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| T4a cosine sim | 0.983 | High directional accuracy; expected given embedding cluster tightness |
-| T4b Recall@1 | 0.031 | Near-chance subject retrieval — predicts week cluster, not individual identity |
-| T4b MRR | 0.177 | Correct subject ranks ~6th out of 66 on average |
-| T4c improvement rate | 0.682 | Predictor beats returning T_k unchanged 68% of the time |
+| T4a cosine sim | 0.981 | High directional accuracy; reflects tight embedding cluster geometry |
+| T4b Recall@1 | 0.036 | Near-chance subject retrieval — predicts week cluster, not individual identity |
+| T4b MRR | 0.185 | Correct subject ranks ~5th out of 32 on average |
+| T4c improvement rate | 0.661 | Beats returning T_k unchanged 66% of the time |
 
-### VLM — baseline (single ts0 token, text-match genotype, LOSO CV, 32 NaF subjects)
+### VLM — genotype & TBR trajectory prediction (multitask heads, LOSO CV, 32 NaF subjects)
 
-| Metric | Value |
-|--------|-------|
-| Genotype accuracy (text-match) | 0.69 |
-| TBR overall MAE | 4.634 |
-| TBR overall Pearson r | 0.086 |
-| TBR overall R² | −0.176 |
+All VLM metrics come from the multitask heads on the LLM's last hidden state — genotype from a sigmoid classification head, TBR from a 4-slot regression head. (Text-generated TBR is unreliable: the LLM produced parseable output in <2% of held-out records, so the regression head is the sole reported TBR metric.) "Longitudinal" means feeding the MLP-predicted Week 15/18/20 embeddings (ts1/ts2/ts3) as extra image tokens alongside the observed Week 12 embedding (ts0).
 
-### VLM — longitudinal (4-token input + multitask heads, LOSO CV, 32 NaF subjects)
+| Model | Geno acc | TBR MAE (overall) | TBR r (Δ3wk) | TBR R² (overall) |
+|-------|----------|-------------------|--------------|------------------|
+| Baseline (ts0 only, 10 ep) | 0.219 | 6.241 | −0.090 | −0.357 |
+| Longitudinal 4-token (10 ep) | 0.531 | 5.393 | **0.447** | −0.076 |
+| **Longitudinal 4-token (20 ep)** | **0.719** | **4.736** | 0.376 | **0.104** |
 
-Adds predicted future embeddings (ts1/ts2/ts3) as additional image tokens and trains TBR regression and genotype classification heads jointly on the LLM hidden state.
-
-| Metric | Value | vs. baseline |
-|--------|-------|-------------|
-| Genotype accuracy (head) | **0.625** | −0.065 (head-based; baseline used text-match) |
-| TBR (text) overall MAE | 18.702 | worse — model generates incoherent text |
-| TBR (text) overall r | 0.080 | ≈ same |
-| TBR regression head MAE | **3.776** | — (new metric) |
-| TBR regression head r | **0.767** | — (new metric) |
-| TBR regression head R² | **0.407** | — (new metric) |
-
-The regression head (r = 0.767, R² = 0.407) is the primary TBR output — it substantially outperforms the text-generation path. Δ3wk is the strongest slot (r = 0.838, n = 64); Δ8wk is weak (r = 0.049, n = 18) due to limited data. Genotype accuracy at 62.5% is above chance (50%) from a calibrated sigmoid head. See [docs/results.md](docs/results.md) for full per-slot breakdown.
+**Key findings:**
+- **Longitudinal tokens roughly double genotype accuracy** (0.219 → 0.531 at matched 10 epochs) and flip TBR Δ3wk correlation from negative to r = 0.447 — the MLP-predicted future embeddings carry usable trajectory signal.
+- **20 epochs is the sweet spot** — best genotype accuracy (0.719), best overall TBR MAE (4.736), and the only configuration with positive overall R² (+0.104). Training further (50/100 ep) overfits back to ~0.625 genotype on this 32-subject dataset.
+- **Backbone size trades off between tasks.** Swapping LLaMA-3.1-8B for TinyLlama-1.1B improves TBR regression (overall R² 0.220 vs −0.076) but collapses genotype (0.344) — the smaller model overfits less on the numeric task but lacks capacity for genotype discrimination.
+- **A signal-loss gap remains.** A longitudinal linear probe on the same MLP-predicted embeddings reaches genotype acc 0.750 — an inflated ceiling, since the MLP conditioning vector includes genotype as an input feature. The gap between that probe and the VLM points to signal lost through the 768→4096 projection and LLM pathway, an open investigation. Δ3wk is the strongest TBR slot; Δ6wk/Δ8wk are weaker due to smaller sample sizes. See [docs/experiments.md](docs/experiments.md) for the full run log and [docs/results.md](docs/results.md) for the per-slot breakdown.
 
 ---
 

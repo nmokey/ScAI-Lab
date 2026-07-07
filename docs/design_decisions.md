@@ -205,8 +205,10 @@ An MLP (input: 768-d embedding + 7-d conditioning vector; two hidden layers of 5
 output: 768-d; architecture: Linear→LayerNorm→GELU→Linear→LayerNorm→GELU→Linear)
 is trained to predict T_{k+1} from T_k using cosine similarity loss. The conditioning
 vector encodes genotype (2-d one-hot), cohort (2-d one-hot), and transition step
-(3-d one-hot for W12→15, W15→18, W18→20). Training uses all 129 consecutive pairs
-across 78 subjects (NaF + FDG, all four timepoints where available) under LOSO CV.
+(3-d one-hot for W12→15, W15→18, W18→20). Training uses the 56 consecutive pairs
+across the 32 NaF subjects under LOSO CV. The MLP was retrained on the NaF cohort
+only (previously 78 subjects across both cohorts) so the predicted embeddings fed to
+the VLM come from exactly the VLM's evaluation population.
 
 ### Why predicted embeddings avoid leakage
 
@@ -229,5 +231,5 @@ predictions come from a fold that never trained on that subject.
 | Only 32 NaF subjects with Week 12 baseline | Small training set; high variance in LOSO metrics | FDG cohort excluded (no TBR available) |
 | RAD-DINO extracts from CT, not PET | Embedding may not capture PET signal directly | CT correlates with late-stage calcification but not early NaF signal |
 | LM cross-entropy is numerically blind for TBR | Model generates plausible-looking but numerically wrong TBR values | Regression head partially addresses this but does not constrain generation |
-| Longitudinal MLP Recall@1 = 0.031 | Predicted embeddings encode week cluster, not subject identity | Limits how much ts1/ts2/ts3 tokens help the VLM differentiate between mice |
+| Longitudinal MLP Recall@1 = 0.036 | Predicted embeddings encode week cluster, not subject identity | Limits how much ts1/ts2/ts3 tokens help the VLM differentiate between mice |
 | Val set (2 subjects) too small for single-run evaluation | Metrics from single runs are unreliable | LOSO over 32 subjects is the correct evaluation |

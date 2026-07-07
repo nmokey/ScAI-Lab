@@ -111,6 +111,8 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 
 See Summary Table above for primary reported metrics. Detailed breakdown below.
 
+> The VLM longitudinal numbers here use the default 10-epoch config (`mouse_vlm_loso`). A subsequent epoch ablation found **20 epochs is the best configuration** — genotype acc 0.719, overall TBR MAE 4.736, and the only positive overall R² (+0.104); 50/100 epochs overfit back to ~0.625 genotype. See [experiments.md](experiments.md) for the full run log (baseline, epoch sweep, TinyLlama backbone).
+
 **Setup:** LOSO CV over 32 NaF subjects × 3 question types = 96 records. All metrics are from multitask heads — text-match and text-parsed TBR are omitted (LLM did not generate well-formatted output in <2% of held-out records). Genotype: sigmoid(logit) > 0.5 threshold on the Linear(4096,1) head. TBR: Linear(4096,256)→GELU→Linear(256,4) regression head, MSE-trained with slot masking (−1 sentinel for missing future weeks).
 
 ### TBR Regression Head — Full Breakdown
