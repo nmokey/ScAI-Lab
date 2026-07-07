@@ -1,0 +1,105 @@
+# Longitudinal VLM (ts0 + predicted trajectory), 15 epochs
+# Overnight sweep (2026-07-07): 4-token input: ts0 real + ts1/ts2/ts3 MLP-predicted
+# Config: exp3 (r=4, q/v LoRA, multitask_wt=5, z-scored TBR) — the ep20 winner.
+# Only variables across the sweep are epochs and input type (ts0-only vs longitudinal).
+
+exp:
+  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep15
+
+data:
+  train_dataset: mouse_traj_vqa
+  inf_dataset: mouse_traj_vqa
+  tokenizer_name: meta-llama/Meta-Llama-3.1-8B-Instruct
+  base_dir: ""
+  img_dir: ""
+  inf_img_dir: ""
+  data_path: /data1/Processed_NIfTI_Test/embeddings/vlm/mouse_train_vqa_traj.json
+  inf_data_path: /data1/Processed_NIfTI_Test/embeddings/vlm/mouse_val_vqa_traj.json
+  data_seed: 0
+  test_size: 0.2
+  height: 224
+  width: 224
+  num_channels: 3
+  img_tokens: 4
+  predicted_emb_dir: /data1/Processed_NIfTI_Test/embeddings/longitudinal/predicted_embeddings
+  seq_length: 150
+  kg_embedder_params: null
+  prompt_type: "standard"
+
+train:
+  save_model_name: mouse_vlm_mdl
+  model_name: null
+  vision_model_name: None
+  freeze_vision_model: True
+  freeze_llm_model: False
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
+  pretrained: False
+  load_projection_matrix: False
+  use_quantization: True
+  r: 4
+  lora_alpha: 16
+  target_modules: ["q_proj", "v_proj"]
+  lora_dropout: 0.1
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  create_self_attn_block: False
+  create_x_attn_block: False
+  num_attn_layers: null
+  num_attn_heads: null
+  add_x_attn_mlp: False
+  x_attn_query: null
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  gradient_accumulation_steps: 4
+  num_train_epochs: 15
+  learning_rate: 2.0e-4
+  fp16: False
+  bf16: True
+  optim: adamw_torch_fused
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.05
+  save_total_limit: 1
+  logging_steps: 1
+  num_proj_layers: 1
+  label_names: ["labels", "tbr_targets", "genotype_label"]
+  save_strategy: epoch
+  evaluation_strategy: epoch
+  eval_steps: null
+  save_steps: null
+  add_multitask: True
+  add_multitask_unknown: False
+  multitask_wt: 5.0
+  evaluate_start: False
+  gen_train_outputs: False
+  gen_llava_med_train_outputs: False
+  resume_from_checkpoint: False
+  report_to: "tensorboard"
+
+inf:
+  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep15/mouse_vlm_mdl
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
+  load_projection_matrix: False
+  use_quantization: True
+  r: 4
+  lora_alpha: 16
+  target_modules: ["q_proj", "v_proj"]
+  lora_dropout: 0.1
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  beg_prompt: ""
+  mid_prompt: ""
+  end_prompt: ""
+  context_prompt: ""
+  replace_prompt: null
+  max_new_tokens: 100
+  top_k: null
+  similarity_threshold: null
+  decoding_kwargs:
+    num_beams: 1
+    do_sample: False
+  clean_mc: False
+  include_img: True
+  llm_only: False
+  save_file: vqa.json
+  results_file: val.json
+  train_gt_file: /data1/Processed_NIfTI_Test/embeddings/vlm/mouse_train_vqa_traj.json
