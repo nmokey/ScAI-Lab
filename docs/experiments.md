@@ -7,24 +7,18 @@ and TBR regression MAE (Δ3wk). r and R² are reported for analysis only.
 All experiments use: 32 NaF subjects, LOSO CV, RAD-DINO embeddings (768-d),
 multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
 
-> **TBR MAE validity note:** A denormalization bug was present in inference code
-> prior to commit `1f5704f`. The regression head outputs z-scored predictions;
-> without denormalization, MAE is computed against raw TBR values (~22–33) producing
-> nonsense MAEs of ~25. Results marked ⚠️ are affected. Only runs after `1f5704f`
-> have valid TBR MAE; genotype acc is unaffected.
-
 ---
 
 ## Summary table
 
-| Experiment | Epochs | LLM | Geno acc | TBR MAE (Δ3wk) | TBR r (Δ3wk) | TBR MAE valid? |
-|---|---|---|---|---|---|---|
-| Baseline (ts0 only) | 10 | LLaMA-3.1-8B | 0.219 | 6.806 | −0.090 | ✓ |
-| **Longitudinal 10ep** | 10 | LLaMA-3.1-8B | 0.531 | 6.123 | 0.447 | ✓ |
-| Longitudinal 20ep | 20 | LLaMA-3.1-8B | **0.719** | ⚠️ 24.751 | 0.500 | ✗ rerunning |
-| Longitudinal 50ep | 50 | LLaMA-3.1-8B | 0.656 | ⚠️ 24.553 | 0.279 | ✗ rerunning |
-| Longitudinal 100ep | 100 | LLaMA-3.1-8B | 0.625 | ⚠️ 24.481 | 0.323 | ✗ rerunning |
-| TinyLlama 10ep | 10 | TinyLlama-1.1B | 0.344 | 6.294 | 0.548 | ✓ |
+| Experiment | Epochs | LLM | Geno acc | TBR MAE (overall) | TBR MAE (Δ3wk) | TBR r (Δ3wk) | TBR R² (overall) |
+|---|---|---|---|---|---|---|---|
+| Baseline (ts0 only) | 10 | LLaMA-3.1-8B | 0.219 | 6.241 | 6.806 | −0.090 | −0.357 |
+| Longitudinal 10ep | 10 | LLaMA-3.1-8B | 0.531 | 5.393 | 6.123 | **0.447** | −0.076 |
+| **Longitudinal 20ep** | 20 | LLaMA-3.1-8B | **0.719** | **4.736** | 6.346 | 0.376 | **0.104** |
+| Longitudinal 50ep | 50 | LLaMA-3.1-8B | 0.625 | 5.352 | 7.459 | 0.176 | −0.011 |
+| Longitudinal 100ep | 100 | LLaMA-3.1-8B | 0.625 | 5.490 | 7.481 | 0.202 | −0.011 |
+| TinyLlama 10ep | 10 | TinyLlama-1.1B | 0.344 | 4.794 | 6.294 | 0.548 | 0.220 |
 
 ---
 
@@ -75,32 +69,42 @@ multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
 These all use the `mouse_vlm_loso` config as the baseline and change **one variable only**.
 First runs had invalid TBR MAE due to denorm bug; reruns in progress (GPU 0: ep50→ep100, GPU 1: done).
 
-### `mouse_vlm_ep20` — epoch ablation: 20 epochs ⚠️
+### `mouse_vlm_ep20` — epoch ablation: 20 epochs ✓
 - **YAML:** `viz_emb_params_mouse_ep20.yml`
 - **Change:** `num_train_epochs: 20` (was 10)
 - **Hypothesis:** model is underfitting at 10 epochs; more training should improve genotype acc and TBR MAE
-- **Results (TBR MAE invalid — pre-fix run, rerun needed):**
-  - Genotype acc: **0.719** *(valid — unaffected by denorm bug)*
-  - TBR reg MAE (Δ3wk): ~~24.751~~ *(invalid)*
-  - TBR reg r (Δ3wk): 0.500 *(valid)*
+- **Results:**
+  - Genotype acc: **0.719**
+  - TBR reg MAE (overall): **4.736**, r=0.339, R²=**0.104**
+  - TBR reg MAE (Δ3wk): 6.346, r=0.376, R²=0.100, n=64
+  - TBR reg MAE (Δ6wk): 5.437, r=0.141, R²=−0.003, n=30
+  - TBR reg MAE (Δ8wk): 1.633, r=0.070, R²=−0.067, n=40
+- **Observation:** best genotype acc and best overall MAE of all configurations;
+  Δ3wk r slightly lower than 10ep (0.376 vs 0.447) but overall R² turns positive.
 
-### `mouse_vlm_ep50` — epoch ablation: 50 epochs ⚠️
+### `mouse_vlm_ep50` — epoch ablation: 50 epochs ✓
 - **YAML:** `viz_emb_params_mouse_ep50.yml`
 - **Change:** `num_train_epochs: 50` (was 10)
 - **Hypothesis:** continued underfitting past 20 epochs
-- **Results (TBR MAE invalid — rerunning):**
-  - Genotype acc: 0.656 *(valid)*
-  - TBR reg MAE (Δ3wk): ~~24.553~~ *(invalid)*
-  - TBR reg r (Δ3wk): 0.279 *(valid)*
+- **Results:**
+  - Genotype acc: 0.625
+  - TBR reg MAE (overall): 5.352, r=0.196, R²=−0.011
+  - TBR reg MAE (Δ3wk): 7.459, r=0.176, R²=−0.025, n=64
+  - TBR reg MAE (Δ6wk): 6.302, r=−0.034, R²=−0.178, n=30
+  - TBR reg MAE (Δ8wk): 1.269, r=0.727, R²=0.408, n=40
+- **Observation:** genotype and Δ3wk both degrade vs 20ep — model is overfitting past 20 epochs.
 
-### `mouse_vlm_ep100` — epoch ablation: 100 epochs ⚠️
+### `mouse_vlm_ep100` — epoch ablation: 100 epochs ✓
 - **YAML:** `viz_emb_params_mouse_ep100.yml`
 - **Change:** `num_train_epochs: 100` (was 10)
 - **Hypothesis:** upper bound on epoch scaling; may reveal overfitting on this small dataset (32 subjects)
-- **Results (TBR MAE invalid — rerunning):**
-  - Genotype acc: 0.625 *(valid)*
-  - TBR reg MAE (Δ3wk): ~~24.481~~ *(invalid)*
-  - TBR reg r (Δ3wk): 0.323 *(valid)*
+- **Results:**
+  - Genotype acc: 0.625
+  - TBR reg MAE (overall): 5.490, r=0.247, R²=−0.011
+  - TBR reg MAE (Δ3wk): 7.481, r=0.202, R²=−0.034, n=64
+  - TBR reg MAE (Δ6wk): 6.126, r=0.176, R²=−0.076, n=30
+  - TBR reg MAE (Δ8wk): 1.827, r=0.208, R²=−0.135, n=40
+- **Observation:** nearly identical to 50ep — model saturates around 50 epochs on this dataset size.
 
 ---
 
