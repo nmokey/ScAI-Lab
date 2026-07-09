@@ -22,6 +22,69 @@ multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
 
 ---
 
+## Epoch sweep: baseline (ts0) vs longitudinal (2026-07-07)
+
+Controlled 2D ablation. All 10 runs use the **exp3 config** (r=4, q/v LoRA,
+multitask_wt=5, z-scored TBR, LLaMA-3.1-8B). The only variables are (a) epochs
+and (b) input type: baseline = ts0 only (img_tokens=1, no predicted_emb_dir);
+longitudinal = ts0 + MLP-predicted ts1/ts2/ts3 (img_tokens=4).
+
+YAMLs: `viz_emb_params_mouse_{base,long}_ep{N}.yml`. Runners:
+`run/run_sweep_gpuA_baseline.sh`, `run/run_sweep_gpuB_longitudinal.sh`.
+(long_ep20 == the earlier `mouse_vlm_ep20` run — same config.)
+
+### Genotype accuracy
+
+| Epochs | Baseline (ts0) | Longitudinal |
+|---|---|---|
+| 15 | 0.625 | 0.625 |
+| 20 | 0.500 | **0.719** ⭐ |
+| 25 | 0.375 | 0.438 |
+| 30 | 0.344 | 0.438 |
+| 40 | 0.375 | 0.656 |
+
+### TBR regression — overall MAE / R²
+
+| Epochs | Baseline MAE / R² | Longitudinal MAE / R² |
+|---|---|---|
+| 15 | 5.034 / 0.071 | **4.462 / 0.240** ⭐ |
+| 20 | 4.828 / 0.104 | 4.736 / 0.104 |
+| 25 | 4.808 / 0.065 | 5.470 / −0.075 |
+| 30 | 4.699 / 0.151 | 5.465 / −0.089 |
+| 40 | 4.914 / 0.057 | 6.200 / −0.203 |
+
+### TBR regression — Δ3wk MAE / r (n=64)
+
+| Epochs | Baseline MAE / r | Longitudinal MAE / r |
+|---|---|---|
+| 15 | 6.741 / 0.371 | 5.726 / **0.525** |
+| 20 | 6.475 / 0.301 | 6.346 / 0.376 |
+| 25 | 5.937 / 0.275 | 7.707 / −0.016 |
+| 30 | 6.196 / 0.319 | 7.345 / 0.091 |
+| 40 | 6.559 / 0.221 | 8.983 / −0.142 |
+
+### Takeaways
+
+1. **Longitudinal input drives genotype signal.** Longitudinal ≥ baseline at
+   every epoch count, peaking at **0.719 @ 20ep**. Baseline never exceeds 0.625
+   and slides toward chance (0.34–0.50) as training lengthens — the ts0-only model
+   has little stable genotype signal to lock onto. This is the strongest evidence
+   that the predicted trajectory (not just more training) is what carries genotype.
+2. **The two heads want different training lengths.** Longitudinal genotype peaks
+   at 20ep; longitudinal TBR peaks at **15ep** (MAE 4.462, R²=0.240, Δ3wk r=0.525).
+   No single epoch count is jointly optimal.
+3. **Longitudinal TBR overfits past 20ep.** Overall R² goes 0.240 → 0.104 →
+   negative (−0.075 / −0.089 / −0.203). Baseline TBR stays flat-and-positive across
+   all epochs, i.e. it is less expressive but more stable.
+4. **long_ep40 genotype (0.656) is likely noise.** The 25/30/40 longitudinal
+   genotype points (0.438, 0.438, 0.656) bounce around; with 32 LOSO folds the
+   per-point SE is large. Treat the >20ep region as "degraded," not monotonic.
+
+**Recommended configs:** longitudinal 20ep for genotype (advisor's pick, confirmed);
+longitudinal 15ep if TBR is the priority.
+
+---
+
 ## Completed experiments
 
 ### `mouse_vlm_baseline_loso` — VLM baseline (ts0 only)
