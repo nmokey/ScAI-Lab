@@ -93,9 +93,12 @@ collectively replace the single `<image>` placeholder in the prompt sequence.
 
 ### Language model
 
-LLaMA-3.1-8B-Instruct, LoRA fine-tuned (r=16, α=32) on all attention and MLP projection
-layers (q/k/v/o/gate/up/down_proj). The base LLM weights are frozen except for the LoRA
-adapters.
+LLaMA-3.1-8B-Instruct, LoRA fine-tuned. The canonical config uses **r=4, α=16 on the
+query/value projections only** (`q_proj`, `v_proj`); the base LLM weights are frozen
+except for the LoRA adapters. This is a deliberate ~8× reduction from the original
+r=16/α=32 on all seven attention+MLP projection layers — on 31 training subjects per fold,
+the smaller adapter overfits less and, combined with 20 epochs, gives the best genotype
+and TBR results (see [experiments.md](experiments.md)).
 
 ### Multitask heads
 
@@ -172,8 +175,9 @@ Three question types per subject (32 NaF subjects with a Week 12 scan + ≥1 fut
    → relative week deltas from Week 12 (Week 3, Week 6, Week 8) with TBR values
 3. **Combined**: TBR trajectory + genotype in one question/answer
 
-Total: **96 records** (32 subjects × 3 question types).
-The primary evaluation is LOSO CV (see below). A fixed 84/6/6 train/val/test split is used only for single-run development checks (`train_single_fold.py`); it is not used for reported results.
+Total: **96 records** (32 subjects × 3 question types). The primary evaluation is LOSO CV
+(see below); a fixed 84/6/6 train/val/test split is used only for single-run development
+checks (`run/run_mouse_vlm_single.py`) and is not used for reported results.
 
 ### TBR answer format: relative weeks
 
@@ -193,7 +197,6 @@ future timepoints of a held-out subject into training.
 The primary evaluation is Leave-One-Subject-Out cross-validation: train on 31 subjects,
 evaluate on 1, rotate across all 32. This gives 96 held-out predictions (every record
 evaluated exactly once) and is the correct protocol given the small dataset size.
-The 84/6/6 split is used only for quick single-run development checks.
 
 ---
 

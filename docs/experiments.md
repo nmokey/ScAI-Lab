@@ -100,11 +100,13 @@ longitudinal 15ep if TBR is the priority.
   - TBR reg MAE (Δ6wk): 7.568, r=−0.243, R²=−0.957, n=30
   - TBR reg MAE (Δ8wk): 4.340, r=0.069, R²=−4.421, n=40
 
-### `mouse_vlm_loso` — VLM longitudinal, current best (exp3 config)
+### `mouse_vlm_loso` — VLM longitudinal, 10-epoch (exp3 config)
 - **YAML:** `viz_emb_params_mouse_exp3_combined.yml`
 - **Key settings:** img_tokens=4 (ts0 real + ts1/ts2/ts3 MLP-predicted), r=4 q/v LoRA only,
   multitask_wt=5, z-scored TBR targets, 10 epochs
-- **Purpose:** primary longitudinal result; combines lessons from exp1–3
+- **Purpose:** combines lessons from exp1–3. Superseded as the headline result by
+  `mouse_vlm_ep20` (same config, 20 epochs) — see below; the 20-epoch config is the
+  canonical default (`viz_emb_params_mouse.yml`).
 - **Results:**
   - Genotype acc: **0.531** / AUROC: **0.560**
   - TBR reg MAE (overall): 5.393, r=0.276, R²=−0.076
@@ -129,13 +131,13 @@ longitudinal 15ep if TBR is the priority.
 
 ---
 
-## Signal-loss investigation experiments (rerunning with denorm fix)
+## Epoch and architecture ablations (post denorm-fix)
 
 These all use the `mouse_vlm_loso` config as the baseline and change **one variable only**.
-First runs had invalid TBR MAE due to denorm bug; reruns in progress (GPU 0: ep50→ep100, GPU 1: done).
+(An earlier round had invalid TBR MAE from a denorm bug; all runs below are post-fix.)
 
-### `mouse_vlm_ep20` — epoch ablation: 20 epochs ✓
-- **YAML:** `viz_emb_params_mouse_ep20.yml`
+### `mouse_vlm_ep20` — epoch ablation: 20 epochs ✓ (CANONICAL / headline result)
+- **YAML:** `viz_emb_params_mouse_ep20.yml` — identical to the canonical default `viz_emb_params_mouse.yml`
 - **Change:** `num_train_epochs: 20` (was 10)
 - **Hypothesis:** model is underfitting at 10 epochs; more training should improve genotype acc and TBR MAE
 - **Results:**

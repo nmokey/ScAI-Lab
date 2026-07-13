@@ -69,7 +69,7 @@ class VizEmbTrainer:
                 "tokenizer_name", "data_path", "test_size", "data_seed",
                 "train_dataset", "inf_dataset", "base_dir", "img_dir", "inf_img_dir",
                 "height", "width", "num_channels", "img_tokens", "seq_length",
-                "inf_data_path", "kg_embedder_params", "prompt_type",
+                "inf_data_path", "prompt_type",
             ],
             "train": [
                 "model_name", "save_model_name", "use_quantization", "r", "lora_alpha",
@@ -78,21 +78,18 @@ class VizEmbTrainer:
                 "gradient_accumulation_steps", "num_train_epochs", "learning_rate", "fp16",
                 "save_total_limit", "logging_steps", "save_strategy", "evaluation_strategy",
                 "eval_steps", "save_steps", "optim", "lr_scheduler_type", "warmup_ratio",
-                "resume_from_checkpoint", "evaluate_start", "gen_train_outputs",
-                "gen_llava_med_train_outputs", "label_names",
+                "resume_from_checkpoint", "evaluate_start", "label_names",
                 "vision_model_name", "freeze_llm_model", "freeze_vision_model", "pretrained",
-                "load_projection_matrix", "num_proj_layers", "create_self_attn_block",
-                "create_x_attn_block", "num_attn_layers", "num_attn_heads", "add_x_attn_mlp",
-                "x_attn_query", "add_multitask", "add_multitask_unknown", "multitask_wt",
+                "load_projection_matrix", "num_proj_layers",
+                "add_multitask", "add_multitask_unknown", "multitask_wt",
                 "report_to", "bf16",
             ],
             "inf": [
                 "model_name", "beg_prompt", "mid_prompt", "end_prompt",
                 "llm_model_name", "use_quantization", "r", "lora_alpha", "target_modules",
                 "lora_dropout", "bias", "task_type", "load_projection_matrix",
-                "context_prompt", "replace_prompt", "max_new_tokens", "top_k",
-                "similarity_threshold", "decoding_kwargs", "clean_mc", "include_img",
-                "save_file", "results_file", "llm_only", "train_gt_file",
+                "replace_prompt", "max_new_tokens", "decoding_kwargs", "include_img",
+                "save_file", "results_file", "train_gt_file",
             ],
         }
 
@@ -154,10 +151,6 @@ class VizEmbTrainer:
     @property
     def pad_token(self):
         return "<|finetune_right_pad_id|>"
-
-    @property
-    def pixel_values_dtype(self):
-        return torch.float
 
     # ------------------------------------------------------------------
     # Training
@@ -267,12 +260,6 @@ class VizEmbTrainer:
             lora_dropout=section["lora_dropout"],
             bias=section["bias"], task_type=section["task_type"],
         )
-
-    def load_vision_model(self):
-        return None, None
-
-    def get_vision_model_norm_params(self):
-        return None, None
 
     # ------------------------------------------------------------------
     # Data

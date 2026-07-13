@@ -157,8 +157,9 @@ python scripts/train_longitudinal.py
 python scripts/create_mouse_traj_dataset.py
 
 # 6. Train VLM with LOSO CV (longitudinal 4-token input + multitask heads)
+#    The default yaml is the canonical config — this reproduces the headline result.
 cd vlm && CUDA_VISIBLE_DEVICES=0 python run/run_mouse_vlm_loso.py
-# → results in vlm/runs/mouse_vlm_longitudinal/loso_results.json
+# → {output_dir}/embeddings/vlm/runs/mouse_vlm_loso/loso_results.json
 ```
 
 ---
@@ -176,7 +177,8 @@ vlm/
   yaml/                   Training hyperparameter configs
 docs/
   DATA_MANIFEST.md        Full scan inventory, mouse mappings, data heuristics
-  results.md              Zero-shot encoder evaluation — full tables and analysis
+  results.md              Encoder + VLM evaluation — full tables and analysis
+  experiments.md          VLM experiment log (all LOSO runs, ablations, sweeps)
   design_decisions.md     Non-obvious design choices and known limitations
   QA_REPORT.md            Dataset QA verification report
 manifest.csv              Session-level DICOM inventory (147 rows)

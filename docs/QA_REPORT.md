@@ -50,6 +50,8 @@ The file-size heuristic (PET ≈115 KB ±5%, CT-Hi ≈2814 KB ±5%, CT-Lo ≈705
 
 ### 3a. DISCREPANCY: m54223 — NaF PET present but manifest says absent
 
+> **RESOLVED** — investigated and fixed; see [§7 Fix 2](#fix-2-m54223-naf-pet-status-corrected--done). DICOM tag inspection confirmed the NaF PET is genuine; the manifest and per-modality merge were corrected. The discussion below is the original finding, kept for provenance.
+
 | Field | Manifest | Actual (heuristic) |
 |---|---|---|
 | `has_pet` | `False` | **True** (191 PET-sized files in `dicom_m54223`) |

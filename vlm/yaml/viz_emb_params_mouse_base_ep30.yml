@@ -23,7 +23,6 @@ data:
   img_tokens: 1
   predicted_emb_dir: null
   seq_length: 150
-  kg_embedder_params: null
   prompt_type: "standard"
 
 train:
@@ -42,12 +41,6 @@ train:
   lora_dropout: 0.1
   bias: "none"
   task_type: "CAUSAL_LM"
-  create_self_attn_block: False
-  create_x_attn_block: False
-  num_attn_layers: null
-  num_attn_heads: null
-  add_x_attn_mlp: False
-  x_attn_query: null
   per_device_train_batch_size: 2
   per_device_eval_batch_size: 2
   gradient_accumulation_steps: 4
@@ -70,8 +63,6 @@ train:
   add_multitask_unknown: False
   multitask_wt: 5.0
   evaluate_start: False
-  gen_train_outputs: False
-  gen_llava_med_train_outputs: False
   resume_from_checkpoint: False
   report_to: "tensorboard"
 
@@ -89,17 +80,12 @@ inf:
   beg_prompt: ""
   mid_prompt: ""
   end_prompt: ""
-  context_prompt: ""
   replace_prompt: null
   max_new_tokens: 100
-  top_k: null
-  similarity_threshold: null
   decoding_kwargs:
     num_beams: 1
     do_sample: False
-  clean_mc: False
   include_img: True
-  llm_only: False
   save_file: vqa.json
   results_file: val.json
   train_gt_file: /data1/Processed_NIfTI_Test/embeddings/vlm/mouse_train_vqa_traj.json
