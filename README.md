@@ -13,6 +13,12 @@ Atherosclerosis (arterial plaque build-up) is the leading cause of cardiovascula
 2. Can a VLM predict future aortic TBR trajectory and genotype from a single baseline scan embedding?
 3. Does feeding longitudinal encoder predictions as additional image tokens improve VLM performance?
 
+## Key Takeaways
+
+1. **Yes — but only one encoder.** Of four zero-shot human-pretrained encoders, **RAD-DINO** (a 2D chest-X-ray ViT applied slice-wise) cleanly separates early vs. late disease (AUC = 1.000) and is the *only* encoder with real genotype signal (WT-vs-KO AUC = 0.869); the 3D CT encoders are near chance on genotype. Human-centric encoders *can* read mouse disease progression, but capability is model-specific, not guaranteed. No encoder does subject retrieval (Recall@1 < 5%).
+2. **Yes for genotype, weakly for TBR.** From a single Week 12 scan, the best VLM predicts genotype at 0.719 accuracy / 0.762 AUROC and recovers a positive TBR trajectory signal (Δ3wk r ≈ 0.4). TBR is inherently noisy — the ground truth is a population-level programmatic proxy, not a per-mouse gold standard (see [design_decisions.md](docs/design_decisions.md)).
+3. **Yes — this is the central result.** Feeding MLP-predicted future embeddings as extra image tokens is what carries the genotype signal: it roughly doubles accuracy (0.219 → 0.531 at matched epochs) and lifts AUROC from below-chance (0.163) to 0.560, and to 0.762 at 20 epochs. A single-scan baseline has no stable genotype signal to learn.
+
 ---
 
 ## Dataset
@@ -91,17 +97,20 @@ MLP (768-d embedding + 7-d conditioning → 768-d output; two hidden layers with
 
 All VLM metrics come from the multitask heads on the LLM's last hidden state — genotype from a sigmoid classification head, TBR from a 4-slot regression head. (Text-generated TBR is unreliable: the LLM produced parseable output in <2% of held-out records, so the regression head is the sole reported TBR metric.) "Longitudinal" means feeding the MLP-predicted Week 15/18/20 embeddings (ts1/ts2/ts3) as extra image tokens alongside the observed Week 12 embedding (ts0).
 
-| Model | Geno acc | TBR MAE (overall) | TBR r (Δ3wk) | TBR R² (overall) |
-|-------|----------|-------------------|--------------|------------------|
-| Baseline (ts0 only, 10 ep) | 0.219 | 6.241 | −0.090 | −0.357 |
-| Longitudinal 4-token (10 ep) | 0.531 | 5.393 | **0.447** | −0.076 |
-| **Longitudinal 4-token (20 ep)** | **0.719** | **4.736** | 0.376 | **0.104** |
+Genotype is a binary WT-vs-KO task (chance: acc 0.5, AUROC 0.5); both accuracy and AUROC come from the sigmoid classification head.
+
+| Model | Geno acc | Geno AUROC | TBR MAE (overall) | TBR r (Δ3wk) | TBR R² (overall) |
+|-------|----------|------------|-------------------|--------------|------------------|
+| Baseline (ts0 only, 10 ep) | 0.219 | 0.163 | 6.241 | −0.090 | −0.357 |
+| Longitudinal 4-token (10 ep) | 0.531 | 0.560 | 5.393 | **0.447** | −0.076 |
+| **Longitudinal 4-token (20 ep)** | **0.719** | **0.762** | **4.736** | 0.376 | **0.104** |
 
 **Key findings:**
-- **Longitudinal tokens roughly double genotype accuracy** (0.219 → 0.531 at matched 10 epochs) and flip TBR Δ3wk correlation from negative to r = 0.447 — the MLP-predicted future embeddings carry usable trajectory signal.
-- **20 epochs is the sweet spot** — best genotype accuracy (0.719), best overall TBR MAE (4.736), and the only configuration with positive overall R² (+0.104). Training further (50/100 ep) overfits back to ~0.625 genotype on this 32-subject dataset.
-- **Backbone size trades off between tasks.** Swapping LLaMA-3.1-8B for TinyLlama-1.1B improves TBR regression (overall R² 0.220 vs −0.076) but collapses genotype (0.344) — the smaller model overfits less on the numeric task but lacks capacity for genotype discrimination.
-- **A signal-loss gap remains.** A longitudinal linear probe on the same MLP-predicted embeddings reaches genotype acc 0.750 — an inflated ceiling, since the MLP conditioning vector includes genotype as an input feature. The gap between that probe and the VLM points to signal lost through the 768→4096 projection and LLM pathway, an open investigation. Δ3wk is the strongest TBR slot; Δ6wk/Δ8wk are weaker due to smaller sample sizes. See [docs/experiments.md](docs/experiments.md) for the full run log and [docs/results.md](docs/results.md) for the per-slot breakdown.
+- **Longitudinal tokens are what carry genotype signal.** At matched 10 epochs, adding the MLP-predicted future embeddings roughly doubles genotype accuracy (0.219 → 0.531) and lifts AUROC from 0.163 to 0.560. The ts0-only baseline sits *below chance* on AUROC (0.163) — its head ranks genotype anti-correlated, i.e. there is no stable single-scan genotype signal to learn. Longitudinal tokens also flip TBR Δ3wk correlation from negative to r = 0.447.
+- **20 epochs is the sweet spot** — best genotype (acc 0.719, AUROC 0.762), best overall TBR MAE (4.736), and the only configuration with positive overall R² (+0.104). Training further (50/100 ep) overfits back to ~0.625 genotype on this 32-subject dataset.
+- **The genotype "signal-loss gap" is mostly underfitting, not a pathway limit.** A longitudinal linear probe on the same MLP-predicted embeddings reaches AUROC 0.718 — an inflated ceiling, since the MLP conditioning vector includes genotype as an input feature. At 10 epochs the VLM (AUROC 0.560) trails that ceiling, but at 20 epochs it reaches 0.762, *matching/exceeding* the probe. So the projection + LLM pathway can recover the probe-level genotype signal given enough training; the apparent loss at 10ep is an underfitting artifact. (It should not be over-read, since condition B is itself inflated.)
+- **Backbone size trades off between tasks.** Swapping LLaMA-3.1-8B for TinyLlama-1.1B improves TBR regression (overall R² 0.220 vs −0.076) but collapses genotype (acc 0.344, AUROC 0.397 — below chance) — the smaller model overfits less on the numeric task but lacks capacity for genotype discrimination.
+- Δ3wk is the strongest TBR slot; Δ6wk/Δ8wk are weaker due to smaller sample sizes. See [docs/experiments.md](docs/experiments.md) for the full run log and [docs/results.md](docs/results.md) for the per-slot breakdown.
 
 ---
 

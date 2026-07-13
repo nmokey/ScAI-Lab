@@ -11,14 +11,14 @@ multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
 
 ## Summary table
 
-| Experiment | Epochs | LLM | Geno acc | TBR MAE (overall) | TBR MAE (Δ3wk) | TBR r (Δ3wk) | TBR R² (overall) |
-|---|---|---|---|---|---|---|---|
-| Baseline (ts0 only) | 10 | LLaMA-3.1-8B | 0.219 | 6.241 | 6.806 | −0.090 | −0.357 |
-| Longitudinal 10ep | 10 | LLaMA-3.1-8B | 0.531 | 5.393 | 6.123 | **0.447** | −0.076 |
-| **Longitudinal 20ep** | 20 | LLaMA-3.1-8B | **0.719** | **4.736** | 6.346 | 0.376 | **0.104** |
-| Longitudinal 50ep | 50 | LLaMA-3.1-8B | 0.625 | 5.352 | 7.459 | 0.176 | −0.011 |
-| Longitudinal 100ep | 100 | LLaMA-3.1-8B | 0.625 | 5.490 | 7.481 | 0.202 | −0.011 |
-| TinyLlama 10ep | 10 | TinyLlama-1.1B | 0.344 | 4.794 | 6.294 | 0.548 | 0.220 |
+| Experiment | Epochs | LLM | Geno acc | Geno AUC | TBR MAE (overall) | TBR MAE (Δ3wk) | TBR r (Δ3wk) | TBR R² (overall) |
+|---|---|---|---|---|---|---|---|---|
+| Baseline (ts0 only) | 10 | LLaMA-3.1-8B | 0.219 | 0.163 | 6.241 | 6.806 | −0.090 | −0.357 |
+| Longitudinal 10ep | 10 | LLaMA-3.1-8B | 0.531 | 0.560 | 5.393 | 6.123 | **0.447** | −0.076 |
+| **Longitudinal 20ep** | 20 | LLaMA-3.1-8B | **0.719** | **0.762** | **4.736** | 6.346 | 0.376 | **0.104** |
+| Longitudinal 50ep | 50 | LLaMA-3.1-8B | 0.625 | 0.627 | 5.352 | 7.459 | 0.176 | −0.011 |
+| Longitudinal 100ep | 100 | LLaMA-3.1-8B | 0.625 | 0.714 | 5.490 | 7.481 | 0.202 | −0.011 |
+| TinyLlama 10ep | 10 | TinyLlama-1.1B | 0.344 | 0.397 | 4.794 | 6.294 | 0.548 | 0.220 |
 
 ---
 
@@ -33,15 +33,15 @@ YAMLs: `viz_emb_params_mouse_{base,long}_ep{N}.yml`. Runners:
 `run/run_sweep_gpuA_baseline.sh`, `run/run_sweep_gpuB_longitudinal.sh`.
 (long_ep20 == the earlier `mouse_vlm_ep20` run — same config.)
 
-### Genotype accuracy
+### Genotype accuracy / AUROC
 
-| Epochs | Baseline (ts0) | Longitudinal |
+| Epochs | Baseline (ts0) acc / AUC | Longitudinal acc / AUC |
 |---|---|---|
-| 15 | 0.625 | 0.625 |
-| 20 | 0.500 | **0.719** ⭐ |
-| 25 | 0.375 | 0.438 |
-| 30 | 0.344 | 0.438 |
-| 40 | 0.375 | 0.656 |
+| 15 | 0.625 / 0.623 | 0.625 / 0.635 |
+| 20 | 0.500 / 0.583 | **0.719 / 0.762** ⭐ |
+| 25 | 0.375 / 0.345 | 0.438 / 0.421 |
+| 30 | 0.344 / 0.298 | 0.438 / 0.536 |
+| 40 | 0.375 / 0.349 | 0.656 / 0.595 |
 
 ### TBR regression — overall MAE / R²
 
@@ -65,11 +65,13 @@ YAMLs: `viz_emb_params_mouse_{base,long}_ep{N}.yml`. Runners:
 
 ### Takeaways
 
-1. **Longitudinal input drives genotype signal.** Longitudinal ≥ baseline at
-   every epoch count, peaking at **0.719 @ 20ep**. Baseline never exceeds 0.625
-   and slides toward chance (0.34–0.50) as training lengthens — the ts0-only model
-   has little stable genotype signal to lock onto. This is the strongest evidence
-   that the predicted trajectory (not just more training) is what carries genotype.
+1. **Longitudinal input drives genotype signal.** Longitudinal ≥ baseline on both
+   accuracy and AUROC at every epoch count, peaking at **0.719 acc / 0.762 AUC @ 20ep**.
+   Baseline never exceeds 0.625 acc and its AUROC slides *below* chance as training
+   lengthens (0.35 / 0.30 / 0.35 at 25/30/40ep, 0.163 at the 10ep default) — the
+   ts0-only head not only fails to separate genotype but ranks it anti-correlated,
+   a hallmark of overfitting with no stable signal to lock onto. This is the strongest
+   evidence that the predicted trajectory (not just more training) is what carries genotype.
 2. **The two heads want different training lengths.** Longitudinal genotype peaks
    at 20ep; longitudinal TBR peaks at **15ep** (MAE 4.462, R²=0.240, Δ3wk r=0.525).
    No single epoch count is jointly optimal.
@@ -92,7 +94,7 @@ longitudinal 15ep if TBR is the priority.
 - **Key settings:** img_tokens=1, no predicted_emb_dir, r=16 full LoRA, multitask_wt=1, 10 epochs
 - **Purpose:** lower bound — what can the VLM do from a single scan?
 - **Results:**
-  - Genotype acc: **0.219**
+  - Genotype acc: **0.219** / AUROC: **0.163** *(below chance — head ranks genotype anti-correlated)*
   - TBR reg MAE (overall): 6.241, r=−0.054, R²=−0.357
   - TBR reg MAE (Δ3wk): 6.806, r=−0.090, R²=−0.088, n=64
   - TBR reg MAE (Δ6wk): 7.568, r=−0.243, R²=−0.957, n=30
@@ -104,7 +106,7 @@ longitudinal 15ep if TBR is the priority.
   multitask_wt=5, z-scored TBR targets, 10 epochs
 - **Purpose:** primary longitudinal result; combines lessons from exp1–3
 - **Results:**
-  - Genotype acc: **0.531**
+  - Genotype acc: **0.531** / AUROC: **0.560**
   - TBR reg MAE (overall): 5.393, r=0.276, R²=−0.076
   - TBR reg MAE (Δ3wk): 6.123, r=0.447, R²=0.131, n=64
   - TBR reg MAE (Δ6wk): 6.855, r=−0.093, R²=−0.722, n=30
@@ -116,7 +118,7 @@ longitudinal 15ep if TBR is the priority.
 - **Hypothesis:** LLaMA-3.1-8B may be overparameterized for this structured embedding regression task;
   a smaller LLM may overfit less and better preserve the linear signal that the probe can decode
 - **Results** (post-fix, valid):
-  - Genotype acc: 0.344 *(below chance — TinyLlama lacks capacity for genotype signal)*
+  - Genotype acc: 0.344 / AUROC: 0.397 *(both below chance — TinyLlama lacks capacity for genotype signal)*
   - TBR reg MAE (overall): **4.794**, r=0.492, R²=**0.220**
   - TBR reg MAE (Δ3wk): 6.294, r=0.548, R²=0.193, n=64
   - TBR reg MAE (Δ6wk): **5.631**, r=0.557, R²=0.233, n=30
@@ -137,7 +139,7 @@ First runs had invalid TBR MAE due to denorm bug; reruns in progress (GPU 0: ep5
 - **Change:** `num_train_epochs: 20` (was 10)
 - **Hypothesis:** model is underfitting at 10 epochs; more training should improve genotype acc and TBR MAE
 - **Results:**
-  - Genotype acc: **0.719**
+  - Genotype acc: **0.719** / AUROC: **0.762**
   - TBR reg MAE (overall): **4.736**, r=0.339, R²=**0.104**
   - TBR reg MAE (Δ3wk): 6.346, r=0.376, R²=0.100, n=64
   - TBR reg MAE (Δ6wk): 5.437, r=0.141, R²=−0.003, n=30
@@ -150,7 +152,7 @@ First runs had invalid TBR MAE due to denorm bug; reruns in progress (GPU 0: ep5
 - **Change:** `num_train_epochs: 50` (was 10)
 - **Hypothesis:** continued underfitting past 20 epochs
 - **Results:**
-  - Genotype acc: 0.625
+  - Genotype acc: 0.625 / AUROC: 0.627
   - TBR reg MAE (overall): 5.352, r=0.196, R²=−0.011
   - TBR reg MAE (Δ3wk): 7.459, r=0.176, R²=−0.025, n=64
   - TBR reg MAE (Δ6wk): 6.302, r=−0.034, R²=−0.178, n=30
@@ -162,7 +164,7 @@ First runs had invalid TBR MAE due to denorm bug; reruns in progress (GPU 0: ep5
 - **Change:** `num_train_epochs: 100` (was 10)
 - **Hypothesis:** upper bound on epoch scaling; may reveal overfitting on this small dataset (32 subjects)
 - **Results:**
-  - Genotype acc: 0.625
+  - Genotype acc: 0.625 / AUROC: 0.714
   - TBR reg MAE (overall): 5.490, r=0.247, R²=−0.011
   - TBR reg MAE (Δ3wk): 7.481, r=0.202, R²=−0.034, n=64
   - TBR reg MAE (Δ6wk): 6.126, r=0.176, R²=−0.076, n=30

@@ -17,12 +17,13 @@ Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis 
 | **A1** RAD-DINO linear probe | ts0 only (real) | 0.406 | 0.353 | −0.153 | −0.250 | −0.200 |
 | **A2** RAD-DINO linear probe | ts0+ts1+ts2+ts3 (all real) | 0.406 | 0.401 | **0.432** | 0.350 | 0.085 |
 | **B** Longitudinal linear probe | ts0 real + ts1/ts2/ts3 MLP-predicted | **0.750** | **0.718** | 0.225 | 0.030 | −0.323 |
-| **VLM baseline** | ts0 only | 0.219 | — | −0.054 | −0.090 | −0.088 |
-| **VLM longitudinal** | ts0 real + ts1/ts2/ts3 MLP-predicted | 0.531 | — | 0.276 | **0.447** | **0.131** |
+| **VLM baseline** | ts0 only | 0.219 | 0.163 | −0.054 | −0.090 | −0.088 |
+| **VLM longitudinal** (10ep) | ts0 real + ts1/ts2/ts3 MLP-predicted | 0.531 | 0.560 | 0.276 | **0.447** | **0.131** |
+| **VLM longitudinal** (20ep, best) | ts0 real + ts1/ts2/ts3 MLP-predicted | **0.719** | **0.762** | 0.339 | 0.376 | 0.100 |
 
 **Notes on condition B:** The longitudinal linear probe (B) genotype acc=0.750/AUC=0.718 is likely inflated. The longitudinal MLP conditioning vector includes genotype as an explicit input feature, so MLP-predicted embeddings implicitly encode the label. This is not signal the VLM can equivalently exploit. Condition B should be treated as an upper-bound reference, not a fair comparison. The MLP was retrained on the 32 NaF subjects only (matching the VLM population) to remove an additional source of advantage from the prior 78-subject mixed-cohort training.
 
-**The key discrepancy:** The VLM longitudinal model (genotype acc=0.531) underperforms condition B (acc=0.750, AUC=0.718) by ~19 AUC points despite receiving the same MLP-predicted ts1/ts2/ts3 embeddings as input. This gap — image domain signal surviving in a linear probe but degrading through the LLM pathway — is an open investigation question (see signal loss investigation system prompt).
+**The key discrepancy (epoch-dependent):** At the 10-epoch default, the VLM longitudinal model (acc=0.531, AUROC=0.560) underperforms condition B (acc=0.750, AUROC=0.718) by ~0.16 AUROC despite receiving the same MLP-predicted ts1/ts2/ts3 embeddings — consistent with signal surviving in a linear probe but degrading through the LLM pathway. However, at 20 epochs the VLM reaches AUROC=0.762, *matching/exceeding* the condition-B ceiling. So the "signal loss" is largely an underfitting artifact of the 10-epoch config, not a fundamental limit of the LLM pathway — the projection+LLM can recover the probe-level genotype signal given enough training, though it then overfits past 20ep (see [experiments.md](experiments.md)). Note condition B is itself an inflated ceiling (genotype leaks into the MLP conditioning vector), so the 20ep VLM matching it should not be over-read.
 
 ---
 

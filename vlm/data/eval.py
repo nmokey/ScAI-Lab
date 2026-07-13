@@ -39,6 +39,34 @@ def _r2(ys_true, ys_pred):
     return 1 - ss_res / ss_tot if ss_tot > 0 else float("nan")
 
 
+def _auroc(labels, scores):
+    """Binary AUROC via the rank-based (Mann-Whitney U) formula, with tie handling.
+
+    labels: 0/1 ground-truth; scores: continuous decision values (higher → class 1).
+    The genotype head emits one logit, a monotonic function of P(KO), so the raw
+    logit works directly as the score. Returns NaN if either class is absent.
+    """
+    n = len(labels)
+    n_pos = sum(labels)
+    n_neg = n - n_pos
+    if n_pos == 0 or n_neg == 0:
+        return float("nan")
+    # Average ranks (1-based), tie groups share the mean of their positions.
+    order = sorted(range(n), key=lambda i: scores[i])
+    ranks = [0.0] * n
+    i = 0
+    while i < n:
+        j = i
+        while j + 1 < n and scores[order[j + 1]] == scores[order[i]]:
+            j += 1
+        avg_rank = (i + j) / 2.0 + 1.0  # mean of positions i..j, converted to 1-based
+        for k in range(i, j + 1):
+            ranks[order[k]] = avg_rank
+        i = j + 1
+    sum_ranks_pos = sum(r for r, lbl in zip(ranks, labels) if lbl == 1)
+    return (sum_ranks_pos - n_pos * (n_pos + 1) / 2.0) / (n_pos * n_neg)
+
+
 def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     with open(pred_file) as f:
         preds = json.load(f)
@@ -50,6 +78,7 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     # Records without it fall back to text matching.
     head_correct, head_n   = 0, 0
     text_correct, text_n   = 0, 0
+    geno_labels, geno_scores = [], []  # for head-based AUROC (label, raw logit)
 
     tbr_pairs = defaultdict(lambda: {"gt": [], "pred": []})  # week -> lists
     tbr_q_n, combined_q_n = 0, 0
@@ -75,6 +104,8 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
                 pred_label = 1 if p["genotype_logit"] > 0.0 else 0
                 head_correct += int(gt_label == pred_label)
                 head_n += 1
+                geno_labels.append(gt_label)
+                geno_scores.append(p["genotype_logit"])
             else:
                 # Fallback: text matching
                 pred_geno = "KO" if "KO" in model_ans.upper() else ("WT" if "WT" in model_ans.upper() else "")
@@ -98,6 +129,8 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     geno_n          = head_n + text_n
     correct_geno    = head_correct + text_correct
     head_based      = head_n > 0
+    # AUROC is only defined for the head-based scores (needs continuous logits + both classes)
+    geno_auc        = _auroc(geno_labels, geno_scores) if head_based else float("nan")
 
     # Per-week TBR metrics
     tbr_results = {}
@@ -158,6 +191,7 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     results = {
         "total":                    total,
         "genotype_acc":             round(correct_geno / max(geno_n, 1), 3),
+        "genotype_auc":             round(geno_auc, 3) if geno_auc == geno_auc else None,
         "genotype_n":               geno_n,
         "genotype_acc_source":      "multitask_head" if head_based else "text_match",
         "genotype_head_n":          head_n,
@@ -177,6 +211,8 @@ def calculate_mouse_metrics(gt_file, train_gt_file, pred_file, out_file):
     print("\n=== Mouse Trajectory VLM Evaluation ===")
     src = "multitask head" if head_based else "text match"
     print(f"  Genotype accuracy : {results['genotype_acc']:.3f}  (n={geno_n}, source={src})")
+    if results["genotype_auc"] is not None:
+        print(f"  Genotype AUROC    : {results['genotype_auc']:.3f}  (head-based, n={head_n}, chance=0.5)")
     if head_based and text_n > 0:
         print(f"    head-based: {head_correct}/{head_n}  text-match: {text_correct}/{text_n}")
     if all_gt:
