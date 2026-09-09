@@ -1,0 +1,46 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * *"   # nightly, for the slow control suite
+
+jobs:
+  # Green gate. Everything except the diagnostic probes, which are expected to
+  # fail until the findings they document are fixed.
+  suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Fast tests
+        run: pytest -m "not slow and not probe and not realdata" -v
+      - name: Regression locks on fixed findings
+        # F4, F6, F7, F8, F9 are fixed; these guards must stay green.
+        run: pytest tests/pipeline tests/unit/test_determinism.py -m "not realdata" -v
+      - name: Control suite
+        if: github.event_name == 'schedule'
+        run: pytest -m "slow and not probe and not realdata" -v
+
+  # Diagnostics for findings that are still OPEN -- F1, F2, F3, F5, F10. These FAIL by
+  # design; each failure is a documented finding (leakage, confounding, calibration,
+  # statistical power). Kept visible and non-blocking so their measured magnitudes land
+  # in the run log. F4/F6/F7/F8/F9 have already graduated into the gate above.
+  probes:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Diagnostic probes (expected to fail)
+        run: pytest -m "probe and not realdata" -v -s

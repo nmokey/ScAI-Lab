@@ -207,7 +207,11 @@ def tbr_strategy_3(ct_data, pet_data):
 
         sizes    = [(i+1, (labeled == i+1).sum()) for i in range(n)]
         spine_id = max(sizes, key=lambda x: x[1])[0]
-        ys, xs   = np.where(labeled == spine_id)
+        # F9: `sl` is a 2-D slice of a volume indexed [x, y, z], so np.where returns
+        # (x indices, y indices) -- in that order. The previous unpacking was
+        # `ys, xs = np.where(...)`, which transposed the centroid and applied the
+        # "3mm anterior" offset along the wrong anatomical axis.
+        xs, ys   = np.where(labeled == spine_id)
 
         if len(xs) < 5:
             continue
@@ -218,7 +222,9 @@ def tbr_strategy_3(ct_data, pet_data):
         # Aortic ROI: 1.5mm radius cylinder, 3mm anterior (higher Y) to spine
         aorta_cy = spine_cy + aorta_offset_vox
 
-        # Bounds check — aorta must be inside the image
+        # Bounds check — aorta must be inside the image. aorta_cy is a Y coordinate,
+        # so it is checked against the Y extent (ct_ny); previously this compared an
+        # X-derived value against ct_ny (part of finding F9).
         if aorta_cy + aorta_radius_vox >= ct_ny or aorta_cy < 0:
             continue
 

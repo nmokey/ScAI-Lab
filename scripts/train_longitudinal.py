@@ -94,6 +94,9 @@ def parse_args():
                    help="Single linear layer instead of MLP")
     p.add_argument("--no-conditioning", action="store_true",
                    help="Disable genotype+cohort+step one-hot conditioning")
+    p.add_argument("--seed", type=int, default=0,
+                   help="Random seed. Every fold is seeded as seed+fold_index so a rerun "
+                        "reproduces the predicted embeddings exactly (finding F6).")
     return p.parse_args()
 
 
@@ -589,6 +592,10 @@ def main():
     Y_pred = np.zeros_like(Y)
 
     for fold, (train_idx, test_idx) in enumerate(logo.split(X, Y, subjects)):
+        # F6: seed per fold, not once globally, so each fold is reproducible
+        # independently of how many folds ran before it.
+        torch.manual_seed(args.seed + fold)
+        np.random.seed(args.seed + fold)
         model = train_fold(
             X[train_idx], Y[train_idx],
             in_dim=in_dim, out_dim=out_dim,
@@ -616,6 +623,7 @@ def main():
     plot_umap(embs, weeks, subject_ids, list(Y_pred), meta, plots_dir)
 
     save_predicted_embeddings(Y_pred, meta, args.output_dir)
+    metrics["seed"] = args.seed
     save_metrics(metrics, args.output_dir)
     save_report(metrics, args.output_dir, n_pairs, n_subjects, model_desc, cond_desc)
 

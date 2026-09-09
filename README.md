@@ -15,6 +15,16 @@ Atherosclerosis (arterial plaque build-up) is the leading cause of cardiovascula
 
 ## Key Takeaways
 
+> [!WARNING]
+> **Results below are under audit and should not be cited as they stand.** An
+> automated audit (2026-08-29) found defects that affect every number in this
+> section — most importantly checkpoint selection on the held-out subject (F2),
+> a genotype-head threshold that does not transfer to inference (F3), and a
+> null distribution at n=32 wide enough to contain several of the reported
+> values (F1). See [FINDINGS.md](docs/FINDINGS.md) for the register and
+> `pytest -m probe` for the demonstrations. Re-runs are pending.
+
+
 1. **Yes — but only one encoder.** Of four zero-shot human-pretrained encoders, **RAD-DINO** (a 2D chest-X-ray ViT applied slice-wise) cleanly separates early vs. late disease (AUC = 1.000) and is the *only* encoder with real genotype signal (WT-vs-KO AUC = 0.869); the 3D CT encoders are near chance on genotype. Human-centric encoders *can* read mouse disease progression, but capability is model-specific, not guaranteed. No encoder does subject retrieval (Recall@1 < 5%).
 2. **Yes for genotype, weakly for TBR.** From a single Week 12 scan, the best VLM predicts genotype at 0.719 accuracy / 0.762 AUROC and recovers a positive TBR trajectory signal (Δ3wk r ≈ 0.4). TBR is inherently noisy — the ground truth is a population-level programmatic proxy, not a per-mouse gold standard (see [design_decisions.md](docs/design_decisions.md)).
 3. **Yes — this is the central result.** Feeding MLP-predicted future embeddings as extra image tokens is what carries the genotype signal: it roughly doubles accuracy (0.219 → 0.531 at matched epochs) and lifts AUROC from below-chance (0.163) to 0.560, and to 0.762 at 20 epochs. A single-scan baseline has no stable genotype signal to learn.
@@ -65,6 +75,16 @@ Raw DICOM  →  NIfTI Conversion  →  Encoder Embeddings  →  Evaluation / VLM
 ---
 
 ## Results
+
+> [!WARNING]
+> **Results below are under audit and should not be cited as they stand.** An
+> automated audit (2026-08-29) found defects that affect every number in this
+> section — most importantly checkpoint selection on the held-out subject (F2),
+> a genotype-head threshold that does not transfer to inference (F3), and a
+> null distribution at n=32 wide enough to contain several of the reported
+> values (F1). See [FINDINGS.md](docs/FINDINGS.md) for the register and
+> `pytest -m probe` for the demonstrations. Re-runs are pending.
+
 
 ### Encoder Evaluation
 

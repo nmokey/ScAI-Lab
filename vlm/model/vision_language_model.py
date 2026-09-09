@@ -109,11 +109,28 @@ class VisionLanguageModel(nn.Module):
         # Project image features into LLM embedding space
         image_features = self.language_projection(image_features)
 
-        # Find position of <image> token
-        first_seq = input_ids[0]
-        if self.img_token_id not in first_seq:
-            raise ValueError("Image token not found in input_ids")
-        img_pos = (first_seq == self.img_token_id).nonzero(as_tuple=False).item()
+        # Find position of the <image> token.
+        # F7: img_pos is derived from row 0 and applied to the whole batch, so every row
+        # must place the placeholder at the same index. That holds for the fixed-length
+        # prefix _add_prompt emits today, but `beg_prompt` is config-settable, and the
+        # failure mode was silent -- a misplaced row kept its placeholder and lost real
+        # text tokens. Assert the precondition instead of assuming it.
+        img_mask_ids = input_ids == self.img_token_id
+        per_row = img_mask_ids.sum(dim=1)
+        if not (per_row == 1).all():
+            raise ValueError(
+                f"Each sequence must contain exactly one image token "
+                f"(id={self.img_token_id}); got counts {per_row.tolist()}"
+            )
+        positions = img_mask_ids.float().argmax(dim=1)
+        if not (positions == positions[0]).all():
+            raise ValueError(
+                f"Image token must be at the same index in every sequence of a batch; "
+                f"got positions {positions.tolist()}. The splice uses a single offset "
+                f"for the whole batch, so mixed positions would corrupt every row after "
+                f"the first."
+            )
+        img_pos = int(positions[0].item())
 
         # Split text embeddings around image token
         embed = self.language_model.get_input_embeddings()

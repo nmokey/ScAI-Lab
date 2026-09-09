@@ -1,0 +1,22 @@
+# Test / tooling configuration.
+#
+# The research code itself is run as scripts (scripts/*.py) and as a CWD-relative
+# package (vlm/, entered from vlm/ by run/*.py). This file deliberately does NOT
+# repackage that code — tests/conftest.py puts the right directories on sys.path
+# instead, so the suite can land without perturbing the pipeline entry points.
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "unit: pure logic, no torch, fast (<1s). Runs on every commit.",
+    "torch: needs torch/transformers on CPU. Minutes.",
+    "slow: permutation/bootstrap suites with many model fits. Nightly.",
+    "realdata: needs the real dataset; skipped unless SCAI_DATA_ROOT is set.",
+    "probe: a diagnostic control that is EXPECTED TO FAIL on unfixed code. Its failure is the finding.",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]

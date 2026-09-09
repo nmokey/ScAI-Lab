@@ -117,8 +117,11 @@ class VizEmbTrainer:
         # TB logs go to a sibling dir so the LOSO runner's model-weight cleanup
         # doesn't wipe them along with checkpoints.
         tb_log_dir = os.path.join(self.output_dir, "tb_logs")
+        seed = int(self.params["data"].get("data_seed", 0))
         return transformers.TrainingArguments(
             output_dir=self.output_dir,
+            seed=seed,
+            data_seed=seed,
             per_device_train_batch_size=p["per_device_train_batch_size"],
             per_device_eval_batch_size=p["per_device_eval_batch_size"],
             gradient_accumulation_steps=p["gradient_accumulation_steps"],
@@ -170,6 +173,12 @@ class VizEmbTrainer:
         return mean, std
 
     def train(self):
+        # F6: the declared data_seed previously reached nothing. Seed here, before
+        # load_train_model() constructs the projection layer and the multitask heads --
+        # Trainer's internal seeding happens later and would not cover them.
+        seed = int(self.params["data"].get("data_seed", 0))
+        transformers.set_seed(seed)
+        print(f"[i] Seeded with data_seed={seed}")
         data = self.get_train_data()
         print(f"Train samples: {len(data['train'])}, Val samples: {len(data['test'])}")
         data_collator = self.get_data_collator()

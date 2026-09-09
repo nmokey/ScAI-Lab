@@ -224,3 +224,5 @@ manifest.csv
 
 # Claude
 .claude/
+# Test virtualenv
+.venv-test/

@@ -1,5 +1,19 @@
 # Encoder Evaluation Results
 
+> [!WARNING]
+> **Results below are under audit and should not be cited as they stand.** An
+> automated audit (2026-08-29) found defects that affect every number in this
+> section — most importantly checkpoint selection on the held-out subject (F2),
+> a genotype-head threshold that does not transfer to inference (F3), and a
+> null distribution at n=32 wide enough to contain several of the reported
+> values (F1). See [FINDINGS.md](FINDINGS.md) for the register and
+> `pytest -m probe` for the demonstrations. Re-runs are pending.
+
+> Encoder-only results carry an additional caveat: genotype **and week** are both
+> confounded with acquisition session (F5), so T2b's early-vs-late AUC = 1.000 may
+> reflect scanner drift across the study rather than disease progression.
+
+
 Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis CT dataset (229 scans, 78 mice, 4 timepoints). No fine-tuning. All supervised tasks use Leave-One-Subject-Out (LOSO) cross-validation.
 
 **Dataset:** 80 mice (NaF cohort + FDG cohort, WT + KO), imaged at Weeks 12, 15, 18, 20. Only CT-Hi modality evaluated here. See [DATA_MANIFEST.md](DATA_MANIFEST.md) for full inventory.

@@ -89,7 +89,22 @@ class MouseTrajDataset(Dataset):
                 mask   = np.pad(mask,   (0, pad), constant_values=0)
                 labels = np.pad(labels, (0, pad), constant_values=self.ignore_token_id)
             elif len(tok_qa) > self.seq_length:
+                # F8: right-truncation removes the answer's terminal EOS, and
+                # VisionLanguageModel._eos_hidden_state then pools this record at the
+                # QUESTION EOS while intact records in the same batch pool at the answer
+                # EOS -- two different pooling semantics inside one batch. Previously
+                # silent; warn once per dataset so the count is visible.
                 trunc  = len(tok_qa) - self.seq_length
+                self._n_truncated = getattr(self, "_n_truncated", 0) + 1
+                if self._n_truncated == 1:
+                    import warnings
+                    warnings.warn(
+                        f"Record {idx} is {len(tok_qa)} tokens, over seq_length="
+                        f"{self.seq_length}; truncating from the right drops the answer's "
+                        f"EOS and changes which position the multitask heads pool from. "
+                        f"Raise seq_length or shorten the prompt.",
+                        RuntimeWarning, stacklevel=2,
+                    )
                 tok_qa = tok_qa[:-trunc]
                 mask   = mask[:-trunc]
                 labels = labels[:-trunc]

@@ -577,11 +577,32 @@ def stage3_crop_and_write(session, nifti_paths, bboxes, output_root, dry_run=Fal
     # position 1 = bboxes[0], 2 = bboxes[1], etc.
     mouse_nums = session["mouse_nums"]
 
+    # F4: `segment_animals` returns a COMPACTED list -- quadrants with no bone, or with
+    # less than 1 mL of it, are skipped -- but each surviving entry still carries its true
+    # `position`. Pairing bboxes with mouse_nums by list index (the previous behaviour)
+    # therefore shifts every mouse after a skipped quadrant onto the wrong animal and
+    # drops the last one, silently. Mouse identity is the join key for the whole project:
+    # genotype is parsed out of the subject ID and mouse numbers are persistent
+    # longitudinal identifiers, so a shift also mislabels genotype and splices scans into
+    # another animal's trajectory.
+    #
+    # `mouse_nums` lists the mice present in scanner-position order, so the i-th listed
+    # mouse belongs at the i-th occupied quadrant. That correspondence only holds when
+    # every expected quadrant was found; when it does not, we refuse to guess.
     if len(bboxes) != len(mouse_nums):
-        print(f"    [!] bbox count ({len(bboxes)}) ≠ n_mice ({len(mouse_nums)}) for {session['base_id']}")
-        print(f"        Proceeding with min({len(bboxes)}, {len(mouse_nums)}) crops.")
+        raise RuntimeError(
+            f"Segmentation found {len(bboxes)} animal(s) at quadrant position(s) "
+            f"{[b['position'] for b in bboxes]}, but the manifest lists {len(mouse_nums)} "
+            f"mice {mouse_nums} for session {session['base_id']} (week {session['week']}, "
+            f"{session['tracer']}).\n"
+            f"Refusing to assign mouse identities by list index: doing so would write "
+            f"scans under the wrong mouse ID and the wrong genotype.\n"
+            f"Resolve by inspecting the session and either correcting mouse_nums in "
+            f"manifest.csv, or re-running just this session with adjusted segmentation "
+            f"(--sessions {session['base_id']})."
+        )
 
-    n_crops = min(len(bboxes), len(mouse_nums))
+    n_crops = len(bboxes)
 
     for i in range(n_crops):
         bbox = bboxes[i]

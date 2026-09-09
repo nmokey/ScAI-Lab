@@ -26,10 +26,6 @@ import shutil
 import torch
 import transformers
 
-# Pin to logical device 0 (the physical GPU selected by CUDA_VISIBLE_DEVICES).
-# This ensures every from_pretrained call inside each fold lands on the same device.
-torch.cuda.set_device(0)
-
 from utils.misc_utils import load_yaml
 from utils.run_utils import get_model
 from data.eval import calculate_mouse_metrics
@@ -114,6 +110,13 @@ def run_fold(sid, fold_idx, all_records, output_dir, base_params):
 
 
 def main():
+    # Pin to logical device 0 (the physical GPU selected by CUDA_VISIBLE_DEVICES) so
+    # every from_pretrained call inside each fold lands on the same device. Done here
+    # rather than at import time: as a module-level side effect it raised on CPU-only
+    # machines, making this entry point impossible to import or test off-GPU.
+    if torch.cuda.is_available():
+        torch.cuda.set_device(0)
+
     args = parse_args()
     os.makedirs(args.output_dir, exist_ok=True)
 

@@ -1,0 +1,24 @@
+# Test-suite dependencies. Install into a dedicated venv:
+#   python3 -m venv .venv-test && .venv-test/bin/pip install -r requirements-dev.txt
+#
+# These are intentionally unpinned at the upper bound: the suite must keep
+# passing as the scientific stack moves. The pipeline's own pinned versions
+# live in requirements.txt / environment.yml.
+pytest>=7.0
+pytest-cov
+hypothesis
+numpy
+scipy
+scikit-learn
+pandas
+matplotlib
+pyyaml
+# Needed only by tests marked `torch`.
+torch
+transformers
+safetensors
+peft
+# Needed by the pipeline/phantom tests.
+SimpleITK
+pydicom
+nibabel

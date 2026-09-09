@@ -1,5 +1,21 @@
 # VLM Experiment Log
 
+> [!WARNING]
+> **Results below are under audit and should not be cited as they stand.** An
+> automated audit (2026-08-29) found defects that affect every number in this
+> section — most importantly checkpoint selection on the held-out subject (F2),
+> a genotype-head threshold that does not transfer to inference (F3), and a
+> null distribution at n=32 wide enough to contain several of the reported
+> values (F1). See [FINDINGS.md](FINDINGS.md) for the register and
+> `pytest -m probe` for the demonstrations. Re-runs are pending.
+
+> The epoch sweep specifically: the reported best cell (20 epochs, genotype AUROC
+> 0.762) has p = 0.046 against a no-signal null once treated as the maximum over
+> the 10 configurations it was selected from, before any correction for F2's
+> measured +0.14 to +0.20 selection inflation. "20 epochs is the sweet spot" is
+> not supported as stated.
+
+
 Canonical record of all LOSO CV runs. Each entry documents exactly what changed,
 why, and what the results were. Primary metrics for the paper: genotype accuracy
 and TBR regression MAE (Δ3wk). r and R² are reported for analysis only.
