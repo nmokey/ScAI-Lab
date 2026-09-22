@@ -111,7 +111,7 @@ def test_tbr3_roi_finds_the_planted_hot_spot():
 
     strategy = load_script_module("extract_tbr_features").tbr_strategy_3
     ct, pet = _phantoms()
-    result = strategy(ct, pet)
+    result = strategy(ct, pet, np.diag([.1,.1,.1,1]), np.diag([.4,.4,.4,1]))
 
     tbr = result.get("tbr3_tbr")
     print(f"\n  planted hot spot = 50x background; tbr_strategy_3 reports: {result}")

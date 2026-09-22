@@ -155,13 +155,13 @@ def tbr_strategy_2(pet_data):
     }
 
 
-def tbr_strategy_3(ct_data, pet_data):
+def tbr_strategy_3(ct_data, pet_data, ct_affine=None, pet_affine=None):
     """
     TBR-3: Spine-anchored aortic ROI.
     For each axial slice in the mid-Z band:
       1. Find the vertebral column: largest high-HU (>400 HU) connected
          component after excluding the image border (ribs/skin).
-      2. Place a 3mm-radius cylinder 3mm anterior (higher Y in RAS) to
+      2. Place a 1.5mm-radius disk 3mm anterior (higher Y in RAS) to
          the spine centroid — this is where the aorta runs in mice.
       3. Average PET signal in that cylinder vs. median of remaining voxels.
 
@@ -174,10 +174,20 @@ def tbr_strategy_3(ct_data, pet_data):
     ct_nz, ct_ny, ct_nz_slices = ct_data.shape
     pet_nx, pet_ny, pet_nz      = pet_data.shape
 
-    # Scale factors between CT and PET voxel grids
-    sx = pet_nx / ct_nz        # ~0.187 for 401→75
-    sy = pet_ny / ct_ny        # ~0.187
-    sz = pet_nz / ct_nz_slices # ~0.159 for 1200→191
+    if ct_affine is None or pet_affine is None:
+        raise ValueError("TBR-3 requires both physical CT/PET affines; shape-ratio registration is invalid")
+    ct_affine, pet_affine = np.asarray(ct_affine), np.asarray(pet_affine)
+    for affine in (ct_affine,pet_affine):
+        if affine.shape != (4,4) or not np.isfinite(affine).all():
+            raise ValueError("Invalid image affine")
+        # This slice-based heuristic requires axis-aligned RAS volumes. Reject
+        # oblique/flipped grids until explicitly resampled; never guess anatomy.
+        axes=affine[:3,:3]
+        if not np.allclose(axes,np.diag(np.diag(axes)),atol=1e-6) or (np.diag(axes)<=0).any():
+            raise ValueError("TBR-3 requires axis-aligned RAS grids")
+    ct_spacing=np.diag(ct_affine)[:3]
+    pet_spacing=np.diag(pet_affine)[:3]
+    ct_to_pet=np.linalg.inv(pet_affine) @ ct_affine
 
     # Mid-Z band in CT voxels
     ct_z0 = int(ct_nz_slices * 0.33)
@@ -188,8 +198,8 @@ def tbr_strategy_3(ct_data, pet_data):
     by0 = int(ct_ny * 0.15);   by1 = int(ct_ny * 0.85)
 
     # Radius of aortic ROI and offset from spine (in CT voxels)
-    aorta_offset_vox = 30   # ~3mm anterior to spine centroid
-    aorta_radius_vox = 15   # ~1.5mm radius around expected aorta center
+    aorta_offset_vox = 3.0 / ct_spacing[1]
+    aorta_radius_vox = 1.5 / ct_spacing[1]
 
     aortic_vals = []
     n_good_slices = 0
@@ -228,21 +238,15 @@ def tbr_strategy_3(ct_data, pet_data):
         if aorta_cy + aorta_radius_vox >= ct_ny or aorta_cy < 0:
             continue
 
-        # Sample PET at the corresponding Z position
-        pet_z = int(ct_z * sz)
-        if pet_z >= pet_nz:
+        # Map the physical center, including both origins and voxel spacings.
+        center_pet=ct_to_pet @ np.array([spine_cx,aorta_cy,ct_z,1.0])
+        pet_z=int(round(center_pet[2]))
+        if not 0 <= pet_z < pet_nz:
             continue
-        pet_sl = pet_data[:, :, pet_z]
-
-        # Map aortic ROI center to PET grid
-        aorta_cx_pet = spine_cx * sx
-        aorta_cy_pet = aorta_cy * sy
-        r_pet        = max(2, int(aorta_radius_vox * sx))
-
-        yy, xx = np.ogrid[:pet_ny, :pet_nx]
-        roi_mask = ((xx - aorta_cx_pet)**2 + (yy - aorta_cy_pet)**2) <= r_pet**2
-
-        roi_vals = pet_sl[roi_mask.T]
+        xx,yy=np.ogrid[:pet_nx,:pet_ny]
+        roi_mask=(((xx-center_pet[0])*pet_spacing[0])**2 +
+                  ((yy-center_pet[1])*pet_spacing[1])**2) <= 1.5**2
+        roi_vals=pet_data[:,:,pet_z][roi_mask]
         roi_vals = roi_vals[roi_vals > 0]
         if len(roi_vals) < 3:
             continue
@@ -260,6 +264,8 @@ def tbr_strategy_3(ct_data, pet_data):
     # Background: whole mid-Z band, nonzero, excluding top 5%
     mid_band = pet_data[:, :, int(pet_nz*0.33):int(pet_nz*0.67)].flatten()
     mid_band = mid_band[mid_band > 0]
+    if not len(mid_band):
+        return {"tbr3_aortic_mean": np.nan, "tbr3_tbr": np.nan, "tbr3_n_slices": n_good_slices}
     bg_thresh = np.percentile(mid_band, 95)
     bg_vals   = mid_band[mid_band < bg_thresh]
     bg_median = float(np.median(bg_vals)) if len(bg_vals) > 0 else np.nan
@@ -308,7 +314,8 @@ def extract_all_features(mice_dir, cohort, strategies):
             }
 
             try:
-                pet_data = nib.load(str(pet_path)).get_fdata()
+                pet_image = nib.load(str(pet_path))
+                pet_data = pet_image.get_fdata()
 
                 if 1 in strategies:
                     row.update(tbr_strategy_1(pet_data))
@@ -316,8 +323,9 @@ def extract_all_features(mice_dir, cohort, strategies):
                     row.update(tbr_strategy_2(pet_data))
                 if 3 in strategies:
                     if ct_path.exists():
-                        ct_data = nib.load(str(ct_path)).get_fdata()
-                        row.update(tbr_strategy_3(ct_data, pet_data))
+                        ct_image = nib.load(str(ct_path))
+                        ct_data = ct_image.get_fdata()
+                        row.update(tbr_strategy_3(ct_data, pet_data, ct_image.affine, pet_image.affine))
                     else:
                         row.update({"tbr3_aortic_mean": np.nan, "tbr3_tbr": np.nan,
                                     "tbr3_n_slices": 0})

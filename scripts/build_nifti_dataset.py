@@ -66,6 +66,28 @@ MANIFEST_PATH = "manifest.csv"
 IGNORE_EXTENSIONS = {".im3", ".vol", ".raw"}
 
 
+OVERRIDES_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                              "quadrant_overrides.yaml")
+
+
+def load_quadrant_overrides(path=OVERRIDES_PATH):
+    """
+    F20: per-session {position: mouse_num | "skip"} overrides, for sessions where a
+    non-animal object (the bed's fluid line, a phantom) occupies a quadrant and the
+    manifest's mouse_nums cannot be paired with quadrants by list order.
+    Returns {} when the file is absent.
+    """
+    if not os.path.exists(path):
+        return {}
+    with open(path) as f:
+        raw = yaml.safe_load(f) or {}
+    out = {}
+    for sid, spec in raw.items():
+        pos = spec.get("positions", {}) if isinstance(spec, dict) else {}
+        out[str(sid)] = {int(k): (None if str(v).lower() == "skip" else int(v)) for k, v in pos.items()}
+    return out
+
+
 def load_manifest(manifest_path=MANIFEST_PATH):
     rows = []
     with open(manifest_path, newline="") as f:
@@ -586,10 +608,39 @@ def stage3_crop_and_write(session, nifti_paths, bboxes, output_root, dry_run=Fal
     # longitudinal identifiers, so a shift also mislabels genotype and splices scans into
     # another animal's trajectory.
     #
+    # F20: an explicit per-session quadrant -> mouse map takes precedence over list-order
+    # pairing. It is the only way to handle a session where a tube or phantom was
+    # segmented as an animal: those quadrants are marked `skip`, the real mice are
+    # assigned by the position the segmenter reported, and the count check below is
+    # replaced by an exact-coverage check.
+    overrides = load_quadrant_overrides()
+    if session["base_id"] in overrides:
+        omap = overrides[session["base_id"]]
+        found = {b["position"] for b in bboxes}
+        missing = found - set(omap)
+        if missing:
+            raise RuntimeError(
+                f"quadrant_overrides.yaml for {session['base_id']} does not say what is at "
+                f"segmented position(s) {sorted(missing)}. Every found quadrant must be "
+                f"listed (as a mouse number or `skip`).")
+        assigned = [omap[p] for p in sorted(found) if omap[p] is not None]
+        if sorted(assigned) != sorted(mouse_nums):
+            raise RuntimeError(
+                f"quadrant_overrides.yaml for {session['base_id']} assigns mice {sorted(assigned)} "
+                f"but manifest.csv lists {sorted(mouse_nums)}. Each listed mouse must be assigned "
+                f"exactly once to a found quadrant.")
+        pairs = [(b, omap[b["position"]]) for b in sorted(bboxes, key=lambda b: b["position"])
+                 if omap[b["position"]] is not None]
+        print(f"    [i] F20 override applied: " +
+              ", ".join(f"pos{b['position']}->{'skip' if omap[b['position']] is None else omap[b['position']]}"
+                        for b in sorted(bboxes, key=lambda b: b['position'])))
+    else:
+        pairs = None
+
     # `mouse_nums` lists the mice present in scanner-position order, so the i-th listed
     # mouse belongs at the i-th occupied quadrant. That correspondence only holds when
     # every expected quadrant was found; when it does not, we refuse to guess.
-    if len(bboxes) != len(mouse_nums):
+    if pairs is None and len(bboxes) != len(mouse_nums):
         raise RuntimeError(
             f"Segmentation found {len(bboxes)} animal(s) at quadrant position(s) "
             f"{[b['position'] for b in bboxes]}, but the manifest lists {len(mouse_nums)} "
@@ -602,11 +653,10 @@ def stage3_crop_and_write(session, nifti_paths, bboxes, output_root, dry_run=Fal
             f"(--sessions {session['base_id']})."
         )
 
-    n_crops = len(bboxes)
+    if pairs is None:
+        pairs = list(zip(bboxes, mouse_nums))
 
-    for i in range(n_crops):
-        bbox = bboxes[i]
-        mouse_num = mouse_nums[i]
+    for bbox, mouse_num in pairs:
         mouse_id = f"{cohort}_{genotype}_{mouse_num:02d}"
         week_dir = os.path.join(output_root, "mice", mouse_id, f"week_{week}")
         ct_out = os.path.join(week_dir, "ct_hi.nii.gz")

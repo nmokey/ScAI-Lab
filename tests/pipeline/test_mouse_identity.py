@@ -170,27 +170,14 @@ def test_skipped_quadrant_does_not_misassign_mouse_identity(scripts, tmp_path):
     assert "m54231" in message, "the error should name the session so it can be inspected"
 
 
-def test_count_mismatch_is_a_hard_error(scripts):
-    """
-    F4, fixed. When the segmenter finds fewer animals than the manifest declares, the
-    pipeline now raises instead of cropping `min(len(bboxes), len(mouse_nums))` animals
-    under shifted identities.
-    """
-    import inspect
-
-    mod = scripts("build_nifti_dataset")
-    src = inspect.getsource(mod.stage3_crop_and_write)
-
-    assert "mouse_num = mouse_nums[i]" in src, "wiring changed -- re-derive R4"
-    guard = src[src.index("if len(bboxes) != len(mouse_nums):") :]
-    guard = guard[: guard.index("n_crops")]
-
-    assert "raise" in guard, (
-        "A bbox/mouse_nums count mismatch only prints a warning and then proceeds to "
-        "write crops under shifted mouse IDs:\n"
-        f"{guard.strip()}\n"
-        "Silent data mislabeling should be fatal."
-    )
+@pytest.mark.parametrize("positions,mouse_nums", [({1,2,3},[1,2,3,4]), ({1,2,3,4},[1,2,3])])
+def test_count_mismatch_is_a_hard_error(scripts,tmp_path,positions,mouse_nums):
+    """Behavioral guard for both missing animals and surplus tube/phantom detections."""
+    mod,bboxes=_segment(scripts,positions,n_expected=len(mouse_nums))
+    session=dict(base_id="test_no_override",week=12,tracer="NaF",genotype="KO",
+                 group="Disease",timepoint_h="3h",mouse_nums=mouse_nums,n_mice=len(mouse_nums),notes="")
+    with pytest.raises(RuntimeError,match="Refusing to assign mouse identities"):
+        mod.stage3_crop_and_write(session,{"ct_hi":str(tmp_path/'ct.nii.gz')},bboxes,str(tmp_path),dry_run=True)
 
 
 # ---------------------------------------------------------------------------
@@ -198,39 +185,36 @@ def test_count_mismatch_is_a_hard_error(scripts):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.realdata
-def test_no_session_lost_a_quadrant(data_root):
-    """
-    Bounds the blast radius on real data. `crop_position` is recorded per row in
-    mouse_manifest.csv, so any session whose positions are not a contiguous 1..n run
-    hit the compaction path and may carry shifted identities.
-    """
+def test_current_crop_identities_follow_filename_positions_and_overrides(data_root, scripts):
+    """Noncontiguous positions can be correct after explicit phantom exclusions."""
     import csv
+    import yaml
+    repo=Path(__file__).resolve().parents[2]
+    manifest=data_root/'mouse_manifest.csv'
+    if not manifest.exists():pytest.skip(f'{manifest} unavailable')
+    with manifest.open() as stream:crops=list(csv.DictReader(stream))
+    with (repo/'manifest.csv').open() as stream:raw=list(csv.DictReader(stream))
+    overrides=yaml.safe_load((repo/'quadrant_overrides.yaml').read_text())
+    checks=scripts('validate_research_inputs').validate_crop_identities(crops,raw,overrides)
+    assert len(checks)>0
 
-    manifest = data_root / "mouse_manifest.csv"
-    if not manifest.exists():
-        pytest.skip(f"mouse_manifest.csv not found at {manifest}")
 
-    by_session = {}
-    with open(manifest, newline="") as f:
-        for row in csv.DictReader(f):
-            key = (row["session_id"], row["week"])
-            by_session.setdefault(key, []).append(
-                (int(row["crop_position"]), int(row["mouse_num"]), row["mouse_id"])
-            )
-
-    suspect = {}
-    for key, entries in by_session.items():
-        positions = sorted(p for p, _, _ in entries)
-        if positions != list(range(1, len(positions) + 1)):
-            suspect[key] = sorted(entries)
-
-    for key, entries in suspect.items():
-        print(f"\n  {key}: positions {[p for p, _, _ in entries]} -- "
-              f"mice {[m for _, m, _ in entries]}")
-
-    assert not suspect, (
-        f"{len(suspect)} session(s) have non-contiguous crop positions, meaning a "
-        f"quadrant was skipped and mouse identities were assigned by shifted index. "
-        f"Affected sessions listed above; each needs its mouse->quadrant mapping "
-        f"verified by hand against the source DICOM."
-    )
+@pytest.mark.parametrize('mapping,valid', [
+    ({1:9,2:None,3:10,4:11},True),
+    ({1:9,3:10,4:11},False),  # Unaccounted detected phantom.
+    ({1:9,2:None,3:9,4:11},False),  # Duplicated mouse and missing mouse 10.
+    ({1:9,2:None,3:10,4:None},False),  # Missing an expected mouse.
+])
+def test_override_requires_exact_mouse_coverage(scripts,tmp_path,monkeypatch,mapping,valid):
+    mod,bboxes=_segment(scripts,{1,2,3,4})
+    monkeypatch.setattr(mod,'load_quadrant_overrides',lambda:{'override_test':mapping})
+    session=dict(base_id='override_test',week=15,tracer='NaF',genotype='KO',
+                 group='Disease',timepoint_h='3h',mouse_nums=[9,10,11],n_mice=3,notes='',
+                 ct_hi_scan_id='override_test')
+    def run():
+        return mod.stage3_crop_and_write(session,{'ct_hi':str(tmp_path/'ct.nii.gz')},bboxes,str(tmp_path),dry_run=True)
+    if valid:
+        rows=run()
+        assert [(r['mouse_num'],r['crop_position']) for r in rows]==[(9,1),(10,3),(11,4)]
+    else:
+        with pytest.raises(RuntimeError,match='quadrant_overrides'):run()

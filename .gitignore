@@ -220,9 +220,23 @@ config.yaml
 *_qa.png
 
 # Pipeline outputs
-manifest.csv
+# manifest.csv is tracked deliberately (F17): 147 rows, session-level, no PHI --
+# needed for the DICOM stage to be reproducible from a clean clone (TESTING_PLAN.md §5.3).
+# mouse_manifest.csv is NOT tracked -- it's generated per machine into paths.output_dir.
 
 # Claude
 .claude/
 # Test virtualenv
 .venv-test/
+
+# Local assistant guidance was intentionally untracked in repository history.
+/CLAUDE.md
+
+# Retain compact audit evidence, but keep full training artifacts on the server.
+/docs/audit_2026-09-14/real_mouse_learning_control/*/checkpoint-*/
+/docs/audit_2026-09-14/real_mouse_learning_control/*/final_model/
+/docs/audit_2026-09-14/**/*.lock
+/docs/audit_2026-09-14/**/*.done
+
+# These bounded logs are cited research-verification evidence.
+!/docs/audit_2026-09-14/**/*.log

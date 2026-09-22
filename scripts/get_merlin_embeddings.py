@@ -39,6 +39,14 @@ import csv
 import yaml
 import torch
 import numpy as np
+import sys
+import inspect
+import importlib.metadata
+from pathlib import Path
+
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"vlm"))
+from utils.research_io import file_sha256, atomic_json
+from utils.image_cache import image_cache_key
 
 from merlin.data import DataLoader
 from merlin import Merlin
@@ -76,13 +84,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None,
                         help="Process only the first N volumes (useful for testing).")
+    parser.add_argument("--output-dir",default=None,help="Separate destination for regenerated embeddings")
     args = parser.parse_args()
 
     cfg = load_config()
     output_dir    = cfg["paths"]["output_dir"]
     manifest_path = os.path.join(output_dir, "mouse_manifest.csv")
-    embed_dir     = os.path.join(output_dir, "embeddings", "merlin")
-    cache_dir     = os.path.join(embed_dir, "cache")
+    embed_dir     = args.output_dir or os.path.join(output_dir, "embeddings", "merlin_validated_20260914")
+    cache_dir     = os.path.join(embed_dir, "cache_v2")
     output_path   = os.path.join(embed_dir, "merlin_embeddings.npz")
     os.makedirs(embed_dir, exist_ok=True)
     os.makedirs(cache_dir, exist_ok=True)
@@ -103,6 +112,13 @@ def main():
     model = Merlin(ImageEmbedding=True)
     model.eval()
     model.to(device)
+    loader_source=Path(inspect.getfile(Merlin))
+    checkpoint_path=loader_source.parent/'checkpoints'/model._config['checkpoint']
+    model_provenance=dict(checkpoint_path=str(checkpoint_path),checkpoint_sha256=file_sha256(checkpoint_path),
+                          loader_sha256=file_sha256(loader_source),
+                          builder_sha256=file_sha256(inspect.getfile(type(model.model))),
+                          merlin_version=importlib.metadata.version('merlin-vlm'),
+                          task='ImageEmbedding',image_architecture='3D inflated ResNet-152')
     print("[i] Model ready.\n")
 
     # Load manifest
@@ -146,12 +162,19 @@ def main():
         num_workers=0,
     )
 
+    import merlin.data.monai_transforms as transforms
+    preprocessing_identity=dict(transform_sha256=file_sha256(inspect.getfile(transforms)),
+                                monai=importlib.metadata.version('monai'),torch=torch.__version__)
+    dataloader.dataset.hash_func=lambda item:image_cache_key(item,preprocessing_identity)
+    source_hashes=[file_sha256(row['ct_hi_nifti']) for row in valid_rows]
+
     embeddings  = []
     subject_ids = []
     weeks       = []
     modalities  = []
     paths       = []
     failed      = []
+    extracted_hashes = []
 
     for i, batch in enumerate(dataloader):
         row        = valid_rows[i]
@@ -168,6 +191,7 @@ def main():
             weeks.append(week_label)
             modalities.append("CT_HiRes")
             paths.append(row["ct_hi_nifti"])
+            extracted_hashes.append(source_hashes[i])
             print(f"    [+] OK  (embedding shape: {emb.shape})")
         except Exception as e:
             print(f"    [!] Failed: {e}")
@@ -186,8 +210,13 @@ def main():
         weeks       = np.array(weeks),
         modalities  = np.array(modalities),
         paths       = np.array(paths),
+        source_sha256 = np.array(extracted_hashes),
     )
 
+    atomic_json(Path(embed_dir)/'input_manifest.json',dict(preprocessing=preprocessing_identity,model=model_provenance,
+                source_sha256=dict(zip(paths,extracted_hashes)),source_manifest_sha256=file_sha256(manifest_path),
+                embedding_sha256=file_sha256(output_path),complete=not (missing or failed or len(embeddings)!=len(rows)),
+                expected_rows=len(rows),extracted_rows=len(embeddings)))
     print(f"\n[+] Saved {len(embeddings)} embeddings → {output_path}")
     print(f"    Array shape: {embeddings_array.shape}  (N crops × {embeddings_array.shape[1]} dimensions)")
     print(f"\n    To evaluate, run:")

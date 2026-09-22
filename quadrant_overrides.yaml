@@ -1,0 +1,30 @@
+# Per-session quadrant -> mouse overrides for stage 3 of build_nifti_dataset.py (F20).
+#
+# The segmenter counts any quadrant holding >= 1 mL of bone-density voxels as a mouse.
+# The scanner bed's fluid line and calibration phantom both clear that bar, so in a
+# session with fewer than four mice they can occupy an "empty" slot and be mistaken for
+# an animal. When that happens the manifest's mouse_nums cannot be paired with quadrants
+# by list order, and this file says explicitly which quadrant holds which mouse.
+#
+# Positions: 1 = lower-left, 2 = lower-right, 3 = upper-left, 4 = upper-right, in the
+# scanner's physical frame (see segment_animals). Value is a mouse number from
+# manifest.csv's mouse_nums, or `skip` for a quadrant that is not an animal.
+# Every position the segmenter finds must be listed; every mouse in mouse_nums must be
+# assigned exactly once. Stage 3 refuses otherwise.
+#
+# Evidence for each entry: docs/qa_2026-09-13/dropped.png (side-view bone projections of
+# all four quadrants) and docs/FINDINGS.md F20.
+
+m54406:   # Week 15 NaF, KO 9/10/11
+  reason: >
+    Fluid line in slot 1 (1.6M bone-density voxels). Three real mice in slots 2, 3, 4.
+    Pre-fix pipeline wrote the tube as KO_09, shifted KO_09->"KO_10", KO_10->"KO_11",
+    and discarded KO_11.
+  positions: {1: skip, 2: 9, 3: 10, 4: 11}
+
+m54520:   # Week 15 FDG, WT 1/2
+  reason: >
+    Fluid line in slot 1 and rectangular phantom in slot 2 (2.5M / 2.6M bone-density
+    voxels). Both real mice in slots 3 and 4. Pre-fix pipeline wrote both objects as
+    WT_01 / WT_02 and discarded both mice.
+  positions: {1: skip, 2: skip, 3: 1, 4: 2}
