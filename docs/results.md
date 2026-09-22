@@ -1,179 +1,103 @@
-# Encoder Evaluation Results
+# Validated research results
 
-> [!WARNING]
-> **Results below are under audit and should not be cited as they stand.** An
-> automated audit (2026-08-29) found defects that affect every number in this
-> section — most importantly checkpoint selection on the held-out subject (F2),
-> a genotype-head threshold that does not transfer to inference (F3), and a
-> null distribution at n=32 wide enough to contain several of the reported
-> values (F1). See [FINDINGS.md](FINDINGS.md) for the register and
-> `pytest -m probe` for the demonstrations. Re-runs are pending.
+For a single summary of every completed result family after repair, including the later model experiments, embedding probes, learning controls and refreshed encoders, see [the consolidated post-audit ledger](POST_AUDIT_RESULTS.md).
 
-> Encoder-only results carry an additional caveat: genotype **and week** are both
-> confounded with acquisition session (F5), so T2b's early-vs-late AUC = 1.000 may
-> reflect scanner drift across the study rather than disease progression.
+All six prespecified VLM runs are complete: 32 held-out mice × two arms × three seeds. Checkpoint hashes, source/input fingerprints and paired prediction coverage were verified before scoring. The endpoint is the existing PET intensity proxy, not a validated aortic measurement.
 
+**Current genotype evaluation:** use the [completed four-fold amendment](audit_2026-09-14/stratified/RESULTS.md), which avoids ranking scores across different fitted models. The table below preserves the original LOSO study; its pooled genotype AUROCs are not the amended discrimination estimates. See also [why the remaining small separations reverse](audit_2026-09-14/stratified/GENOTYPE_MECHANISM.md).
 
-Zero-shot evaluation of pretrained vision encoders on the mouse atherosclerosis CT dataset (229 scans, 78 mice, 4 timepoints). No fine-tuning. All supervised tasks use Leave-One-Subject-Out (LOSO) cross-validation.
+Subsequent residual-forecast and VLM architecture/objective experiments are reported separately below, with [complete development results](audit_2026-09-14/genotype_vlm_variants/README.md). They do not replace the original protocol's primary endpoint or confer independent validation on repeatedly inspected folds.
 
-**Dataset:** 80 mice (NaF cohort + FDG cohort, WT + KO), imaged at Weeks 12, 15, 18, 20. Only CT-Hi modality evaluated here. See [DATA_MANIFEST.md](DATA_MANIFEST.md) for full inventory.
+## Baseline versus longitudinal VLM
 
----
+| Seed | Baseline subject MAE | Longitudinal subject MAE | Longitudinal − baseline | Baseline genotype AUROC | Longitudinal genotype AUROC |
+|---|---:|---:|---:|---:|---:|
+| 0 | 5.7587 | 5.7522 | -0.0065 | 0.3532 | 0.0635 |
+| 1 | 5.6489 | 5.6662 | +0.0173 | 0.1468 | 0.0913 |
+| 2 | 5.4261 | 5.5297 | +0.1035 | 0.1627 | 0.2103 |
 
-## Summary Table (Paper-Relevant Results)
+Mean paired MAE difference: **+0.0381**; initialization SD 0.0579. The direction of the primary difference varies across seeds.
+The descriptive fixed-prediction subject interval for the seed-mean difference is [-0.1880, +0.2330]. It does not account for refitting or acquisition-group dependence and is not a significance test.
 
-**Scope:** 32 NaF subjects, LOSO CV, chance = 0.5. This is the primary evaluation cohort for the paper — all encoder and VLM results below use the same subjects and the same tasks. Encoder-only results use a linear probe (LogisticRegression for genotype, Ridge for TBR); the VLM uses its multitask head on LLM last hidden state.
+Primary MAE averages valid-horizon errors within each mouse and then across mice. Negative differences favor longitudinal. Seeds are repeated fits on the same 32 mice, not extra animals. All 67 observed future subject/horizon targets are included (W15: 32; W18: 15; W20: 20).
 
-> **Critical evaluation consistency requirement:** Encoder-only tasks and VLM tasks must be evaluated identically. The original encoder benchmarks (T2c/full encoder comparison table) used 78 subjects across both cohorts and all 4 timepoints — those numbers are not directly comparable to the VLM, which is restricted to 32 NaF subjects with Week 12 as fixed input. The table below is the authoritative comparison; do not cite T2c=0.869 from the full encoder table alongside VLM results without noting the population mismatch.
+## Per-horizon results
 
-| Condition | Input | Geno acc | Geno AUC | TBR overall r | TBR Δ3wk r | TBR Δ3wk R² |
-|---|---|---|---|---|---|---|
-| **A1** RAD-DINO linear probe | ts0 only (real) | 0.406 | 0.353 | −0.153 | −0.250 | −0.200 |
-| **A2** RAD-DINO linear probe | ts0+ts1+ts2+ts3 (all real) | 0.406 | 0.401 | **0.432** | 0.350 | 0.085 |
-| **B** Longitudinal linear probe | ts0 real + ts1/ts2/ts3 MLP-predicted | **0.750** | **0.718** | 0.225 | 0.030 | −0.323 |
-| **VLM baseline** | ts0 only | 0.219 | 0.163 | −0.054 | −0.090 | −0.088 |
-| **VLM longitudinal** (10ep) | ts0 real + ts1/ts2/ts3 MLP-predicted | 0.531 | 0.560 | 0.276 | **0.447** | **0.131** |
-| **VLM longitudinal** (20ep, best) | ts0 real + ts1/ts2/ts3 MLP-predicted | **0.719** | **0.762** | 0.339 | 0.376 | 0.100 |
+Values below are means of the three per-seed metrics; R² is ordinary held-out R². Every horizon is shown.
 
-**Notes on condition B:** The longitudinal linear probe (B) genotype acc=0.750/AUC=0.718 is likely inflated. The longitudinal MLP conditioning vector includes genotype as an explicit input feature, so MLP-predicted embeddings implicitly encode the label. This is not signal the VLM can equivalently exploit. Condition B should be treated as an upper-bound reference, not a fair comparison. The MLP was retrained on the 32 NaF subjects only (matching the VLM population) to remove an additional source of advantage from the prior 78-subject mixed-cohort training.
+| Horizon | n | Baseline MAE | Longitudinal MAE | Training-mean MAE | Baseline MSE | Longitudinal MSE | Training-mean MSE | Baseline R² | Longitudinal R² | Training-mean R² |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| W15 | 32 | 6.7939 | 6.8704 | 6.8545 | 82.7453 | 81.6330 | 81.2928 | -0.0846 | -0.0700 | -0.0656 |
+| W18 | 15 | 6.4072 | 6.2274 | 6.4616 | 61.9312 | 58.9216 | 61.7872 | -0.1506 | -0.0947 | -0.1480 |
+| W20 | 20 | 1.8378 | 1.8712 | 1.8836 | 5.8860 | 5.8387 | 5.8454 | -0.1157 | -0.1068 | -0.1080 |
 
-**The key discrepancy (epoch-dependent):** At the 10-epoch default, the VLM longitudinal model (acc=0.531, AUROC=0.560) underperforms condition B (acc=0.750, AUROC=0.718) by ~0.16 AUROC despite receiving the same MLP-predicted ts1/ts2/ts3 embeddings — consistent with signal surviving in a linear probe but degrading through the LLM pathway. However, at 20 epochs the VLM reaches AUROC=0.762, *matching/exceeding* the condition-B ceiling. So the "signal loss" is largely an underfitting artifact of the 10-epoch config, not a fundamental limit of the LLM pathway — the projection+LLM can recover the probe-level genotype signal given enough training, though it then overfits past 20ep (see [experiments.md](experiments.md)). Note condition B is itself an inflated ceiling (genotype leaks into the MLP conditioning vector), so the 20ep VLM matching it should not be over-read.
+The actual training-fold mean predictor has subject MAE 5.6765. Baseline's seed-mean MAE is 5.6112; longitudinal's is 5.6494. Longitudinal reduces seed-mean absolute error for 12/32 mice. The accompanying JSON preserves every mouse's paired error and the observation-weighted continuity metrics.
 
----
+Per-horizon MAE differences by seed (longitudinal minus baseline):
 
-## Full Encoder Comparison Table (historical — 78 subjects, both cohorts)
+| Horizon | Seed 0 | Seed 1 | Seed 2 |
+|---|---:|---:|---:|
+| W15 | +0.0095 | +0.0530 | +0.1669 |
+| W18 | -0.1534 | -0.1761 | -0.2099 |
+| W20 | +0.0558 | +0.0187 | +0.0259 |
 
-> **Warning:** These results use 78 subjects (NaF + FDG), all 4 timepoints, and are NOT directly comparable to the 32-subject VLM evaluation above. They are retained for encoder selection justification only.
+Longitudinal has lower MAE at W15: 0/3 seeds, W18: 3/3 seeds, W20: 0/3 seeds. These are secondary per-horizon results (32, 15 and 20 observed mice respectively), and do not override the primary comparison.
 
-| Metric | Chance | COLIPRI | Merlin | RAD-DINO | M3D |
-|---|---|---|---|---|---|
-| **T2a Accuracy** (4-class week, LOSO) | 0.25 | 0.454 | 0.563 | **0.878** ⭐ | 0.607 |
-| **T2b AUC-ROC** (early vs late, LOSO) | 0.50 | 0.683 | 0.852 | **1.000** ⭐ | 0.963 |
-| **T2c Accuracy** (WT vs KO, LOSO) | 0.50 | 0.411 | 0.459 | **0.786** ⭐ | 0.563 |
-| **T2c AUC-ROC** (WT vs KO, LOSO) | 0.50 | 0.282 | 0.491 | **0.869** ⭐ | 0.567 |
-| **T3b** Subject retrieval Recall@1 | — | 0.018 | **0.044** ⭐ | 0.013 | 0.022 |
+## Validity and limits
 
----
+**Genotype evaluation amendment complete:** the genotype AUROCs above pool different leave-one-out models and remain historical diagnostics of that protocol. The verified four-fold amendment compares only predictions from the same fitted model: baseline AUROC 0.5161 / 0.4839 / 0.4355 versus longitudinal 0.4194 / 0.4516 / 0.4516. Both independent scorers agree; no consistent longitudinal gain is established. See [the amended results](audit_2026-09-14/stratified/RESULTS.md) and [the investigation of weak/reversed class separation](audit_2026-09-14/stratified/GENOTYPE_MECHANISM.md). The original numerical outputs are unchanged.
 
-## Encoder Notes
+Both arms use the same question-boundary heads, targets, folds, seeds and final-state training schedule. The longitudinal tokens are generated through five inner cross-fits plus an outer-training forecaster per held-out mouse. The installed Trainer executes 220 updates (reported epoch approximately 19.53) under the fixed requested 20-epoch configuration. No setting was selected from these held-out scores.
 
-### COLIPRI (`microsoft/colipri`)
-- **Architecture:** 3D ViT, pre-trained on human chest CT + radiology reports
-- **Preprocessing:** Resampled to 2 mm isotropic, resized to 192³, HU clipped ±1000
-- **Embedding:** 768-d CLS token (`pool=True, project=True`)
-- **Verdict:** Weakest encoder. Severe anisotropy (all cosine sims ≈ 0.997) — embeddings are packed into a tiny cone. Temporal signal exists but is geometrically very subtle. Chest-focused pre-training likely mismatches with abdominal mouse anatomy.
+The NaF subset has three acquisition components (KO 4, KO 10, WT 18), with one WT component. These subject-held-out results cannot establish independent-group genotype generalization. Calibration is not assessed; threshold accuracy uses a fixed zero logit. Genotype and diet are confounded. The PET proxy has not been validated against source ROI measurements or histology.
 
-### Merlin (`stanfordmimi/Merlin`)
-- **Architecture:** 3D ViT, pre-trained on human abdominal CT + EHR
-- **Preprocessing:** Handled internally by `merlin.data.DataLoader`; preprocessed tensors cached to `embeddings/merlin/cache/`
-- **Embedding:** 2048-d (`ImageEmbedding=True`)
-- **Verdict:** Clear improvement over COLIPRI on all supervised tasks. Abdominal pre-training is a better domain match. The larger embedding dimension (2048) retains more task-relevant information. Still suffers from anisotropy but less severely.
+This comparison tests adding three predicted tokens to the existing baseline. It does not establish the mechanism of a gain or personalized future modeling. Actual nested rollout cosine exceeds persistence but trails the training-week centroid at all three horizons. Extra observed visits, alternative endpoints and additional VLM control arms were outside this validation task.
 
-### RAD-DINO (`microsoft/rad-dino`)
-- **Architecture:** 2D ViT-Base/14, pre-trained on 882k chest X-rays (DINOv2 self-supervised)
-- **Preprocessing:** 32 evenly-spaced axial slices per volume; HU window [-160, 240] (soft-tissue); scaled to uint8 [0, 255]; converted to RGB PIL Image; RAD-DINO's `BitImageProcessor` handles resize (518px), center crop (518×518), and normalization (mean=0.5307, std=0.2583) internally
-- **Embedding:** Mean-pool of 32 per-slice 768-d CLS tokens → 768-d volume embedding
-- **Verdict:** Dominant encoder across nearly all metrics. Only encoder with positive silhouette score. T2b AUC = 1.000 (perfect early vs. late separation). T3a = 0.926 (temporal ordering). The 2D slice + mean-pool adaptation is surprisingly effective — more so than native 3D processing. Note: subject retrieval (T3b) is weakest of the four; mean-pooling erases individual anatomy, so the model knows *when* but not *who*.
+## Other verified results
 
-### M3D (`GoodBaiBai88/M3D-CLIP`)
-- **Architecture:** 3D ViT (0.2B params), pre-trained on ~120k medical image-text pairs across 11 modalities via contrastive learning (CLIP objective); used in advisor's prior paper
-- **Preprocessing:** HU clipped [-160, 240]; trilinear resampled to (32, 256, 256); min-max normalized to [0, 1]
-- **Embedding:** 768-d CLS token via `model.encode_image(tensor)[:, 0]`
-- **Verdict:** Best 3D encoder on unsupervised geometry (T1b ARI 0.114, NMI 0.150, T1d Δ 0.026) — significantly better than Merlin and COLIPRI at separating weeks without labels. Strong T2b AUC (0.963) and T3a (0.755). However, weak genotype signal (T2c AUC 0.567 ≈ near-chance) and cohort-blind (T2d AUC 0.502). The CLIP pre-training on diverse 3D medical data gives strong temporal structure but insufficient body composition sensitivity. Positioned between Merlin and RAD-DINO overall.
+* All 111 PET-2 source measurements reproduce exactly; corrected RAD-DINO crops and baseline features reproduce exactly.
+* RAD-DINO all-week group-held-out genotype/diet AUROC remains 0.82819, exact full-refit group-label p=0.00833 (229 scans, 78 mice, ten groups). This is an association, not disease localization; encoder selection limits confirmatory wording.
+* Fresh Merlin extraction includes all 229 scans. Its group-held-out genotype/diet AUROC is 0.4464, exact full-refit p=0.1167 over 120 arrangements. The old cached Merlin rows are superseded.
 
----
+### Refreshed Merlin comparison rows
 
-## Key Observations
+| Existing metric | Fresh result |
+|---|---:|
+| Four-class week accuracy, subject holdout | 0.77293 |
+| Early/late AUROC, subject holdout | 0.95804 |
+| Early/late AUROC, group holdout | 0.95804 |
+| Genotype/diet accuracy, subject holdout | 0.62009 |
+| Genotype/diet AUROC, subject holdout | 0.63407 |
+| Genotype/diet AUROC, group holdout | 0.44637 |
+| Cohort AUROC, subject holdout | 0.55085 |
+| Temporal-ordering accuracy | 0.77043 |
+| Subject retrieval Recall@1 | 0.03930 |
+| Week retrieval mAP@5 | 0.69561 |
 
-1. **RAD-DINO wins on every supervised and longitudinal task.** The 2D slice + mean-pool approach (32 axial slices, mean-pool CLS tokens) outperforms all native 3D encoders across the entire evaluation battery. Self-supervised ViT pre-training on large 2D radiology corpora transfers more effectively than 3D models trained with text supervision on smaller human CT datasets.
+## Evidence and reproduction
 
-2. **RAD-DINO is the only encoder with meaningful genotype (WT vs KO) signal.** T2c AUC: RAD-DINO 0.869 vs. M3D 0.567 vs. Merlin 0.491 (chance) vs. COLIPRI 0.282 (below chance). COLIPRI's sub-chance AUC indicates its compressed embedding geometry actively anti-predicts genotype — the logistic boundary learned on training subjects inverts on held-out subjects, a hallmark of anisotropy-induced overfitting. This is the most clinically important result: only RAD-DINO could support a genotype classification application.
+[Paired machine-readable results](audit_2026-09-14/paired_vlm_results.json), [closure report](audit_2026-09-14/PIPELINE_CLOSURE.md), [fixed protocol](audit_2026-09-14/EXPERIMENT_PROTOCOL.json), [commands and run paths](experiments.md), [Merlin metrics](audit_2026-09-14/merlin_regenerated_metrics.json), [RAD-DINO refit evidence](audit_2026-09-14/group_refit.log). Each paired result records its source run directories. Each run retains raw predictions, split files, checkpoint files and verification manifests.
 
-3. **M3D is the best encoder for unsupervised geometry (T1b/T1d).** M3D achieves the highest ARI (0.114), NMI (0.150), and T1d Δ (0.026) — meaning its embedding space is more intrinsically organised by timepoint and identity than any other encoder, without any supervision. This reflects the diversity of its CLIP pre-training across 11 modalities. However, this geometric quality does not translate to supervised genotype discrimination.
+Historical VLM summaries, including those previously labeled “leak-free,” are archived and excluded from this corrected result.
 
-4. **Anisotropy renders COLIPRI and Merlin blind to genotype and disease stage.** Both 3D encoders have T2c AUC ≈ 0.48–0.49 and T2e OvR AUC ≈ 0.50–0.65, meaning their embeddings contain essentially no linearly separable genotype signal. The near-identical cosine similarities (≈0.997) pack all representations into a tiny cone where only the strongest signal (time) is recoverable, and even that is weak for COLIPRI (T2b AUC = 0.68). M3D avoids this failure mode (T1d Δ = 0.026 vs. COLIPRI 0.0003).
+## Subsequent development comparisons on the amended four folds
 
-5. **RAD-DINO's T2b = 1.000 is validated as biological, not scanner drift.** Per-cohort conditioned T2b: NaF AUC = 1.000, FDG AUC = 1.000. Both cohorts use different scanners/tracers but both achieve perfect separation — scanner drift as the sole explanation is ruled out. The signal reflects real body composition/soft-tissue changes over 8 weeks of high-fat diet. M3D conditioned T2b (NaF 0.933, FDG 0.934) is consistent within cohorts at a high level, second only to RAD-DINO.
+All VLM rows below use the same 32 mice, four subject folds, and seeds 0/1/2. Values are means across those three seeds. AUROC counts KO–WT pairs within each fitted test fold, never across fitted models. Every prescribed run completed and passed artifact and independent-scoring checks.
 
-6. **RAD-DINO has moderate but non-trivial cohort sensitivity (T2d AUC = 0.709).** COLIPRI (0.488), Merlin (0.476), and M3D (0.502) are all at chance for NaF vs. FDG — they cannot tell which radiotracer was used. Only RAD-DINO can, at AUC 0.709. This could reflect genuine differences in animal preparation/body condition between cohorts rather than scanner artifacts, but warrants monitoring for cross-cohort downstream tasks.
+| Model/input | Mean AUROC | Mean accuracy | Mean supervised proxy MAE |
+|---|---:|---:|---:|
+| Baseline VLM | 0.4785 | 0.5000 | 5.5506 |
+| Original forecast-input VLM | 0.4409 | 0.5313 | 5.6631 |
+| Residual forecast-input VLM | 0.5484 | 0.5208 | 5.6564 |
+| Residual + direct visual genotype head | 0.6882 | 0.5000 | 5.5550 |
+| Residual + genotype-only supervision | 0.5806 | 0.5208 | Not supervised |
 
-7. **T2e accuracy is misleading for COLIPRI, Merlin, and M3D — look at F1.** T2e accuracy: M3D 0.515, COLIPRI 0.520, Merlin 0.515 (all slightly above chance of 0.20). But macro-F1: all three ≈ 0.14–0.16 ≈ chance. These encoders predict "WT" (majority class) for nearly everything, inflating accuracy. RAD-DINO (F1 = 0.621) is the only encoder learning meaningful stage boundaries.
+The fixed direct-embedding classifier scores baseline features at AUROC 0.6290, accuracy 21/32 (0.6563), and residual features at AUROC 0.6774, accuracy 19/32 (0.5938). These are simpler classifiers with different optimization, not matched VLM ablations. Always-WT accuracy is 18/32 (0.5625). Residual future-embedding fidelity remains worse than the original forecaster and training-week centroid; the improved genotype ranking does not establish better forecasting.
 
-8. **T3b (subject retrieval) is universally poor — the critical gap.** Recall@1: Merlin 0.044 ⭐, M3D 0.022, COLIPRI 0.018, RAD-DINO 0.013. All well below a useful threshold. Mean-pooling in RAD-DINO erases individual anatomy. A custom encoder with longitudinal contrastive loss (pulling same-mouse scans together) is needed to close this gap.
+Direct visual access improves VLM AUROC in every seed (0.6935, 0.6774, 0.6935), but every seed has only 16/32 correct classifications. Its visual component alone retains nearly all the combined ranking performance (AUROC 0.6774, 0.6774, 0.6935). Genotype-only supervision has inconsistent ranking gains and the same per-seed accuracies as residual VLM. Neither variant reaches 70% accuracy.
 
-9. **M3D is the best 3D encoder overall.** Compared to Merlin: M3D wins on T1b/T1d (unsupervised geometry), T2b AUC (0.963 vs. 0.852), T2e OvR AUC (0.701 vs. 0.652), and T3a (0.755 vs. 0.770 — roughly equal). Merlin retains the edge on T3b subject retrieval (MRR 0.096 vs. 0.069). The diverse CLIP pre-training of M3D on 11 modalities provides stronger structural organisation than Merlin's abdominal CT + EHR objective.
+Both new variants classify all eight mice as WT in folds 00 and 03 in every seed. Direct-visual fold-03 AUROC is nevertheless 1.0 in each seed, with every raw KO probability below 0.08. Fold 01 remains below chance. This identifies both score-offset/threshold problems and remaining ranking failures; it does not establish that calibration alone will fix accuracy. The new variants also make confident mistakes rather than merely borderline guesses. [Descriptive score evidence](audit_2026-09-14/genotype_vlm_variants/score_diagnostics.json) involves no new fitting or threshold selection.
 
----
+Residual VLM's Week-20 proxy MAE improves over the baseline VLM in all three seeds (mean 1.9662 versus 2.0704, 20 mice), but its overall proxy MAE worsens. Direct-visual mean proxy MAE is essentially unchanged from baseline and does not improve consistently across seeds. Genotype-only proxy outputs are unsupervised and excluded from performance interpretation. All supervised horizons remain available in the linked artifacts.
 
-## Conditioned Analysis (per cohort)
-
-*Run T2a and T2b separately for NaF and FDG to disentangle biological signal from scanner/tracer confounds.*
-
-| Metric | Cohort | COLIPRI | Merlin | RAD-DINO | M3D |
-|---|---|---|---|---|---|
-| **T2a acc** (week, 4-class) | NaF | 0.460 | 0.505 | **0.802** | 0.604 |
-| **T2a acc** (week, 4-class) | FDG | 0.449 | 0.517 | **0.814** | 0.568 |
-| **T2a OvR AUC** (week, 4-class) | NaF | 0.610 | 0.660 | **0.954** | 0.729 |
-| **T2a OvR AUC** (week, 4-class) | FDG | 0.634 | 0.724 | **0.958** | 0.729 |
-| **T2b acc** (early vs late) | NaF | 0.600 | 0.617 | **1.000** | 0.767 |
-| **T2b acc** (early vs late) | FDG | 0.610 | 0.678 | **1.000** | 0.864 |
-| **T2b AUC** (early vs late) | NaF | 0.617 | 0.719 | **1.000** | 0.933 |
-| **T2b AUC** (early vs late) | FDG | 0.574 | 0.779 | **1.000** | 0.934 |
-
----
-
-## VLM Results
-
-See Summary Table above for primary reported metrics. Detailed breakdown below.
-
-> The VLM longitudinal numbers here use the default 10-epoch config (`mouse_vlm_loso`). A subsequent epoch ablation found **20 epochs is the best configuration** — genotype acc 0.719, overall TBR MAE 4.736, and the only positive overall R² (+0.104); 50/100 epochs overfit back to ~0.625 genotype. See [experiments.md](experiments.md) for the full run log (baseline, epoch sweep, TinyLlama backbone).
-
-**Setup:** LOSO CV over 32 NaF subjects × 3 question types = 96 records. All metrics are from multitask heads — text-match and text-parsed TBR are omitted (LLM did not generate well-formatted output in <2% of held-out records). Genotype: sigmoid(logit) > 0.5 threshold on the Linear(4096,1) head. TBR: Linear(4096,256)→GELU→Linear(256,4) regression head, MSE-trained with slot masking (−1 sentinel for missing future weeks).
-
-### TBR Regression Head — Full Breakdown
-
-Slot counts: Δ3wk n=64 (all subjects with Week 15), Δ6wk n=30 (subjects with Week 18), Δ8wk n=40 (subjects with Week 20).
-
-| Metric | Longitudinal (4-token) | Baseline (1-token) |
-|---|---|---|
-| Overall MAE | **5.393** | 6.241 |
-| Overall Pearson r | **0.276** | −0.054 |
-| Overall R² | −0.076 | −0.357 |
-| Δ3wk MAE | **6.123** | 6.806 |
-| Δ3wk Pearson r | **0.447** | −0.090 |
-| Δ3wk R² | **0.131** | −0.088 |
-| Δ6wk Pearson r | **−0.093** | −0.243 |
-| Δ8wk Pearson r | **0.207** | 0.069 |
-
-Δ6wk and Δ8wk metrics are weaker, partly due to smaller sample sizes and zero-padding for missing weeks introducing noise. Negative R² overall indicates neither model beats a constant mean predictor across all slots — consistent with noisy programmatic TBR labels (see design_decisions.md).
-
-## Longitudinal Encoder Results (LOSO CV, RAD-DINO embeddings, 32 NaF subjects, 56 pairs)
-
-MLP (775 → 512 → 512 → 768, two hidden layers with LayerNorm+GELU) predicting T_{k+1} from T_k with cosine similarity loss. Retrained on 32 NaF subjects only to match the VLM evaluation population (previously 78 subjects across both cohorts).
-
-| Metric | Value | Notes |
-|---|---|---|
-| T4a cosine sim | 0.981 | High directional accuracy; reflects tight embedding cluster geometry |
-| T4b Recall@1 | 0.036 | Near-chance subject retrieval; predicts week cluster, not individual identity |
-| T4b MRR | 0.185 | Correct subject ranks ~5th out of 32 on average |
-| T4c improvement rate | 0.661 | Beats returning T_k unchanged 66% of the time |
-
----
-
-## Future Directions
-
-### Near-term (run next)
-- [x] **Run notebook on all 3 encoders** — all T2a OvR AUC, T2c, T2d, T2e, conditioned analysis complete
-- [x] **M3D encoder** (`GoodBaiBai88/M3D-CLIP`) — implemented `get_m3d_embeddings.py`, extracted 229 embeddings, full evaluation complete
-- [x] **Longitudinal MLP encoder** — LOSO CV complete, predicted embeddings exported for VLM input
-- [x] **VLM baseline** — LOSO CV complete (single ts0 token); genotype acc=0.219, TBR Δ3wk r=−0.090
-- [x] **Genotype classification head** — implemented on LLM hidden state with BCE loss; replaces text-match
-- [x] **VLM with longitudinal 4-token input + classification head** — LOSO CV complete; genotype acc=0.531, TBR Δ3wk r=0.447, overall TBR r=0.276
-
-### Medium-term
-- [ ] **Custom encoder — MAE baseline**: 3D ViT trained from scratch on this dataset with masked autoencoder objective; cheap to train and directly comparable to Merlin
-- [ ] **Custom encoder — Contrastive + Reconstruction**: pull same-mouse embeddings across weeks together (longitudinal contrastive loss) + MAE reconstruction loss; designed to close the T3b (subject retrieval) gap
-
-### Long-term (encoder paper scope)
-- [ ] **DINO-style self-distillation on RAD-DINO backbone**: fine-tune the RAD-DINO ViT-B/14 backbone using DINOv2 objective on this dataset; may be challenging to reimplement but DINOv2 is open-source
-- [ ] **Rigorous custom encoder evaluation**: if pursuing an encoder-specific paper, all ablations (loss terms, architecture variants, data augmentation) must be documented
+These are descriptive development findings with acquisition/diet confounding. Direct visual access has not been evaluated with matched baseline-only inputs, so its improvement does not isolate a benefit from forecast tokens or language-model reasoning. [Residual forecaster results](audit_2026-09-14/residual_rollout_experiment/README.md), [residual VLM results](audit_2026-09-14/residual_vlm/README.md), [variant results and protocol](audit_2026-09-14/genotype_vlm_variants/README.md).

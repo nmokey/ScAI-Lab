@@ -1,5 +1,7 @@
 # Dataset QA Report
 
+> Historical inventory QA dated 2026-03-04. Its PASS findings concern that inventory snapshot, not the later model pipeline or biological validity. See [current status](STATUS.md) and [current identity assumptions](DATA_MANIFEST.md).
+
 **Date:** 2026-03-04
 **Method:** Ground-truth verification against `/data1/Dicom Data/` and `/data1/Amgen SUV Data/`
 **Scope:** All 147 rows of `manifest.csv`, all DICOM scan folders, all Amgen XIF files

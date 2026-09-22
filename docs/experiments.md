@@ -1,236 +1,122 @@
-# VLM Experiment Log
+# Current fixed-protocol VLM experiment
 
-> [!WARNING]
-> **Results below are under audit and should not be cited as they stand.** An
-> automated audit (2026-08-29) found defects that affect every number in this
-> section — most importantly checkpoint selection on the held-out subject (F2),
-> a genotype-head threshold that does not transfer to inference (F3), and a
-> null distribution at n=32 wide enough to contain several of the reported
-> values (F1). See [FINDINGS.md](FINDINGS.md) for the register and
-> `pytest -m probe` for the demonstrations. Re-runs are pending.
+The [historical experiment log](audit_2026-09-14/legacy_documents/experiments.md) is preserved for provenance. Its descriptions of “citable” or “leak-free” VLM runs are superseded by the checkpoint, head-context and nested-split audit. Those runs do not evaluate the corrected model.
 
-> The epoch sweep specifically: the reported best cell (20 epochs, genotype AUROC
-> 0.762) has p = 0.046 against a no-signal null once treated as the maximum over
-> the 10 configurations it was selected from, before any correction for F2's
-> measured +0.14 to +0.20 selection inflation. "20 epochs is the sweet spot" is
-> not supported as stated.
+## Frozen comparison
 
+* Existing 32 NaF mice, 96 questions, W12 baseline; future horizons W15, W18 and W20 for every mouse.
+* Existing RAD-DINO embeddings and existing two-decimal PET-2 targets/masks.
+* Baseline: one observed token. Longitudinal: that token plus three fold-nested normalized forecast tokens.
+* Both arms: question-boundary heads, canonical strict adapter reload, final training state, requested 20 epochs, seeds 0/1/2.
+* Forecaster: existing MLP, hidden 512, 300 epochs, learning rate 0.001, seed 0, five inner subject folds, genotype disabled.
+* Primary outcome: subject-averaged MAE difference, longitudinal minus baseline. Genotype AUROC is secondary.
 
-Canonical record of all LOSO CV runs. Each entry documents exactly what changed,
-why, and what the results were. Primary metrics for the paper: genotype accuracy
-and TBR regression MAE (Δ3wk). r and R² are reported for analysis only.
+The installed Trainer executes 220 updates and reports approximately 19.53 epochs for 93 training records under the requested 20-epoch setting. This fixed schedule is shared by both arms. Held-out losses are logged for debugging and never select a checkpoint or setting.
 
-All experiments use: 32 NaF subjects, LOSO CV, RAD-DINO embeddings (768-d),
-multitask head on LLM EOS hidden state, LLaMA-3.1-8B-Instruct unless noted.
+The [protocol JSON](audit_2026-09-14/EXPERIMENT_PROTOCOL.json), [six configurations](audit_2026-09-14/run_configs), [frozen production sources](audit_2026-09-14/run_configs/source_snapshot), and per-run `run_manifest.json` identify the experiment. Full runs reuse each verified completed first fold without retraining or appending duplicates.
 
----
+## Reproduce
 
-## Summary table
+Use the existing `.venv-test/bin/python` environment from the repository root. Set `OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 HF_HUB_OFFLINE=1 NUMBA_CACHE_DIR=/tmp/scai-numba LD_LIBRARY_PATH=/home/ryab/miniconda3/envs/vlm_env/lib`. Select an available GPU with `CUDA_VISIBLE_DEVICES` for training. Keep long jobs in tmux.
 
-| Experiment | Epochs | LLM | Geno acc | Geno AUC | TBR MAE (overall) | TBR MAE (Δ3wk) | TBR r (Δ3wk) | TBR R² (overall) |
-|---|---|---|---|---|---|---|---|---|
-| Baseline (ts0 only) | 10 | LLaMA-3.1-8B | 0.219 | 0.163 | 6.241 | 6.806 | −0.090 | −0.357 |
-| Longitudinal 10ep | 10 | LLaMA-3.1-8B | 0.531 | 0.560 | 5.393 | 6.123 | **0.447** | −0.076 |
-| **Longitudinal 20ep** | 20 | LLaMA-3.1-8B | **0.719** | **0.762** | **4.736** | 6.346 | 0.376 | **0.104** |
-| Longitudinal 50ep | 50 | LLaMA-3.1-8B | 0.625 | 0.627 | 5.352 | 7.459 | 0.176 | −0.011 |
-| Longitudinal 100ep | 100 | LLaMA-3.1-8B | 0.625 | 0.714 | 5.490 | 7.481 | 0.202 | −0.011 |
-| TinyLlama 10ep | 10 | TinyLlama-1.1B | 0.344 | 0.397 | 4.794 | 6.294 | 0.548 | 0.220 |
+For each arm (`base`, `long`) and seed (`0`, `1`, `2`), run:
 
----
+```bash
+.venv-test/bin/python -u vlm/run/run_mouse_vlm_loso.py \
+  --yaml docs/audit_2026-09-14/run_configs/base_seed0.yml \
+  --output-dir /data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0
+```
 
-## Epoch sweep: baseline (ts0) vs longitudinal (2026-07-07)
+Change both configuration and destination for each arm/seed. A repeated command verifies and reuses complete folds; it resumes incomplete folds only from compatible retained training state. Changed fingerprints require a new output directory. Logs are `docs/audit_2026-09-14/validated_<arm>_seed<seed>.log`.
 
-Controlled 2D ablation. All 10 runs use the **exp3 config** (r=4, q/v LoRA,
-multitask_wt=5, z-scored TBR, LLaMA-3.1-8B). The only variables are (a) epochs
-and (b) input type: baseline = ts0 only (img_tokens=1, no predicted_emb_dir);
-longitudinal = ts0 + MLP-predicted ts1/ts2/ts3 (img_tokens=4).
+All six runs completed on 2026-09-14. Recompute their verified paired scores with:
 
-YAMLs: `viz_emb_params_mouse_{base,long}_ep{N}.yml`. Runners:
-`run/run_sweep_gpuA_baseline.sh`, `run/run_sweep_gpuB_longitudinal.sh`.
-(long_ep20 == the earlier `mouse_vlm_ep20` run — same config.)
+```bash
+.venv-test/bin/python scripts/aggregate_seeds.py \
+  --baseline /data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed{0,1,2} \
+  --longitudinal /data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed{0,1,2} \
+  --truth /data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/mouse_all_vqa_traj.json \
+  --output docs/audit_2026-09-14/paired_vlm_results.json
+```
 
-### Genotype accuracy / AUROC
+The scorer rejects incomplete studies, duplicate/missing predictions, changed checkpoint files, mismatched seeds/configurations and mismatched train-mean references. The JSON includes per-horizon outcomes, per-mouse errors and source prediction directories; its Markdown companion contains the primary table.
 
-| Epochs | Baseline (ts0) acc / AUC | Longitudinal acc / AUC |
-|---|---|---|
-| 15 | 0.625 / 0.623 | 0.625 / 0.635 |
-| 20 | 0.500 / 0.583 | **0.719 / 0.762** ⭐ |
-| 25 | 0.375 / 0.345 | 0.438 / 0.421 |
-| 30 | 0.344 / 0.298 | 0.438 / 0.536 |
-| 40 | 0.375 / 0.349 | 0.656 / 0.595 |
+## Input verification
 
-### TBR regression — overall MAE / R²
+```bash
+.venv-test/bin/python scripts/validate_research_inputs.py \
+  --report docs/audit_2026-09-14/validated_inputs.json
+.venv-test/bin/python scripts/validate_nested_rollout.py \
+  --forecasts /data1/Processed_NIfTI_Test/embeddings/longitudinal_nested_20260914 \
+  --embeddings /data1/Processed_NIfTI_Test/embeddings/raddino/raddino_embeddings.npz \
+  --report docs/audit_2026-09-14/nested_rollout_validation.json
+```
 
-| Epochs | Baseline MAE / R² | Longitudinal MAE / R² |
-|---|---|---|
-| 15 | 5.034 / 0.071 | **4.462 / 0.240** ⭐ |
-| 20 | 4.828 / 0.104 | 4.736 / 0.104 |
-| 25 | 4.808 / 0.065 | 5.470 / −0.075 |
-| 30 | 4.699 / 0.151 | 5.465 / −0.089 |
-| 40 | 4.914 / 0.057 | 6.200 / −0.203 |
+For an independent proxy recomputation, `scripts/recompute_existing_pet_proxy.py` accepts `--manifest`, `--source-csv` and a separate `--output-dir`; do not overwrite the frozen dataset. Only PET-2 columns are recomputed; other historical target columns are copied and remain unvalidated.
 
-### TBR regression — Δ3wk MAE / r (n=64)
+The main CPU gate is `python -m pytest -m 'not probe and not realdata' -q`. Set `SCAI_DATA_ROOT=/data1/Processed_NIfTI_Test` to run the separate current crop-identity test. Actual quantized-backbone, corrected-encoder and data evidence is linked in the [closure report](audit_2026-09-14/PIPELINE_CLOSURE.md).
 
-| Epochs | Baseline MAE / r | Longitudinal MAE / r |
-|---|---|---|
-| 15 | 6.741 / 0.371 | 5.726 / **0.525** |
-| 20 | 6.475 / 0.301 | 6.346 / 0.376 |
-| 25 | 5.937 / 0.275 | 7.707 / −0.016 |
-| 30 | 6.196 / 0.319 | 7.345 / 0.091 |
-| 40 | 6.559 / 0.221 | 8.983 / −0.142 |
+## Completed result
 
-### Takeaways
+The six prescribed runs completed all 192 folds and passed artifact verification. Primary paired MAE difference is +0.0381 (longitudinal minus baseline), so the corrected comparison does not show an overall gain. W18 MAE is lower with longitudinal tokens in all three seeds; it remains a secondary result in 15 mice. See [all results](results.md), including every horizon, seed and training-mean comparator.
 
-1. **Longitudinal input drives genotype signal.** Longitudinal ≥ baseline on both
-   accuracy and AUROC at every epoch count, peaking at **0.719 acc / 0.762 AUC @ 20ep**.
-   Baseline never exceeds 0.625 acc and its AUROC slides *below* chance as training
-   lengthens (0.35 / 0.30 / 0.35 at 25/30/40ep, 0.163 at the 10ep default) — the
-   ts0-only head not only fails to separate genotype but ranks it anti-correlated,
-   a hallmark of overfitting with no stable signal to lock onto. This is the strongest
-   evidence that the predicted trajectory (not just more training) is what carries genotype.
-2. **The two heads want different training lengths.** Longitudinal genotype peaks
-   at 20ep; longitudinal TBR peaks at **15ep** (MAE 4.462, R²=0.240, Δ3wk r=0.525).
-   No single epoch count is jointly optimal.
-3. **Longitudinal TBR overfits past 20ep.** Overall R² goes 0.240 → 0.104 →
-   negative (−0.075 / −0.089 / −0.203). Baseline TBR stays flat-and-positive across
-   all epochs, i.e. it is less expressive but more stable.
-4. **long_ep40 genotype (0.656) is likely noise.** The 25/30/40 longitudinal
-   genotype points (0.438, 0.438, 0.656) bounce around; with 32 LOSO folds the
-   per-point SE is large. Treat the >20ep region as "degraded," not monotonic.
+Independent arithmetic verification (does not import the production scorer):
 
-**Recommended configs:** longitudinal 20ep for genotype (advisor's pick, confirmed);
-longitudinal 15ep if TBR is the priority.
+```bash
+.venv-test/bin/python scripts/check_saved_vlm_metrics.py
+```
 
----
+See [the final interpretation](audit_2026-09-14/FINAL_INTERPRETATION.md) for the observed prediction compression, genotype limitations and the secondary W18 result.
 
-## Completed experiments
+### Follow-up: systematically low genotype scores
 
-### `mouse_vlm_baseline_loso` — VLM baseline (ts0 only)
-- **YAML:** `viz_emb_params_mouse.yml`
-- **Key settings:** img_tokens=1, no predicted_emb_dir, r=16 full LoRA, multitask_wt=1, 10 epochs
-- **Purpose:** lower bound — what can the VLM do from a single scan?
-- **Results:**
-  - Genotype acc: **0.219** / AUROC: **0.163** *(below chance — head ranks genotype anti-correlated)*
-  - TBR reg MAE (overall): 6.241, r=−0.054, R²=−0.357
-  - TBR reg MAE (Δ3wk): 6.806, r=−0.090, R²=−0.088, n=64
-  - TBR reg MAE (Δ6wk): 7.568, r=−0.243, R²=−0.957, n=30
-  - TBR reg MAE (Δ8wk): 4.340, r=0.069, R²=−4.421, n=40
+Read-only checks of all 64 seed-0 baseline/longitudinal checkpoints reproduce held-out genotype logits with zero error. Median training AUROC is 0.7185/0.6450, while the identical first-fold input scored across models gives AUROC 0.4167/0.2738 against the held-out labels. These are diagnostics, not additional performance estimates. No fitting, threshold changes or score inversion was performed. V07 is reopened because reproducible pooled LOSO AUROC does not establish reliable discrimination; see [diagnosis and required closure](audit_2026-09-14/GENOTYPE_EVALUATION_FOLLOWUP.md).
 
-### `mouse_vlm_loso` — VLM longitudinal, 10-epoch (exp3 config)
-- **YAML:** `viz_emb_params_mouse_exp3_combined.yml`
-- **Key settings:** img_tokens=4 (ts0 real + ts1/ts2/ts3 MLP-predicted), r=4 q/v LoRA only,
-  multitask_wt=5, z-scored TBR targets, 10 epochs
-- **Purpose:** combines lessons from exp1–3. Superseded as the headline result by
-  `mouse_vlm_ep20` (same config, 20 epochs) — see below; the 20-epoch config is the
-  canonical default (`viz_emb_params_mouse.yml`).
-- **Results:**
-  - Genotype acc: **0.531** / AUROC: **0.560**
-  - TBR reg MAE (overall): 5.393, r=0.276, R²=−0.076
-  - TBR reg MAE (Δ3wk): 6.123, r=0.447, R²=0.131, n=64
-  - TBR reg MAE (Δ6wk): 6.855, r=−0.093, R²=−0.722, n=30
-  - TBR reg MAE (Δ8wk): 3.127, r=0.207, R²=−1.826, n=40
+```bash
+CUDA_VISIBLE_DEVICES=4 .venv-test/bin/python scripts/diagnose_genotype_fold_offsets.py --run /data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0 --output docs/audit_2026-09-14/genotype_fold_diagnostic_long0.json
+CUDA_VISIBLE_DEVICES=5 .venv-test/bin/python scripts/diagnose_genotype_fold_offsets.py --run /data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0 --output docs/audit_2026-09-14/genotype_fold_diagnostic_base0.json
+```
 
-### `mouse_vlm_tinyllama` — TinyLlama-1.1B backbone ✓
-- **YAML:** `viz_emb_params_mouse_tinyllama.yml`
-- **Change:** `llm_model_name` + `tokenizer_name` → `TinyLlama/TinyLlama-1.1B-Chat-v1.0`
-- **Hypothesis:** LLaMA-3.1-8B may be overparameterized for this structured embedding regression task;
-  a smaller LLM may overfit less and better preserve the linear signal that the probe can decode
-- **Results** (post-fix, valid):
-  - Genotype acc: 0.344 / AUROC: 0.397 *(both below chance — TinyLlama lacks capacity for genotype signal)*
-  - TBR reg MAE (overall): **4.794**, r=0.492, R²=**0.220**
-  - TBR reg MAE (Δ3wk): 6.294, r=0.548, R²=0.193, n=64
-  - TBR reg MAE (Δ6wk): **5.631**, r=0.557, R²=0.233, n=30
-  - TBR reg MAE (Δ8wk): **1.766**, r=−0.020, R²=−0.143, n=40
-- **Observation:** TBR regression better than 8B baseline overall (R²=0.220 vs −0.076);
-  genotype badly worse (0.344 vs 0.531). Smaller model overfits less on regression but
-  lacks capacity for genotype discrimination.
+### Authorized fixed four-fold evaluation amendment
 
----
+After the pooled-LOSO follow-up, the user authorized mixed-class test folds and within-fold AUROC. The split is four-fold stratified subject CV with split seed 0, paired baseline/longitudinal arms and model seeds 0/1/2. Original model settings and targets are unchanged. All 24 forecaster fits and 24 VLM fits finished; all 384 forecast tokens, fit memberships and final model/prediction artifacts passed validation. Independent standard-library arithmetic reproduced every final genotype AUROC, accuracy and proxy MAE. Outputs and the original LOSO study remain separate. See [the frozen protocol and reproduction instructions](audit_2026-09-14/stratified/README.md). This amendment was chosen after observing the original results; no parameter search was performed.
 
-## Epoch and architecture ablations (post denorm-fix)
+The follow-up investigation strictly reloaded all 24 amended models, reproduced every held-out genotype score exactly, and compared training versus held-out class gaps, training-centroid responses and inference precision. All models have the intended average class direction in training; many reverse it on held-out mice. A separate four-model longitudinal seed-0 check reproduced all 96 held-out head outputs across the three question types. No saved model, threshold or research prediction was changed. See [the mechanism report and diagnostic artifacts](audit_2026-09-14/stratified/GENOTYPE_MECHANISM.md).
 
-These all use the `mouse_vlm_loso` config as the baseline and change **one variable only**.
-(An earlier round had invalid TBR MAE from a denorm bug; all runs below are post-fix.)
+### Real-mouse learning capacity control
 
-### `mouse_vlm_ep20` — epoch ablation: 20 epochs ✓ (CANONICAL / headline result)
-- **YAML:** `viz_emb_params_mouse_ep20.yml` — identical to the canonical default `viz_emb_params_mouse.yml`
-- **Change:** `num_train_epochs: 20` (was 10)
-- **Hypothesis:** model is underfitting at 10 epochs; more training should improve genotype acc and TBR MAE
-- **Results:**
-  - Genotype acc: **0.719** / AUROC: **0.762**
-  - TBR reg MAE (overall): **4.736**, r=0.339, R²=**0.104**
-  - TBR reg MAE (Δ3wk): 6.346, r=0.376, R²=0.100, n=64
-  - TBR reg MAE (Δ6wk): 5.437, r=0.141, R²=−0.003, n=30
-  - TBR reg MAE (Δ8wk): 1.633, r=0.070, R²=−0.067, n=40
-- **Observation:** best genotype acc and best overall MAE of all configurations;
-  Δ3wk r slightly lower than 10ep (0.376 vs 0.447) but overall R² turns positive.
+The user authorized a training-only control on eight existing training mice, with matched combined versus genotype-only objectives. Both longitudinal models received the same 24 records, seed-0 initial parameters, inputs, optimizer and 300-update budget. The combined objective met the declared 8/8-correct plus BCE ≤ 0.1 criterion by the measurement at update 120; genotype-only met it by update 180. Both finished all 300 updates. The combined objective therefore does not prevent learning this selected real-data subset under an extended budget. The KO subset is one acquisition component, and these are memorization diagnostics rather than new research-performance estimates.
 
-### `mouse_vlm_ep50` — epoch ablation: 50 epochs ✓
-- **YAML:** `viz_emb_params_mouse_ep50.yml`
-- **Change:** `num_train_epochs: 50` (was 10)
-- **Hypothesis:** continued underfitting past 20 epochs
-- **Results:**
-  - Genotype acc: 0.625 / AUROC: 0.627
-  - TBR reg MAE (overall): 5.352, r=0.196, R²=−0.011
-  - TBR reg MAE (Δ3wk): 7.459, r=0.176, R²=−0.025, n=64
-  - TBR reg MAE (Δ6wk): 6.302, r=−0.034, R²=−0.178, n=30
-  - TBR reg MAE (Δ8wk): 1.269, r=0.727, R²=0.408, n=40
-- **Observation:** genotype and Δ3wk both degrade vs 20ep — model is overfitting past 20 epochs.
+An initial diagnostic reload assertion compared automatic Trainer mixed precision against ordinary inference. The probe was corrected to make precision explicit; saved endpoints then reproduced exactly, and final tensors matched checkpoint 300, without further training or weight changes. Ordinary inference also retains 8/8 correct labels in both controls. Swapping image inputs makes outputs follow donor images exactly; identical images remove all between-mouse genotype-score differences. [Complete results and evidence](audit_2026-09-14/real_mouse_learning_control/RESULTS.md). Original study outputs remain unchanged.
 
-### `mouse_vlm_ep100` — epoch ablation: 100 epochs ✓
-- **YAML:** `viz_emb_params_mouse_ep100.yml`
-- **Change:** `num_train_epochs: 100` (was 10)
-- **Hypothesis:** upper bound on epoch scaling; may reveal overfitting on this small dataset (32 subjects)
-- **Results:**
-  - Genotype acc: 0.625 / AUROC: 0.714
-  - TBR reg MAE (overall): 5.490, r=0.247, R²=−0.011
-  - TBR reg MAE (Δ3wk): 7.481, r=0.202, R²=−0.034, n=64
-  - TBR reg MAE (Δ6wk): 6.126, r=0.176, R²=−0.076, n=30
-  - TBR reg MAE (Δ8wk): 1.827, r=0.208, R²=−0.135, n=40
-- **Observation:** nearly identical to 50ep — model saturates around 50 epochs on this dataset size.
+### Direct genotype classification of corrected longitudinal embeddings
 
----
+At the user's request, a fixed linear readout was evaluated on the existing corrected embeddings, independently of the VLM. The three representations were fixed before fitting: baseline alone, three predicted future tokens concatenated, and baseline plus those predictions. All use the same validated four subject folds, verified nested forecasts, a training-only StandardScaler, and L2 logistic regression with C=1; no parameter search or new forecaster/VLM training. All 12 classifiers converged. Within-fold pair-weighted AUROC is 0.6290 / 0.4516 / 0.5968 respectively; correct labels are 21/32, 15/32, and 20/32. Mean training AUROC is 1.0000 / 0.9983 / 1.0000. This shows modest baseline association but no benefit from the predicted tokens for this fixed readout. Acquisition/diet confounding, high dimensionality relative to sample size, and the cross-fitted training versus outer-fit test representation difference remain limitations. [Protocol, full results, and saved artifacts](audit_2026-09-14/stratified/embedding_probe/RESULTS.md).
 
-## Completed config exploration (no valid LOSO results)
+### Residual full-rollout development experiment — completed 2026-09-16
 
-These runs explored config changes but were either never run to LOSO completion
-or were invalidated by the TBR z-score bug fix. Documented for provenance only.
+The user authorized one fixed forecaster variant: a baseline residual connection, zero-initialized residual output, full-rollout training against every available future embedding, and a 0.01 residual penalty. The existing 300-epoch budget, 512-wide hidden layers, learning rate, outer folds, inner cross-fitting, and fit-role seeds were retained. No genotype supervision or PET targets were added. Settings and sources were frozen before fitting; checkpoints and exports use a separate directory.
 
-### `mouse_vlm_exp1_mtwt5` — multitask weight ablation
-- **YAML:** `viz_emb_params_mouse_exp1_multitask_wt5.yml`
-- **Change from baseline:** multitask_wt=5 (was 1); everything else same as baseline
-  (r=16, all 7 LoRA modules, 10 epochs, 4-token input)
-- **Hypothesis:** LM cross-entropy over 150 tokens dominates ~75–100× over head loss
-  at wt=1; increasing to 5 would give heads more gradient
-- **Results:** never run to LOSO completion — no loso_results.json
+All 24 forecasters and 384 tokens completed, with exact checkpoint reload. A fixed linear readout scores residual future tokens at AUROC 0.6774 (19/32 correct), compared with baseline 0.6290 (21/32) and current future tokens 0.4516 (15/32). Residual plus baseline also scores 0.6774 (19/32). All earlier classifier predictions reproduce exactly. The residual ranking advantage over baseline is three of 62 within-fold pairs, with one test fold still below chance; it is descriptive development evidence.
 
-### `mouse_vlm_exp2_freeze_llm` — frozen LLM
-- **YAML:** `viz_emb_params_mouse_exp2_freeze_llm.yml`
-- **Change from baseline:** freeze_llm_model=True (trains only projection ~3.1M + heads ~1M params);
-  multitask_wt=1, r=16 LoRA settings present but inactive due to freeze
-- **Hypothesis:** LoRA fine-tuning on only 93 records/fold may be net-negative vs. a
-  frozen LLM that just routes embeddings to the heads
-- **Results:** never run to LOSO completion — no loso_results.json
+Forecast fidelity worsens: subject-mean future cosine 0.9808 versus current 0.9827 and training-week centroid 0.9866; persistence is 0.9759. The residual model is worse than current and centroid at all three horizons. The predeclared joint genotype/fidelity advancement criterion failed, so no VLM run was included in that encoder experiment. A later user-authorized VLM follow-up is recorded below. Independent calculations verified all 20 classifiers, token/source hashes, and 67 observed-future comparisons. [Full results, interpretation, protocol, and verification](audit_2026-09-14/residual_rollout_experiment/README.md).
 
-### `mouse_vlm_exp3_combined` — pre-fix run (invalidated)
-- **YAML:** `viz_emb_params_mouse_exp3_combined.yml`
-- **Change from exp1/2:** combined r=4 q/v-only LoRA + multitask_wt=5; first run with
-  z-scored TBR targets (added mid-experiment)
-- **Results (invalid — pre-bugfix):**
-  - Genotype acc: 0.625 *(inflated — TBR normalization was not yet applied correctly)*
-  - TBR reg MAE (Δ3wk): 24.41 *(unnormalized scale, not comparable)*
-  - Superseded by `mouse_vlm_loso` rerun after fixes
+### User-authorized residual-embedding VLM follow-up — complete
 
----
+After reviewing the raw-embedding result, the user explicitly requested a VLM evaluation. The separate follow-up froze the same model, three seeds, four subject folds, 20-epoch schedule, question-boundary supervision, loss weights, and inference used in the completed amendment. Only the nested forecast source and its validation route changed. All six existing comparator runs passed preflight, and the production dataset loader exactly reproduced every residual four-token input. Two routing/configuration tests passed. All 12 new fold fits completed on GPU 6, followed by artifact validation and independent scoring of all nine runs. [Frozen protocol, results, and run details](audit_2026-09-14/residual_vlm/README.md).
 
-## Reference: linear probe upper bounds
+Genotype AUROC is 0.5484 for each residual VLM seed, improving on both matched VLM comparators in all three seeds. The identical totals arise from different score vectors and fold contributions, each summing to 34 of 62 correctly ordered pairs. Accuracy is 17/32, 16/32, and 17/32, below the always-WT comparator. Mean primary proxy MAE remains worse than baseline: 5.6564 versus 5.5506; current longitudinal is 5.6631 and the training-mean comparator is 5.6106. Week-20 MAE is lower in all three residual runs than all three comparators (20 mice), with mean 1.9662 versus baseline 2.0704. This is a secondary development result on repeatedly inspected folds; all horizons and seeds remain reported and no independent-group significance or biological disease-progression claim is made.
 
-| Condition | Geno acc | Geno AUC | TBR Δ3wk MAE | TBR Δ3wk r |
-|---|---|---|---|---|
-| RAD-DINO linear probe, ts0 only | 0.406 | 0.353 | — | −0.250 |
-| RAD-DINO linear probe, all 4 real timepoints | 0.406 | 0.401 | — | 0.350 |
-| Longitudinal linear probe (ts0 + MLP-predicted) | **0.750** | **0.718** | — | 0.030 |
+### Fixed genotype VLM variants — complete
 
-Note: the longitudinal linear probe (0.750) is an inflated upper bound — the MLP
-conditioning vector includes genotype as an explicit input feature, so predicted
-embeddings implicitly encode the label. Treat as a ceiling, not a fair comparison.
+Two user-authorized variants started on GPUs 1 and 6 after a successful frozen-input preflight: direct visual access (a zero-initialized linear score from training-standardized image tokens added to the language-state genotype score, with the combined objective unchanged), and genotype-only supervision (original architecture with language/proxy losses removed). Each retains the residual VLM's four folds, seeds 0/1/2, 20 epochs/180 updates, optimizer, batching, and zero-logit threshold. Six focused tests and actual-backbone objective, gradient, answer-invariance, and exact-reload checks passed. Variant sources/checkpoints are isolated from all earlier runs.
+
+All 24 fits and exact final-checkpoint inference reloads completed. Genotype-only seed 2 was parallelized on free GPU 4 without changing its frozen configuration; the main queue subsequently verified and skipped it. Independent scoring reproduced all 12 new/comparator runs, and normalization/shared-initial-weight checks passed. Direct-visual AUROC is 0.6935/0.6774/0.6935 (mean 0.6882), but accuracy is 16/32 in every seed. Genotype-only AUROC is 0.6613/0.5484/0.5323 (mean 0.5806), with accuracy 17/32, 16/32, 17/32. Direct-visual mean proxy MAE is 5.5550 versus baseline 5.5506; genotype-only proxy outputs are unsupervised and excluded.
+
+Descriptive inspection of the completed scores finds all-WT predictions in folds 00 and 03 for both variants in every seed, despite perfect direct-visual AUROC in fold 03. Fold 01 remains below chance. Direct-visual errors have mean raw confidence about 0.83, so stronger scores have not solved classification. No thresholds or settings were selected from these observations. Direct-image component scores are descriptive diagnostics of a jointly trained model, and largely retain the combined model's ranking performance. These experiments compare architecture/objective changes on residual inputs; they do not isolate the benefit of longitudinal tokens within each new architecture. [Protocol, all results, source snapshots, and runtime checks](audit_2026-09-14/genotype_vlm_variants/README.md).
+
+### Documentation reconciliation — 2026-09-21
+
+Current guides now distinguish direct embedding classification, forecast fidelity, downstream VLM metrics and the additive logit-level late-fusion hybrid. Known repairs and targeted checks are not described as proof that all methodological issues are closed. Recommended ablations remain unrun. Frozen reports and completion manifests retain their original scope. The genotype mechanism report was restored to its exact completion hash; its two later introductory paragraphs remain in a separately preserved annotated version. No research predictions, model weights, metrics, thresholds, or protocol settings changed. See [current status](STATUS.md) and [evidence scope](audit_2026-09-14/README.md).
+
+The current pre-commit CPU suite passed 135 tests with 18 probe/real-data cases deselected in 162.24 seconds. This verifies the current source tree without rerunning research experiments; the [test guide](../tests/README.md#current-pre-commit-gate-2026-09-21) records the command and output.

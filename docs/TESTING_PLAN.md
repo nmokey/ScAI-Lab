@@ -1,6 +1,15 @@
 # Verification & Reproducibility Plan
 
-Status: proposal, not yet implemented. Written 2026-08-29 after a full read of
+> Current verification and limitations are in [STATUS.md](STATUS.md). In particular, the historical L3 wording below overstates what negative controls prove: passing a control can exclude a tested failure mode, not all leakage or artifacts. No finite test suite establishes that this research pipeline is bug-free.
+
+> **Historical document.** Written 2026-08-29 as a proposal; §1 ("zero tests, no CI") and
+> §1b describe the state at that time. Phases P0–P3 have since been carried out — the suite
+> lives in `tests/`, the register in [FINDINGS.md](FINDINGS.md), and the re-runs in
+> [experiments.md](experiments.md). Current validation status is recorded in [the closure report](audit_2026-09-14/PIPELINE_CLOSURE.md);
+> the F1–F24 narrative is retained as history. In particular, R5's "blocked on plumbing" was resolved by a manifest join, and the
+> confound unit turned out to be the mouse-group, not the session.
+
+Status: proposal, written 2026-08-29 after a full read of
 `scripts/`, `vlm/`, and `docs/`.
 
 ---
