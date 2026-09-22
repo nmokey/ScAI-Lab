@@ -1,0 +1,74 @@
+fold_00/fit_0: 38 targets; final cosine loss 0.01044; reload exact
+fold_00/fit_1: 40 targets; final cosine loss 0.01946; reload exact
+fold_00/fit_2: 39 targets; final cosine loss 0.01505; reload exact
+fold_00/fit_3: 39 targets; final cosine loss 0.01592; reload exact
+fold_00/fit_4: 40 targets; final cosine loss 0.01388; reload exact
+fold_00/fit_5: 49 targets; final cosine loss 0.01239; reload exact
+Completed fold_00: 6 fits, 96 forecast tokens
+fold_01/fit_0: 40 targets; final cosine loss 0.01159; reload exact
+fold_01/fit_1: 43 targets; final cosine loss 0.01097; reload exact
+fold_01/fit_2: 41 targets; final cosine loss 0.02080; reload exact
+fold_01/fit_3: 42 targets; final cosine loss 0.01359; reload exact
+fold_01/fit_4: 42 targets; final cosine loss 0.01411; reload exact
+fold_01/fit_5: 52 targets; final cosine loss 0.02479; reload exact
+Completed fold_01: 6 fits, 96 forecast tokens
+fold_02/fit_0: 41 targets; final cosine loss 0.01281; reload exact
+fold_02/fit_1: 41 targets; final cosine loss 0.01998; reload exact
+fold_02/fit_2: 40 targets; final cosine loss 0.01165; reload exact
+fold_02/fit_3: 41 targets; final cosine loss 0.01131; reload exact
+fold_02/fit_4: 41 targets; final cosine loss 0.01418; reload exact
+fold_02/fit_5: 51 targets; final cosine loss 0.01452; reload exact
+Completed fold_02: 6 fits, 96 forecast tokens
+fold_03/fit_0: 39 targets; final cosine loss 0.01176; reload exact
+fold_03/fit_1: 39 targets; final cosine loss 0.01066; reload exact
+fold_03/fit_2: 38 targets; final cosine loss 0.01075; reload exact
+fold_03/fit_3: 40 targets; final cosine loss 0.01250; reload exact
+fold_03/fit_4: 40 targets; final cosine loss 0.01190; reload exact
+fold_03/fit_5: 49 targets; final cosine loss 0.01737; reload exact
+Completed fold_03: 6 fits, 96 forecast tokens
+{
+  "genotype": {
+    "baseline": {
+      "auc": 0.6290322580645161,
+      "accuracy": 0.65625,
+      "correct": 21,
+      "balanced_accuracy": 0.6468253968253967,
+      "train_auc_mean": 1.0
+    },
+    "current_future": {
+      "auc": 0.45161290322580644,
+      "accuracy": 0.46875,
+      "correct": 15,
+      "balanced_accuracy": 0.4642857142857143,
+      "train_auc_mean": 0.9982517482517482
+    },
+    "current_combined": {
+      "auc": 0.5967741935483871,
+      "accuracy": 0.625,
+      "correct": 20,
+      "balanced_accuracy": 0.6349206349206349,
+      "train_auc_mean": 1.0
+    },
+    "residual_future": {
+      "auc": 0.6774193548387096,
+      "accuracy": 0.59375,
+      "correct": 19,
+      "balanced_accuracy": 0.5753968253968254,
+      "train_auc_mean": 1.0
+    },
+    "residual_combined": {
+      "auc": 0.6774193548387096,
+      "accuracy": 0.59375,
+      "correct": 19,
+      "balanced_accuracy": 0.5753968253968254,
+      "train_auc_mean": 1.0
+    }
+  },
+  "forecast": {
+    "current_cosine": 0.9827416185303801,
+    "residual_cosine": 0.9807668359954499,
+    "persistence_cosine": 0.9759172160424949,
+    "centroid_cosine": 0.9865907761772716
+  },
+  "advance_criterion_passed": false
+}

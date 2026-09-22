@@ -1,0 +1,597 @@
+{
+  "captured_utc": "2026-09-14T08:06:08.885501+00:00",
+  "encoders": {
+    "raddino": {
+      "shape": [
+        229,
+        768
+      ],
+      "subjects": 78,
+      "duplicate_keys": 0,
+      "nonfinite": 0,
+      "modalities": [
+        "CT_HiRes"
+      ]
+    },
+    "colipri": {
+      "shape": [
+        229,
+        768
+      ],
+      "subjects": 78,
+      "duplicate_keys": 0,
+      "nonfinite": 0,
+      "modalities": [
+        "CT_HiRes"
+      ]
+    },
+    "merlin": {
+      "shape": [
+        229,
+        2048
+      ],
+      "subjects": 78,
+      "duplicate_keys": 0,
+      "nonfinite": 0,
+      "modalities": [
+        "CT_HiRes"
+      ]
+    },
+    "m3d": {
+      "shape": [
+        229,
+        768
+      ],
+      "subjects": 78,
+      "duplicate_keys": 0,
+      "nonfinite": 0,
+      "modalities": [
+        "CT_HiRes"
+      ]
+    }
+  },
+  "vlm_data": {
+    "subjects": 32,
+    "records": 96,
+    "types": {
+      "genotype": 32,
+      "tbr": 32,
+      "combined": 32
+    },
+    "group_composition": {
+      "group00": {
+        "KO": 4
+      },
+      "group01": {
+        "KO": 10
+      },
+      "group02": {
+        "WT": 18
+      }
+    },
+    "duplicate_pid_type": 0,
+    "ts0_max_error": 0.0
+  },
+  "matched_week12_genotype_probe_auc": {
+    "subject": {
+      "auc": 0.6190476190476191,
+      "predicted_subjects": 32,
+      "skipped_subjects": []
+    },
+    "mousegroup": {
+      "auc": null,
+      "predicted_subjects": 14,
+      "skipped_subjects": [
+        "NaF_WT_01",
+        "NaF_WT_02",
+        "NaF_WT_03",
+        "NaF_WT_04",
+        "NaF_WT_05",
+        "NaF_WT_06",
+        "NaF_WT_07",
+        "NaF_WT_08",
+        "NaF_WT_09",
+        "NaF_WT_10",
+        "NaF_WT_11",
+        "NaF_WT_12",
+        "NaF_WT_13",
+        "NaF_WT_14",
+        "NaF_WT_15",
+        "NaF_WT_16",
+        "NaF_WT_17",
+        "NaF_WT_18"
+      ]
+    }
+  },
+  "rollout_vs_centroid": {
+    "Week 15": {
+      "n": 32,
+      "predicted_cosine": 0.9864277243614197,
+      "subject_excluded_centroid_cosine": 0.987015962600708,
+      "group_excluded_centroid_cosine": 0.9873981475830078,
+      "baseline_persistence_cosine": 0.9796476364135742,
+      "predicted_norm": 13.968473434448242,
+      "actual_norm": 13.98565673828125,
+      "fraction_beating_subject_centroid": 0.65625
+    },
+    "Week 18": {
+      "n": 15,
+      "predicted_cosine": 0.9846980571746826,
+      "subject_excluded_centroid_cosine": 0.9853121042251587,
+      "group_excluded_centroid_cosine": 0.9852125644683838,
+      "baseline_persistence_cosine": 0.9681075811386108,
+      "predicted_norm": 13.96880054473877,
+      "actual_norm": 13.996493339538574,
+      "fraction_beating_subject_centroid": 0.6
+    },
+    "Week 20": {
+      "n": 20,
+      "predicted_cosine": 0.9847073554992676,
+      "subject_excluded_centroid_cosine": 0.9862138628959656,
+      "group_excluded_centroid_cosine": 0.9868597984313965,
+      "baseline_persistence_cosine": 0.9745081663131714,
+      "predicted_norm": 13.967763900756836,
+      "actual_norm": 13.877548217773438,
+      "fraction_beating_subject_centroid": 0.55
+    }
+  },
+  "current_tbr_baselines": {
+    "subject": {
+      "3": {
+        "train_mean": {
+          "n": 32,
+          "mae": 6.854516129032257,
+          "mse": 81.29280499479707,
+          "r2": -0.06555671175858468
+        },
+        "train_median": {
+          "n": 32,
+          "mae": 6.66375,
+          "mse": 89.55133124999998,
+          "r2": -0.17380648959598566
+        },
+        "ridge_alpha100": {
+          "n": 32,
+          "mae": 7.9853815674781785,
+          "mse": 119.23280338440814,
+          "r2": -0.5628605005840215
+        }
+      },
+      "6": {
+        "train_mean": {
+          "n": 15,
+          "mae": 6.461619047619047,
+          "mse": 61.787171428571405,
+          "r2": -0.14795918367346905
+        },
+        "train_median": {
+          "n": 15,
+          "mae": 5.679333333333332,
+          "mse": 62.27412666666665,
+          "r2": -0.1570064458265128
+        },
+        "ridge_alpha100": {
+          "n": 15,
+          "mae": 8.787991185506183,
+          "mse": 102.99811721705335,
+          "r2": -0.9136275674486989
+        }
+      },
+      "8": {
+        "train_mean": {
+          "n": 20,
+          "mae": 1.8835789473684212,
+          "mse": 5.845358448753462,
+          "r2": -0.10803324099723
+        },
+        "train_median": {
+          "n": 20,
+          "mae": 1.8619999999999997,
+          "mse": 6.058239999999999,
+          "r2": -0.14838659780916674
+        },
+        "ridge_alpha100": {
+          "n": 20,
+          "mae": 2.749052490234375,
+          "mse": 11.02805237190355,
+          "r2": -1.0904532576840191
+        }
+      }
+    },
+    "mousegroup": {
+      "3": {
+        "train_mean": {
+          "n": 32,
+          "mae": 7.242118506493506,
+          "mse": 85.56881143426376,
+          "r2": -0.12160505898178942
+        },
+        "train_median": {
+          "n": 32,
+          "mae": 6.8225,
+          "mse": 87.79095624999998,
+          "r2": -0.15073213022824006
+        },
+        "ridge_alpha100": {
+          "n": 32,
+          "mae": 7.712813365459443,
+          "mse": 118.85638848932075,
+          "r2": -0.5579265901611747
+        }
+      },
+      "6": {
+        "train_mean": {
+          "n": 15,
+          "mae": 5.686121212121212,
+          "mse": 58.69526628099172,
+          "r2": -0.09051391101983075
+        },
+        "train_median": {
+          "n": 15,
+          "mae": 5.851333333333332,
+          "mse": 70.25306,
+          "r2": -0.305249027322692
+        },
+        "ridge_alpha100": {
+          "n": 15,
+          "mae": 8.915751744588217,
+          "mse": 124.14763962446412,
+          "r2": -1.3065697901876425
+        }
+      },
+      "8": {
+        "train_mean": {
+          "n": 20,
+          "mae": 1.80975,
+          "mse": 5.612649765624997,
+          "r2": -0.06392149684405202
+        },
+        "train_median": {
+          "n": 20,
+          "mae": 1.7809999999999995,
+          "mse": 5.745109999999999,
+          "r2": -0.08903036640004713
+        },
+        "ridge_alpha100": {
+          "n": 20,
+          "mae": 2.4145285301208497,
+          "mse": 9.337916464788302,
+          "r2": -0.7700748269504745
+        }
+      }
+    }
+  },
+  "acquisition_checks": {
+    "timing_counts": {
+      "('NaF', '1+3')": 2,
+      "('NaF', '3')": 109,
+      "('FDG', '5')": 118
+    },
+    "different_ct_pet_source": [
+      {
+        "mouse_id": "NaF_KO_12",
+        "week": "15",
+        "ct_source_scan": "m54407_2",
+        "pet_source_scan": "m54407"
+      },
+      {
+        "mouse_id": "NaF_KO_13",
+        "week": "15",
+        "ct_source_scan": "m54407_2",
+        "pet_source_scan": "m54407"
+      },
+      {
+        "mouse_id": "NaF_KO_14",
+        "week": "15",
+        "ct_source_scan": "m54407_2",
+        "pet_source_scan": "m54407"
+      },
+      {
+        "mouse_id": "NaF_KO_15",
+        "week": "15",
+        "ct_source_scan": "m54407_2",
+        "pet_source_scan": "m54407"
+      }
+    ],
+    "tbr3_shape_mapping_error_mm": {
+      "n": 111,
+      "median": 0.5070833092030664,
+      "maximum": 0.7548115362636051
+    },
+    "corrected_crop_merlin_cache": [
+      {
+        "subject": "NaF_KO_09",
+        "cache_exists": true,
+        "cache_older_than_ct": true
+      },
+      {
+        "subject": "NaF_KO_10",
+        "cache_exists": true,
+        "cache_older_than_ct": true
+      },
+      {
+        "subject": "NaF_KO_11",
+        "cache_exists": true,
+        "cache_older_than_ct": true
+      },
+      {
+        "subject": "FDG_WT_01",
+        "cache_exists": true,
+        "cache_older_than_ct": true
+      },
+      {
+        "subject": "FDG_WT_02",
+        "cache_exists": true,
+        "cache_older_than_ct": true
+      }
+    ]
+  },
+  "runs": {
+    "mouse_vlm_nogeno_base_ep20": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.377,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 6.392,
+        "tbr_reg_overall_r2": -0.4
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_base_ep20_f20": {
+      "records": 57,
+      "subjects": 19,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": false,
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_base_ep20_seed1": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.595,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 5.799,
+        "tbr_reg_overall_r2": -0.152
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_base_ep20_seed2": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.687,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 5.745,
+        "tbr_reg_overall_r2": -0.202
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_base_ep20_seed3": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.313,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 5.568,
+        "tbr_reg_overall_r2": -0.1
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_base_ep20_seed4": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.548,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 6.152,
+        "tbr_reg_overall_r2": -0.232
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.464,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 7.036,
+        "tbr_reg_overall_r2": -0.669
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_f20": {
+      "records": 33,
+      "subjects": 11,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": false,
+      "unique_genotype_labels_so_far": [
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_f22": {
+      "records": 21,
+      "subjects": 7,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": false,
+      "unique_genotype_labels_so_far": [
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_f22_qeos": {
+      "records": 21,
+      "subjects": 7,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": false,
+      "unique_genotype_labels_so_far": [
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_qeos_seed0": {
+      "records": 24,
+      "subjects": 8,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": false,
+      "unique_genotype_labels_so_far": [
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_seed1": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.111,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 5.692,
+        "tbr_reg_overall_r2": -0.047
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_seed2": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.532,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 6.052,
+        "tbr_reg_overall_r2": -0.165
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_seed3": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.627,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 6.047,
+        "tbr_reg_overall_r2": -0.251
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    },
+    "mouse_vlm_nogeno_long_ep20_seed4": {
+      "records": 96,
+      "subjects": 32,
+      "duplicate_pid_qid": 0,
+      "completed_metrics": true,
+      "metrics": {
+        "genotype_auc": 0.206,
+        "genotype_n": 32,
+        "tbr_reg_overall_mae": 5.775,
+        "tbr_reg_overall_r2": -0.215
+      },
+      "fold_mean_baseline_on_saved_targets": {
+        "n": 67,
+        "mae": 5.4739297249427805,
+        "mse": 59.210435791276204,
+        "r2": -0.04817728233037033
+      },
+      "unique_genotype_labels_so_far": [
+        0,
+        1
+      ]
+    }
+  }
+}

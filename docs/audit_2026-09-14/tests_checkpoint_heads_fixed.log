@@ -1,0 +1,33 @@
+.................F...................................................... [ 83%]
+..............                                                           [100%]
+=================================== FAILURES ===================================
+_____________________ test_count_mismatch_is_a_hard_error ______________________
+
+scripts = <function load_script_module at 0x7fa87509e170>
+
+    def test_count_mismatch_is_a_hard_error(scripts):
+        """
+        F4, fixed. When the segmenter finds fewer animals than the manifest declares, the
+        pipeline now raises instead of cropping `min(len(bboxes), len(mouse_nums))` animals
+        under shifted identities.
+        """
+        import inspect
+    
+        mod = scripts("build_nifti_dataset")
+        src = inspect.getsource(mod.stage3_crop_and_write)
+    
+>       assert "mouse_num = mouse_nums[i]" in src, "wiring changed -- re-derive R4"
+E       AssertionError: wiring changed -- re-derive R4
+E       assert 'mouse_num = mouse_nums[i]' in 'def stage3_crop_and_write(session, nifti_paths, bboxes, output_root, dry_run=False):\n    """\n    Given a session\'s...se_num, mouse_id, week, ct_out, actual_pet_out, bbox)\n        manifest_rows.append(row)\n\n    return manifest_rows\n'
+
+tests/pipeline/test_mouse_identity.py:184: AssertionError
+=============================== warnings summary ===============================
+tests/control/test_loso_selection_leakage.py::test_load_best_model_at_end_is_config_driven_and_defaults_off
+  /home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/transformers/training_args.py:1568: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/pipeline/test_mouse_identity.py::test_count_mismatch_is_a_hard_error
+1 failed, 85 passed, 18 deselected, 1 warning in 62.44s (0:01:02)
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute

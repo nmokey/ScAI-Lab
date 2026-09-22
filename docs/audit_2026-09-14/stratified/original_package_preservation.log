@@ -1,0 +1,2 @@
+[["validated_base_seed0", "complete", 32], ["validated_base_seed1", "complete", 32], ["validated_base_seed2", "complete", 32], ["validated_long_seed0", "complete", 32], ["validated_long_seed1", "complete", 32], ["validated_long_seed2", "complete", 32]]
+Complete paired MAE difference: +0.038121

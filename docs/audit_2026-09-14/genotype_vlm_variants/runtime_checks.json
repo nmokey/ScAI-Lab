@@ -1,0 +1,26 @@
+{
+  "gpu": "NVIDIA L40S",
+  "model_source_sha256": "5850215f583cbff4811e5127d81690d54eac5b8f69523b1de85296225dbe7409",
+  "status": "passed",
+  "torch": "2.10.0+cu128",
+  "variants": {
+    "direct_visual": {
+      "answer_invariance": true,
+      "expected_loss": 7.601344585418701,
+      "genotype_gradient_nonzero": true,
+      "initial_loss": 7.601344585418701,
+      "objective_match": true,
+      "reload_max_logit_error": 0.0,
+      "visual_gradient_nonzero": true
+    },
+    "genotype_only": {
+      "answer_invariance": true,
+      "expected_loss": 2.928166389465332,
+      "genotype_gradient_nonzero": true,
+      "initial_loss": 2.928166389465332,
+      "objective_match": true,
+      "proxy_gradients_absent": true,
+      "reload_max_logit_error": 0.0
+    }
+  }
+}

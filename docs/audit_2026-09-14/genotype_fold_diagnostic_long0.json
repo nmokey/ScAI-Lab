@@ -1,0 +1,5430 @@
+{
+  "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0",
+  "diagnostic_only": true,
+  "reference_definition": "First fold held-out genotype input, identical across models; not a performance control",
+  "folds": [
+    {
+      "fold": "fold_00_NaF_KO_01",
+      "held_pid": "NaF_KO_01",
+      "held_label": 1,
+      "held_score": -0.283179372549057,
+      "saved_score_error": 0.0,
+      "reference_score": -0.283179372549057,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6282051282051282,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.08823941728451046,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.05495719611644745
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.3039787709712982
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.3139648139476776
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.24396394193172455
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.17030200362205505
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.1937941163778305
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.3075101673603058
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.2381439507007599
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.12765724956989288
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.29284432530403137
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.32055777311325073
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.2817271053791046
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.04850824177265167
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3362118899822235
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.3459003269672394
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.24572579562664032
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.12163959443569183
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.29557937383651733
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.3245328664779663
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.2847776710987091
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.16984498500823975
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.3380414843559265
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.33629918098449707
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.08488260209560394
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.18353305757045746
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.32305651903152466
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.24954383075237274
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.24918104708194733
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.12473040819168091
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3017362952232361
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.3023296296596527
+        }
+      ]
+    },
+    {
+      "fold": "fold_01_NaF_KO_02",
+      "held_pid": "NaF_KO_02",
+      "held_label": 1,
+      "held_score": -0.261188805103302,
+      "saved_score_error": 0.0,
+      "reference_score": -0.014430804178118706,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.7222222222222223,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.060653662082096264,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.012945188209414482
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.0845298320055008
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.09520621597766876
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.06734313070774078
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.12214995920658112
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.11095161736011505
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.07607369124889374
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.0050030783750116825
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.15098096430301666
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.06163196265697479
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.06855441629886627
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.034972772002220154
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.25276637077331543
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.1875288188457489
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.13158635795116425
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.15028518438339233
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.1789522022008896
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.11735929548740387
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.10787665843963623
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.014006657525897026
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.24159760773181915
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.13700245320796967
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.14484408497810364
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.09657648205757141
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.1887747049331665
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.07963305711746216
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.12109585106372833
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.034485653042793274
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.15955086052417755
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.09148213267326355
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.08662700653076172
+        }
+      ]
+    },
+    {
+      "fold": "fold_02_NaF_KO_03",
+      "held_pid": "NaF_KO_03",
+      "held_label": 1,
+      "held_score": -0.4484488368034363,
+      "saved_score_error": 0.0,
+      "reference_score": -0.2888587713241577,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6837606837606838,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.10246111378232081,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.21399471163749695
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3287230134010315
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.4047379195690155
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.22433841228485107
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.2859823703765869
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3563787639141083
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.43873509764671326
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.21011140942573547
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.22576522827148438
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.40801769495010376
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.4214543104171753
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.28973981738090515
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.15206056833267212
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.5100090503692627
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.4817248284816742
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.28598150610923767
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.2244299054145813
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.44682055711746216
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.46083933115005493
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.2870122194290161
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.34999001026153564
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.4611138105392456
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.4603271484375
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.13394901156425476
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.32594555616378784
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.4372985064983368
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.3555019497871399
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.24921584129333496
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.2793343663215637
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3848937749862671
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.44138985872268677
+        }
+      ]
+    },
+    {
+      "fold": "fold_03_NaF_KO_04",
+      "held_pid": "NaF_KO_04",
+      "held_label": 1,
+      "held_score": -0.3817500174045563,
+      "saved_score_error": 0.0,
+      "reference_score": -0.276061087846756,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6623931623931624,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.06146404889676455,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.23021365702152252
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3064236342906952
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.3633165955543518
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.24865901470184326
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.2841562330722809
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3668527603149414
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.40124693512916565
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.21294069290161133
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.34209397435188293
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.3438147008419037
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.39426377415657043
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.31344208121299744
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.2479616105556488
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.4277305603027344
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.432971715927124
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.28622645139694214
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.33816710114479065
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.39548149704933167
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.3793523609638214
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.25020700693130493
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.3272187411785126
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.3910847008228302
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.41400834918022156
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.26515254378318787
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.2981031835079193
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.39588239789009094
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.35193300247192383
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.2630990147590637
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.29288074374198914
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3560170829296112
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.3823181688785553
+        }
+      ]
+    },
+    {
+      "fold": "fold_04_NaF_KO_09",
+      "held_pid": "NaF_KO_09",
+      "held_label": 1,
+      "held_score": -0.35179567337036133,
+      "saved_score_error": 0.0,
+      "reference_score": -0.362085223197937,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6538461538461539,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.021258908587657572,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.336208701133728
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3517111539840698
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.3837869167327881
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.3689565062522888
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.351253867149353
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.39211350679397583
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.37594741582870483
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.3238033056259155
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.3524084687232971
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.3735753893852234
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.38821494579315186
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.3632386326789856
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.33957016468048096
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.41147637367248535
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.39154917001724243
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.3699914813041687
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.3560764193534851
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.38195323944091797
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.39407163858413696
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.3443920612335205
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.36756226420402527
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.39565616846084595
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.3977774977684021
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.3450168967247009
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.370174765586853
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.38538557291030884
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.37582331895828247
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.34797120094299316
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.33796048164367676
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.38115936517715454
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.3757976293563843
+        }
+      ]
+    },
+    {
+      "fold": "fold_05_NaF_KO_10",
+      "held_pid": "NaF_KO_10",
+      "held_label": 1,
+      "held_score": -0.32550540566444397,
+      "saved_score_error": 0.0,
+      "reference_score": -0.32558003067970276,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6324786324786325,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.03338878316961313,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.31625863909721375
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3743986189365387
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.38030537962913513
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.33664724230766296
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.2604476511478424
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3661142885684967
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.36286333203315735
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.26178213953971863
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.33894965052604675
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.30989429354667664
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.3744836151599884
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.3467089831829071
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.32771721482276917
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3771025240421295
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.3904024064540863
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.34060224890708923
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.341246634721756
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.3765517771244049
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.33121219277381897
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.29548123478889465
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.3921339213848114
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.34926363825798035
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.378549188375473
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.3121565878391266
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.3618263304233551
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.36758556962013245
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.34226855635643005
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.3157986104488373
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.33778414130210876
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3624912202358246
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.377545028924942
+        }
+      ]
+    },
+    {
+      "fold": "fold_06_NaF_KO_11",
+      "held_pid": "NaF_KO_11",
+      "held_label": 1,
+      "held_score": -0.3658304512500763,
+      "saved_score_error": 0.0,
+      "reference_score": -0.3169547915458679,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6837606837606838,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.02770123779041452,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.3039819896221161
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3711089789867401
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.37734735012054443
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.36156249046325684
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.2932582199573517
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.33886435627937317
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.3631121814250946
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.2995007336139679
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.33908993005752563
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.35492172837257385
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.39470335841178894
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.348612904548645
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.35627639293670654
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.40940147638320923
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.38331854343414307
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.35631537437438965
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.35220572352409363
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.3872441053390503
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.3802386224269867
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.33088675141334534
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.36991801857948303
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.36641979217529297
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.3967790901660919
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.32477590441703796
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.35086938738822937
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.3906581997871399
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.3593876361846924
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.33790621161460876
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.3532789647579193
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3805573284626007
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.37291890382766724
+        }
+      ]
+    },
+    {
+      "fold": "fold_07_NaF_KO_12",
+      "held_pid": "NaF_KO_12",
+      "held_label": 1,
+      "held_score": -0.2879071831703186,
+      "saved_score_error": 0.0,
+      "reference_score": 0.12729880213737488,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6538461538461539,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.31655522939275105,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": 0.1675061285495758
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.22682267427444458
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.4104752838611603
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.34738802909851074
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": 0.5801811814308167
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.12701061367988586
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3513531982898712
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": 0.5961299538612366
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.08847556263208389
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.015992796048521996
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.4651189148426056
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": 0.07615812867879868
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.04133811965584755
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.6527523994445801
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.505455732345581
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": 0.006985450629144907
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.04908141866326332
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.47940582036972046
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.30224210023880005
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": 0.3493787348270416
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.3259085416793823
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.5046775937080383
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.6211463809013367
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": 0.20206311345100403
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.185865581035614
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.42351749539375305
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2359645664691925
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": 0.13719108700752258
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": 0.03399231657385826
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.333977609872818
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.37112078070640564
+        }
+      ]
+    },
+    {
+      "fold": "fold_08_NaF_KO_13",
+      "held_pid": "NaF_KO_13",
+      "held_label": 1,
+      "held_score": -0.3442758321762085,
+      "saved_score_error": 0.0,
+      "reference_score": -0.36295607686042786,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.52991452991453,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.013570110773474664,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.35784104466438293
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3812049925327301
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.3771047294139862
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.380892813205719
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.32723480463027954
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.3669765293598175
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.37445512413978577
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.3638525605201721
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.37663525342941284
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.36083388328552246
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.37931641936302185
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.34818127751350403
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.3736395835876465
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.394355446100235
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.37344422936439514
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.3624010384082794
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.3679722845554352
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.37606456875801086
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.3752916753292084
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.3397132456302643
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.3785513937473297
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.38892707228660583
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.3753332197666168
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.3489653766155243
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.37963053584098816
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.37303778529167175
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.3711090385913849
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.3711530864238739
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.3695182502269745
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3665929436683655
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.36586448550224304
+        }
+      ]
+    },
+    {
+      "fold": "fold_09_NaF_KO_14",
+      "held_pid": "NaF_KO_14",
+      "held_label": 1,
+      "held_score": -0.2508384585380554,
+      "saved_score_error": 0.0,
+      "reference_score": -0.14209233224391937,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6581196581196581,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.06103404566424388,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.10397647321224213
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.30032777786254883
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.23161308467388153
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.21464209258556366
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.11076723039150238
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.21551938354969025
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.2333647459745407
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.19946865737438202
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.08087451756000519
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.2094872146844864
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.20946107804775238
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.14595039188861847
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.3053237497806549
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.25550058484077454
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.2596001923084259
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.24988411366939545
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.21828024089336395
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.2164047211408615
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.2614442706108093
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.1539139598608017
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.30764803290367126
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.27352628111839294
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.24690280854701996
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.10200868546962738
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.27498671412467957
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.21792949736118317
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.21505622565746307
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.1257127970457077
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.28522852063179016
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.20922614634037018
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.20435945689678192
+        }
+      ]
+    },
+    {
+      "fold": "fold_10_NaF_KO_15",
+      "held_pid": "NaF_KO_15",
+      "held_label": 1,
+      "held_score": -0.32560330629348755,
+      "saved_score_error": 0.0,
+      "reference_score": -0.2652490735054016,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6666666666666667,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.057873298994961034,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.22134391963481903
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.2527596950531006
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.33297038078308105
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.30864667892456055
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.18321476876735687
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.27655118703842163
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3505414128303528
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.3185054659843445
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.23858927190303802
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.21538423001766205
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.330585777759552
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.28521043062210083
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.20300285518169403
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3720938563346863
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.36438918113708496
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.2631053924560547
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.28764426708221436
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.3603871464729309
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.33028727769851685
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.25005459785461426
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.2765941023826599
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.3510187864303589
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.37241023778915405
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.23703156411647797
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.27241313457489014
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.340049147605896
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.3153347969055176
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.2368539422750473
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.15402065217494965
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3232337236404419
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.32894057035446167
+        }
+      ]
+    },
+    {
+      "fold": "fold_11_NaF_KO_16",
+      "held_pid": "NaF_KO_16",
+      "held_label": 1,
+      "held_score": -0.3632220923900604,
+      "saved_score_error": 0.0,
+      "reference_score": 0.754993200302124,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.7521367521367521,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.7362699144065427,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": 0.8137169480323792
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": 0.34588536620140076
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.44075116515159607
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.32017502188682556
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": 0.8407336473464966
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": 0.5312175154685974
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.6141692996025085
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.33245834708213806
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": 0.9130392074584961
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": 0.6353143453598022
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.577826738357544
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": 1.1315836906433105
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.6643275618553162
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -1.4935294389724731
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -1.0565322637557983
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": 0.4342770278453827
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": 0.4470488131046295
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.9765669107437134
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.9216548204421997
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": 0.23772166669368744
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": 0.15320150554180145
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -1.1873723268508911
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -1.3144177198410034
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": 0.6855919361114502
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": 0.3465519845485687
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.5550010204315186
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.40561315417289734
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": 0.5921883583068848
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": 0.48614487051963806
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.4372149407863617
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.7067756652832031
+        }
+      ]
+    },
+    {
+      "fold": "fold_12_NaF_KO_17",
+      "held_pid": "NaF_KO_17",
+      "held_label": 1,
+      "held_score": -0.17714406549930573,
+      "saved_score_error": 0.0,
+      "reference_score": -0.1876043826341629,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.6153846153846154,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.04344461736951792,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.13668163120746613
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.1875339299440384
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.22688157856464386
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.1974746733903885
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.14046408236026764
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.19712992012500763
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.24539966881275177
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.23574168980121613
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.16216851770877838
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.14900876581668854
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.2169448286294937
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.22342343628406525
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.105359748005867
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.2542446553707123
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.2580018937587738
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.1571107655763626
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.1965477615594864
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.24901528656482697
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.25454816222190857
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.19461168348789215
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.20990689098834991
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.22873397171497345
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.24772889912128448
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.14185954630374908
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.18091650307178497
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.20893730223178864
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.17440922558307648
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.15752013027668
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.1046181470155716
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.2065211683511734
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.23390521109104156
+        }
+      ]
+    },
+    {
+      "fold": "fold_13_NaF_KO_18",
+      "held_pid": "NaF_KO_18",
+      "held_label": 1,
+      "held_score": -0.3110135793685913,
+      "saved_score_error": 0.0,
+      "reference_score": -0.31173190474510193,
+      "training_positive_fraction": 0.41935483870967744,
+      "training_auc": 0.44871794871794873,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.0019026176915127098,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.3123573660850525
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.3114950656890869
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.3105164170265198
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.3123869299888611
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.3121148347854614
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.30799466371536255
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3125111162662506
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.31265732645988464
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.30970364809036255
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.30955174565315247
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.3113829493522644
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.31214916706085205
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.3122602105140686
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3140341341495514
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.3105556070804596
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.3105442225933075
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.30654823780059814
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.3072061538696289
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.3129575848579407
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.3109535276889801
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.3072371482849121
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.31200915575027466
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.31333017349243164
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.3112963140010834
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.30931559205055237
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.3141692280769348
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.31107017397880554
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.31281566619873047
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.3101941645145416
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.31075456738471985
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.31194007396698
+        }
+      ]
+    },
+    {
+      "fold": "fold_14_NaF_WT_01",
+      "held_pid": "NaF_WT_01",
+      "held_label": 0,
+      "held_score": -0.33177903294563293,
+      "saved_score_error": 0.0,
+      "reference_score": -0.14473460614681244,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6470588235294117,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.07707215453575506,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.12448497861623764
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.19174185395240784
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.24612274765968323
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.24572521448135376
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.08439425379037857
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.13699084520339966
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.30004677176475525
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.24272336065769196
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.10559958219528198
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.11924592405557632
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.24252425134181976
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.23633348941802979
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.14506107568740845
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.060346733778715134
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.33060160279273987
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.181251659989357
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.143130362033844
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.26961198449134827
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.28328582644462585
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.1458810716867447
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.2079150527715683
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.31964585185050964
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.2943575382232666
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.08491358906030655
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.16899317502975464
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.24650391936302185
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2329753339290619
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.12600168585777283
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.09130672365427017
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.21971076726913452
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.3014713227748871
+        }
+      ]
+    },
+    {
+      "fold": "fold_15_NaF_WT_02",
+      "held_pid": "NaF_WT_02",
+      "held_label": 0,
+      "held_score": -0.24099111557006836,
+      "saved_score_error": 0.0,
+      "reference_score": -0.16738317906856537,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.634453781512605,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.060681159958370014,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.12558208405971527
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.19060073792934418
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.2361905425786972
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.2101093828678131
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.09869696199893951
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.17850597202777863
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.2852768301963806
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.22214612364768982
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.15699218213558197
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.1372062712907791
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.21805301308631897
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.2658616304397583
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.1310691386461258
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.11345435678958893
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3459117114543915
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.14511780440807343
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.19776852428913116
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.28336000442504883
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.259924978017807
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.1529472917318344
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.1979696899652481
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2546846568584442
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.26829612255096436
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.13907189667224884
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.18472103774547577
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.2210853546857834
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2066713273525238
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.13533838093280792
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.12619413435459137
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.22351686656475067
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.28117993474006653
+        }
+      ]
+    },
+    {
+      "fold": "fold_16_NaF_WT_03",
+      "held_pid": "NaF_WT_03",
+      "held_label": 0,
+      "held_score": 0.11215177178382874,
+      "saved_score_error": 0.0,
+      "reference_score": 0.037974800914525986,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6554621848739496,
+      "training_accuracy": 0.6451612903225806,
+      "training_score_sd": 0.19856666505024154,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": 0.16499024629592896
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": 0.00622465880587697
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.142376109957695
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.08289733529090881
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": 0.13178008794784546
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": 0.057170744985342026
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.2881442606449127
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.21550026535987854
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": 0.2415948212146759
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": 0.09520083665847778
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.12339392304420471
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.15829622745513916
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": 0.1843094825744629
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.44992923736572266
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.4710877537727356
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.1717177927494049
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": 0.07332020998001099
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.18740609288215637
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.31493234634399414
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.07059131562709808
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.005259144585579634
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.18511492013931274
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.23838406801223755
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": 0.32092511653900146
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": 0.024658765643835068
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.10809110105037689
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.09790174663066864
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": 0.14753857254981995
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": 0.09819933772087097
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.0878208726644516
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.2652480900287628
+        }
+      ]
+    },
+    {
+      "fold": "fold_17_NaF_WT_04",
+      "held_pid": "NaF_WT_04",
+      "held_label": 0,
+      "held_score": -0.061799872666597366,
+      "saved_score_error": 0.0,
+      "reference_score": -0.07122161239385605,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6680672268907564,
+      "training_accuracy": 0.6129032258064516,
+      "training_score_sd": 0.11880918314879882,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": 0.0010663368739187717
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.14377065002918243
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.24434147775173187
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.18037250638008118
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": 0.04086000844836235
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.12269680947065353
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.30718356370925903
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.2202387899160385
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.0018112859688699245
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.07361432164907455
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.19789379835128784
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.2568560242652893
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": 0.014420220628380775
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.054443199187517166
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.4377734065055847
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.2607381343841553
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.12042983621358871
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.2907833755016327
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.30103057622909546
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.08511435240507126
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.16154490411281586
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2847626805305481
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.33199673891067505
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": 0.011176267638802528
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.13204140961170197
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.20039881765842438
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.1713729202747345
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.021325698122382164
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.06085200980305672
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.21095694601535797
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.2707865536212921
+        }
+      ]
+    },
+    {
+      "fold": "fold_18_NaF_WT_05",
+      "held_pid": "NaF_WT_05",
+      "held_label": 0,
+      "held_score": -0.20784014463424683,
+      "saved_score_error": 0.0,
+      "reference_score": -0.18801680207252502,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6638655462184875,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.024929343193045423,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.18254953622817993
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.21625474095344543
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.24083787202835083
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.22504457831382751
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.14989253878593445
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.20059320330619812
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.2484014630317688
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.21415674686431885
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.18446165323257446
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.188034325838089
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.22633102536201477
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.22458499670028687
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.1949043571949005
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.20040318369865417
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.2541302740573883
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.2341305911540985
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.20704379677772522
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.20954886078834534
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.24022138118743896
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.19767916202545166
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.21647170186042786
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2458724081516266
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.25237900018692017
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.1788846254348755
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.21755769848823547
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.22885078191757202
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2342030107975006
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.2033834457397461
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.18407675623893738
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.22369089722633362
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.24767223000526428
+        }
+      ]
+    },
+    {
+      "fold": "fold_19_NaF_WT_06",
+      "held_pid": "NaF_WT_06",
+      "held_label": 0,
+      "held_score": -0.17681032419204712,
+      "saved_score_error": 0.0,
+      "reference_score": -0.09585531800985336,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6008403361344538,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.08231280556194978,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.09993153065443039
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.01947607845067978
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.08106889575719833
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.13155877590179443
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.034021131694316864
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.06572233885526657
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.12543663382530212
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.14109662175178528
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.046455107629299164
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.030214957892894745
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.08737500756978989
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.10385524481534958
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.08797275274991989
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.2384222447872162
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.2199992835521698
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.20080521702766418
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.03629874438047409
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.05616416782140732
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.17667779326438904
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.11688800901174545
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.040929339826107025
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.19666644930839539
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.1549682915210724
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.020782671868801117
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.03501712530851364
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.08175542205572128
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.14165571331977844
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.017106465995311737
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.01943998783826828
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.07057502120733261
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.14698192477226257
+        }
+      ]
+    },
+    {
+      "fold": "fold_20_NaF_WT_07",
+      "held_pid": "NaF_WT_07",
+      "held_label": 0,
+      "held_score": -0.1490171104669571,
+      "saved_score_error": 0.0,
+      "reference_score": -0.18279235064983368,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6848739495798319,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.10036004540865444,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.09567110240459442
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.27615952491760254
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.3458256125450134
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.2251405566930771
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.0352642722427845
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.12850947678089142
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.3514885902404785
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.26954352855682373
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.11864836513996124
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.22736097872257233
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.3219241201877594
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.28878310322761536
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.10895214974880219
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.12971501052379608
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.44015035033226013
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.3267800509929657
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.1395835429430008
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.18765102326869965
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.30073419213294983
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.37711814045906067
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.27803412079811096
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2897988259792328
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.37313222885131836
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.07393874228000641
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.2455974966287613
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.32337406277656555
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2734743058681488
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.19407235085964203
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.1971748024225235
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.3423144221305847
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.30138760805130005
+        }
+      ]
+    },
+    {
+      "fold": "fold_21_NaF_WT_08",
+      "held_pid": "NaF_WT_08",
+      "held_label": 0,
+      "held_score": -0.11015397310256958,
+      "saved_score_error": 0.0,
+      "reference_score": -0.13389098644256592,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.5798319327731093,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.01695783016983599,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.10683855414390564
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.11836943030357361
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.12543520331382751
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.12287911772727966
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.11377891898155212
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.09821245074272156
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.1349576711654663
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.13396865129470825
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.1054002046585083
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.13753440976142883
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.12429964542388916
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.13051241636276245
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.1270587146282196
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.08309993147850037
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.14231744408607483
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.13059315085411072
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.09929701685905457
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.1085151731967926
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.143032044172287
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.13438448309898376
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.13527920842170715
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.12741628289222717
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.13313135504722595
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.08429467678070068
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.11207923293113708
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.13050240278244019
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.11472275853157043
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.09398645162582397
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.12120646238327026
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.11932352185249329
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.15475597977638245
+        }
+      ]
+    },
+    {
+      "fold": "fold_22_NaF_WT_09",
+      "held_pid": "NaF_WT_09",
+      "held_label": 0,
+      "held_score": -0.18418753147125244,
+      "saved_score_error": 0.0,
+      "reference_score": -0.1609468162059784,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6302521008403361,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.04113353780468963,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.11834919452667236
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.1549088954925537
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.1829971969127655
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.16255807876586914
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.14633676409721375
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.1440638303756714
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.1921825408935547
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.21102237701416016
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.12257915735244751
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.1838533878326416
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.18860465288162231
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.15940958261489868
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.13200560212135315
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.03456542268395424
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.2190881073474884
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.18590578436851501
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.1022731363773346
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.13385441899299622
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.2147846817970276
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.2277592122554779
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.16410136222839355
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.13793671131134033
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.1991211175918579
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.08862021565437317
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.17001843452453613
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.1902768611907959
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.16361594200134277
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.14027705788612366
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.17266225814819336
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.16712969541549683
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.20850703120231628
+        }
+      ]
+    },
+    {
+      "fold": "fold_23_NaF_WT_10",
+      "held_pid": "NaF_WT_10",
+      "held_label": 0,
+      "held_score": -0.09164711087942123,
+      "saved_score_error": 0.0,
+      "reference_score": -0.05149289593100548,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.5882352941176471,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.020320836646272843,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.057794760912656784
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.07113119214773178
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.07775800675153732
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.08218816667795181
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.06728499382734299
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.05557998642325401
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.08000094443559647
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.08567317575216293
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.03900299593806267
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.06315847486257553
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.0816376581788063
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.0552884005010128
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.05629010125994682
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.0038733971305191517
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.09118673205375671
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.08715908974409103
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.04137536510825157
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.050246354192495346
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.08500837534666061
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.10330762714147568
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.06403092294931412
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.07205741852521896
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.07858786731958389
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.032442282885313034
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.08305875211954117
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.0640140101313591
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.06793516129255295
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.052984025329351425
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.07092773169279099
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.06475543230772018
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.0717070922255516
+        }
+      ]
+    },
+    {
+      "fold": "fold_24_NaF_WT_11",
+      "held_pid": "NaF_WT_11",
+      "held_label": 0,
+      "held_score": -0.2145761400461197,
+      "saved_score_error": 0.0,
+      "reference_score": -0.23746101558208466,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6512605042016807,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.02058358083424465,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.22636975347995758
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.24555538594722748
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.26531025767326355
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.26239854097366333
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.20820383727550507
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.22476826608181
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.26649728417396545
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.263141393661499
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.2060190886259079
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.24178428947925568
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.2558240294456482
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.24730534851551056
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.22770743072032928
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.23635827004909515
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.2862030863761902
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.273357093334198
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.2104397565126419
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.22327975928783417
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.2705051898956299
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.26712721586227417
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.23711715638637543
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.252433717250824
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2781488001346588
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.2548631429672241
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.24246828258037567
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.25595974922180176
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.25882208347320557
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.23042775690555573
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.23588834702968597
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.2586614489555359
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.26154088973999023
+        }
+      ]
+    },
+    {
+      "fold": "fold_25_NaF_WT_12",
+      "held_pid": "NaF_WT_12",
+      "held_label": 0,
+      "held_score": -0.10340630263090134,
+      "saved_score_error": 0.0,
+      "reference_score": -0.17468614876270294,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.5840336134453782,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.14041184834720055,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.12066420167684555
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.08953341096639633
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.1920771449804306
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.25877559185028076
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.1747005134820938
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.1366250365972519
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.33562803268432617
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.4038712978363037
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.12132441252470016
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.24421276152133942
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.20675449073314667
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.27550220489501953
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.15718521177768707
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.2873815596103668
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3881635069847107
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.2998705804347992
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.1472640484571457
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.12807317078113556
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.44034451246261597
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.42867183685302734
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.21900062263011932
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.02929692529141903
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.25315365195274353
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.30805566906929016
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.10995548218488693
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.2035408467054367
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2500004172325134
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.012449285015463829
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.17354445159435272
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.16417954862117767
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.3285737633705139
+        }
+      ]
+    },
+    {
+      "fold": "fold_26_NaF_WT_13",
+      "held_pid": "NaF_WT_13",
+      "held_label": 0,
+      "held_score": -0.17821361124515533,
+      "saved_score_error": 0.0,
+      "reference_score": -0.1669205129146576,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6512605042016807,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.03060774344012957,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.14025449752807617
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.17359581589698792
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.16417822241783142
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.16192346811294556
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.1397232711315155
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.12712380290031433
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.19118133187294006
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.1747986376285553
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.13970178365707397
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.14818942546844482
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.1598823368549347
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.15128883719444275
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.1356412172317505
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.06021341681480408
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.20616427063941956
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.20203086733818054
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.13568240404129028
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.14008742570877075
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.20292633771896362
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.21355821192264557
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.16313517093658447
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.14630097150802612
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.17358219623565674
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.1761351227760315
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.1631140410900116
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.10925766825675964
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.16926756501197815
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.12005376815795898
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.14964687824249268
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.15742093324661255
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.17488184571266174
+        }
+      ]
+    },
+    {
+      "fold": "fold_27_NaF_WT_14",
+      "held_pid": "NaF_WT_14",
+      "held_label": 0,
+      "held_score": -0.22955071926116943,
+      "saved_score_error": 0.0,
+      "reference_score": -0.19781501591205597,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6428571428571429,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.04860324888575444,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.15220440924167633
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.23121409118175507
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.22625848650932312
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.21403449773788452
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.15752600133419037
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.15552093088626862
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.26487675309181213
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.24797596037387848
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.12368264049291611
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.1799970418214798
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.23170042037963867
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.17128898203372955
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.1624375730752945
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.11113350838422775
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.32532525062561035
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.22866548597812653
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.1631632000207901
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.16638024151325226
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.261218398809433
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.2657151520252228
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.2289990782737732
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.16272802650928497
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2518397271633148
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.21316735446453094
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.17577069997787476
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.1788794994354248
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.18406255543231964
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.1734253615140915
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.13805077970027924
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.22014759480953217
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.2551113963127136
+        }
+      ]
+    },
+    {
+      "fold": "fold_28_NaF_WT_15",
+      "held_pid": "NaF_WT_15",
+      "held_label": 0,
+      "held_score": -0.2525630593299866,
+      "saved_score_error": 0.0,
+      "reference_score": -0.24868321418762207,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6302521008403361,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.008381446385521853,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.25460749864578247
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.2520543932914734
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.2513294816017151
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.25124281644821167
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.23920971155166626
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.25130128860473633
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.2545813322067261
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.25616782903671265
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.24864131212234497
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": -0.23399685323238373
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.2528230547904968
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.25714296102523804
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.25250089168548584
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.2344783991575241
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.26639336347579956
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.2589704692363739
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.25895923376083374
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.25211137533187866
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.25837743282318115
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.24998915195465088
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.2535676956176758
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.2449290156364441
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.2545628547668457
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.25744175910949707
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.258009672164917
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.24009254574775696
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.25320863723754883
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.24611365795135498
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.2257593870162964
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.24850398302078247
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.25523513555526733
+        }
+      ]
+    },
+    {
+      "fold": "fold_29_NaF_WT_16",
+      "held_pid": "NaF_WT_16",
+      "held_label": 0,
+      "held_score": 0.01583152264356613,
+      "saved_score_error": 0.0,
+      "reference_score": -0.19154340028762817,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6386554621848739,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.2147175413063209,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.1388838291168213
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": 0.3328578472137451
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.31564971804618835
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.2835939824581146
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": 0.18816867470741272
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": 0.011859558522701263
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.19795668125152588
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.27078360319137573
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.030998595058918
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": 0.3835718035697937
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.3299943208694458
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.17935314774513245
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.20288339257240295
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.2456779181957245
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.3119708299636841
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.35517874360084534
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": 0.0032681450247764587
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": 0.05756460875272751
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.318922758102417
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.2526646554470062
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.17214742302894592
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": 0.019316457211971283
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.39171797037124634
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.26806068420410156
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": 0.23968437314033508
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.0736444965004921
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.2855287194252014
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.2846221923828125
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": 0.019326798617839813
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.2952142059803009
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.25334399938583374
+        }
+      ]
+    },
+    {
+      "fold": "fold_30_NaF_WT_17",
+      "held_pid": "NaF_WT_17",
+      "held_label": 0,
+      "held_score": -0.1614321768283844,
+      "saved_score_error": 0.0,
+      "reference_score": -0.10709011554718018,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.638655462184874,
+      "training_accuracy": 0.5806451612903226,
+      "training_score_sd": 0.056710681139132385,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.08974698185920715
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.048997312784194946
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.1593756079673767
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.13123580813407898
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.011950194835662842
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.0706821084022522
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.14571046829223633
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.14986839890480042
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.06814298033714294
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": 0.04307106137275696
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.14941078424453735
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.0997905433177948
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.10621556639671326
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": -0.012568175792694092
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.19040760397911072
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.15453696250915527
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.07201093435287476
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.06323608756065369
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.18429484963417053
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.15029913187026978
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.10640400648117065
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.0666247308254242
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.17955076694488525
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.14220309257507324
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.03652516007423401
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": -0.08529093861579895
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.14437690377235413
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.1507139503955841
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.027515441179275513
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": -0.0774972140789032
+        },
+        {
+          "pid": "NaF_WT_18",
+          "label": 0,
+          "score": -0.13319933414459229
+        }
+      ]
+    },
+    {
+      "fold": "fold_31_NaF_WT_18",
+      "held_pid": "NaF_WT_18",
+      "held_label": 0,
+      "held_score": -0.05676041543483734,
+      "saved_score_error": 0.0,
+      "reference_score": -0.02828305959701538,
+      "training_positive_fraction": 0.45161290322580644,
+      "training_auc": 0.6008403361344538,
+      "training_accuracy": 0.5483870967741935,
+      "training_score_sd": 0.041721897680105244,
+      "training_scores": [
+        {
+          "pid": "NaF_KO_01",
+          "label": 1,
+          "score": -0.010878466069698334
+        },
+        {
+          "pid": "NaF_KO_02",
+          "label": 1,
+          "score": -0.03231152147054672
+        },
+        {
+          "pid": "NaF_KO_03",
+          "label": 1,
+          "score": -0.03499322384595871
+        },
+        {
+          "pid": "NaF_KO_04",
+          "label": 1,
+          "score": -0.044154971837997437
+        },
+        {
+          "pid": "NaF_KO_09",
+          "label": 1,
+          "score": -0.01169673353433609
+        },
+        {
+          "pid": "NaF_KO_10",
+          "label": 1,
+          "score": -0.014543123543262482
+        },
+        {
+          "pid": "NaF_KO_11",
+          "label": 1,
+          "score": -0.06696196645498276
+        },
+        {
+          "pid": "NaF_KO_12",
+          "label": 1,
+          "score": -0.07897409796714783
+        },
+        {
+          "pid": "NaF_KO_13",
+          "label": 1,
+          "score": -0.01993090659379959
+        },
+        {
+          "pid": "NaF_KO_14",
+          "label": 1,
+          "score": 0.001847103238105774
+        },
+        {
+          "pid": "NaF_KO_15",
+          "label": 1,
+          "score": -0.04975808411836624
+        },
+        {
+          "pid": "NaF_KO_16",
+          "label": 1,
+          "score": -0.043310731649398804
+        },
+        {
+          "pid": "NaF_KO_17",
+          "label": 1,
+          "score": -0.02871032804250717
+        },
+        {
+          "pid": "NaF_KO_18",
+          "label": 1,
+          "score": 0.1272711604833603
+        },
+        {
+          "pid": "NaF_WT_01",
+          "label": 0,
+          "score": -0.09031245857477188
+        },
+        {
+          "pid": "NaF_WT_02",
+          "label": 0,
+          "score": -0.05858730524778366
+        },
+        {
+          "pid": "NaF_WT_03",
+          "label": 0,
+          "score": -0.022723063826560974
+        },
+        {
+          "pid": "NaF_WT_04",
+          "label": 0,
+          "score": -0.02504000812768936
+        },
+        {
+          "pid": "NaF_WT_05",
+          "label": 0,
+          "score": -0.09983497112989426
+        },
+        {
+          "pid": "NaF_WT_06",
+          "label": 0,
+          "score": -0.09122017025947571
+        },
+        {
+          "pid": "NaF_WT_07",
+          "label": 0,
+          "score": -0.03259851038455963
+        },
+        {
+          "pid": "NaF_WT_08",
+          "label": 0,
+          "score": -0.010204300284385681
+        },
+        {
+          "pid": "NaF_WT_09",
+          "label": 0,
+          "score": -0.05619297921657562
+        },
+        {
+          "pid": "NaF_WT_10",
+          "label": 0,
+          "score": -0.0544155016541481
+        },
+        {
+          "pid": "NaF_WT_11",
+          "label": 0,
+          "score": -0.017356112599372864
+        },
+        {
+          "pid": "NaF_WT_12",
+          "label": 0,
+          "score": 0.015244655311107635
+        },
+        {
+          "pid": "NaF_WT_13",
+          "label": 0,
+          "score": -0.05116298049688339
+        },
+        {
+          "pid": "NaF_WT_14",
+          "label": 0,
+          "score": -0.022890634834766388
+        },
+        {
+          "pid": "NaF_WT_15",
+          "label": 0,
+          "score": -0.020504668354988098
+        },
+        {
+          "pid": "NaF_WT_16",
+          "label": 0,
+          "score": 0.037614986300468445
+        },
+        {
+          "pid": "NaF_WT_17",
+          "label": 0,
+          "score": -0.05069388449192047
+        }
+      ]
+    }
+  ],
+  "reference_pid": "NaF_KO_01",
+  "summary": {
+    "held_auc": 0.06349206349206349,
+    "reference_auc_by_held_label": 0.27380952380952384,
+    "held_reference_correlation": 0.16606252149108197,
+    "held_score_sd": 0.12296629940433913,
+    "reference_score_sd": 0.19791610873866228,
+    "median_training_score_sd": 0.05729199006704671,
+    "median_training_auc": 0.6449579831932772,
+    "min_training_auc": 0.44871794871794873,
+    "max_training_auc": 0.7521367521367521,
+    "reference_ko_fold_mean": -0.16103513206222228,
+    "reference_wt_fold_mean": -0.13949123604430091
+  },
+  "status": "complete"
+}

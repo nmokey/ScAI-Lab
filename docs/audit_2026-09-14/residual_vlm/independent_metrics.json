@@ -1,0 +1,321 @@
+{
+  "checks": [
+    {
+      "folds": [
+        {
+          "auc": 0.875,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 14.0
+        },
+        {
+          "auc": 0.3125,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 5.0
+        },
+        {
+          "auc": 0.4666666666666667,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 7.0
+        },
+        {
+          "auc": 0.4,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 6.0
+        }
+      ],
+      "genotype_accuracy": 0.5,
+      "genotype_auc_within_fold_pair_weighted": 0.5161290322580645,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed0",
+      "status": "passed",
+      "subject_mae": 5.66777375459671,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.4375,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 7.0
+        },
+        {
+          "auc": 0.3125,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 5.0
+        },
+        {
+          "auc": 0.6666666666666666,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 10.0
+        },
+        {
+          "auc": 0.26666666666666666,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 4.0
+        }
+      ],
+      "genotype_accuracy": 0.5,
+      "genotype_auc_within_fold_pair_weighted": 0.41935483870967744,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0",
+      "status": "passed",
+      "subject_mae": 5.718315948645274,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.6875,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 11.0
+        },
+        {
+          "auc": 0.3125,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 5.0
+        },
+        {
+          "auc": 0.6666666666666666,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 10.0
+        },
+        {
+          "auc": 0.5333333333333333,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 8.0
+        }
+      ],
+      "genotype_accuracy": 0.53125,
+      "genotype_auc_within_fold_pair_weighted": 0.5483870967741935,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_residual_seed0",
+      "status": "passed",
+      "subject_mae": 5.655233176151911,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.8125,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 13.0
+        },
+        {
+          "auc": 0.375,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0
+        },
+        {
+          "auc": 0.4,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 6.0
+        },
+        {
+          "auc": 0.3333333333333333,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 5.0
+        }
+      ],
+      "genotype_accuracy": 0.5,
+      "genotype_auc_within_fold_pair_weighted": 0.4838709677419355,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed1",
+      "status": "passed",
+      "subject_mae": 5.647063513795534,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.5,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 8.0
+        },
+        {
+          "auc": 0.375,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0
+        },
+        {
+          "auc": 0.6,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 9.0
+        },
+        {
+          "auc": 0.3333333333333333,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 5.0
+        }
+      ],
+      "genotype_accuracy": 0.53125,
+      "genotype_auc_within_fold_pair_weighted": 0.45161290322580644,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed1",
+      "status": "passed",
+      "subject_mae": 5.6866908750931415,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.75,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 12.0
+        },
+        {
+          "auc": 0.375,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0
+        },
+        {
+          "auc": 0.6,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 9.0
+        },
+        {
+          "auc": 0.4666666666666667,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 7.0
+        }
+      ],
+      "genotype_accuracy": 0.5,
+      "genotype_auc_within_fold_pair_weighted": 0.5483870967741935,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_residual_seed1",
+      "status": "passed",
+      "subject_mae": 5.795885747671127,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.625,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 10.0
+        },
+        {
+          "auc": 0.375,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0
+        },
+        {
+          "auc": 0.26666666666666666,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 4.0
+        },
+        {
+          "auc": 0.4666666666666667,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 7.0
+        }
+      ],
+      "genotype_accuracy": 0.5,
+      "genotype_auc_within_fold_pair_weighted": 0.43548387096774194,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed2",
+      "status": "passed",
+      "subject_mae": 5.337111223141352,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.4375,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 7.0
+        },
+        {
+          "auc": 0.4375,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 7.0
+        },
+        {
+          "auc": 0.6,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 9.0
+        },
+        {
+          "auc": 0.3333333333333333,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 5.0
+        }
+      ],
+      "genotype_accuracy": 0.5625,
+      "genotype_auc_within_fold_pair_weighted": 0.45161290322580644,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed2",
+      "status": "passed",
+      "subject_mae": 5.584252386093139,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    },
+    {
+      "folds": [
+        {
+          "auc": 0.75,
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 12.0
+        },
+        {
+          "auc": 0.3125,
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 5.0
+        },
+        {
+          "auc": 0.6,
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 9.0
+        },
+        {
+          "auc": 0.5333333333333333,
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 8.0
+        }
+      ],
+      "genotype_accuracy": 0.53125,
+      "genotype_auc_within_fold_pair_weighted": 0.5483870967741935,
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_residual_seed2",
+      "status": "passed",
+      "subject_mae": 5.518018297751745,
+      "train_mean_subject_mae": 5.610645134051641,
+      "training_majority_accuracy": 0.5625
+    }
+  ],
+  "method": "Independent standard-library scoring via check_stratified_metrics.check_run for all nine runs",
+  "status": "passed"
+}

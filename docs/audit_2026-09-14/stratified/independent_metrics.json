@@ -1,0 +1,216 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed0",
+      "status": "passed",
+      "genotype_auc_within_fold_pair_weighted": 0.5161290322580645,
+      "genotype_accuracy": 0.5,
+      "training_majority_accuracy": 0.5625,
+      "subject_mae": 5.66777375459671,
+      "train_mean_subject_mae": 5.610645134051641,
+      "folds": [
+        {
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 14.0,
+          "auc": 0.875
+        },
+        {
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 5.0,
+          "auc": 0.3125
+        },
+        {
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 7.0,
+          "auc": 0.4666666666666667
+        },
+        {
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 6.0,
+          "auc": 0.4
+        }
+      ]
+    },
+    {
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed1",
+      "status": "passed",
+      "genotype_auc_within_fold_pair_weighted": 0.4838709677419355,
+      "genotype_accuracy": 0.5,
+      "training_majority_accuracy": 0.5625,
+      "subject_mae": 5.647063513795534,
+      "train_mean_subject_mae": 5.610645134051641,
+      "folds": [
+        {
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 13.0,
+          "auc": 0.8125
+        },
+        {
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0,
+          "auc": 0.375
+        },
+        {
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 6.0,
+          "auc": 0.4
+        },
+        {
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 5.0,
+          "auc": 0.3333333333333333
+        }
+      ]
+    },
+    {
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed2",
+      "status": "passed",
+      "genotype_auc_within_fold_pair_weighted": 0.43548387096774194,
+      "genotype_accuracy": 0.5,
+      "training_majority_accuracy": 0.5625,
+      "subject_mae": 5.337111223141352,
+      "train_mean_subject_mae": 5.610645134051641,
+      "folds": [
+        {
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 10.0,
+          "auc": 0.625
+        },
+        {
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0,
+          "auc": 0.375
+        },
+        {
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 4.0,
+          "auc": 0.26666666666666666
+        },
+        {
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 7.0,
+          "auc": 0.4666666666666667
+        }
+      ]
+    },
+    {
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0",
+      "status": "passed",
+      "genotype_auc_within_fold_pair_weighted": 0.41935483870967744,
+      "genotype_accuracy": 0.5,
+      "training_majority_accuracy": 0.5625,
+      "subject_mae": 5.718315948645274,
+      "train_mean_subject_mae": 5.610645134051641,
+      "folds": [
+        {
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 7.0,
+          "auc": 0.4375
+        },
+        {
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 5.0,
+          "auc": 0.3125
+        },
+        {
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 10.0,
+          "auc": 0.6666666666666666
+        },
+        {
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 4.0,
+          "auc": 0.26666666666666666
+        }
+      ]
+    },
+    {
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed1",
+      "status": "passed",
+      "genotype_auc_within_fold_pair_weighted": 0.45161290322580644,
+      "genotype_accuracy": 0.53125,
+      "training_majority_accuracy": 0.5625,
+      "subject_mae": 5.6866908750931415,
+      "train_mean_subject_mae": 5.610645134051641,
+      "folds": [
+        {
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 8.0,
+          "auc": 0.5
+        },
+        {
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 6.0,
+          "auc": 0.375
+        },
+        {
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 9.0,
+          "auc": 0.6
+        },
+        {
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 5.0,
+          "auc": 0.3333333333333333
+        }
+      ]
+    },
+    {
+      "run": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed2",
+      "status": "passed",
+      "genotype_auc_within_fold_pair_weighted": 0.45161290322580644,
+      "genotype_accuracy": 0.5625,
+      "training_majority_accuracy": 0.5625,
+      "subject_mae": 5.584252386093139,
+      "train_mean_subject_mae": 5.610645134051641,
+      "folds": [
+        {
+          "key": "fold_00",
+          "pairs": 16,
+          "wins": 7.0,
+          "auc": 0.4375
+        },
+        {
+          "key": "fold_01",
+          "pairs": 16,
+          "wins": 7.0,
+          "auc": 0.4375
+        },
+        {
+          "key": "fold_02",
+          "pairs": 15,
+          "wins": 9.0,
+          "auc": 0.6
+        },
+        {
+          "key": "fold_03",
+          "pairs": 15,
+          "wins": 5.0,
+          "auc": 0.3333333333333333
+        }
+      ]
+    }
+  ],
+  "method": "Independent standard-library arithmetic; no production scorer imported"
+}

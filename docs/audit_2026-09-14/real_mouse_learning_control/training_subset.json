@@ -1,0 +1,826 @@
+[
+  {
+    "acquisition_group": "group00",
+    "answer": "The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_01",
+    "qid": 0,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "KO"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 22.71, Week 6: NA, Week 8: 23.00.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        22.71,
+        -1.0,
+        23.0,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_01",
+    "qid": 1,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 22.71, Week 6: NA, Week 8: 23.00"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 22.71, Week 6: NA, Week 8: 23.00. The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        22.71,
+        -1.0,
+        23.0,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_01_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_01",
+    "qid": 2,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "KO",
+      "trajectory": "Week 3: 22.71, Week 6: NA, Week 8: 23.00"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_02",
+    "qid": 3,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "KO"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 33.54, Week 6: NA, Week 8: 25.61.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        33.54,
+        -1.0,
+        25.61,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_02",
+    "qid": 4,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 33.54, Week 6: NA, Week 8: 25.61"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 33.54, Week 6: NA, Week 8: 25.61. The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        33.54,
+        -1.0,
+        25.61,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_02_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_02",
+    "qid": 5,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "KO",
+      "trajectory": "Week 3: 33.54, Week 6: NA, Week 8: 25.61"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_03",
+    "qid": 6,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "KO"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 18.11, Week 6: NA, Week 8: 19.68.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        18.11,
+        -1.0,
+        19.68,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_03",
+    "qid": 7,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 18.11, Week 6: NA, Week 8: 19.68"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 18.11, Week 6: NA, Week 8: 19.68. The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        18.11,
+        -1.0,
+        19.68,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_03_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_03",
+    "qid": 8,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "KO",
+      "trajectory": "Week 3: 18.11, Week 6: NA, Week 8: 19.68"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_04",
+    "qid": 9,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "KO"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 24.38, Week 6: NA, Week 8: 22.11.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        24.38,
+        -1.0,
+        22.11,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_04",
+    "qid": 10,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 24.38, Week 6: NA, Week 8: 22.11"
+    }
+  },
+  {
+    "acquisition_group": "group00",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 24.38, Week 6: NA, Week 8: 22.11. The mouse genotype is KO.",
+    "answer_vqa_numeric": {
+      "genotype": 1,
+      "tbr": [
+        24.38,
+        -1.0,
+        22.11,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts1.safetensors",
+    "embedding_path_ts2": "",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_KO_04_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_KO_04",
+    "qid": 11,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "KO",
+      "trajectory": "Week 3: 24.38, Week 6: NA, Week 8: 22.11"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_02",
+    "qid": 45,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "WT"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 41.88, Week 6: 40.93, Week 8: 29.13.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        41.88,
+        40.93,
+        29.13,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_02",
+    "qid": 46,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 41.88, Week 6: 40.93, Week 8: 29.13"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 41.88, Week 6: 40.93, Week 8: 29.13. The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        41.88,
+        40.93,
+        29.13,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_02_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_02",
+    "qid": 47,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "WT",
+      "trajectory": "Week 3: 41.88, Week 6: 40.93, Week 8: 29.13"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_03",
+    "qid": 48,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "WT"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 19.92, Week 6: 25.97, Week 8: 24.32.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        19.92,
+        25.97,
+        24.32,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_03",
+    "qid": 49,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 19.92, Week 6: 25.97, Week 8: 24.32"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 19.92, Week 6: 25.97, Week 8: 24.32. The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        19.92,
+        25.97,
+        24.32,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_03_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_03",
+    "qid": 50,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "WT",
+      "trajectory": "Week 3: 19.92, Week 6: 25.97, Week 8: 24.32"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_04",
+    "qid": 51,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "WT"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 31.48, Week 6: 34.39, Week 8: 19.41.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        31.48,
+        34.39,
+        19.41,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_04",
+    "qid": 52,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 31.48, Week 6: 34.39, Week 8: 19.41"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 31.48, Week 6: 34.39, Week 8: 19.41. The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        31.48,
+        34.39,
+        19.41,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_04_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_04",
+    "qid": 53,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "WT",
+      "trajectory": "Week 3: 31.48, Week 6: 34.39, Week 8: 19.41"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ]
+    },
+    "content_type": "genotype",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_07",
+    "qid": 60,
+    "question": "What will be the eventual mouse status for genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "short_feature": "genotype",
+      "status": "WT"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 15.04, Week 6: 19.03, Week 8: 23.00.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        15.04,
+        19.03,
+        23.0,
+        -1.0
+      ]
+    },
+    "content_type": "tbr",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_07",
+    "qid": 61,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "trajectory": "Week 3: 15.04, Week 6: 19.03, Week 8: 23.00"
+    }
+  },
+  {
+    "acquisition_group": "group02",
+    "answer": "The predicted trajectory for PET intensity proxy (TBR-2) - Week 3: 15.04, Week 6: 19.03, Week 8: 23.00. The mouse genotype is WT.",
+    "answer_vqa_numeric": {
+      "genotype": 0,
+      "tbr": [
+        15.04,
+        19.03,
+        23.0,
+        -1.0
+      ]
+    },
+    "content_type": "combined",
+    "embedding_path_ts0": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts0.safetensors",
+    "embedding_path_ts1": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts1.safetensors",
+    "embedding_path_ts2": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts2.safetensors",
+    "embedding_path_ts3": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings/NaF_WT_07_ts3.safetensors",
+    "future_weeks": [
+      "Week 15",
+      "Week 18",
+      "Week 20"
+    ],
+    "input_week": "Week 12",
+    "pid": "NaF_WT_07",
+    "qid": 62,
+    "question": "Predict the mouse's trajectory of PET intensity proxy (TBR-2) over the next 8 weeks and the eventual status of genotype?",
+    "target_name": "pet_midband_p95_trimmed_median_proxy",
+    "target_schema_version": 1,
+    "template_values": {
+      "long_feature": "PET intensity proxy (TBR-2)",
+      "n_weeks": 8,
+      "short_feature": "genotype",
+      "status": "WT",
+      "trajectory": "Week 3: 15.04, Week 6: 19.03, Week 8: 23.00"
+    }
+  }
+]

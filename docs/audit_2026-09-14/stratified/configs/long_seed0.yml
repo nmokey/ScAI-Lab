@@ -1,0 +1,93 @@
+data:
+  base_dir: ''
+  data_path: /data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/mouse_train_vqa_traj.json
+  data_seed: 0
+  height: 224
+  img_dir: ''
+  img_tokens: 4
+  inf_data_path: /data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/mouse_val_vqa_traj.json
+  inf_dataset: mouse_traj_vqa
+  inf_img_dir: ''
+  nested_forecast_root: /data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914
+  num_channels: 3
+  predicted_emb_dir: null
+  prompt_type: standard
+  seq_length: 150
+  test_size: 0.2
+  tokenizer_name: meta-llama/Meta-Llama-3.1-8B-Instruct
+  train_dataset: mouse_traj_vqa
+  width: 224
+exp:
+  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0
+inf:
+  beg_prompt: ''
+  bias: none
+  decoding_kwargs:
+    do_sample: false
+    num_beams: 1
+  end_prompt: ''
+  include_img: true
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
+  load_projection_matrix: false
+  lora_alpha: 16
+  lora_dropout: 0.1
+  max_new_tokens: 100
+  mid_prompt: ''
+  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0/mouse_vlm_mdl
+  r: 4
+  replace_prompt: null
+  results_file: val.json
+  save_file: vqa.json
+  target_modules:
+  - q_proj
+  - v_proj
+  task_type: CAUSAL_LM
+  train_gt_file: /data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/mouse_train_vqa_traj.json
+  use_quantization: true
+train:
+  add_multitask: true
+  add_multitask_unknown: false
+  bf16: true
+  bias: none
+  eval_steps: null
+  evaluate_start: false
+  evaluation_strategy: epoch
+  fp16: false
+  freeze_llm_model: false
+  freeze_vision_model: true
+  gradient_accumulation_steps: 4
+  label_names:
+  - labels
+  - tbr_targets
+  - genotype_label
+  learning_rate: 0.0002
+  llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
+  load_best_model_at_end: false
+  load_projection_matrix: false
+  logging_steps: 1
+  lora_alpha: 16
+  lora_dropout: 0.1
+  lr_scheduler_type: cosine
+  model_name: null
+  multitask_wt: 5.0
+  num_proj_layers: 1
+  num_train_epochs: 20
+  optim: adamw_torch_fused
+  per_device_eval_batch_size: 2
+  per_device_train_batch_size: 2
+  pool_at: question_eos
+  pretrained: false
+  r: 4
+  report_to: tensorboard
+  resume_from_checkpoint: false
+  save_model_name: mouse_vlm_mdl
+  save_steps: null
+  save_strategy: epoch
+  save_total_limit: 1
+  target_modules:
+  - q_proj
+  - v_proj
+  task_type: CAUSAL_LM
+  use_quantization: true
+  vision_model_name: None
+  warmup_ratio: 0.05

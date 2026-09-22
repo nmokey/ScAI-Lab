@@ -1,0 +1,303 @@
+{
+  "advance_criterion": "Residual future-only and combined AUROCs at least baseline; residual mean subject cosine exceeds current, persistence, and training-week centroid",
+  "architecture": "Same two hidden layers of width 512 with LayerNorm/GELU; final residual layer initialized to zero",
+  "checkpoint": "Final fixed update only, no held-out or training-based checkpoint selection",
+  "classifier": "Same training-only StandardScaler + L2 LogisticRegression(C=1, max_iter=2000, tol=1e-4, lbfgs, random_state=0)",
+  "classifier_arms": {
+    "baseline": [
+      "old",
+      [
+        0
+      ]
+    ],
+    "current_combined": [
+      "old",
+      [
+        0,
+        1,
+        2,
+        3
+      ]
+    ],
+    "current_future": [
+      "old",
+      [
+        1,
+        2,
+        3
+      ]
+    ],
+    "residual_combined": [
+      "new",
+      [
+        0,
+        1,
+        2,
+        3
+      ]
+    ],
+    "residual_future": [
+      "new",
+      [
+        1,
+        2,
+        3
+      ]
+    ]
+  },
+  "comparisons": [
+    "Existing forecaster",
+    "Baseline persistence",
+    "Outer-training observed week centroid"
+  ],
+  "embeddings_path": "/data1/Processed_NIfTI_Test/embeddings/raddino/raddino_embeddings.npz",
+  "embeddings_sha256": "7932df600782298d2f1b19f703413e329c6611b6e1c43da2a4792670c5d53739",
+  "export_scale": "Same mean observed consecutive-target norm as the original forecaster, computed within each fit",
+  "forecast_metric": "Primary: average future-target cosine within each mouse, then over 32 mice; report every horizon separately",
+  "forecast_output": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_residual_rollout_20260915",
+  "genotype_metric": "62 within-fold KO-WT pairs, pair-weighted AUROC; zero-logit accuracy",
+  "interpretation": "Development experiment after repeated inspection of these folds; no untouched confirmatory test or independent-acquisition claim",
+  "method": "baseline_anchored_residual_full_rollout",
+  "objective": "Mean per-subject masked cosine loss + 0.01 * mean squared L2 norm of residual over subjects and all three steps",
+  "optimizer": "Adam lr=0.001, default betas, no weight decay; one full-subject batch per epoch (19/20/24 mice); 300 updates",
+  "original_manifests_sha256": {
+    "fold_00": "f0e64a5d6a66d7a5c69a0785b6c60bd90e400730272d6d6e27b7cde6dc072314",
+    "fold_01": "38af0754ce675141b9ac98015a05af02f9393ee4101794cbc01307768da5709a",
+    "fold_02": "0bef71ee6a5745ddf9716f525bc3e3df5e312f841f8a09ee9d4840c6eae33315",
+    "fold_03": "3161ecab620faf9de67f0d86752cd652c470274fdbcdd012676a9f5ea17e38c3"
+  },
+  "original_probe_sha256": "14d11009680d190ec95c0cfdda5a00ef4f0377115e8e74032c29547c8fa41cee",
+  "population": {
+    "amendment": "Chosen after inspecting original pooled LOSO results; no model or parameter search",
+    "folds": [
+      {
+        "key": "fold_00",
+        "test_subjects": [
+          "NaF_KO_09",
+          "NaF_KO_12",
+          "NaF_KO_15",
+          "NaF_KO_16",
+          "NaF_WT_01",
+          "NaF_WT_05",
+          "NaF_WT_06",
+          "NaF_WT_17"
+        ],
+        "train_subjects": [
+          "NaF_KO_01",
+          "NaF_KO_02",
+          "NaF_KO_03",
+          "NaF_KO_04",
+          "NaF_KO_10",
+          "NaF_KO_11",
+          "NaF_KO_13",
+          "NaF_KO_14",
+          "NaF_KO_17",
+          "NaF_KO_18",
+          "NaF_WT_02",
+          "NaF_WT_03",
+          "NaF_WT_04",
+          "NaF_WT_07",
+          "NaF_WT_08",
+          "NaF_WT_09",
+          "NaF_WT_10",
+          "NaF_WT_11",
+          "NaF_WT_12",
+          "NaF_WT_13",
+          "NaF_WT_14",
+          "NaF_WT_15",
+          "NaF_WT_16",
+          "NaF_WT_18"
+        ]
+      },
+      {
+        "key": "fold_01",
+        "test_subjects": [
+          "NaF_KO_02",
+          "NaF_KO_03",
+          "NaF_KO_13",
+          "NaF_KO_17",
+          "NaF_WT_07",
+          "NaF_WT_11",
+          "NaF_WT_15",
+          "NaF_WT_16"
+        ],
+        "train_subjects": [
+          "NaF_KO_01",
+          "NaF_KO_04",
+          "NaF_KO_09",
+          "NaF_KO_10",
+          "NaF_KO_11",
+          "NaF_KO_12",
+          "NaF_KO_14",
+          "NaF_KO_15",
+          "NaF_KO_16",
+          "NaF_KO_18",
+          "NaF_WT_01",
+          "NaF_WT_02",
+          "NaF_WT_03",
+          "NaF_WT_04",
+          "NaF_WT_05",
+          "NaF_WT_06",
+          "NaF_WT_08",
+          "NaF_WT_09",
+          "NaF_WT_10",
+          "NaF_WT_12",
+          "NaF_WT_13",
+          "NaF_WT_14",
+          "NaF_WT_17",
+          "NaF_WT_18"
+        ]
+      },
+      {
+        "key": "fold_02",
+        "test_subjects": [
+          "NaF_KO_01",
+          "NaF_KO_11",
+          "NaF_KO_14",
+          "NaF_WT_04",
+          "NaF_WT_08",
+          "NaF_WT_10",
+          "NaF_WT_13",
+          "NaF_WT_18"
+        ],
+        "train_subjects": [
+          "NaF_KO_02",
+          "NaF_KO_03",
+          "NaF_KO_04",
+          "NaF_KO_09",
+          "NaF_KO_10",
+          "NaF_KO_12",
+          "NaF_KO_13",
+          "NaF_KO_15",
+          "NaF_KO_16",
+          "NaF_KO_17",
+          "NaF_KO_18",
+          "NaF_WT_01",
+          "NaF_WT_02",
+          "NaF_WT_03",
+          "NaF_WT_05",
+          "NaF_WT_06",
+          "NaF_WT_07",
+          "NaF_WT_09",
+          "NaF_WT_11",
+          "NaF_WT_12",
+          "NaF_WT_14",
+          "NaF_WT_15",
+          "NaF_WT_16",
+          "NaF_WT_17"
+        ]
+      },
+      {
+        "key": "fold_03",
+        "test_subjects": [
+          "NaF_KO_04",
+          "NaF_KO_10",
+          "NaF_KO_18",
+          "NaF_WT_02",
+          "NaF_WT_03",
+          "NaF_WT_09",
+          "NaF_WT_12",
+          "NaF_WT_14"
+        ],
+        "train_subjects": [
+          "NaF_KO_01",
+          "NaF_KO_02",
+          "NaF_KO_03",
+          "NaF_KO_09",
+          "NaF_KO_11",
+          "NaF_KO_12",
+          "NaF_KO_13",
+          "NaF_KO_14",
+          "NaF_KO_15",
+          "NaF_KO_16",
+          "NaF_KO_17",
+          "NaF_WT_01",
+          "NaF_WT_04",
+          "NaF_WT_05",
+          "NaF_WT_06",
+          "NaF_WT_07",
+          "NaF_WT_08",
+          "NaF_WT_10",
+          "NaF_WT_11",
+          "NaF_WT_13",
+          "NaF_WT_15",
+          "NaF_WT_16",
+          "NaF_WT_17",
+          "NaF_WT_18"
+        ]
+      }
+    ],
+    "format_version": 1,
+    "genotype_metric": "within_fold_positive_negative_pair_weighted_AUROC",
+    "genotype_threshold": 0.0,
+    "n_splits": 4,
+    "population_limit": "Subject holdout only; acquisition group and diet remain confounded",
+    "primary_regression_metric": "subject_averaged_future_proxy_MAE",
+    "requested_epochs": 20,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "split_method": "StratifiedKFold",
+    "split_seed": 0,
+    "subjects": [
+      "NaF_KO_01",
+      "NaF_KO_02",
+      "NaF_KO_03",
+      "NaF_KO_04",
+      "NaF_KO_09",
+      "NaF_KO_10",
+      "NaF_KO_11",
+      "NaF_KO_12",
+      "NaF_KO_13",
+      "NaF_KO_14",
+      "NaF_KO_15",
+      "NaF_KO_16",
+      "NaF_KO_17",
+      "NaF_KO_18",
+      "NaF_WT_01",
+      "NaF_WT_02",
+      "NaF_WT_03",
+      "NaF_WT_04",
+      "NaF_WT_05",
+      "NaF_WT_06",
+      "NaF_WT_07",
+      "NaF_WT_08",
+      "NaF_WT_09",
+      "NaF_WT_10",
+      "NaF_WT_11",
+      "NaF_WT_12",
+      "NaF_WT_13",
+      "NaF_WT_14",
+      "NaF_WT_15",
+      "NaF_WT_16",
+      "NaF_WT_17",
+      "NaF_WT_18"
+    ]
+  },
+  "records_path": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/mouse_all_vqa_traj.json",
+  "records_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2",
+  "rollout": "unit_prediction[t] = normalize(unit_baseline + MLP(unit_prediction[t-1], cohort, step)); first input is unit_baseline",
+  "scope": "One pre-fixed model variant and forecast seed schedule; embedding evaluation only; no parameter search",
+  "settings": {
+    "epochs": 300,
+    "hidden": 512,
+    "inner_folds": 5,
+    "lr": 0.001,
+    "residual_penalty": 0.01,
+    "seed": 0
+  },
+  "sklearn_version": "1.7.2",
+  "source_sha256": {
+    "build_nested_forecasts.py": "80518ae566d16b7cdd40736bd6dc7347a18414f2dc3c5e9268619dd26f31a3a9",
+    "probe_stratified_longitudinal_genotype.py": "1cb62ef9fe278d80a555f79d25e639ae1b06ef9acce775e194f796efabf16566",
+    "residual_rollout_forecast.py": "6dda44a4af163e78ca9d836f28f2b0e5cecb807915b77feeb01c0a0dc836b73f",
+    "run_residual_rollout_experiment.py": "defdda98e7f4fe0aab249b2f7e12aa5bf125364e13ec365c4a20014b29fdd55a",
+    "stratified_vlm_protocol.py": "ade445f73a235bcb2138badecd8c20e33ba2a8ef095ae253c09af81feb0d2285",
+    "train_longitudinal.py": "c942d72589398bff7fee03e041d049c6230bc94be6d78a3e41d45d650637971e"
+  },
+  "supervision": "Observed embeddings only; neither genotype inputs nor genotype supervision; no PET labels",
+  "torch_version": "2.10.0+cu128",
+  "training": "Full baseline rollout; no detached transitions; all available future visits; no teacher forcing"
+}

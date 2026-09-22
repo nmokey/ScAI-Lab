@@ -1,0 +1,45 @@
+{
+  "corrected_raddino_crops": [
+    {
+      "artifact_error": 0.0,
+      "repeat_error": 0.0,
+      "source_sha256": "7904fe9864eab90cb3ea736aa109b39cc22e0ade72c9bdb5de01572166d05ac6",
+      "subject": "NaF_KO_09",
+      "week": "Week 15"
+    },
+    {
+      "artifact_error": 0.0,
+      "repeat_error": 0.0,
+      "source_sha256": "2f609edf198b70a840afc1a3352917d473aa9d8293c591f9410fcd747165f34e",
+      "subject": "NaF_KO_10",
+      "week": "Week 15"
+    },
+    {
+      "artifact_error": 0.0,
+      "repeat_error": 0.0,
+      "source_sha256": "8c11837cb9875fd58a1158e84e516c3cbf4f7214204fcc2de17d421de1dab304",
+      "subject": "NaF_KO_11",
+      "week": "Week 15"
+    },
+    {
+      "artifact_error": 0.0,
+      "repeat_error": 0.0,
+      "source_sha256": "ad56565d6f29cbde909350b886611aa0d9b6d6d5a8cf767341eba7cea3bfad87",
+      "subject": "FDG_WT_01",
+      "week": "Week 15"
+    },
+    {
+      "artifact_error": 0.0,
+      "repeat_error": 0.0,
+      "source_sha256": "01710cfb46f17ed361f71ee5fe4ccb72d9e87f653b963a64c20bd7af6e19da4e",
+      "subject": "FDG_WT_02",
+      "week": "Week 15"
+    }
+  ],
+  "merlin_cache": {
+    "initial_cached_fresh_max_error": 0.0,
+    "new_cache_files": 1,
+    "source": "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_15/ct_hi.nii.gz"
+  },
+  "status": "passed"
+}

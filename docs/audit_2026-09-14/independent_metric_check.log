@@ -1,0 +1,1 @@
+Independently verified all 6 runs: primary MAE, pairwise AUROC, per-horizon MAE/MSE/R² and training-mean comparator.

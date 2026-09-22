@@ -1,0 +1,1379 @@
+{
+  "completion_sha256": "346640540fc67cfea75f1f606f92983caafb0747a45b7f80eaa0015918c35b6b",
+  "limitation": "Confidence means raw sigmoid score, not verified calibration. Seeds reuse the same mice; paired changes are descriptive, not independent observations.",
+  "method": "Descriptive inspection of all completed predictions; sigmoid of saved logits; no fitting, threshold selection, inversion, or new model evaluation",
+  "prediction_sha256": {
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed0/vqa_stratified.json": "ae60ecc8b5b9cd11e00b61cf19d29753921667d5320ec0519ee6cbc881e18c19",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed1/vqa_stratified.json": "04814d99d8dee0ddabc8940173afc40685c810e2926e40d8f475db5f063001ac",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed2/vqa_stratified.json": "139ef24693eeafb7fdf3865acfa6ebc8f52b594d940656951b518981c94fdc71",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_direct_visual_seed0/vqa_stratified.json": "dcc395d3d5ad61d60c231ae95824255fa3f8625fc9c4e700a843b0896375eef1",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_direct_visual_seed1/vqa_stratified.json": "af9435614cdf77f6d89f4c3e0cb44d732ccaef7c4099128dc10f94afb92e6f4b",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_direct_visual_seed2/vqa_stratified.json": "839b4cd8646368e5607a51c089bc33482fe28211f7f2eaae3e7522fb3ceff75f",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_genotype_only_seed0/vqa_stratified.json": "c2eb4027cf7e7c51dc1646417a5b4649eddc1fcc2f784424431291ecf74c7984",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_genotype_only_seed1/vqa_stratified.json": "0f75bbaf78fd082910862ae68ef71980efe5042f064d665ee40842057af60480",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_genotype_only_seed2/vqa_stratified.json": "9073fd5186a1085a39290e670808075ec3508cbb43daa595814feda4d94af114",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_residual_seed0/vqa_stratified.json": "885ab79e8e2d69abe4eb33dd00faadb143eca1f82f69223b4843657da88ae44a",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_residual_seed1/vqa_stratified.json": "38fd66dfce35c4f18f3d40b5ba70dce0d680c3978646965a562fc17f317099ac",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_residual_seed2/vqa_stratified.json": "4a7bf61f6c15b9682c5119d1634017990a88829c90e8ada8496445e05d1f23fb"
+  },
+  "runs": [
+    {
+      "arm": "base",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.8208933025598526,
+              "ko_minus_wt_mean": 0.19624264538288116,
+              "mean": -0.9190146252512932,
+              "wt_mean": -1.0171359479427338
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.6937081498670881,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.3537394923685759,
+          "probability_min": 0.23871622675091678
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.16676944866776466,
+              "ko_minus_wt_mean": -0.0786149650812149,
+              "mean": -0.1274619661271572,
+              "wt_mean": -0.08815448358654976
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.5412180499005828,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 7,
+          "probability_max": 0.48963381552293755,
+          "probability_min": 0.38931478322724034
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.129775270819664,
+              "ko_minus_wt_mean": -0.080171337723732,
+              "mean": -0.0796681847423315,
+              "wt_mean": -0.04960393309593201
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.6374828390099889,
+          "n": 8,
+          "predicted_ko": 3,
+          "probability_04_to_06": 3,
+          "probability_max": 0.6771820455027954,
+          "probability_min": 0.2842275653863104
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.5478615264097849,
+              "ko_minus_wt_mean": -0.17913617889086403,
+              "mean": -0.4359014146029949,
+              "wt_mean": -0.3687253475189209
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.6813149281041821,
+          "n": 8,
+          "predicted_ko": 3,
+          "probability_04_to_06": 0,
+          "probability_max": 0.6492465076027739,
+          "probability_min": 0.23559930245896338
+        }
+      ],
+      "seed": 0,
+      "summary": {
+        "confidence_at_least_09": 0,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.6384309917204605,
+        "n": 32,
+        "predicted_ko": 6,
+        "probability_04_to_06": 10,
+        "probability_max": 0.6771820455027954,
+        "probability_min": 0.23559930245896338
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_KO_04",
+          "NaF_WT_07",
+          "NaF_WT_11",
+          "NaF_WT_15",
+          "NaF_WT_16"
+        ],
+        "worsened": [
+          "NaF_KO_01",
+          "NaF_KO_13",
+          "NaF_KO_17",
+          "NaF_WT_03",
+          "NaF_WT_08",
+          "NaF_WT_14"
+        ]
+      }
+    },
+    {
+      "arm": "residual",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.910045325756073,
+              "ko_minus_wt_mean": 0.6317605972290039,
+              "mean": -3.225925624370575,
+              "wt_mean": -3.541805922985077
+            }
+          },
+          "confidence_at_least_09": 7,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.9402758622388138,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.10685899834877291,
+          "probability_min": 0.009715227068037395
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.37816087156534195,
+              "ko_minus_wt_mean": -0.7854032889008522,
+              "mean": 0.770862516015768,
+              "wt_mean": 1.1635641604661942
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 2,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.7144695637628967,
+          "n": 8,
+          "predicted_ko": 6,
+          "probability_04_to_06": 1,
+          "probability_max": 0.861646050808708,
+          "probability_min": 0.3119204578427274
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.1757343610127767,
+              "ko_minus_wt_mean": 0.23972040017445884,
+              "mean": 0.02590911090373993,
+              "wt_mean": -0.06398603916168213
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 6,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.5919836462035296,
+          "n": 8,
+          "predicted_ko": 3,
+          "probability_04_to_06": 5,
+          "probability_max": 0.608821798688263,
+          "probability_min": 0.3769650291946379
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -1.3368395169576008,
+              "ko_minus_wt_mean": -0.07695468862851462,
+              "mean": -1.2887428365647793,
+              "wt_mean": -1.2598848283290862
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.7910443448568186,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 1,
+          "probability_max": 0.41023110656733175,
+          "probability_min": 0.11936873627599054
+        }
+      ],
+      "seed": 0,
+      "summary": {
+        "confidence_at_least_09": 7,
+        "correct": 17,
+        "mistaken_mean_confidence": 0.77366807723401,
+        "n": 32,
+        "predicted_ko": 9,
+        "probability_04_to_06": 7,
+        "probability_max": 0.861646050808708,
+        "probability_min": 0.009715227068037395
+      },
+      "versus_residual": {
+        "improved": [],
+        "worsened": []
+      }
+    },
+    {
+      "arm": "direct_visual",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.4733012318611145,
+              "ko_minus_wt_mean": 0.7920721769332886,
+              "mean": -2.869337320327759,
+              "wt_mean": -3.265373408794403
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.9969281852245331,
+              "ko_minus_wt_mean": 0.02661021053791046,
+              "mean": -1.0102332904934883,
+              "wt_mean": -1.0235383957624435
+            },
+            "visual_genotype_logit": {
+              "ko_mean": -1.4763730764389038,
+              "ko_minus_wt_mean": 0.7654618918895721,
+              "mean": -1.8591040223836899,
+              "wt_mean": -2.241834968328476
+            }
+          },
+          "confidence_at_least_09": 7,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.9084441669566217,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.15560653142076047,
+          "probability_min": 0.0066333284272428695
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 1.8743156492710114,
+              "ko_minus_wt_mean": -1.800313264131546,
+              "mean": 2.7744722813367844,
+              "wt_mean": 3.6746289134025574
+            },
+            "language_genotype_logit": {
+              "ko_mean": -1.0376296937465668,
+              "ko_minus_wt_mean": -0.0062978267669677734,
+              "mean": -1.0344807803630829,
+              "wt_mean": -1.031331866979599
+            },
+            "visual_genotype_logit": {
+              "ko_mean": 2.9119453132152557,
+              "ko_minus_wt_mean": -1.7940154671669006,
+              "mean": 3.808953046798706,
+              "wt_mean": 4.705960780382156
+            }
+          },
+          "confidence_at_least_09": 6,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.8786389919829709,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 2,
+          "probability_max": 0.999214169698507,
+          "probability_min": 0.039526974436540345
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.3506903052330017,
+              "ko_minus_wt_mean": 0.3375672876834869,
+              "mean": 0.13971075043082237,
+              "wt_mean": 0.013123017549514771
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.24764333168665567,
+              "ko_minus_wt_mean": 0.014887996514638263,
+              "mean": -0.2569483295083046,
+              "wt_mean": -0.26253132820129393
+            },
+            "visual_genotype_logit": {
+              "ko_mean": 0.5983336269855499,
+              "ko_minus_wt_mean": 0.32267927527427676,
+              "mean": 0.39665907993912697,
+              "wt_mean": 0.27565435171127317
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.6091099865701615,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 4,
+          "probability_max": 0.7507454516140001,
+          "probability_min": 0.19418900761509963
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.931140104929606,
+              "ko_minus_wt_mean": 1.777184184392293,
+              "mean": -4.041880220174789,
+              "wt_mean": -4.708324289321899
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.5417254368464152,
+              "ko_minus_wt_mean": 0.00988912185033164,
+              "mean": -0.5479061380028725,
+              "wt_mean": -0.5516145586967468
+            },
+            "visual_genotype_logit": {
+              "ko_mean": -2.389414628346761,
+              "ko_minus_wt_mean": 1.767294994990031,
+              "mean": -3.4939740002155304,
+              "wt_mean": -4.156709623336792
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.9484491519909571,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.0659211020456565,
+          "probability_min": 0.0033348982794511248
+        }
+      ],
+      "seed": 0,
+      "summary": {
+        "confidence_at_least_09": 21,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.8317974393746786,
+        "n": 32,
+        "predicted_ko": 10,
+        "probability_04_to_06": 6,
+        "probability_max": 0.999214169698507,
+        "probability_min": 0.0033348982794511248
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_WT_16"
+        ],
+        "worsened": [
+          "NaF_WT_13",
+          "NaF_WT_18"
+        ]
+      }
+    },
+    {
+      "arm": "genotype_only",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.8221258521080017,
+              "ko_minus_wt_mean": 0.7662830352783203,
+              "mean": -3.205267369747162,
+              "wt_mean": -3.588408887386322
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.9384357982023639,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.09966425684076045,
+          "probability_min": 0.006474685366344877
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -1.5353527069091797,
+              "ko_minus_wt_mean": -2.7240092158317566,
+              "mean": -0.1733480989933014,
+              "wt_mean": 1.188656508922577
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.9686701762126615,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 0,
+          "probability_max": 0.9987287752957581,
+          "probability_min": 7.883472438742835e-05
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.9071751783291498,
+              "ko_minus_wt_mean": 0.4189374546209971,
+              "mean": 0.6453392691910267,
+              "wt_mean": 0.48823772370815277
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.7257279301142252,
+          "n": 8,
+          "predicted_ko": 6,
+          "probability_04_to_06": 3,
+          "probability_max": 0.7881757021692567,
+          "probability_min": 0.43390781281283664
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -3.196112950642904,
+              "ko_minus_wt_mean": 0.9040909449259442,
+              "mean": -3.7611697912216187,
+              "wt_mean": -4.100203895568848
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.9528370325080213,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.06688743337626687,
+          "probability_min": 0.005355990421820126
+        }
+      ],
+      "seed": 0,
+      "summary": {
+        "confidence_at_least_09": 24,
+        "correct": 17,
+        "mistaken_mean_confidence": 0.9088525974493001,
+        "n": 32,
+        "predicted_ko": 11,
+        "probability_04_to_06": 3,
+        "probability_max": 0.9987287752957581,
+        "probability_min": 7.883472438742835e-05
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_KO_11",
+          "NaF_WT_16"
+        ],
+        "worsened": [
+          "NaF_WT_13",
+          "NaF_WT_18"
+        ]
+      }
+    },
+    {
+      "arm": "base",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.5010881572961807,
+              "ko_minus_wt_mean": 0.009717285633087158,
+              "mean": -0.5059468001127243,
+              "wt_mean": -0.5108054429292679
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.6227119926842792,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.38021696946817024,
+          "probability_min": 0.373119892146151
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.1603592187166214,
+              "ko_minus_wt_mean": -0.22424507047981024,
+              "mean": -0.04823668347671628,
+              "wt_mean": 0.06388585176318884
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.5796280396475703,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 7,
+          "probability_max": 0.5710102233331596,
+          "probability_min": 0.29992082633936995
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.2630622908473015,
+              "ko_minus_wt_mean": -0.011455275118350983,
+              "mean": -0.2559027438983321,
+              "wt_mean": -0.2516070157289505
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.5650393945358069,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 7,
+          "probability_max": 0.48282217598370275,
+          "probability_min": 0.3903278290099035
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.5779495338598887,
+              "ko_minus_wt_mean": -0.16180125872294104,
+              "mean": -0.47682374715805054,
+              "wt_mean": -0.41614827513694763
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.6157593175563969,
+          "n": 8,
+          "predicted_ko": 1,
+          "probability_04_to_06": 3,
+          "probability_max": 0.5463799358200395,
+          "probability_min": 0.29488349047948226
+        }
+      ],
+      "seed": 1,
+      "summary": {
+        "confidence_at_least_09": 0,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.5966964764254986,
+        "n": 32,
+        "predicted_ko": 6,
+        "probability_04_to_06": 17,
+        "probability_max": 0.5710102233331596,
+        "probability_min": 0.29488349047948226
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_WT_16"
+        ],
+        "worsened": [
+          "NaF_WT_03"
+        ]
+      }
+    },
+    {
+      "arm": "residual",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.5133037716150284,
+              "ko_minus_wt_mean": 0.07915901392698288,
+              "mean": -0.5528832785785198,
+              "wt_mean": -0.5924627855420113
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.6253044948950895,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 2,
+          "probability_max": 0.4117730155657978,
+          "probability_min": 0.3304250122006457
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.20237508416175842,
+              "ko_minus_wt_mean": -1.6341582760214806,
+              "mean": 1.0194542221724987,
+              "wt_mean": 1.836533360183239
+            }
+          },
+          "confidence_at_least_09": 4,
+          "correct": 2,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.8441594820295804,
+          "n": 8,
+          "predicted_ko": 6,
+          "probability_04_to_06": 1,
+          "probability_max": 0.9608080810002757,
+          "probability_min": 0.07622447482666943
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.29050661126772565,
+              "ko_minus_wt_mean": 0.07097719808419545,
+              "mean": -0.3348673600703478,
+              "wt_mean": -0.3614838093519211
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.5716354539474312,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 6,
+          "probability_max": 0.4597347511144046,
+          "probability_min": 0.36256736488171376
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -1.5032126506169636,
+              "ko_minus_wt_mean": -0.010359694560368782,
+              "mean": -1.4967378415167332,
+              "wt_mean": -1.4928529560565948
+            }
+          },
+          "confidence_at_least_09": 1,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.8155816677704447,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.3993073350659941,
+          "probability_min": 0.09051293004778
+        }
+      ],
+      "seed": 1,
+      "summary": {
+        "confidence_at_least_09": 5,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.7329891398069668,
+        "n": 32,
+        "predicted_ko": 6,
+        "probability_04_to_06": 9,
+        "probability_max": 0.9608080810002757,
+        "probability_min": 0.07622447482666943
+      },
+      "versus_residual": {
+        "improved": [],
+        "worsened": []
+      }
+    },
+    {
+      "arm": "direct_visual",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.57529279589653,
+              "ko_minus_wt_mean": 0.831093817949295,
+              "mean": -2.9908397048711777,
+              "wt_mean": -3.406386613845825
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.9675838351249695,
+              "ko_minus_wt_mean": -0.012355506420135498,
+              "mean": -0.9614060819149017,
+              "wt_mean": -0.955228328704834
+            },
+            "visual_genotype_logit": {
+              "ko_mean": -1.6077089607715607,
+              "ko_minus_wt_mean": 0.8434492349624634,
+              "mean": -2.0294335782527924,
+              "wt_mean": -2.451158195734024
+            }
+          },
+          "confidence_at_least_09": 7,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.9140269772169961,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.14578813607476365,
+          "probability_min": 0.0048635086393411095
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 2.0041751861572266,
+              "ko_minus_wt_mean": -1.8036113679409027,
+              "mean": 2.905980870127678,
+              "wt_mean": 3.8077865540981293
+            },
+            "language_genotype_logit": {
+              "ko_mean": -1.183033525943756,
+              "ko_minus_wt_mean": -0.04778340458869934,
+              "mean": -1.1591418236494064,
+              "wt_mean": -1.1352501213550568
+            },
+            "visual_genotype_logit": {
+              "ko_mean": 3.187208741903305,
+              "ko_minus_wt_mean": -1.7558278739452362,
+              "mean": 4.065122678875923,
+              "wt_mean": 4.943036615848541
+            }
+          },
+          "confidence_at_least_09": 6,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.8861010909203868,
+          "n": 8,
+          "predicted_ko": 7,
+          "probability_04_to_06": 2,
+          "probability_max": 0.9993556656298472,
+          "probability_min": 0.040365770433407944
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.26294833421707153,
+              "ko_minus_wt_mean": 0.3059126675128937,
+              "mean": 0.07175291702151299,
+              "wt_mean": -0.042964333295822145
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.296332319577535,
+              "ko_minus_wt_mean": -0.009135513504346215,
+              "mean": -0.2906226236373186,
+              "wt_mean": -0.28719680607318876
+            },
+            "visual_genotype_logit": {
+              "ko_mean": 0.5592806537946066,
+              "ko_minus_wt_mean": 0.31504818995793665,
+              "mean": 0.36237553507089615,
+              "wt_mean": 0.2442324638366699
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.6010324815566083,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 4,
+          "probability_max": 0.7081510089741734,
+          "probability_min": 0.19470470774685678
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.9179407755533853,
+              "ko_minus_wt_mean": 1.5456272919972736,
+              "mean": -3.8839578330516815,
+              "wt_mean": -4.463568067550659
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.6086470087369283,
+              "ko_minus_wt_mean": 0.0020908514658609656,
+              "mean": -0.6099537909030914,
+              "wt_mean": -0.6107378602027893
+            },
+            "visual_genotype_logit": {
+              "ko_mean": -2.309293746948242,
+              "ko_minus_wt_mean": 1.5435365676879882,
+              "mean": -3.274004101753235,
+              "wt_mean": -3.8528303146362304
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.9482806367999332,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.061566938017264185,
+          "probability_min": 0.004572223284967032
+        }
+      ],
+      "seed": 1,
+      "summary": {
+        "confidence_at_least_09": 21,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.8334740750060095,
+        "n": 32,
+        "predicted_ko": 12,
+        "probability_04_to_06": 6,
+        "probability_max": 0.9993556656298472,
+        "probability_min": 0.004572223284967032
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_KO_01",
+          "NaF_KO_03",
+          "NaF_KO_14"
+        ],
+        "worsened": [
+          "NaF_WT_04",
+          "NaF_WT_13",
+          "NaF_WT_18"
+        ]
+      }
+    },
+    {
+      "arm": "genotype_only",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -4.965500473976135,
+              "ko_minus_wt_mean": 1.293418288230896,
+              "mean": -5.612209618091583,
+              "wt_mean": -6.258918762207031
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.9874096240002459,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.02689230020484717,
+          "probability_min": 0.00011215011963457219
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.1280379295349121,
+              "ko_minus_wt_mean": -3.048383206129074,
+              "mean": 1.396153673529625,
+              "wt_mean": 2.920345276594162
+            }
+          },
+          "confidence_at_least_09": 7,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.976780236553061,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 0,
+          "probability_max": 0.9990010728561677,
+          "probability_min": 0.0007104018711223583
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 1.1654157638549805,
+              "ko_minus_wt_mean": 0.7736948668956757,
+              "mean": 0.6818564720451832,
+              "wt_mean": 0.3917208969593048
+            }
+          },
+          "confidence_at_least_09": 1,
+          "correct": 4,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.7932300347477362,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 0,
+          "probability_max": 0.9204627156780274,
+          "probability_min": 0.12005870778177145
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.78618053595225,
+              "ko_minus_wt_mean": -0.2604232231775918,
+              "mean": -2.623416021466255,
+              "wt_mean": -2.525757312774658
+            }
+          },
+          "confidence_at_least_09": 5,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.9318389372323964,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.22404108707594023,
+          "probability_min": 0.025423793138623224
+        }
+      ],
+      "seed": 1,
+      "summary": {
+        "confidence_at_least_09": 21,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.9251235393409014,
+        "n": 32,
+        "predicted_ko": 10,
+        "probability_04_to_06": 0,
+        "probability_max": 0.9990010728561677,
+        "probability_min": 0.00011215011963457219
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_KO_01",
+          "NaF_KO_14",
+          "NaF_WT_16"
+        ],
+        "worsened": [
+          "NaF_WT_04",
+          "NaF_WT_13",
+          "NaF_WT_18"
+        ]
+      }
+    },
+    {
+      "arm": "base",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.5547466576099396,
+              "ko_minus_wt_mean": 0.002973511815071106,
+              "mean": -0.5562334135174751,
+              "wt_mean": -0.5577201694250107
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.6352346517209569,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.36709695095759864,
+          "probability_min": 0.36258631999733004
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.17991045117378235,
+              "ko_minus_wt_mean": -0.8535785544663668,
+              "mean": 0.6066997284069657,
+              "wt_mean": 1.0334890056401491
+            }
+          },
+          "confidence_at_least_09": 1,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.7855074413326756,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 1,
+          "probability_max": 0.9083167468461919,
+          "probability_min": 0.1628059410680947
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.34473084410031635,
+              "ko_minus_wt_mean": -0.036650635798772147,
+              "mean": -0.32182419672608376,
+              "wt_mean": -0.3080802083015442
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.5850798829010759,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 5,
+          "probability_max": 0.4631997406056678,
+          "probability_min": 0.391440512404333
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.6339434583981832,
+              "ko_minus_wt_mean": -0.1091271956761678,
+              "mean": -0.5657389611005783,
+              "wt_mean": -0.5248162627220154
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.6314175307997356,
+          "n": 8,
+          "predicted_ko": 1,
+          "probability_04_to_06": 2,
+          "probability_max": 0.5668803823400083,
+          "probability_min": 0.2537960720858989
+        }
+      ],
+      "seed": 2,
+      "summary": {
+        "confidence_at_least_09": 1,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.671836599090586,
+        "n": 32,
+        "predicted_ko": 6,
+        "probability_04_to_06": 8,
+        "probability_max": 0.9083167468461919,
+        "probability_min": 0.1628059410680947
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_WT_04"
+        ],
+        "worsened": [
+          "NaF_KO_14",
+          "NaF_WT_03"
+        ]
+      }
+    },
+    {
+      "arm": "residual",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -1.3412414491176605,
+              "ko_minus_wt_mean": 0.3730579912662506,
+              "mean": -1.5277704447507858,
+              "wt_mean": -1.7142994403839111
+            }
+          },
+          "confidence_at_least_09": 1,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.7905414885301079,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.24737823529251599,
+          "probability_min": 0.09972092143274494
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.5664808750152588,
+              "ko_minus_wt_mean": -2.2205253541469574,
+              "mean": 0.5437818020582199,
+              "wt_mean": 1.6540444791316986
+            }
+          },
+          "confidence_at_least_09": 7,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.94496923386638,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 0,
+          "probability_max": 0.9908410720650174,
+          "probability_min": 0.004175098780623129
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.05471149211128553,
+              "ko_minus_wt_mean": 0.06357257614533107,
+              "mean": -0.09444435220211744,
+              "wt_mean": -0.1182840682566166
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.5279367999996968,
+          "n": 8,
+          "predicted_ko": 2,
+          "probability_04_to_06": 8,
+          "probability_max": 0.5223645530927734,
+          "probability_min": 0.43151963040902697
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -1.17183252175649,
+              "ko_minus_wt_mean": -0.1451710363229115,
+              "mean": -1.0811006240546703,
+              "wt_mean": -1.0266614854335785
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.7623805887877217,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 1,
+          "probability_max": 0.40658132206367337,
+          "probability_min": 0.17545848479485648
+        }
+      ],
+      "seed": 2,
+      "summary": {
+        "confidence_at_least_09": 8,
+        "correct": 17,
+        "mistaken_mean_confidence": 0.7838642859876391,
+        "n": 32,
+        "predicted_ko": 7,
+        "probability_04_to_06": 9,
+        "probability_max": 0.9908410720650174,
+        "probability_min": 0.004175098780623129
+      },
+      "versus_residual": {
+        "improved": [],
+        "worsened": []
+      }
+    },
+    {
+      "arm": "direct_visual",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.296150803565979,
+              "ko_minus_wt_mean": 0.8657628893852234,
+              "mean": -2.7290322482585907,
+              "wt_mean": -3.1619136929512024
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.7750037014484406,
+              "ko_minus_wt_mean": 0.022633612155914307,
+              "mean": -0.7863205075263977,
+              "wt_mean": -0.7976373136043549
+            },
+            "visual_genotype_logit": {
+              "ko_mean": -1.5211470872163773,
+              "ko_minus_wt_mean": 0.8431292623281479,
+              "mean": -1.9427117183804512,
+              "wt_mean": -2.364276349544525
+            }
+          },
+          "confidence_at_least_09": 5,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.8910521057140288,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.17597941442384504,
+          "probability_min": 0.006690980859966484
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 2.140395924448967,
+              "ko_minus_wt_mean": -1.7766573578119278,
+              "mean": 3.028724603354931,
+              "wt_mean": 3.9170532822608948
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.9486567825078964,
+              "ko_minus_wt_mean": -0.057745277881622314,
+              "mean": -0.9197841435670853,
+              "wt_mean": -0.8909115046262741
+            },
+            "visual_genotype_logit": {
+              "ko_mean": 3.0890526175498962,
+              "ko_minus_wt_mean": -1.7189121842384338,
+              "mean": 3.948508709669113,
+              "wt_mean": 4.80796480178833
+            }
+          },
+          "confidence_at_least_09": 6,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.8933015141903575,
+          "n": 8,
+          "predicted_ko": 7,
+          "probability_04_to_06": 2,
+          "probability_max": 0.999404211752585,
+          "probability_min": 0.04312660754771179
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.2894768218199412,
+              "ko_minus_wt_mean": 0.2865581850210826,
+              "mean": 0.1103779561817646,
+              "wt_mean": 0.0029186367988586425
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.29867082337538403,
+              "ko_minus_wt_mean": -0.012292111913363157,
+              "mean": -0.29098825342953205,
+              "wt_mean": -0.2863787114620209
+            },
+            "visual_genotype_logit": {
+              "ko_mean": 0.5881476501623789,
+              "ko_minus_wt_mean": 0.2988502959410349,
+              "mean": 0.4013662151992321,
+              "wt_mean": 0.289297354221344
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 4,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.6163680228240631,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 4,
+          "probability_max": 0.7233029677045447,
+          "probability_min": 0.19620478789011803
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -2.6960439682006836,
+              "ko_minus_wt_mean": 1.5656330585479736,
+              "mean": -3.674564629793167,
+              "wt_mean": -4.261677026748657
+            },
+            "language_genotype_logit": {
+              "ko_mean": -0.5380663971106211,
+              "ko_minus_wt_mean": 0.04451935489972436,
+              "mean": -0.5658909939229488,
+              "wt_mean": -0.5825857520103455
+            },
+            "visual_genotype_logit": {
+              "ko_mean": -2.15797758102417,
+              "ko_minus_wt_mean": 1.5211136817932127,
+              "mean": -3.108673632144928,
+              "wt_mean": -3.6790912628173826
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.936120693279842,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.07705676938125133,
+          "probability_min": 0.005633910263226921
+        }
+      ],
+      "seed": 2,
+      "summary": {
+        "confidence_at_least_09": 19,
+        "correct": 16,
+        "mistaken_mean_confidence": 0.83153438530898,
+        "n": 32,
+        "predicted_ko": 12,
+        "probability_04_to_06": 6,
+        "probability_max": 0.999404211752585,
+        "probability_min": 0.005633910263226921
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_KO_01",
+          "NaF_KO_03"
+        ],
+        "worsened": [
+          "NaF_WT_13",
+          "NaF_WT_16",
+          "NaF_WT_18"
+        ]
+      }
+    },
+    {
+      "arm": "genotype_only",
+      "folds": [
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -5.138555526733398,
+              "ko_minus_wt_mean": 0.6893236041069031,
+              "mean": -5.48321732878685,
+              "wt_mean": -5.8278791308403015
+            }
+          },
+          "confidence_at_least_09": 8,
+          "correct": 4,
+          "fold": "fold_00",
+          "mistaken_mean_confidence": 0.9891810913372802,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.022019558342041834,
+          "probability_min": 8.080034147842107e-05
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -0.12927842140197754,
+              "ko_minus_wt_mean": -2.500825375318527,
+              "mean": 1.121134266257286,
+              "wt_mean": 2.3715469539165497
+            }
+          },
+          "confidence_at_least_09": 7,
+          "correct": 3,
+          "fold": "fold_01",
+          "mistaken_mean_confidence": 0.9600175223695289,
+          "n": 8,
+          "predicted_ko": 5,
+          "probability_04_to_06": 0,
+          "probability_max": 0.9895528042261753,
+          "probability_min": 0.011116989805453519
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": 0.07700370500485103,
+              "ko_minus_wt_mean": 0.10277701417605083,
+              "mean": 0.01276807114481926,
+              "wt_mean": -0.0257733091711998
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_02",
+          "mistaken_mean_confidence": 0.5219773265679697,
+          "n": 8,
+          "predicted_ko": 4,
+          "probability_04_to_06": 8,
+          "probability_max": 0.5398525378396825,
+          "probability_min": 0.4544108285617656
+        },
+        {
+          "components": {
+            "genotype_logit": {
+              "ko_mean": -1.4175564845403035,
+              "ko_minus_wt_mean": 0.0008380095163982304,
+              "mean": -1.4180802404880524,
+              "wt_mean": -1.4183944940567017
+            }
+          },
+          "confidence_at_least_09": 0,
+          "correct": 5,
+          "fold": "fold_03",
+          "mistaken_mean_confidence": 0.8040778488198728,
+          "n": 8,
+          "predicted_ko": 0,
+          "probability_04_to_06": 0,
+          "probability_max": 0.32930156394785187,
+          "probability_min": 0.10512410978889676
+        }
+      ],
+      "seed": 2,
+      "summary": {
+        "confidence_at_least_09": 15,
+        "correct": 17,
+        "mistaken_mean_confidence": 0.8489985002240195,
+        "n": 32,
+        "predicted_ko": 9,
+        "probability_04_to_06": 8,
+        "probability_max": 0.9895528042261753,
+        "probability_min": 8.080034147842107e-05
+      },
+      "versus_residual": {
+        "improved": [
+          "NaF_KO_01"
+        ],
+        "worsened": [
+          "NaF_WT_13"
+        ]
+      }
+    }
+  ],
+  "source_sha256": "4f0d1e75e92a89d4ac999ba56f8b7c92c2f58e233ce85e82c4f46363c409b365",
+  "status": "complete"
+}

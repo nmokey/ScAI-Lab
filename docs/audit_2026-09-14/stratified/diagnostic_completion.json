@@ -1,0 +1,17 @@
+{
+  "all_question_context_models": 4,
+  "all_question_context_predictions": 96,
+  "exact_genotype_reload_models": 24,
+  "exact_genotype_reload_predictions": 192,
+  "files": {
+    "GENOTYPE_MECHANISM.md": "bab0041672233216ca569087645e2cfcb1e9c554c72f01f971b016d6060400db",
+    "RESULTS.md": "02b7b78e4ea39e9773ddfcc8f32ace2d590270ab7f8e3d64fb1ba89c2ea00e94",
+    "genotype_prompt_context.json": "2fcf7aa17622be6e78e6cd4763aa009cc8a729ba1f5add40ad4790c97329dff0",
+    "genotype_separation.json": "2894c2942047f1aef728d5ec1a1c02f567735dbf68be8e1d3df670d43fbc0315",
+    "genotype_separation.pdf": "0c0ae1735ec51d36efb636bb117d6dc21b2855294b287a74f677d774c141fefd",
+    "genotype_separation.png": "3e531dc4612efbfe7c988009663a0a98be1c024df15bfe0c240ab61992044384",
+    "independent_metrics.json": "2f4a32a262b93468d6463e493dc913168301c3ae1f2400768ba42fafcc1e8d40",
+    "paired_results.json": "d90a11709c4dd0c9ebc2164c2db4880d8defea22d14869323eff4cfb0576c719"
+  },
+  "status": "complete"
+}

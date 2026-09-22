@@ -1,0 +1,66 @@
+params: {'exp': {'output_dir': '/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead'}, 'data': {'train_dataset': 'mouse_traj_vqa', 'inf_dataset': 'mouse_traj_vqa', 'tokenizer_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'base_dir': '', 'img_dir': '', 'inf_img_dir': '', 'data_path': '/data1/Processed_NIfTI_Test/embeddings/vlm/mouse_train_vqa_traj.json', 'inf_data_path': '/data1/Processed_NIfTI_Test/embeddings/vlm/mouse_val_vqa_traj.json', 'data_seed': 0, 'test_size': 0.2, 'height': 224, 'width': 224, 'num_channels': 3, 'img_tokens': 4, 'predicted_emb_dir': '/data1/Processed_NIfTI_Test/embeddings/longitudinal_nogeno_f22/predicted_embeddings', 'seq_length': 150, 'prompt_type': 'standard'}, 'train': {'save_model_name': 'mouse_vlm_mdl', 'model_name': None, 'vision_model_name': 'None', 'freeze_vision_model': True, 'freeze_llm_model': False, 'llm_model_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'pretrained': False, 'load_projection_matrix': False, 'use_quantization': True, 'r': 4, 'lora_alpha': 16, 'target_modules': ['q_proj', 'v_proj'], 'lora_dropout': 0.1, 'bias': 'none', 'task_type': 'CAUSAL_LM', 'per_device_train_batch_size': 2, 'per_device_eval_batch_size': 2, 'gradient_accumulation_steps': 4, 'num_train_epochs': 20, 'learning_rate': 0.0002, 'fp16': False, 'bf16': True, 'optim': 'adamw_torch_fused', 'lr_scheduler_type': 'cosine', 'warmup_ratio': 0.05, 'save_total_limit': 1, 'logging_steps': 1, 'num_proj_layers': 1, 'label_names': ['labels', 'tbr_targets', 'genotype_label'], 'save_strategy': 'epoch', 'evaluation_strategy': 'epoch', 'eval_steps': None, 'save_steps': None, 'load_best_model_at_end': False, 'pool_at': 'question_eos', 'add_multitask': True, 'add_multitask_unknown': False, 'multitask_wt': 5.0, 'evaluate_start': False, 'resume_from_checkpoint': False, 'report_to': 'tensorboard'}, 'inf': {'model_name': '/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead/mouse_vlm_mdl', 'llm_model_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'load_projection_matrix': False, 'use_quantization': True, 'r': 4, 'lora_alpha': 16, 'target_modules': ['q_proj', 'v_proj'], 'lora_dropout': 0.1, 'bias': 'none', 'task_type': 'CAUSAL_LM', 'beg_prompt': '', 'mid_prompt': '', 'end_prompt': '', 'replace_prompt': None, 'max_new_tokens': 100, 'decoding_kwargs': {'num_beams': 1, 'do_sample': False}, 'include_img': True, 'save_file': 'vqa.json', 'results_file': 'val.json', 'train_gt_file': '/data1/Processed_NIfTI_Test/embeddings/vlm/mouse_train_vqa_traj.json'}}
+[!] eval_dataset == inference set (the held-out subject). Fine while load_best_model_at_end is false, but eval_loss is a TEST-set curve. Use run_mouse_vlm_loso.py --inner-val for an honest validation curve.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [02:53<08:41, 173.92s/it]Loading checkpoint shards:  50%|█████     | 2/4 [05:34<05:31, 165.93s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [07:29<02:22, 142.91s/it]Loading checkpoint shards: 100%|██████████| 4/4 [07:39<00:00, 90.39s/it] Loading checkpoint shards: 100%|██████████| 4/4 [07:39<00:00, 114.92s/it]
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/ryab/ScAI-Lab/scripts/validate_vlm_quantized_checkpoint.py:56: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  loss.backward();losses.append(float(loss))
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/peft/utils/save_and_load.py:295: UserWarning: Could not find a config file in meta-llama/Meta-Llama-3.1-8B-Instruct - will assume that the vocabulary was not modified.
+  warnings.warn(
+VisionLanguageModel: vision_dim=768, llm_dim=4096, img_tokens=4, multitask=True
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.28s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:08<00:08,  4.28s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:12<00:04,  4.30s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:13<00:00,  3.03s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:13<00:00,  3.49s/it]
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:590: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.6` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:595: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.9` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+Setting `pad_token_id` to `eos_token_id`:None for open-end generation.
+VisionLanguageModel: vision_dim=768, llm_dim=4096, img_tokens=4, multitask=True
+VisionLanguageModel: vision_dim=768, llm_dim=4096, img_tokens=4, multitask=True
+VisionLanguageModel: vision_dim=768, llm_dim=4096, img_tokens=4, multitask=True
+{
+  "torch": "2.10.0+cu128",
+  "transformers": "4.46.3",
+  "peft": "0.18.1",
+  "gpu": "NVIDIA L40S",
+  "training_updates": 2,
+  "losses": [
+    7.950438976287842,
+    14.540005683898926
+  ],
+  "gradient_max_norms": {
+    "language_projection": 582.093017578125,
+    "genotype_head": 96.82306671142578,
+    "tbr_regression_head": 559.6798706054688,
+    "lora_A": 7.8752593994140625,
+    "lora_B": 107.04793548583984
+  },
+  "adapter_tensors": 128,
+  "nonzero_B": 64,
+  "repeated_eval_max_errors": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "reload_max_errors": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "answer_perturbation_head_max_errors": [
+    0.0,
+    0.0
+  ],
+  "repaired_checkpoints": [
+    {
+      "checkpoint": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/repaired_checkpoints_20260914/mouse_vlm_nogeno_long_ep20_f20/fold_11_NaF_KO_16/checkpoint-112",
+      "strict_reload": "passed",
+      "pool_at": "answer_eos"
+    },
+    {
+      "checkpoint": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/repaired_checkpoints_20260914/mouse_vlm_nogeno_long_ep20_qeos_seed0/fold_08_NaF_KO_13/checkpoint-67",
+      "strict_reload": "passed",
+      "pool_at": "question_eos"
+    }
+  ],
+  "status": "passed"
+}

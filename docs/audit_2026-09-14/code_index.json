@@ -1,0 +1,1728 @@
+{
+  "created_utc": "2026-09-14T08:07:54.865026+00:00",
+  "git_head": "1ae8b84f41906ed822184ae656fc419f039ae987",
+  "files": [
+    {
+      "path": "docs/qa_2026-09-13/air_stats.py",
+      "lines": 38,
+      "sha256": "142149d4f424ffaac3286c2e1750926706911460b03e181e3c09b0e27eac2711",
+      "summary": "Is Week-12-vs-Week-20 separation anatomy (growth) or acquisition (drift)?",
+      "symbols": [
+        {
+          "name": "logo",
+          "line": 26
+        }
+      ]
+    },
+    {
+      "path": "docs/qa_2026-09-13/headers.py",
+      "lines": 12,
+      "sha256": "85fcdea155b0d486b3b3798962070374198fcec5e48bd1c4b5ffcaf217515049",
+      "summary": "Compare geometry of every session NIfTI, and raw DICOM orientation tags for the WT_03-06 group.",
+      "symbols": []
+    },
+    {
+      "path": "docs/qa_2026-09-13/render_crops.py",
+      "lines": 15,
+      "sha256": "e815b30f9b86701d52ee1603535a6763c26932bcb38af579938fd7b4f2c905e0",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "docs/qa_2026-09-13/render_dropped.py",
+      "lines": 20,
+      "sha256": "ef151a85a1e2019d63c03fd9d795e8ffe597598d4773cb094cdf94702476d41c",
+      "summary": "Render every quadrant of m54406 and m54520 from the session volume, labelled with what the old code wrote there.",
+      "symbols": []
+    },
+    {
+      "path": "docs/qa_2026-09-13/render_sessions.py",
+      "lines": 34,
+      "sha256": "dbec0b5ad348691f9818164dc8bca3013f55f79598855592a5428a35daa6bf5f",
+      "summary": "Render full-bed CT with the segmentation's quadrant divider and the manifest's mouse labels.",
+      "symbols": []
+    },
+    {
+      "path": "docs/qa_2026-09-13/skel_match.py",
+      "lines": 46,
+      "sha256": "0a760053c51dd92eef7cd05ef287b9b9530ffe1e6679711b121eb556341c8669",
+      "summary": "Can skeletal shape identify an individual mouse across weeks?",
+      "symbols": [
+        {
+          "name": "bone_mask",
+          "line": 13
+        },
+        {
+          "name": "dice_after_rigid",
+          "line": 22
+        }
+      ]
+    },
+    {
+      "path": "docs/qa_2026-09-13/skull_match.py",
+      "lines": 44,
+      "sha256": "c64ca5fa02b0ca172b261331f7289505e09040a014aeabc2bc07353aa5a3ffec",
+      "summary": "Skull-only rigid registration: pose-invariant, individually shaped. Same group as before.",
+      "symbols": [
+        {
+          "name": "skull",
+          "line": 6
+        },
+        {
+          "name": "dice_rigid",
+          "line": 22
+        }
+      ]
+    },
+    {
+      "path": "scripts/aggregate_seeds.py",
+      "lines": 117,
+      "sha256": "b83d487a936e29cf0657ab2cf5cae3f0b35d2773a32c0afba31ce50926e3cc25",
+      "summary": "Aggregate VLM LOSO results across seeds -> mean \u00b1 SD per metric (F1).",
+      "symbols": [
+        {
+          "name": "rescore",
+          "line": 35
+        },
+        {
+          "name": "main",
+          "line": 45
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_checkpoint_roundtrip.py",
+      "lines": 96,
+      "sha256": "389f1f1fd391073133af2d71bf5672e07c14c23e74435d37aec12bacd6095188",
+      "summary": "CPU-only, offline check of the production VLM checkpoint round trip.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 23
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_group_permutation.py",
+      "lines": 38,
+      "sha256": "655b005c350908121321ed9308d5498daf07b4356a0643abf4928a4541ea49a1",
+      "summary": "Exact group-label permutation with full probe refits on current RAD-DINO data.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 16
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_merlin_cache.py",
+      "lines": 28,
+      "sha256": "fc66b24bf211c954c0256f5f32338633596c842202df02cb8f0a0da5ef890221",
+      "summary": "Compare one corrected crop's current preprocessing to its path-keyed cache.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 14
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_research_artifacts.py",
+      "lines": 163,
+      "sha256": "a2cb54f1e4107f96180a2d538569e96fa0ed657b92867050cca92dc88e154cc1",
+      "summary": "Read-only audit of current research artifacts; CPU, no model downloads.",
+      "symbols": [
+        {
+          "name": "regression",
+          "line": 28
+        },
+        {
+          "name": "cosine",
+          "line": 33
+        },
+        {
+          "name": "main",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "path": "scripts/build_nifti_dataset.py",
+      "lines": 859,
+      "sha256": "d6b5be017cc7543b086cbd26b1a5ffe674c9d8eaa4dbc012aad4d192e7f63b74",
+      "summary": "build_nifti_dataset.py \u2014 Convert raw DICOM sessions to a per-mouse NIfTI dataset.",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 39
+        },
+        {
+          "name": "init_config",
+          "line": 49
+        },
+        {
+          "name": "load_quadrant_overrides",
+          "line": 73
+        },
+        {
+          "name": "load_manifest",
+          "line": 91
+        },
+        {
+          "name": "get_base_id",
+          "line": 107
+        },
+        {
+          "name": "get_suffix_num",
+          "line": 115
+        },
+        {
+          "name": "consolidate_sessions",
+          "line": 123
+        },
+        {
+          "name": "is_size_match",
+          "line": 189
+        },
+        {
+          "name": "find_dicom_dir",
+          "line": 196
+        },
+        {
+          "name": "collect_dicom_files",
+          "line": 238
+        },
+        {
+          "name": "sort_slices_by_z",
+          "line": 248
+        },
+        {
+          "name": "read_nifti_from_dicoms",
+          "line": 264
+        },
+        {
+          "name": "stage1_convert_session",
+          "line": 284
+        },
+        {
+          "name": "segment_animals",
+          "line": 368
+        },
+        {
+          "name": "crop_to_physical_bbox",
+          "line": 535
+        },
+        {
+          "name": "stage3_crop_and_write",
+          "line": 580
+        },
+        {
+          "name": "_build_manifest_row",
+          "line": 694
+        },
+        {
+          "name": "write_mouse_manifest",
+          "line": 728
+        },
+        {
+          "name": "run_pipeline",
+          "line": 749
+        },
+        {
+          "name": "main",
+          "line": 828
+        }
+      ]
+    },
+    {
+      "path": "scripts/create_mouse_traj_dataset.py",
+      "lines": 413,
+      "sha256": "231d195b5b777656a647776e5937a6cdef838f3d6f16c38dac1de536f3d642b9",
+      "summary": "create_mouse_traj_dataset.py",
+      "symbols": [
+        {
+          "name": "parse_args",
+          "line": 66
+        },
+        {
+          "name": "load_embeddings",
+          "line": 83
+        },
+        {
+          "name": "load_tbr",
+          "line": 98
+        },
+        {
+          "name": "export_safetensors",
+          "line": 112
+        },
+        {
+          "name": "_tbr_str",
+          "line": 142
+        },
+        {
+          "name": "_genotype",
+          "line": 146
+        },
+        {
+          "name": "_max_delta_weeks",
+          "line": 151
+        },
+        {
+          "name": "_tbr_trajectory_str",
+          "line": 156
+        },
+        {
+          "name": "format_tbr_qa",
+          "line": 170
+        },
+        {
+          "name": "format_genotype_qa",
+          "line": 188
+        },
+        {
+          "name": "format_combined_qa",
+          "line": 198
+        },
+        {
+          "name": "build_record",
+          "line": 224
+        },
+        {
+          "name": "get_records_for_subject",
+          "line": 260
+        },
+        {
+          "name": "make_random_splits",
+          "line": 305
+        },
+        {
+          "name": "split_records",
+          "line": 328
+        },
+        {
+          "name": "main",
+          "line": 340
+        }
+      ]
+    },
+    {
+      "path": "scripts/dataset/create_brats_3d_vqa_dataset_from_openai.py",
+      "lines": 509,
+      "sha256": "941f53e7a5a28f8a4b27bfdd0aac5207da1a312a3a9ccfa9f756e6ca6f69a674",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "validate_vqa_lists",
+          "line": 36
+        },
+        {
+          "name": "map_df_cols_to_combo",
+          "line": 170
+        },
+        {
+          "name": "map_df_cols_to_combo_and_unknown",
+          "line": 180
+        },
+        {
+          "name": "validate_question_answer_combo",
+          "line": 190
+        },
+        {
+          "name": "map_df_cols_to_unknown",
+          "line": 204
+        },
+        {
+          "name": "pick_question_from_df",
+          "line": 212
+        },
+        {
+          "name": "pick_num_question_types_combos_and_rows",
+          "line": 236
+        },
+        {
+          "name": "organize_vqa_data_by_seg_id_and_label_and_type",
+          "line": 282
+        },
+        {
+          "name": "unorganize_vqa_data_by_seg_id_and_label_and_type",
+          "line": 312
+        },
+        {
+          "name": "generate_updated_vqa_data",
+          "line": 321
+        }
+      ]
+    },
+    {
+      "path": "scripts/dataset/create_mouse_vqa_dataset_from_openai.py",
+      "lines": 224,
+      "sha256": "425c43366d81c875bc8380229bb2a8f9d851e6fa94c2a843ee28adb403306451",
+      "summary": "create_mouse_vqa_dataset_from_openai.py",
+      "symbols": [
+        {
+          "name": "_parse_pairs",
+          "line": 92
+        },
+        {
+          "name": "load_paraphrase_pools",
+          "line": 106
+        },
+        {
+          "name": "fill_template",
+          "line": 133
+        },
+        {
+          "name": "augment_record",
+          "line": 140
+        },
+        {
+          "name": "augment_records",
+          "line": 166
+        },
+        {
+          "name": "parse_args",
+          "line": 175
+        },
+        {
+          "name": "main",
+          "line": 187
+        }
+      ]
+    },
+    {
+      "path": "scripts/eval_stats.py",
+      "lines": 318,
+      "sha256": "33fa51ab9242e68d2503504e90eddb9f64c11159100b2bb217a925a39cb8fa75",
+      "summary": "Shared statistics and metadata helpers for the evaluation scripts.",
+      "symbols": [
+        {
+          "name": "load_session_map",
+          "line": 28
+        },
+        {
+          "name": "join_session_ids",
+          "line": 40
+        },
+        {
+          "name": "join_mouse_group_ids",
+          "line": 60
+        },
+        {
+          "name": "default_manifest_path",
+          "line": 107
+        },
+        {
+          "name": "_safe_auc",
+          "line": 128
+        },
+        {
+          "name": "bootstrap_auc_ci",
+          "line": 135
+        },
+        {
+          "name": "_pure_group_labels",
+          "line": 159
+        },
+        {
+          "name": "_n_exact_arrangements",
+          "line": 173
+        },
+        {
+          "name": "_exact_pure_arrangements",
+          "line": 179
+        },
+        {
+          "name": "_permute_labels",
+          "line": 196
+        },
+        {
+          "name": "permutation_auc_p",
+          "line": 222
+        },
+        {
+          "name": "permutation_refit_p",
+          "line": 272
+        }
+      ]
+    },
+    {
+      "path": "scripts/evaluate_embeddings.py",
+      "lines": 974,
+      "sha256": "9ca006926cd0145baaebb97404dec3576f7c9f08f88bc894bf9ea9d04aef3e27",
+      "summary": "evaluate_embeddings.py",
+      "symbols": [
+        {
+          "name": "_fmt",
+          "line": 98
+        },
+        {
+          "name": "load_embeddings",
+          "line": 114
+        },
+        {
+          "name": "_scatter_2d",
+          "line": 133
+        },
+        {
+          "name": "run_t1a_plots",
+          "line": 167
+        },
+        {
+          "name": "run_t1b_cluster_alignment",
+          "line": 201
+        },
+        {
+          "name": "run_t1c_silhouette",
+          "line": 221
+        },
+        {
+          "name": "run_t1d_subject_consistency",
+          "line": 237
+        },
+        {
+          "name": "_loso_logistic",
+          "line": 268
+        },
+        {
+          "name": "_binary_probe_with_uncertainty",
+          "line": 318
+        },
+        {
+          "name": "run_t2a_week_classification",
+          "line": 371
+        },
+        {
+          "name": "run_t2b_early_vs_late",
+          "line": 396
+        },
+        {
+          "name": "run_t2c_wt_vs_ko",
+          "line": 418
+        },
+        {
+          "name": "run_t2d_naf_vs_fdg",
+          "line": 438
+        },
+        {
+          "name": "run_t2e_staging",
+          "line": 460
+        },
+        {
+          "name": "run_conditioned_analysis",
+          "line": 485
+        },
+        {
+          "name": "run_t3a_temporal_ordering",
+          "line": 542
+        },
+        {
+          "name": "run_t3b_subject_retrieval",
+          "line": 607
+        },
+        {
+          "name": "_ap_at_k",
+          "line": 637
+        },
+        {
+          "name": "run_t3c_week_retrieval",
+          "line": 647
+        },
+        {
+          "name": "run_t4_longitudinal",
+          "line": 673
+        },
+        {
+          "name": "save_metrics",
+          "line": 776
+        },
+        {
+          "name": "save_report",
+          "line": 786
+        },
+        {
+          "name": "main",
+          "line": 867
+        }
+      ]
+    },
+    {
+      "path": "scripts/evaluate_encoder_vs_vlm.py",
+      "lines": 379,
+      "sha256": "f76284755b66687ff16e1ded91c1e4bcecd0262f9730e5807fa7ebdf5196b281",
+      "summary": "evaluate_encoder_vs_vlm.py",
+      "symbols": [
+        {
+          "name": "pearson",
+          "line": 61
+        },
+        {
+          "name": "r2",
+          "line": 71
+        },
+        {
+          "name": "tbr_slot_metrics",
+          "line": 81
+        },
+        {
+          "name": "load_raddino",
+          "line": 111
+        },
+        {
+          "name": "load_tbr",
+          "line": 124
+        },
+        {
+          "name": "load_predicted",
+          "line": 139
+        },
+        {
+          "name": "get_vlm_subjects",
+          "line": 149
+        },
+        {
+          "name": "build_ts0_features",
+          "line": 160
+        },
+        {
+          "name": "build_real_4token_features",
+          "line": 172
+        },
+        {
+          "name": "build_predicted_4token_features",
+          "line": 189
+        },
+        {
+          "name": "loso_genotype",
+          "line": 216
+        },
+        {
+          "name": "loso_tbr",
+          "line": 239
+        },
+        {
+          "name": "main",
+          "line": 294
+        }
+      ]
+    },
+    {
+      "path": "scripts/extract_tbr_features.py",
+      "lines": 693,
+      "sha256": "4e5be72b6735c8d599c5cb6a37b055bb703acc2239655c5cae226e11b8f102db",
+      "summary": "extract_tbr_features.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 87
+        },
+        {
+          "name": "parse_args",
+          "line": 95
+        },
+        {
+          "name": "tbr_strategy_1",
+          "line": 119
+        },
+        {
+          "name": "tbr_strategy_2",
+          "line": 134
+        },
+        {
+          "name": "tbr_strategy_3",
+          "line": 158
+        },
+        {
+          "name": "extract_all_features",
+          "line": 280
+        },
+        {
+          "name": "eval_ko_vs_wt_separation",
+          "line": 341
+        },
+        {
+          "name": "eval_longitudinal_trend",
+          "line": 367
+        },
+        {
+          "name": "eval_embedding_correlation",
+          "line": 395
+        },
+        {
+          "name": "eval_embedding_prediction",
+          "line": 443
+        },
+        {
+          "name": "plot_tbr_trajectories",
+          "line": 502
+        },
+        {
+          "name": "plot_embedding_vs_tbr",
+          "line": 548
+        },
+        {
+          "name": "plot_prediction_scatter",
+          "line": 577
+        },
+        {
+          "name": "main",
+          "line": 598
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_colipri_embeddings.py",
+      "lines": 187,
+      "sha256": "2dc91ed6de19a00ef38764cc8c52e19a67511758d3e2b32ddb4083b35b3e7434",
+      "summary": "get_colipri_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 42
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 53
+        },
+        {
+          "name": "extract_embedding",
+          "line": 69
+        },
+        {
+          "name": "main",
+          "line": 94
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_m3d_embeddings.py",
+      "lines": 251,
+      "sha256": "45b0ee22c3c6397317abaef291c1497cae6ca60f3904b320019dd1f715ba21d8",
+      "summary": "get_m3d_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 51
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 62
+        },
+        {
+          "name": "preprocess_volume",
+          "line": 74
+        },
+        {
+          "name": "embed_volume",
+          "line": 114
+        },
+        {
+          "name": "main",
+          "line": 127
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_merlin_embeddings.py",
+      "lines": 206,
+      "sha256": "3ddd923f862b9837d1a432a0aaa0eadde5e7ce0de169040a5a0c92c60d0119c6",
+      "summary": "get_merlin_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 48
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 59
+        },
+        {
+          "name": "main",
+          "line": 75
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_raddino_embeddings.py",
+      "lines": 239,
+      "sha256": "6325ebf2d7cd790effd87a3258da015510502b4b0e60c83b93c1ce3dd4a96cde",
+      "summary": "get_raddino_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 48
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 59
+        },
+        {
+          "name": "volume_to_slices",
+          "line": 71
+        },
+        {
+          "name": "embed_volume",
+          "line": 105
+        },
+        {
+          "name": "main",
+          "line": 121
+        }
+      ]
+    },
+    {
+      "path": "scripts/qa_embedding_outliers.py",
+      "lines": 73,
+      "sha256": "a8c326c74e76cabbc1270cba0c3b101176503ccb0dcdf9855652af5869170a77",
+      "summary": "QA gate: flag crops whose embedding is an outlier against the population (F16).",
+      "symbols": [
+        {
+          "name": "robust_z",
+          "line": 31
+        },
+        {
+          "name": "main",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "path": "scripts/qa_visualize_all.py",
+      "lines": 160,
+      "sha256": "325df48066016f24260c809362b55acfd721c89b7d35f0763ec726d86f82cba5",
+      "summary": "qa_visualize_all.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 31
+        },
+        {
+          "name": "make_gif",
+          "line": 41
+        },
+        {
+          "name": "main",
+          "line": 85
+        }
+      ]
+    },
+    {
+      "path": "scripts/train_longitudinal.py",
+      "lines": 748,
+      "sha256": "eb0274cddc229844fde0682ff907f6879a5c895ddcd3845a215d9e258b83c8bd",
+      "summary": "train_longitudinal.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 73
+        },
+        {
+          "name": "parse_args",
+          "line": 81
+        },
+        {
+          "name": "load_embeddings",
+          "line": 137
+        },
+        {
+          "name": "parse_subject_meta",
+          "line": 153
+        },
+        {
+          "name": "make_input",
+          "line": 170
+        },
+        {
+          "name": "build_pairs",
+          "line": 183
+        },
+        {
+          "name": "MLPPredictor",
+          "line": 238
+        },
+        {
+          "name": "LinearPredictor",
+          "line": 255
+        },
+        {
+          "name": "cosine_loss",
+          "line": 264
+        },
+        {
+          "name": "train_fold",
+          "line": 270
+        },
+        {
+          "name": "cosine_sim",
+          "line": 294
+        },
+        {
+          "name": "run_t4a",
+          "line": 298
+        },
+        {
+          "name": "run_t4b",
+          "line": 323
+        },
+        {
+          "name": "run_t4c",
+          "line": 385
+        },
+        {
+          "name": "plot_retrieval_rank_hist",
+          "line": 415
+        },
+        {
+          "name": "plot_cosine_improvement",
+          "line": 451
+        },
+        {
+          "name": "plot_umap",
+          "line": 484
+        },
+        {
+          "name": "save_predicted_embeddings",
+          "line": 521
+        },
+        {
+          "name": "save_rollout_embeddings",
+          "line": 544
+        },
+        {
+          "name": "save_metrics",
+          "line": 565
+        },
+        {
+          "name": "save_report",
+          "line": 574
+        },
+        {
+          "name": "main",
+          "line": 613
+        }
+      ]
+    },
+    {
+      "path": "scripts/visualize_nifti.py",
+      "lines": 76,
+      "sha256": "f7735fba709dd7cb215e33125ebb0821c71c9671b1a197f576e6d9b176ac3115",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "make_scan_gif",
+          "line": 12
+        }
+      ]
+    },
+    {
+      "path": "tests/conftest.py",
+      "lines": 98,
+      "sha256": "5736e7609dc2726a5f4fe993bb5662c3cc557b9799bb4834937303e8ad9a8715",
+      "summary": "Shared test configuration.",
+      "symbols": [
+        {
+          "name": "load_script_module",
+          "line": 38
+        },
+        {
+          "name": "repo_root",
+          "line": 69
+        },
+        {
+          "name": "scripts",
+          "line": 74
+        },
+        {
+          "name": "data_root",
+          "line": 80
+        },
+        {
+          "name": "pytest_collection_modifyitems",
+          "line": 91
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_head_shortcut.py",
+      "lines": 317,
+      "sha256": "9f7775f09385a8c558b7d5f5ab6cb6e6ce7e645102c98c546f8d2d06c67f0d39",
+      "summary": "R3 -- do the multitask heads learn from the image, or from the teacher-forced answer?",
+      "symbols": [
+        {
+          "name": "_Tok",
+          "line": 82
+        },
+        {
+          "name": "_build_model",
+          "line": 86
+        },
+        {
+          "name": "_make_data",
+          "line": 105
+        },
+        {
+          "name": "_train_and_eval",
+          "line": 146
+        },
+        {
+          "name": "scores",
+          "line": 189
+        },
+        {
+          "name": "test_eos_index_arithmetic_is_correct",
+          "line": 198
+        },
+        {
+          "name": "test_head_input_is_independent_of_the_answer_during_training",
+          "line": 227
+        },
+        {
+          "name": "test_image_pathway_can_be_learned",
+          "line": 265
+        },
+        {
+          "name": "test_answer_text_does_not_crowd_out_the_image_pathway",
+          "line": 276
+        },
+        {
+          "name": "test_genotype_head_threshold_transfers_to_inference",
+          "line": 295
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_longitudinal_leakage.py",
+      "lines": 289,
+      "sha256": "ed6b0332c20ae46c4d4d6bbc727c777bc92ce088d68e35ea1d6b87aae5839bf6",
+      "summary": "R2 -- does the genotype label leak into the longitudinal MLP's predicted embeddings?",
+      "symbols": [
+        {
+          "name": "_fit_mlp",
+          "line": 59
+        },
+        {
+          "name": "_predict",
+          "line": 69
+        },
+        {
+          "name": "_loso_predict",
+          "line": 76
+        },
+        {
+          "name": "_four_token_features",
+          "line": 93
+        },
+        {
+          "name": "_flip_genotype",
+          "line": 119
+        },
+        {
+          "name": "_flip_sensitivity",
+          "line": 128
+        },
+        {
+          "name": "test_genotype_is_an_input_feature_to_the_longitudinal_mlp",
+          "line": 148
+        },
+        {
+          "name": "test_unused_genotype_bit_is_ignored",
+          "line": 177
+        },
+        {
+          "name": "test_genotype_bit_influence_scales_with_embedding_norm",
+          "line": 193
+        },
+        {
+          "name": "test_conditioning_does_not_amplify_genotype_recovery",
+          "line": 222
+        },
+        {
+          "name": "test_genotype_bit_influence_realdata",
+          "line": 262
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_loso_selection_leakage.py",
+      "lines": 366,
+      "sha256": "dd683df825c6d9211f05a7744472eb111065af69468af5f196d392231b5e7032",
+      "summary": "R1 -- does the VLM's LOSO protocol select checkpoints using the held-out subject?",
+      "symbols": [
+        {
+          "name": "_StubTokenizer",
+          "line": 41
+        },
+        {
+          "name": "_load_loso_module",
+          "line": 55
+        },
+        {
+          "name": "_synthetic_records",
+          "line": 75
+        },
+        {
+          "name": "test_fold_construction_is_subject_disjoint",
+          "line": 96
+        },
+        {
+          "name": "test_inner_val_split_is_three_way_disjoint",
+          "line": 120
+        },
+        {
+          "name": "test_runner_refuses_selection_without_inner_val",
+          "line": 149
+        },
+        {
+          "name": "test_trainer_eval_set_is_not_the_held_out_subject",
+          "line": 178
+        },
+        {
+          "name": "test_load_best_model_at_end_is_config_driven_and_defaults_off",
+          "line": 243
+        },
+        {
+          "name": "_training_args_with",
+          "line": 286
+        },
+        {
+          "name": "test_checkpoint_selection_on_test_fold_inflates_metrics",
+          "line": 303
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_session_confound.py",
+      "lines": 213,
+      "sha256": "f851f1aa0fd769fe1f2617c2e040f6b1555b5303a201dd2e83e9f11e2487fdd3",
+      "summary": "R5 \u2014 is \"genotype\" separable because of biology, or because of the acquisition session?",
+      "symbols": [
+        {
+          "name": "_report",
+          "line": 50
+        },
+        {
+          "name": "_week12",
+          "line": 60
+        },
+        {
+          "name": "confounded",
+          "line": 66
+        },
+        {
+          "name": "test_sessions_are_genotype_pure",
+          "line": 80
+        },
+        {
+          "name": "test_fixture_contains_no_genotype_direction",
+          "line": 89
+        },
+        {
+          "name": "test_subject_loso_is_confounded_by_session",
+          "line": 98
+        },
+        {
+          "name": "test_session_loso_is_clean",
+          "line": 117
+        },
+        {
+          "name": "test_confound_strength_sweep",
+          "line": 130
+        },
+        {
+          "name": "test_session_confound_realdata",
+          "line": 160
+        }
+      ]
+    },
+    {
+      "path": "tests/fixtures/__init__.py",
+      "lines": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "tests/fixtures/synth.py",
+      "lines": 285,
+      "sha256": "b1323b3172f0ef361f06322863a867aa7538ab3c0fc7fbc5213bc738345f15a5",
+      "summary": "Synthetic data factory.",
+      "symbols": [
+        {
+          "name": "SynthEmbeddings",
+          "line": 39
+        },
+        {
+          "name": "_orthonormal_directions",
+          "line": 82
+        },
+        {
+          "name": "make_embeddings",
+          "line": 90
+        },
+        {
+          "name": "make_tbr_table",
+          "line": 204
+        },
+        {
+          "name": "write_tbr_csv",
+          "line": 226
+        },
+        {
+          "name": "loso_auroc",
+          "line": 236
+        },
+        {
+          "name": "permutation_null",
+          "line": 262
+        }
+      ]
+    },
+    {
+      "path": "tests/pipeline/test_mouse_identity.py",
+      "lines": 236,
+      "sha256": "e6ec6ccb039a293f089e5c8e150c2fe8f68d84c35b9dd288e830ba6cca382565",
+      "summary": "R4 -- can a failed quadrant silently reassign scans to the wrong mouse?",
+      "symbols": [
+        {
+          "name": "_phantom",
+          "line": 77
+        },
+        {
+          "name": "_segment",
+          "line": 102
+        },
+        {
+          "name": "test_phantom_quadrants_are_detected",
+          "line": 113
+        },
+        {
+          "name": "test_empty_quadrant_is_skipped_and_list_is_compacted",
+          "line": 120
+        },
+        {
+          "name": "test_skipped_quadrant_does_not_misassign_mouse_identity",
+          "line": 137
+        },
+        {
+          "name": "test_count_mismatch_is_a_hard_error",
+          "line": 173
+        },
+        {
+          "name": "test_no_session_lost_a_quadrant",
+          "line": 201
+        }
+      ]
+    },
+    {
+      "path": "tests/pipeline/test_tbr_strategies.py",
+      "lines": 190,
+      "sha256": "0e6eaf27752a0a57477730c34c84c566e981bbf28255a34cad0bf3c43ee51342",
+      "summary": "R10 -- does the spine-anchored TBR-3 strategy locate the aorta where it claims?",
+      "symbols": [
+        {
+          "name": "_phantoms",
+          "line": 57
+        },
+        {
+          "name": "test_spine_centroid_axes_are_not_transposed",
+          "line": 79
+        },
+        {
+          "name": "test_tbr3_roi_finds_the_planted_hot_spot",
+          "line": 101
+        },
+        {
+          "name": "test_tbr1_matches_hand_computation",
+          "line": 132
+        },
+        {
+          "name": "test_tbr2_matches_hand_computation",
+          "line": 146
+        },
+        {
+          "name": "test_tbr2_guards_against_too_few_voxels",
+          "line": 166
+        },
+        {
+          "name": "test_tbr2_is_sensitive_to_the_z_crop",
+          "line": 174
+        }
+      ]
+    },
+    {
+      "path": "tests/torch/test_splicing_and_truncation.py",
+      "lines": 213,
+      "sha256": "73c70e180efb3fa315baf65e415232c4c267a10a45c3b3905fb66f7cd7f35c8f",
+      "summary": "R7 and R8 -- two latent defects in how image tokens are spliced into the sequence.",
+      "symbols": [
+        {
+          "name": "_Tok",
+          "line": 44
+        },
+        {
+          "name": "_model",
+          "line": 48
+        },
+        {
+          "name": "test_splice_expands_the_placeholder_correctly",
+          "line": 71
+        },
+        {
+          "name": "test_batch_with_differing_image_positions_is_rejected",
+          "line": 94
+        },
+        {
+          "name": "test_missing_image_token_is_rejected",
+          "line": 116
+        },
+        {
+          "name": "test_two_image_tokens_in_one_row_raises",
+          "line": 129
+        },
+        {
+          "name": "test_truncated_record_silently_changes_pooling_target",
+          "line": 146
+        },
+        {
+          "name": "test_dataset_warns_when_a_record_exceeds_seq_length",
+          "line": 171
+        },
+        {
+          "name": "test_no_real_record_exceeds_seq_length",
+          "line": 194
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_audit_statistics.py",
+      "lines": 189,
+      "sha256": "735d90601f4f53c4a530ca72cc5f5e18fd32f700ad02fc2164c438aefc5b3128",
+      "summary": "F16 -- oracle-equivalence tests for the statistics that produced every CI and",
+      "symbols": [
+        {
+          "name": "test_exact_enumeration_matches_hand_computed_p",
+          "line": 26
+        },
+        {
+          "name": "test_exact_enumeration_falls_back_to_monte_carlo_above_exact_max",
+          "line": 60
+        },
+        {
+          "name": "test_n_exact_arrangements_matches_math_comb",
+          "line": 74
+        },
+        {
+          "name": "test_permute_labels_pure_groups_preserves_group_consistency",
+          "line": 88
+        },
+        {
+          "name": "test_permute_labels_mixed_groups_preserves_within_group_composition",
+          "line": 115
+        },
+        {
+          "name": "test_bootstrap_ci_tight_and_high_for_a_perfect_separator",
+          "line": 136
+        },
+        {
+          "name": "test_bootstrap_ci_wide_and_centred_for_pure_noise",
+          "line": 146
+        },
+        {
+          "name": "test_eval_py_and_eval_stats_py_agree_on_the_same_synthetic_case",
+          "line": 161
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_determinism.py",
+      "lines": 138,
+      "sha256": "64b27a1b26ec8feb6755198dc37ec2dbef95fc482917648c8a40ae8ded7f4086",
+      "summary": "R6 -- is any published number reproducible?",
+      "symbols": [
+        {
+          "name": "test_data_seed_is_declared_in_every_config",
+          "line": 35
+        },
+        {
+          "name": "test_data_seed_is_actually_consumed",
+          "line": 46
+        },
+        {
+          "name": "test_longitudinal_mlp_seeds_torch",
+          "line": 68
+        },
+        {
+          "name": "test_unseeded_train_fold_is_nondeterministic",
+          "line": 83
+        },
+        {
+          "name": "test_seeding_would_make_it_deterministic",
+          "line": 115
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_openai_augmentation.py",
+      "lines": 196,
+      "sha256": "15347201a6fcc3281262df71ded73856bccbfac46e1c211ecf1cb7f3d50e9050",
+      "summary": "F21 -- does GPT-paraphrased question wording still route and parse correctly?",
+      "symbols": [
+        {
+          "name": "_aug_mod",
+          "line": 34
+        },
+        {
+          "name": "test_pools_parse_and_cover_all_three_content_types",
+          "line": 42
+        },
+        {
+          "name": "test_every_paraphrase_carries_the_placeholders_its_content_type_needs",
+          "line": 50
+        },
+        {
+          "name": "test_fill_template_replaces_every_placeholder",
+          "line": 77
+        },
+        {
+          "name": "test_augment_record_fills_all_placeholders_for_every_real_paraphrase",
+          "line": 84
+        },
+        {
+          "name": "test_records_without_template_values_pass_through_unchanged",
+          "line": 123
+        },
+        {
+          "name": "test_route_uses_content_type_and_survives_every_real_paraphrase",
+          "line": 138
+        },
+        {
+          "name": "test_tbr_targets_identical_before_and_after_augmentation",
+          "line": 173
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_pooled_auroc_estimator.py",
+      "lines": 271,
+      "sha256": "b3c03e855bcf6e6c944cf6d8b7e2325a53ddc698aa426d5a36750ec4c9410dce",
+      "summary": "Are the reported genotype AUROCs distinguishable from noise?",
+      "symbols": [
+        {
+          "name": "_pooled_auroc",
+          "line": 65
+        },
+        {
+          "name": "_null_draw",
+          "line": 72
+        },
+        {
+          "name": "null",
+          "line": 86
+        },
+        {
+          "name": "test_folds_are_single_class_by_construction",
+          "line": 91
+        },
+        {
+          "name": "test_per_fold_offsets_do_not_distort_the_estimator",
+          "line": 106
+        },
+        {
+          "name": "test_null_distribution_at_n32_is_very_wide",
+          "line": 128
+        },
+        {
+          "name": "test_reported_aurocs_clear_the_no_signal_interval",
+          "line": 145
+        },
+        {
+          "name": "test_headline_auroc_survives_the_sweep_multiplicity",
+          "line": 177
+        },
+        {
+          "name": "test_below_chance_baseline_is_anomalous_not_noise",
+          "line": 218
+        },
+        {
+          "name": "test_measure_per_fold_offsets_from_loso_predictions",
+          "line": 241
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_tbr_parsing.py",
+      "lines": 167,
+      "sha256": "fd193b6365187b14d0fc4b87f3e21fbafdb58232c05b86df19dd5e9ca1c65e32",
+      "summary": "R9 -- is the TBR ground truth preserved losslessly from generation to supervision?",
+      "symbols": [
+        {
+          "name": "_targets",
+          "line": 36
+        },
+        {
+          "name": "test_generated_answer_round_trips_to_the_right_slots",
+          "line": 59
+        },
+        {
+          "name": "test_eval_and_dataset_parsers_agree",
+          "line": 77
+        },
+        {
+          "name": "test_missing_week_becomes_na_and_not_a_number",
+          "line": 99
+        },
+        {
+          "name": "test_genotype_only_records_carry_no_tbr_targets",
+          "line": 110
+        },
+        {
+          "name": "test_negative_tbr_is_unrepresentable",
+          "line": 125
+        },
+        {
+          "name": "test_real_tbr_values_are_positive",
+          "line": 143
+        }
+      ]
+    },
+    {
+      "path": "vlm/__init__.py",
+      "lines": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/data/__init__.py",
+      "lines": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/data/dataset_factory.py",
+      "lines": 12,
+      "sha256": "87f3db7c05ae18a734ca04cefed534973cad549541ab27665fb8028865d7cf6b",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "get_dataset_factory",
+          "line": 4
+        },
+        {
+          "name": "MouseTrajDatasetFactory",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "path": "vlm/data/eval.py",
+      "lines": 408,
+      "sha256": "8086d98b42fe5089bdd95d5a541f6215eb48946b091c0abeb25216111b326f3e",
+      "summary": "Evaluation metrics for the mouse trajectory VLM.",
+      "symbols": [
+        {
+          "name": "_parse_tbr",
+          "line": 18
+        },
+        {
+          "name": "_pearson",
+          "line": 23
+        },
+        {
+          "name": "_r2",
+          "line": 33
+        },
+        {
+          "name": "_auroc",
+          "line": 43
+        },
+        {
+          "name": "_bootstrap_ci",
+          "line": 71
+        },
+        {
+          "name": "_perm_p_auroc",
+          "line": 100
+        },
+        {
+          "name": "_route",
+          "line": 125
+        },
+        {
+          "name": "calculate_mouse_metrics",
+          "line": 156
+        }
+      ]
+    },
+    {
+      "path": "vlm/data/vqa_dataset.py",
+      "lines": 212,
+      "sha256": "ca9b5062674cdf99eb203f903c361a3d5ab3763a4cf149268e733dcaf54d5d29",
+      "summary": "Mouse trajectory VQA dataset.",
+      "symbols": [
+        {
+          "name": "MouseTrajDataset",
+          "line": 16
+        }
+      ]
+    },
+    {
+      "path": "vlm/model/__init__.py",
+      "lines": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/model/model_factory.py",
+      "lines": 12,
+      "sha256": "77323a12aa11e279692157c3c395dada4ead58b501351e4cb5e22c7edbcc85aa",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "get_model_factory",
+          "line": 4
+        },
+        {
+          "name": "VizEmbTrainerFactory",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "path": "vlm/model/vision_language_model.py",
+      "lines": 351,
+      "sha256": "f064740eab3cb81867948040edac525c98dc880f4b76b881c604b39605921b6a",
+      "summary": "VisionLanguageModel for pre-saved embeddings.",
+      "symbols": [
+        {
+          "name": "VisionLanguageModel",
+          "line": 17
+        }
+      ]
+    },
+    {
+      "path": "vlm/model/viz_emb_trainer.py",
+      "lines": 414,
+      "sha256": "813cbc7d1da6c6d3803b794fb1e3b84c76af293179e95a25e7f639d0972ce411",
+      "summary": "Trainer for the mouse trajectory VLM using pre-saved RAD-DINO embeddings.",
+      "symbols": [
+        {
+          "name": "EvalAtStartCallback",
+          "line": 21
+        },
+        {
+          "name": "VizEmbTrainer",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "path": "vlm/run/__init__.py",
+      "lines": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/run/run_mouse_vlm_loso.py",
+      "lines": 213,
+      "sha256": "1906ccb4d44af727d8582a31c66ade81e31d1518d24fbbe030a870f8398b9363",
+      "summary": "LOSO (Leave-One-Subject-Out) cross-validation for the mouse trajectory VLM.",
+      "symbols": [
+        {
+          "name": "parse_args",
+          "line": 41
+        },
+        {
+          "name": "write_fold_jsons",
+          "line": 59
+        },
+        {
+          "name": "pick_inner_val_subject",
+          "line": 85
+        },
+        {
+          "name": "run_fold",
+          "line": 95
+        },
+        {
+          "name": "main",
+          "line": 153
+        }
+      ]
+    },
+    {
+      "path": "vlm/run/run_mouse_vlm_single.py",
+      "lines": 59,
+      "sha256": "2de59130618ec6af54bd3a60e3b7877c476dc9b96a74a25b54336382c3a8ba10",
+      "summary": "Single train/val run for quick metric checks \u2014 no LOSO CV.",
+      "symbols": [
+        {
+          "name": "parse_args",
+          "line": 30
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/__init__.py",
+      "lines": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/utils/huggingface_utils.py",
+      "lines": 54,
+      "sha256": "5559fb66bb1b3897662dc36b5e71d5fbb42b0d6dce124290efff085c90cdf6f9",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "load_tokenizer_from_huggingface",
+          "line": 6
+        },
+        {
+          "name": "load_llm_from_huggingface",
+          "line": 15
+        },
+        {
+          "name": "convert_meta_to_tensor",
+          "line": 50
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/misc_utils.py",
+      "lines": 18,
+      "sha256": "9b03a6fd482b4e168e87a9df5dfce06a30b056bca03db3f59daa0ac5a7d7cb62",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "load_yaml",
+          "line": 4
+        },
+        {
+          "name": "assert_required_params_list",
+          "line": 10
+        },
+        {
+          "name": "list_difference",
+          "line": 17
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/run_utils.py",
+      "lines": 10,
+      "sha256": "1b1c6bc7f45fc144298e39b156af6c922f6ff7c8f8ed4b508a33eaaf61f91245",
+      "summary": "",
+      "symbols": [
+        {
+          "name": "get_model",
+          "line": 5
+        }
+      ]
+    }
+  ]
+}

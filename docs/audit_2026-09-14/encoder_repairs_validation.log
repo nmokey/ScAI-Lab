@@ -1,0 +1,55 @@
+{'subject': 'NaF_KO_09', 'week': 'Week 15', 'source_sha256': '7904fe9864eab90cb3ea736aa109b39cc22e0ade72c9bdb5de01572166d05ac6', 'repeat_error': 0.0, 'artifact_error': 0.0}
+{'subject': 'NaF_KO_10', 'week': 'Week 15', 'source_sha256': '2f609edf198b70a840afc1a3352917d473aa9d8293c591f9410fcd747165f34e', 'repeat_error': 0.0, 'artifact_error': 0.0}
+{'subject': 'NaF_KO_11', 'week': 'Week 15', 'source_sha256': '8c11837cb9875fd58a1158e84e516c3cbf4f7214204fcc2de17d421de1dab304', 'repeat_error': 0.0, 'artifact_error': 0.0}
+{'subject': 'FDG_WT_01', 'week': 'Week 15', 'source_sha256': 'ad56565d6f29cbde909350b886611aa0d9b6d6d5a8cf767341eba7cea3bfad87', 'repeat_error': 0.0, 'artifact_error': 0.0}
+{'subject': 'FDG_WT_02', 'week': 'Week 15', 'source_sha256': '01710cfb46f17ed361f71ee5fe4ccb72d9e87f653b963a64c20bd7af6e19da4e', 'repeat_error': 0.0, 'artifact_error': 0.0}
+<frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/monai/utils/deprecate_utils.py:321: FutureWarning: monai.transforms.spatial.dictionary Orientationd.__init__:labels: Current default value of argument `labels=(('L', 'R'), ('P', 'A'), ('I', 'S'))` was changed in version None from `labels=(('L', 'R'), ('P', 'A'), ('I', 'S'))` to `labels=None`. Default value changed to None meaning that the transform now uses the 'space' of a meta-tensor, if applicable, to determine appropriate axis labels.
+  warn_deprecated(argname, msg, warning_category)
+Size of dataset: 1
+
+{
+  "corrected_raddino_crops": [
+    {
+      "subject": "NaF_KO_09",
+      "week": "Week 15",
+      "source_sha256": "7904fe9864eab90cb3ea736aa109b39cc22e0ade72c9bdb5de01572166d05ac6",
+      "repeat_error": 0.0,
+      "artifact_error": 0.0
+    },
+    {
+      "subject": "NaF_KO_10",
+      "week": "Week 15",
+      "source_sha256": "2f609edf198b70a840afc1a3352917d473aa9d8293c591f9410fcd747165f34e",
+      "repeat_error": 0.0,
+      "artifact_error": 0.0
+    },
+    {
+      "subject": "NaF_KO_11",
+      "week": "Week 15",
+      "source_sha256": "8c11837cb9875fd58a1158e84e516c3cbf4f7214204fcc2de17d421de1dab304",
+      "repeat_error": 0.0,
+      "artifact_error": 0.0
+    },
+    {
+      "subject": "FDG_WT_01",
+      "week": "Week 15",
+      "source_sha256": "ad56565d6f29cbde909350b886611aa0d9b6d6d5a8cf767341eba7cea3bfad87",
+      "repeat_error": 0.0,
+      "artifact_error": 0.0
+    },
+    {
+      "subject": "FDG_WT_02",
+      "week": "Week 15",
+      "source_sha256": "01710cfb46f17ed361f71ee5fe4ccb72d9e87f653b963a64c20bd7af6e19da4e",
+      "repeat_error": 0.0,
+      "artifact_error": 0.0
+    }
+  ],
+  "merlin_cache": {
+    "source": "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_15/ct_hi.nii.gz",
+    "initial_cached_fresh_max_error": 0.0,
+    "new_cache_files": 1
+  },
+  "status": "passed"
+}

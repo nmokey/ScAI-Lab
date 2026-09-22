@@ -1,0 +1,917 @@
+{
+  "changed_over_1e6": 0,
+  "copied_unvalidated_columns": [
+    "subject_id",
+    "cohort",
+    "genotype",
+    "week",
+    "week_rank",
+    "tbr1_p99_median",
+    "tbr1_mean",
+    "tbr3_aortic_mean",
+    "tbr3_tbr",
+    "tbr3_n_slices"
+  ],
+  "extractor_sha256": "6eb874da14a0da660c7ec82520777245df815af2628730902f57efe71ca6ecb5",
+  "manifest_sha256": "49f2d881ca51e65ff7cdb15be2b0ca6489bb58787d6502e209704150e77f3bfc",
+  "max_abs_difference": 0.0,
+  "original_csv_sha256": "79cb05a21f6cd61532a67e36c42bd365498f7f957a9aee7af6acb79c61133988",
+  "recomputed_csv_sha256": "018b96b6b680749d49dc6c765371c8840b52ee5ac2cd9e0282575c40fe028981",
+  "results": [
+    {
+      "abs_difference": 0.0,
+      "old": 12.467741935483872,
+      "recomputed": 12.467741935483872,
+      "subject": "NaF_WT_01",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 14.123076923076923,
+      "recomputed": 14.123076923076923,
+      "subject": "NaF_WT_02",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 18.26190476190476,
+      "recomputed": 18.26190476190476,
+      "subject": "NaF_WT_03",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 26.9375,
+      "recomputed": 26.9375,
+      "subject": "NaF_WT_04",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.238095238095237,
+      "recomputed": 20.238095238095237,
+      "subject": "NaF_WT_05",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.878048780487806,
+      "recomputed": 21.878048780487806,
+      "subject": "NaF_WT_06",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 18.42105263157895,
+      "recomputed": 18.42105263157895,
+      "subject": "NaF_WT_07",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 33.59090909090909,
+      "recomputed": 33.59090909090909,
+      "subject": "NaF_WT_08",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.22,
+      "recomputed": 21.22,
+      "subject": "NaF_WT_09",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.857142857142858,
+      "recomputed": 23.857142857142858,
+      "subject": "NaF_WT_10",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.987951807228914,
+      "recomputed": 21.987951807228914,
+      "subject": "NaF_WT_11",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 33.1,
+      "recomputed": 33.1,
+      "subject": "NaF_WT_12",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.614457831325304,
+      "recomputed": 19.614457831325304,
+      "subject": "NaF_WT_13",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.158536585365855,
+      "recomputed": 24.158536585365855,
+      "subject": "NaF_WT_14",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.636363636363637,
+      "recomputed": 24.636363636363637,
+      "subject": "NaF_WT_15",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 43.794117647058826,
+      "recomputed": 43.794117647058826,
+      "subject": "NaF_WT_16",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 26.07547169811321,
+      "recomputed": 26.07547169811321,
+      "subject": "NaF_WT_17",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.500000000000004,
+      "recomputed": 24.500000000000004,
+      "subject": "NaF_WT_18",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.999999999999996,
+      "recomputed": 20.999999999999996,
+      "subject": "NaF_KO_01",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 30.71428571428571,
+      "recomputed": 30.71428571428571,
+      "subject": "NaF_KO_02",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.866666666666667,
+      "recomputed": 20.866666666666667,
+      "subject": "NaF_KO_03",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.14666666666667,
+      "recomputed": 21.14666666666667,
+      "subject": "NaF_KO_04",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.01492537313433,
+      "recomputed": 22.01492537313433,
+      "subject": "NaF_KO_09",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 31.82692307692308,
+      "recomputed": 31.82692307692308,
+      "subject": "NaF_KO_10",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.649350649350648,
+      "recomputed": 19.649350649350648,
+      "subject": "NaF_KO_11",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.358024691358025,
+      "recomputed": 22.358024691358025,
+      "subject": "NaF_KO_12",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.38095238095238,
+      "recomputed": 23.38095238095238,
+      "subject": "NaF_KO_13",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 32.0,
+      "recomputed": 32.0,
+      "subject": "NaF_KO_14",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.48076923076923,
+      "recomputed": 23.48076923076923,
+      "subject": "NaF_KO_15",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.86,
+      "recomputed": 24.86,
+      "subject": "NaF_KO_16",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 45.02325581395349,
+      "recomputed": 45.02325581395349,
+      "subject": "NaF_WT_19",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 55.885714285714286,
+      "recomputed": 55.885714285714286,
+      "subject": "NaF_WT_20",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.181818181818183,
+      "recomputed": 20.181818181818183,
+      "subject": "NaF_KO_17",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 33.47826086956522,
+      "recomputed": 33.47826086956522,
+      "subject": "NaF_KO_18",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.49425287356322,
+      "recomputed": 19.49425287356322,
+      "subject": "NaF_KO_19",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.07777777777778,
+      "recomputed": 19.07777777777778,
+      "subject": "NaF_KO_20",
+      "week": "Week 12"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 29.98507462686567,
+      "recomputed": 29.98507462686567,
+      "subject": "NaF_WT_01",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 41.875,
+      "recomputed": 41.875,
+      "subject": "NaF_WT_02",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.916666666666664,
+      "recomputed": 19.916666666666664,
+      "subject": "NaF_WT_03",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 31.476190476190478,
+      "recomputed": 31.476190476190478,
+      "subject": "NaF_WT_04",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.957142857142856,
+      "recomputed": 21.957142857142856,
+      "subject": "NaF_WT_05",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.0,
+      "recomputed": 21.0,
+      "subject": "NaF_WT_06",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 15.037735849056604,
+      "recomputed": 15.037735849056604,
+      "subject": "NaF_WT_07",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.095238095238095,
+      "recomputed": 25.095238095238095,
+      "subject": "NaF_WT_08",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.775862068965516,
+      "recomputed": 20.775862068965516,
+      "subject": "NaF_WT_09",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.642857142857142,
+      "recomputed": 20.642857142857142,
+      "subject": "NaF_WT_10",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 17.231884057971012,
+      "recomputed": 17.231884057971012,
+      "subject": "NaF_WT_11",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 30.594594594594597,
+      "recomputed": 30.594594594594597,
+      "subject": "NaF_WT_12",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 17.426229508196723,
+      "recomputed": 17.426229508196723,
+      "subject": "NaF_WT_13",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.115384615384613,
+      "recomputed": 23.115384615384613,
+      "subject": "NaF_WT_14",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 20.980769230769234,
+      "recomputed": 20.980769230769234,
+      "subject": "NaF_WT_15",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 28.121951219512194,
+      "recomputed": 28.121951219512194,
+      "subject": "NaF_WT_16",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.03448275862069,
+      "recomputed": 19.03448275862069,
+      "subject": "NaF_WT_17",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.38,
+      "recomputed": 21.38,
+      "subject": "NaF_WT_18",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.705128205128208,
+      "recomputed": 22.705128205128208,
+      "subject": "NaF_KO_01",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 33.54347826086956,
+      "recomputed": 33.54347826086956,
+      "subject": "NaF_KO_02",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 18.112903225806452,
+      "recomputed": 18.112903225806452,
+      "subject": "NaF_KO_03",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.380281690140848,
+      "recomputed": 24.380281690140848,
+      "subject": "NaF_KO_04",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.725806451612904,
+      "recomputed": 22.725806451612904,
+      "subject": "NaF_KO_05",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 33.526315789473685,
+      "recomputed": 33.526315789473685,
+      "subject": "NaF_KO_06",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.048387096774192,
+      "recomputed": 22.048387096774192,
+      "subject": "NaF_KO_07",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.912280701754387,
+      "recomputed": 22.912280701754387,
+      "subject": "NaF_KO_08",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 16.84931506849315,
+      "recomputed": 16.84931506849315,
+      "subject": "NaF_KO_12",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.625,
+      "recomputed": 21.625,
+      "subject": "NaF_KO_13",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 15.4375,
+      "recomputed": 15.4375,
+      "subject": "NaF_KO_14",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 15.710526315789474,
+      "recomputed": 15.710526315789474,
+      "subject": "NaF_KO_15",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 32.9,
+      "recomputed": 32.9,
+      "subject": "NaF_KO_16",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 57.30434782608695,
+      "recomputed": 57.30434782608695,
+      "subject": "NaF_KO_17",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 30.124999999999996,
+      "recomputed": 30.124999999999996,
+      "subject": "NaF_KO_18",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.659090909090907,
+      "recomputed": 25.659090909090907,
+      "subject": "NaF_WT_01",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 40.925925925925924,
+      "recomputed": 40.925925925925924,
+      "subject": "NaF_WT_02",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.972222222222225,
+      "recomputed": 25.972222222222225,
+      "subject": "NaF_WT_03",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 34.39393939393939,
+      "recomputed": 34.39393939393939,
+      "subject": "NaF_WT_04",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 26.625,
+      "recomputed": 26.625,
+      "subject": "NaF_WT_05",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 42.58333333333333,
+      "recomputed": 42.58333333333333,
+      "subject": "NaF_WT_06",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.03125,
+      "recomputed": 19.03125,
+      "subject": "NaF_WT_07",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.428571428571427,
+      "recomputed": 23.428571428571427,
+      "subject": "NaF_WT_12",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.23404255319149,
+      "recomputed": 22.23404255319149,
+      "subject": "NaF_WT_13",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.000000000000004,
+      "recomputed": 23.000000000000004,
+      "subject": "NaF_WT_14",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.48979591836735,
+      "recomputed": 25.48979591836735,
+      "subject": "NaF_WT_15",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.013157894736842,
+      "recomputed": 19.013157894736842,
+      "subject": "NaF_KO_12",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 37.1875,
+      "recomputed": 37.1875,
+      "subject": "NaF_KO_13",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.06753246753262,
+      "recomputed": 22.06753246753262,
+      "subject": "NaF_KO_14",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.36764705882353,
+      "recomputed": 24.36764705882353,
+      "subject": "NaF_KO_15",
+      "week": "Week 18"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.846323529411592,
+      "recomputed": 23.846323529411592,
+      "subject": "NaF_WT_01",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 29.133898305084152,
+      "recomputed": 29.133898305084152,
+      "subject": "NaF_WT_02",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.32051282051282,
+      "recomputed": 24.32051282051282,
+      "subject": "NaF_WT_03",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.405797101449277,
+      "recomputed": 19.405797101449277,
+      "subject": "NaF_WT_04",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.724137931034484,
+      "recomputed": 25.724137931034484,
+      "subject": "NaF_WT_05",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.867924528301888,
+      "recomputed": 25.867924528301888,
+      "subject": "NaF_WT_06",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.0,
+      "recomputed": 23.0,
+      "subject": "NaF_WT_07",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.681818181818183,
+      "recomputed": 22.681818181818183,
+      "subject": "NaF_WT_08",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.979166666666668,
+      "recomputed": 22.979166666666668,
+      "subject": "NaF_WT_09",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.830188679245285,
+      "recomputed": 22.830188679245285,
+      "subject": "NaF_WT_10",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 21.410714285714285,
+      "recomputed": 21.410714285714285,
+      "subject": "NaF_WT_11",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 26.132075471698112,
+      "recomputed": 26.132075471698112,
+      "subject": "NaF_WT_12",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.000000000000004,
+      "recomputed": 23.000000000000004,
+      "subject": "NaF_KO_01",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.612903225806452,
+      "recomputed": 25.612903225806452,
+      "subject": "NaF_KO_02",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 19.675,
+      "recomputed": 19.675,
+      "subject": "NaF_KO_03",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.105263157894736,
+      "recomputed": 22.105263157894736,
+      "subject": "NaF_KO_04",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 24.796610169491526,
+      "recomputed": 24.796610169491526,
+      "subject": "NaF_KO_05",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 31.173913043478258,
+      "recomputed": 31.173913043478258,
+      "subject": "NaF_KO_06",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.746031746031747,
+      "recomputed": 22.746031746031747,
+      "subject": "NaF_KO_07",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 26.46551724137931,
+      "recomputed": 26.46551724137931,
+      "subject": "NaF_KO_08",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 22.553571428571427,
+      "recomputed": 22.553571428571427,
+      "subject": "NaF_KO_09",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 26.877551020408163,
+      "recomputed": 26.877551020408163,
+      "subject": "NaF_KO_10",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.25423728813559,
+      "recomputed": 23.25423728813559,
+      "subject": "NaF_KO_11",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 23.634920634920636,
+      "recomputed": 23.634920634920636,
+      "subject": "NaF_KO_12",
+      "week": "Week 20"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 36.078947368421055,
+      "recomputed": 36.078947368421055,
+      "subject": "NaF_KO_09",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 31.348837209302328,
+      "recomputed": 31.348837209302328,
+      "subject": "NaF_KO_10",
+      "week": "Week 15"
+    },
+    {
+      "abs_difference": 0.0,
+      "old": 25.69811320754717,
+      "recomputed": 25.69811320754717,
+      "subject": "NaF_KO_11",
+      "week": "Week 15"
+    }
+  ],
+  "source_sha256": {
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_01/week_12/pet_naf.nii.gz": "68b2bb0c350f55528f3a9a6ade825a4828b9adc028e2867633d13c0ead5ebc2f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_01/week_15/pet_naf.nii.gz": "c5f50a64783ebb7ce91554dc312b55789107037c9c71de3ba30a9f100cee59b1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_01/week_20/pet_naf.nii.gz": "5c888975ee415983992f4796cdb9da1307eb7d8ab2ce1a3f5d13f452a4d6111f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_02/week_12/pet_naf.nii.gz": "16efa5ee2de800b135e68def10691f9be4a3c79fd061db5ed3ceadd5b22525db",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_02/week_15/pet_naf.nii.gz": "04ff11a9f3ce233bf898c846c58c0616cd74da8cd105fba063601c6a4545bc10",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_02/week_20/pet_naf.nii.gz": "ea6c150d2ead65fc6868427ce7806863268d20b9c498664393348f455d2169a5",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_03/week_12/pet_naf.nii.gz": "db407d1da3eb44d715116668b0d2fc907ea4884f92a80a02dffe1b7a5d923f5b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_03/week_15/pet_naf.nii.gz": "9daea023e8a8171847af4c5be72cd2f7944e2768e148b6428b6b0459e34c8360",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_03/week_20/pet_naf.nii.gz": "3e78dcd065e1d63c52fb9d46bb1594d53f806319c71b1303f383318f5dfc0e43",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_04/week_12/pet_naf.nii.gz": "5375ac5feabbc846e3e8a3ef162a07075a2a1c363e5570826ac33b08bc653dd3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_04/week_15/pet_naf.nii.gz": "36c3100219e2a9e7424387b224fbbb0423b52999827dbf834eb3ab1c09c917a4",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_04/week_20/pet_naf.nii.gz": "5e312efbc8af0be2e897a891f8b9036b248cd3bb05603dfeb80791e749e1c0c8",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_05/week_15/pet_naf.nii.gz": "79c9360cb450fbab7dd32c853ea9e4cf5e7e5451df3fb49cbb4a29e923d56148",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_05/week_20/pet_naf.nii.gz": "cae270f6dfda2e715b77706a21eea896be48e6003530c7dd8571fcb0ca1642b3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_06/week_15/pet_naf.nii.gz": "f930459ce39474f576537df280a4c9c43518cc5520eb375d8108fc5f8367b627",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_06/week_20/pet_naf.nii.gz": "7186a070b4cda33dc322c217b41c5fd9fd3aba9835793c29bc26e8f6ae401eef",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_07/week_15/pet_naf.nii.gz": "4be59404b175e1d8438cbdb6006ea878fdbc2e1af8b657e46447c52800f5ef18",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_07/week_20/pet_naf.nii.gz": "47129429e1c8755ac39a89868285bf222f26a157937ef48d3b746270409b5481",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_08/week_15/pet_naf.nii.gz": "6959765bad4d9406beb76686424482eb650e2be5e3d189a73f2454fcd00fdb32",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_08/week_20/pet_naf.nii.gz": "8abfafa56f63773393f60b29172eae7def8682a6f8bc6567341a5f543f41db04",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_12/pet_naf.nii.gz": "8cb6e29459988d12c58ce1fa023abe82c0b91b668f007edc849f1d5d41ba8add",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_15/pet_naf.nii.gz": "b6226000312023595d77e7bc4eb82943795f4cc3fed4197153ea97fac311fc92",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_20/pet_naf.nii.gz": "ceefbda929e905434c592ddb6fe5e5ab65553a3d2132caa843236e22c367f253",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_10/week_12/pet_naf.nii.gz": "3b53003ebf1465ee77309107aea319b3f60a3e0eff8004987f7f89acbdc46d6c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_10/week_15/pet_naf.nii.gz": "70c7bee4d603064f7041e6c723500e496587be22a6c3087327a7667cff3af9ac",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_10/week_20/pet_naf.nii.gz": "3105ac66a82579ffbd3c86f927cf3d16140b36d0e0e3a01ec1fe6c7235978e68",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_11/week_12/pet_naf.nii.gz": "075db7ebcd5140a2843e4d8a093b890c4040da59ab4e46d583c45412ab23f013",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_11/week_15/pet_naf.nii.gz": "ceef0de77f4eee4f906edab705ce6300b4c8bedcd7509a1e5fa88f323337c850",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_11/week_20/pet_naf.nii.gz": "e278959e4536c5fecb0fa54268302c75d9365db38b6e7f838afb33e308856535",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_12/pet_naf.nii.gz": "51a63617c00cc01c70c10e6c63845c58653b2a234d302513e09ab819f5a7a040",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_15/pet_naf.nii.gz": "f037c642ccb42c54fda74ef25e71e5acf71ab45239cbed8963db64e7ba0609b5",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_18/pet_naf.nii.gz": "7024f550adb1c96a9399a8004a31601b7cbc31441da15fbf69c813d3d059a9aa",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_20/pet_naf.nii.gz": "948c0831441764bdc26b7fcc31faae100c84477b34647a4dfb54341f9c35009e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_13/week_12/pet_naf.nii.gz": "bc1646e4c688247efc8c82ca1a031c05e16dee8952b5b78cd7233c8ae43a251f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_13/week_15/pet_naf.nii.gz": "fdaee0881725d96d9eca9c81f768f49b295043c4e6522da3b55fb43f216f8801",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_13/week_18/pet_naf.nii.gz": "d74f4c8d6d2bafa25f2cfc44d9a4c857f5378643ad5342415862715d4ca463cb",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_14/week_12/pet_naf.nii.gz": "8645d59df0bf8d758504183a144f09d30567d7ab6679ed1974e06997a8d71aaf",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_14/week_15/pet_naf.nii.gz": "e059063185acf4f3bbf2c7735fa041982ad887ee8bacda585da2f21a23884e13",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_14/week_18/pet_naf.nii.gz": "e61a3a6a933b0c1a4e26be3f4353eff40e03925b1d7888965850c9d1f5b65e62",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_15/week_12/pet_naf.nii.gz": "d3457fb21abc7f9c0045ecfdf20184b40e27d1cc082d389a60e64a89037d44d6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_15/week_15/pet_naf.nii.gz": "549c05b83aafbed5fb6b7949d71b7620722e7ac220a2c2d0f04e26409a252c43",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_15/week_18/pet_naf.nii.gz": "ecee62c4ad1b6369017906c62fa0099214277f30c8d6d6076c08accb1c2b7f8e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_16/week_12/pet_naf.nii.gz": "48ed491d929ac40252e0fee8dbef3da902c459f33a49cae1c36af678d38c792b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_16/week_15/pet_naf.nii.gz": "d8f208958688f67bbc26b03a78e3cedf57f99e7ca0707252044d8886da797620",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_17/week_12/pet_naf.nii.gz": "f2e201ae9f43d94907692fe8b6a829a3259c5a3f35611480851f9dd10eff0c48",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_17/week_15/pet_naf.nii.gz": "2afa44b4b039f56edf9988ff3d5c0e913c46eae4aa8b51d5461c7a8003316041",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_18/week_12/pet_naf.nii.gz": "7ed6d5fddec49d89b2f3988d24748fdf8142be9872751636e25ea73ae2e6b58e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_18/week_15/pet_naf.nii.gz": "441a4dc024e4867db1bdd5251ecdc9c90a02aa7f967441baa199821f045a4a03",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_19/week_12/pet_naf.nii.gz": "c766ef9d447e0a859f994396c56c9a99ec5dc7b40def5144c96597656dfb8e02",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_20/week_12/pet_naf.nii.gz": "a0032df95fde148a1b67ae0afe6185e3dc5db30515479e3c94e889e3fbcac49f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_12/pet_naf.nii.gz": "548a37a1da9517a2436cb89a74d3f7435abef87014682e2ed0e215bd88467c11",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_15/pet_naf.nii.gz": "9f5799389474f968b61bf825d7a9cee3c726a5adcc4bb809611dfc723d326aac",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_18/pet_naf.nii.gz": "5a712e10b5c93e68949b71912d680c46f38febb95ccbb4f2209f694dc90e1750",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_20/pet_naf.nii.gz": "c18abb983c18ddd8b7c7455c7c4033abf5deda240fefba40c6675a417179d6b1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_12/pet_naf.nii.gz": "ee317cff7a46c3c488437a2caadffacff334ee26a3d34bfb3608d27aead69d79",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_15/pet_naf.nii.gz": "cb474c4f028bb55bf40268be05c7bb576a35e6252f8738bff4be8b51b5c30ff6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_18/pet_naf.nii.gz": "39da822ed3af323eab5c1d2dd1528bad7f80962019f84b45075f12859a5852d9",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_20/pet_naf.nii.gz": "b7982da62ee6f3125ca07fa2b851bdce6835069775fec23c2ac7d36b1219efb0",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_12/pet_naf.nii.gz": "3f4f6950326b944f2766ef9c262837dd9a11627ec0b7d5701a575c4b1e8408a1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_15/pet_naf.nii.gz": "4685c9b8750472d3a3b2caecd52d5bd42d3c2fb39407b41628ee55924c330810",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_18/pet_naf.nii.gz": "aff31d562437c37f51154b07e689bbedf59a2d47dbcae26c746dc30404403d6c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_20/pet_naf.nii.gz": "1b72de6379bb06f86ef049c1f07e0146ee1946237a002e3620b333b4bde87478",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_12/pet_naf.nii.gz": "e367e3ae5915e07f5bd5623e47136ff08a6ff304c8e7b927c05b04ba87bb3cd3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_15/pet_naf.nii.gz": "d0ddf8186ab29d739f6dd007002b35eb12aee1a50203c88ed956e3f30f182f9b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_18/pet_naf.nii.gz": "b1548d23e45a32d58b27d4c240f88e0cb9d829fa95b07259a6009aab0f2930f0",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_20/pet_naf.nii.gz": "eef801407c20bed2d56ac0b6c90cf4cf867f0e37223f13440e76324fa473ca4b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_12/pet_naf.nii.gz": "c69494d7aa00beb0139991639afb4edba5172636bef14ddc8e4bcb267da629cf",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_15/pet_naf.nii.gz": "cac3c4ecc09d51f5c301a620d86bf82d42653dd7f48626ff041343d141b1da29",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_18/pet_naf.nii.gz": "c8d076faea67ee0547bb5207490e0c348a87e34a85db1297309cf21932d6b239",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_20/pet_naf.nii.gz": "81e4217f1ebd30db7c356fd9fbcdf6b635171c53ba03f5bad296a04dd1f80bf6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_12/pet_naf.nii.gz": "b12c3475f93f7683717b077c245a5dac4cc7c27dae14e4817c338b042585585b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_15/pet_naf.nii.gz": "3d41e7f410ad00867cf44e42fa6d46d9a5e9bd62fe5564592f93789fc83d7a62",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_18/pet_naf.nii.gz": "78104a9a16c4e2c78d4a06a25ea90a29b421560a29871116fcfed743d93b2320",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_20/pet_naf.nii.gz": "e56b878a7efc1409df6c360fc40786005ac3d22d4708be44011483747acbb41b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_12/pet_naf.nii.gz": "b647de744f91ed77b67835d454680cad7b692d453f9985f833b927a3cca2b481",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_15/pet_naf.nii.gz": "7ba462a0e833080e58702ff3a082782d7edcea331b013e821efc22612aa588e3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_18/pet_naf.nii.gz": "06d94b0a73d7aa33505661b0eca56d92e6d31b6089b71238cec856ee5ad57e14",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_20/pet_naf.nii.gz": "b266651a4b657503c56d4edce8f5fa9b3451889c4b7090f6253bf8c1903e6536",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_08/week_12/pet_naf.nii.gz": "a33ee4b4831933a5610876340e705add25f775dc55590e8d272f2f5cddd48e30",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_08/week_15/pet_naf.nii.gz": "e2e07a7fd792e9129ca49caf444d33cc5d0588a45ae539d0d431ebb3a74d1449",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_08/week_20/pet_naf.nii.gz": "7c279357b85246435a47f10e102d62d6c736a6dadc125240c9aa4038bf94b4ba",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_09/week_12/pet_naf.nii.gz": "0c44c3b8afbae280b3db6507ab7e60e67fa0c881064679a72065cf411320bdbd",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_09/week_15/pet_naf.nii.gz": "a27a08743bd8c12d078e08a5d3670dbcf29277a8f772fb33391f20ba53a0d360",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_09/week_20/pet_naf.nii.gz": "383ccab3a929a8db7a4aeb0bf288790aa10dc6686f389eb9326f014b5c35d584",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_10/week_12/pet_naf.nii.gz": "ccfc7d675f512e98d970b0a51cf850333cd2f5608d7ec45c101015449ed7c91f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_10/week_15/pet_naf.nii.gz": "6914047b1e9b3c629eb01090e37f4275d5ddd6898e69944df5edd5d3b0f9dfa2",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_10/week_20/pet_naf.nii.gz": "3cb31f4832c4e81040ae7903b6b09b2c942c019a8b81088591936ed6c6ff3629",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_11/week_12/pet_naf.nii.gz": "f1fd4d0727c5530492fe92b5eca3b984126ee1ac6ea2932638b9814d5a72f297",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_11/week_15/pet_naf.nii.gz": "c3f6b6cd1051899969e80c3493b64e9ccd3d1d9eaa890c695fba718c457cf5f1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_11/week_20/pet_naf.nii.gz": "b6de2f451ad2907be16f4618d692a4ee1184e90e4b66cde558810b539ba20ad6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_12/pet_naf.nii.gz": "40a5a18d373eef688ef14243e8dc6412ae24899d38c067258e54f896d7505135",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_15/pet_naf.nii.gz": "3e2a80817bc696163faa579c250216914de1aab8adfec67d7fd775e947f29ac9",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_18/pet_naf.nii.gz": "74298ad501f7b0290adc2796dbc77ae1852f148b7726488a8bd6a956f13ebf93",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_20/pet_naf.nii.gz": "eaad081640ca7fd5c849c0a7c4bc6d2ec5ab479a6dd9f6d02ddfc81b95bb0855",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_13/week_12/pet_naf.nii.gz": "6ced199ca6b994c6c3b275d980aa85d752a600ae4d38fdd492171bd79504103f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_13/week_15/pet_naf.nii.gz": "80ffdaecbf4d6b2f6b95a78304203c6a90db9670e59cd23729e3f65879e0c7ac",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_13/week_18/pet_naf.nii.gz": "903e854c339db550057508d23762ba54e7ad2a5513e700a4114a66093cdc7920",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_14/week_12/pet_naf.nii.gz": "b090e1182a4faa6e63f10f827c1037642661a1f431e3313508d7c491ed38c8fd",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_14/week_15/pet_naf.nii.gz": "259a05bf3fcd104329f5bc1e54401c196c2c1acb3103c7341742c7b2dbd52d48",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_14/week_18/pet_naf.nii.gz": "076c972709628cf241c3507b4c1ff848aceb31dcca739fcb74c1fdb03d35e0ed",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_15/week_12/pet_naf.nii.gz": "86fb585c978cde912d37c1be28e5386d038d47c5459ec11d1db3c2748e40797e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_15/week_15/pet_naf.nii.gz": "b572fa5089f53becfe69e021633cc59d606e58a2139fb23b5dd05098bcb49cbc",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_15/week_18/pet_naf.nii.gz": "8b07ddc5a351b114bfaf19585b72404e4846c14bba06e4d754b2043f3e7ddd96",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_16/week_12/pet_naf.nii.gz": "cabc1c80394dcbe8a7adc8d887b60d0560978b58865eb2b2a98c212cdb4ebbcb",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_16/week_15/pet_naf.nii.gz": "754ea304a86959fb4e0d2340458086659e23ec22d15ceb3fa52e31170c5e5f02",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_17/week_12/pet_naf.nii.gz": "24421a6e1e69685487c2b28fc8c21671b5e6e550a4a760616735cc73b50d8b57",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_17/week_15/pet_naf.nii.gz": "443b89b2939c83dcd3fbf0aad72c95eccf8bea8795dceaff8102cc872077a51f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_18/week_12/pet_naf.nii.gz": "9c14edcb5a2e81c591d1ce87f9171a3ade4a413865a01b8f1c85aee98b43e642",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_18/week_15/pet_naf.nii.gz": "95ba098da31713a9fb98189ebc901d6175c9ee14ee1d15421912887b68a71524",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_19/week_12/pet_naf.nii.gz": "0eabe03b313232c4353e825c4c64d43a703958d67f4d4a6eca8cb6a415f66ff2",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_20/week_12/pet_naf.nii.gz": "bef6580e9ecd9cdd856f1966c23cd5efae7c90eae89a3bd7b24ad73f23bddd9c"
+  },
+  "validated_columns": [
+    "tbr2_p95_median",
+    "tbr2_clean_mean",
+    "tbr2_p95"
+  ]
+}

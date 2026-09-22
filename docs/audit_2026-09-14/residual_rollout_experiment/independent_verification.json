@@ -1,0 +1,46 @@
+{
+  "status": "complete",
+  "verified_classifiers": 20,
+  "verified_forecast_tokens": 384,
+  "max_score_error": 1.0658141036401503e-14,
+  "genotype": {
+    "baseline": {
+      "auc": 0.6290322580645161,
+      "accuracy": 0.65625,
+      "correct": 21,
+      "balanced_accuracy": 0.6468253968253967
+    },
+    "current_combined": {
+      "auc": 0.5967741935483871,
+      "accuracy": 0.625,
+      "correct": 20,
+      "balanced_accuracy": 0.6349206349206349
+    },
+    "current_future": {
+      "auc": 0.45161290322580644,
+      "accuracy": 0.46875,
+      "correct": 15,
+      "balanced_accuracy": 0.4642857142857143
+    },
+    "residual_combined": {
+      "auc": 0.6774193548387096,
+      "accuracy": 0.59375,
+      "correct": 19,
+      "balanced_accuracy": 0.5753968253968254
+    },
+    "residual_future": {
+      "auc": 0.6774193548387096,
+      "accuracy": 0.59375,
+      "correct": 19,
+      "balanced_accuracy": 0.5753968253968254
+    }
+  },
+  "forecast_subject_mean": {
+    "current_cosine": 0.9827416185303802,
+    "residual_cosine": 0.9807668359954499,
+    "persistence_cosine": 0.975917216042495,
+    "centroid_cosine": 0.9865907761772716
+  },
+  "observed_future_scans": 67,
+  "advance_criterion_passed": false
+}

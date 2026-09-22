@@ -1,0 +1,27 @@
+Genotype-variant preflight passed: matched inputs/settings, actual-backbone checks, 24 prescribed fits.
+{
+  "base": {
+    "auc": 0.478494623655914,
+    "accuracy": 0.5,
+    "balanced_accuracy": 0.4603174603174603,
+    "proxy_mae": 5.550649497177866
+  },
+  "residual": {
+    "auc": 0.5483870967741935,
+    "accuracy": 0.5208333333333334,
+    "balanced_accuracy": 0.4867724867724868,
+    "proxy_mae": 5.656379073858261
+  },
+  "direct_visual": {
+    "auc": 0.6881720430107526,
+    "accuracy": 0.5,
+    "balanced_accuracy": 0.48148148148148157,
+    "proxy_mae": 5.554979275994831
+  },
+  "genotype_only": {
+    "auc": 0.5806451612903225,
+    "accuracy": 0.5208333333333334,
+    "balanced_accuracy": 0.4973544973544974,
+    "proxy_mae": null
+  }
+}

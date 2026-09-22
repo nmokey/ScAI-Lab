@@ -1,0 +1,21 @@
+Refit progress 20/121
+Refit progress 40/121
+Refit progress 60/121
+Refit progress 80/121
+Refit progress 100/121
+Refit progress 120/121
+{
+  "n": 229,
+  "groups": 10,
+  "auc": 0.8281894576012222,
+  "exact_refit_p": 0.008333333333333333,
+  "refit_null95": [
+    0.0839396254959169,
+    0.7469970930232556
+  ],
+  "permutation": {
+    "method": "exact",
+    "n_arrangements": 120,
+    "resolution": 0.008333333333333333
+  }
+}

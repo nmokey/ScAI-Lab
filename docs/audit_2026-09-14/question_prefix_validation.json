@@ -1,0 +1,8 @@
+{
+  "records": 96,
+  "all_training_prefixes_equal_inference": true,
+  "standard_tokenizations_changed": 0,
+  "max_combined_tokens": 80,
+  "seq_length": 150,
+  "truncated_records": 0
+}

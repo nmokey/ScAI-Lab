@@ -1,0 +1,2994 @@
+{
+  "created_utc": "2026-09-15T05:48:40.594221+00:00",
+  "git_head": "1ae8b84f41906ed822184ae656fc419f039ae987",
+  "files": [
+    {
+      "path": "scripts/aggregate_seeds.py",
+      "sha256": "7fd059fe89d372ed8fe7a73e003b516176d7b8c6ae0e112488f24c828ff301cc",
+      "lines": 133,
+      "summary": "Aggregate complete, paired validated VLM runs without pooling seeds as animals.",
+      "symbols": [
+        {
+          "name": "read_complete_run",
+          "line": 19,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "aggregate_paired",
+          "line": 54,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "without_seed",
+          "line": 71,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 101,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_checkpoint_roundtrip.py",
+      "sha256": "4aaf0b0308824d77dcfb0772800ba125dfba35f84c58b2b64fa44a473ef89585",
+      "lines": 100,
+      "summary": "CPU-only, offline check of the production VLM checkpoint round trip.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 23,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "outputs",
+          "line": 45,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_group_permutation.py",
+      "sha256": "655b005c350908121321ed9308d5498daf07b4356a0643abf4928a4541ea49a1",
+      "lines": 38,
+      "summary": "Exact group-label permutation with full probe refits on current RAD-DINO data.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 16,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "fit_predict",
+          "line": 23,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_merlin_cache.py",
+      "sha256": "fc66b24bf211c954c0256f5f32338633596c842202df02cb8f0a0da5ef890221",
+      "lines": 28,
+      "summary": "Compare one corrected crop's current preprocessing to its path-keyed cache.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 14,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/audit_research_artifacts.py",
+      "sha256": "a2cb54f1e4107f96180a2d538569e96fa0ed657b92867050cca92dc88e154cc1",
+      "lines": 163,
+      "summary": "Read-only audit of current research artifacts; CPU, no model downloads.",
+      "symbols": [
+        {
+          "name": "regression",
+          "line": 28,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "cosine",
+          "line": 33,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 37,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/build_nested_forecasts.py",
+      "sha256": "80518ae566d16b7cdd40736bd6dc7347a18414f2dc3c5e9268619dd26f31a3a9",
+      "lines": 147,
+      "summary": "Build fixed inner-cross-fitted VLM tokens separately inside every outer holdout.",
+      "symbols": [
+        {
+          "name": "embedding_lookup",
+          "line": 27,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "fit_digest",
+          "line": 37,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "outer_forecasts",
+          "line": 46,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "export_outer",
+          "line": 98,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 129,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/build_nifti_dataset.py",
+      "sha256": "d6b5be017cc7543b086cbd26b1a5ffe674c9d8eaa4dbc012aad4d192e7f63b74",
+      "lines": 859,
+      "summary": "build_nifti_dataset.py \u2014 Convert raw DICOM sessions to a per-mouse NIfTI dataset.",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 39,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "init_config",
+          "line": 49,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_quadrant_overrides",
+          "line": 73,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_manifest",
+          "line": 91,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_base_id",
+          "line": 107,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_suffix_num",
+          "line": 115,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "consolidate_sessions",
+          "line": 123,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "is_size_match",
+          "line": 189,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "find_dicom_dir",
+          "line": 196,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "has_target",
+          "line": 217,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "collect_dicom_files",
+          "line": 238,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "sort_slices_by_z",
+          "line": 248,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_z",
+          "line": 249,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "read_nifti_from_dicoms",
+          "line": 264,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "stage1_convert_session",
+          "line": 284,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "segment_animals",
+          "line": 368,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "crop_to_physical_bbox",
+          "line": 535,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "stage3_crop_and_write",
+          "line": 580,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_build_manifest_row",
+          "line": 694,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "write_mouse_manifest",
+          "line": 728,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_pipeline",
+          "line": 749,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 828,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/check_saved_vlm_metrics.py",
+      "sha256": "3db63609e6850fd874acb21b4ccf16bd14349a85d6f901e44a9ab501cb842da4",
+      "lines": 80,
+      "summary": "Independently check saved VLM metrics using only standard-library arithmetic.",
+      "symbols": [
+        {
+          "name": "sha",
+          "line": 15,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "check",
+          "line": 19,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 69,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/create_mouse_traj_dataset.py",
+      "sha256": "f3a0ae08c2971c027fa3dce5d4ef4f473915b77617feb0435b42d1f7fc39e57c",
+      "lines": 448,
+      "summary": "create_mouse_traj_dataset.py",
+      "symbols": [
+        {
+          "name": "parse_args",
+          "line": 71,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_embeddings",
+          "line": 89,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_tbr",
+          "line": 106,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "export_safetensors",
+          "line": 127,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_tbr_str",
+          "line": 157,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_genotype",
+          "line": 161,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_max_delta_weeks",
+          "line": 166,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_tbr_trajectory_str",
+          "line": 171,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "format_tbr_qa",
+          "line": 185,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "format_genotype_qa",
+          "line": 203,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "format_combined_qa",
+          "line": 213,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "build_record",
+          "line": 239,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_path",
+          "line": 241,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_records_for_subject",
+          "line": 278,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "make_random_splits",
+          "line": 327,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_split",
+          "line": 333,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "split_records",
+          "line": 350,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 362,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/dataset/create_brats_3d_vqa_dataset_from_openai.py",
+      "sha256": "941f53e7a5a28f8a4b27bfdd0aac5207da1a312a3a9ccfa9f756e6ca6f69a674",
+      "lines": 509,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "validate_vqa_lists",
+          "line": 36,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "map_df_cols_to_combo",
+          "line": 170,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "map_df_cols_to_combo_and_unknown",
+          "line": 180,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "validate_question_answer_combo",
+          "line": 190,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "map_df_cols_to_unknown",
+          "line": 204,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "pick_question_from_df",
+          "line": 212,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "pick_num_question_types_combos_and_rows",
+          "line": 236,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "organize_vqa_data_by_seg_id_and_label_and_type",
+          "line": 282,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "unorganize_vqa_data_by_seg_id_and_label_and_type",
+          "line": 312,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "generate_updated_vqa_data",
+          "line": 321,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/dataset/create_mouse_vqa_dataset_from_openai.py",
+      "sha256": "425c43366d81c875bc8380229bb2a8f9d851e6fa94c2a843ee28adb403306451",
+      "lines": 224,
+      "summary": "create_mouse_vqa_dataset_from_openai.py",
+      "symbols": [
+        {
+          "name": "_parse_pairs",
+          "line": 92,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_paraphrase_pools",
+          "line": 106,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "fill_template",
+          "line": 133,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "augment_record",
+          "line": 140,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "augment_records",
+          "line": 166,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "parse_args",
+          "line": 175,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 187,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/eval_stats.py",
+      "sha256": "0546c48541e1555d8877f582abde175e331a7863f07b47310e23a629703edbd2",
+      "lines": 319,
+      "summary": "Shared statistics and metadata helpers for the evaluation scripts.",
+      "symbols": [
+        {
+          "name": "load_session_map",
+          "line": 28,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "join_session_ids",
+          "line": 40,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "join_mouse_group_ids",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "find",
+          "line": 78,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "default_manifest_path",
+          "line": 107,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_safe_auc",
+          "line": 128,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "bootstrap_auc_ci",
+          "line": 135,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_pure_group_labels",
+          "line": 159,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_n_exact_arrangements",
+          "line": 173,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_exact_pure_arrangements",
+          "line": 179,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_permute_labels",
+          "line": 196,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "permutation_auc_p",
+          "line": 222,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "permutation_refit_p",
+          "line": 273,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/evaluate_embeddings.py",
+      "sha256": "23e3ac3a97b9870d4e2e3f1c2dee77bb7f11ceaba766356d440922ed0f854efb",
+      "lines": 974,
+      "summary": "evaluate_embeddings.py",
+      "symbols": [
+        {
+          "name": "_fmt",
+          "line": 98,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_embeddings",
+          "line": 114,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_scatter_2d",
+          "line": 133,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t1a_plots",
+          "line": 167,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t1b_cluster_alignment",
+          "line": 201,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t1c_silhouette",
+          "line": 221,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t1d_subject_consistency",
+          "line": 237,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_loso_logistic",
+          "line": 268,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_binary_probe_with_uncertainty",
+          "line": 318,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_fp",
+          "line": 346,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t2a_week_classification",
+          "line": 371,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t2b_early_vs_late",
+          "line": 396,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t2c_wt_vs_ko",
+          "line": 418,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t2d_naf_vs_fdg",
+          "line": 438,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t2e_staging",
+          "line": 460,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_conditioned_analysis",
+          "line": 485,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t3a_temporal_ordering",
+          "line": 542,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t3b_subject_retrieval",
+          "line": 607,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_ap_at_k",
+          "line": 637,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t3c_week_retrieval",
+          "line": 647,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t4_longitudinal",
+          "line": 673,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_metrics",
+          "line": 776,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_report",
+          "line": 786,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 867,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/evaluate_encoder_vs_vlm.py",
+      "sha256": "f76284755b66687ff16e1ded91c1e4bcecd0262f9730e5807fa7ebdf5196b281",
+      "lines": 379,
+      "summary": "evaluate_encoder_vs_vlm.py",
+      "symbols": [
+        {
+          "name": "pearson",
+          "line": 61,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "r2",
+          "line": 71,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "tbr_slot_metrics",
+          "line": 81,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_raddino",
+          "line": 111,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_tbr",
+          "line": 124,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_predicted",
+          "line": 139,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_vlm_subjects",
+          "line": 149,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "build_ts0_features",
+          "line": 160,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "build_real_4token_features",
+          "line": 172,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "build_predicted_4token_features",
+          "line": 189,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "loso_genotype",
+          "line": 216,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "loso_tbr",
+          "line": 239,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 294,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/extract_tbr_features.py",
+      "sha256": "6eb874da14a0da660c7ec82520777245df815af2628730902f57efe71ca6ecb5",
+      "lines": 701,
+      "summary": "extract_tbr_features.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 87,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "parse_args",
+          "line": 95,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "tbr_strategy_1",
+          "line": 119,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "tbr_strategy_2",
+          "line": 134,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "tbr_strategy_3",
+          "line": 158,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "extract_all_features",
+          "line": 286,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "eval_ko_vs_wt_separation",
+          "line": 349,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "eval_longitudinal_trend",
+          "line": 375,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "eval_embedding_correlation",
+          "line": 403,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "eval_embedding_prediction",
+          "line": 451,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "plot_tbr_trajectories",
+          "line": 510,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "plot_embedding_vs_tbr",
+          "line": 556,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "plot_prediction_scatter",
+          "line": 585,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 606,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/finalize_validated_results.py",
+      "sha256": "deffb6aa5d5a706d9b9e84214d32da7a47bc57da14186a9ce4429cec2979ad55",
+      "lines": 160,
+      "summary": "Verify all six fixed runs and produce the authoritative paired result package.",
+      "symbols": [
+        {
+          "name": "render",
+          "line": 19,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 91,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_colipri_embeddings.py",
+      "sha256": "2dc91ed6de19a00ef38764cc8c52e19a67511758d3e2b32ddb4083b35b3e7434",
+      "lines": 187,
+      "summary": "get_colipri_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 42,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 53,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "extract_embedding",
+          "line": 69,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 94,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_m3d_embeddings.py",
+      "sha256": "45b0ee22c3c6397317abaef291c1497cae6ca60f3904b320019dd1f715ba21d8",
+      "lines": 251,
+      "summary": "get_m3d_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 51,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 62,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "preprocess_volume",
+          "line": 74,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "embed_volume",
+          "line": 114,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 127,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_merlin_embeddings.py",
+      "sha256": "65ec28f4b93943d98725af62ac342c8ba8fdf9470e57d55fb700db309c00e708",
+      "lines": 235,
+      "summary": "get_merlin_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 56,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 67,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 83,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/get_raddino_embeddings.py",
+      "sha256": "6325ebf2d7cd790effd87a3258da015510502b4b0e60c83b93c1ce3dd4a96cde",
+      "lines": 239,
+      "summary": "get_raddino_embeddings.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 48,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_ct_rows",
+          "line": 59,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "volume_to_slices",
+          "line": 71,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "embed_volume",
+          "line": 105,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 121,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/qa_embedding_outliers.py",
+      "sha256": "a8c326c74e76cabbc1270cba0c3b101176503ccb0dcdf9855652af5869170a77",
+      "lines": 73,
+      "summary": "QA gate: flag crops whose embedding is an outlier against the population (F16).",
+      "symbols": [
+        {
+          "name": "robust_z",
+          "line": 31,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 37,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/qa_visualize_all.py",
+      "sha256": "325df48066016f24260c809362b55acfd721c89b7d35f0763ec726d86f82cba5",
+      "lines": 160,
+      "summary": "qa_visualize_all.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 31,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "make_gif",
+          "line": 41,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_slice",
+          "line": 67,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "update",
+          "line": 70,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 85,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/recompute_existing_pet_proxy.py",
+      "sha256": "19eeebc18b38095f679890e040b8847c1e2fbe94909e80f015bf14ab50ebb6a7",
+      "lines": 94,
+      "summary": "Recompute the existing PET-2 endpoint without changing its eligible population.",
+      "symbols": [
+        {
+          "name": "recompute",
+          "line": 22,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 83,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/repair_vlm_checkpoint.py",
+      "sha256": "91897b67e75d12a45f50002fa5d209a2f54b94e16792ec5ba79bb959df15b23a",
+      "lines": 111,
+      "summary": "Recover retained adapter/head tensors into a NEW directory, without loading an LLM.",
+      "symbols": [
+        {
+          "name": "digest",
+          "line": 25,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "repair",
+          "line": 33,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 104,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/train_longitudinal.py",
+      "sha256": "c942d72589398bff7fee03e041d049c6230bc94be6d78a3e41d45d650637971e",
+      "lines": 746,
+      "summary": "train_longitudinal.py",
+      "symbols": [
+        {
+          "name": "load_config",
+          "line": 70,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "parse_args",
+          "line": 78,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_embeddings",
+          "line": 134,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "parse_subject_meta",
+          "line": 150,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "make_input",
+          "line": 167,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "build_pairs",
+          "line": 180,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "MLPPredictor",
+          "line": 235,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 236,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "forward",
+          "line": 248,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "LinearPredictor",
+          "line": 252,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 253,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "forward",
+          "line": 257,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "cosine_loss",
+          "line": 261,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "train_fold",
+          "line": 267,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "cosine_sim",
+          "line": 291,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t4a",
+          "line": 295,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t4b",
+          "line": 320,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_t4c",
+          "line": 382,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "plot_retrieval_rank_hist",
+          "line": 412,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "plot_cosine_improvement",
+          "line": 448,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "plot_umap",
+          "line": 481,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_predicted_embeddings",
+          "line": 519,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_rollout_embeddings",
+          "line": 542,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_metrics",
+          "line": 563,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_report",
+          "line": 572,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 611,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_encoder_repairs.py",
+      "sha256": "70800382a46392de1b6807e18305cb6222ae362698f8e7f5489fd1a84d27dcbc",
+      "lines": 41,
+      "summary": "Verify corrected RAD-DINO crops and the repaired Merlin content-addressed cache.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 10,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_merlin_regeneration.py",
+      "sha256": "2d8d64c48ab1c477c5a0666ab79a2863179a0483a044a64ddbbc99028c2d3c06",
+      "lines": 84,
+      "summary": "Verify regenerated Merlin inputs and recompute the existing comparison metrics.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 22,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "fit_predict",
+          "line": 62,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_nested_rollout.py",
+      "sha256": "cfc9a968b79165cb252aff71af4a47cb0658c35c46c99002c67b032b2c395180",
+      "lines": 39,
+      "summary": "Evaluate actual baseline-only nested exports against persistence and train-week means.",
+      "symbols": [
+        {
+          "name": "cosine",
+          "line": 9,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 12,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_projected_tokens.py",
+      "sha256": "6284c14d5f2c3c8e90e1b46140c9e1cc3bd1cc0a8bc2ed2b5b082ac00bb52ef2",
+      "lines": 55,
+      "summary": "Measure observed, forecast and trained-projection token norms on a fixed fold.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 15,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_question_prefixes.py",
+      "sha256": "bb3370db73e4335984b6f2a5f2c8e3d3a8487ad987c3deafafe3154f86d17c6f",
+      "lines": 47,
+      "summary": "Check training/inference token prefixes on every frozen fixed-horizon record.",
+      "symbols": [
+        {
+          "name": "main",
+          "line": 15,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_research_inputs.py",
+      "sha256": "a5167926cffdd8a205d43a1796aaf16ed15bea977c55561dca3e0ee72f2b5d38",
+      "lines": 100,
+      "summary": "Validate current structured targets, baseline features, crop identity and provenance.",
+      "symbols": [
+        {
+          "name": "validate_crop_identities",
+          "line": 18,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 45,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/validate_vlm_quantized_checkpoint.py",
+      "sha256": "58cb6a96d96172e727782a219750f2961095eff118896df43959ea83b1c651d7",
+      "lines": 113,
+      "summary": "Offline plumbing check on the actual 4-bit LLaMA and current mouse inputs.",
+      "symbols": [
+        {
+          "name": "measure",
+          "line": 25,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 35,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "scripts/visualize_nifti.py",
+      "sha256": "f7735fba709dd7cb215e33125ebb0821c71c9671b1a197f576e6d9b176ac3115",
+      "lines": 76,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "make_scan_gif",
+          "line": 12,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_slice",
+          "line": 40,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "update",
+          "line": 44,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "5736e7609dc2726a5f4fe993bb5662c3cc557b9799bb4834937303e8ad9a8715",
+      "lines": 98,
+      "summary": "Shared test configuration.",
+      "symbols": [
+        {
+          "name": "load_script_module",
+          "line": 38,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "repo_root",
+          "line": 69,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "scripts",
+          "line": 74,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "data_root",
+          "line": 80,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "pytest_collection_modifyitems",
+          "line": 91,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_head_shortcut.py",
+      "sha256": "eaa18d71cdf6da962a85968f50780dc38e37f4ae85bb29ba3d1c619486d7ceaa",
+      "lines": 318,
+      "summary": "R3 -- do the multitask heads learn from the image, or from the teacher-forced answer?",
+      "symbols": [
+        {
+          "name": "_Tok",
+          "line": 82,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_build_model",
+          "line": 86,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_make_data",
+          "line": 106,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_train_and_eval",
+          "line": 147,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "scores",
+          "line": 190,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_eos_index_arithmetic_is_correct",
+          "line": 199,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_head_input_is_independent_of_the_answer_during_training",
+          "line": 228,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_image_pathway_can_be_learned",
+          "line": 266,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_answer_text_does_not_crowd_out_the_image_pathway",
+          "line": 277,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_genotype_head_threshold_transfers_to_inference",
+          "line": 296,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_longitudinal_leakage.py",
+      "sha256": "ed6b0332c20ae46c4d4d6bbc727c777bc92ce088d68e35ea1d6b87aae5839bf6",
+      "lines": 289,
+      "summary": "R2 -- does the genotype label leak into the longitudinal MLP's predicted embeddings?",
+      "symbols": [
+        {
+          "name": "_fit_mlp",
+          "line": 59,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_predict",
+          "line": 69,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_loso_predict",
+          "line": 76,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_four_token_features",
+          "line": 93,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_flip_genotype",
+          "line": 119,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_flip_sensitivity",
+          "line": 128,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_genotype_is_an_input_feature_to_the_longitudinal_mlp",
+          "line": 148,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_unused_genotype_bit_is_ignored",
+          "line": 177,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_genotype_bit_influence_scales_with_embedding_norm",
+          "line": 193,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_conditioning_does_not_amplify_genotype_recovery",
+          "line": 222,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_genotype_bit_influence_realdata",
+          "line": 262,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_Wrap",
+          "line": 274,
+          "kind": "ClassDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_loso_selection_leakage.py",
+      "sha256": "dd683df825c6d9211f05a7744472eb111065af69468af5f196d392231b5e7032",
+      "lines": 366,
+      "summary": "R1 -- does the VLM's LOSO protocol select checkpoints using the held-out subject?",
+      "symbols": [
+        {
+          "name": "_StubTokenizer",
+          "line": 41,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "convert_tokens_to_ids",
+          "line": 48,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__call__",
+          "line": 51,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_loso_module",
+          "line": 55,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_synthetic_records",
+          "line": 75,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_fold_construction_is_subject_disjoint",
+          "line": 96,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_inner_val_split_is_three_way_disjoint",
+          "line": 120,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_runner_refuses_selection_without_inner_val",
+          "line": 149,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_trainer_eval_set_is_not_the_held_out_subject",
+          "line": 178,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_load_best_model_at_end_is_config_driven_and_defaults_off",
+          "line": 243,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_training_args_with",
+          "line": 286,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_checkpoint_selection_on_test_fold_inflates_metrics",
+          "line": 303,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/control/test_session_confound.py",
+      "sha256": "f851f1aa0fd769fe1f2617c2e040f6b1555b5303a201dd2e83e9f11e2487fdd3",
+      "lines": 213,
+      "summary": "R5 \u2014 is \"genotype\" separable because of biology, or because of the acquisition session?",
+      "symbols": [
+        {
+          "name": "_report",
+          "line": 50,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_week12",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "confounded",
+          "line": 66,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_sessions_are_genotype_pure",
+          "line": 80,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_fixture_contains_no_genotype_direction",
+          "line": 89,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_subject_loso_is_confounded_by_session",
+          "line": 98,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_session_loso_is_clean",
+          "line": 117,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_confound_strength_sweep",
+          "line": 130,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_session_confound_realdata",
+          "line": 160,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/fixtures/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "tests/fixtures/synth.py",
+      "sha256": "b1323b3172f0ef361f06322863a867aa7538ab3c0fc7fbc5213bc738345f15a5",
+      "lines": 285,
+      "summary": "Synthetic data factory.",
+      "symbols": [
+        {
+          "name": "SynthEmbeddings",
+          "line": 39,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__len__",
+          "line": 52,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "genotype_binary",
+          "line": 56,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "subject_level",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_npz",
+          "line": 69,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_orthonormal_directions",
+          "line": 82,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "make_embeddings",
+          "line": 90,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "make_tbr_table",
+          "line": 204,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "write_tbr_csv",
+          "line": 226,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "loso_auroc",
+          "line": 236,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "permutation_null",
+          "line": 262,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/pipeline/test_mouse_identity.py",
+      "sha256": "c4c3f6b082f46d20aca4c5c27f40c42ad4fa4fa8cc9052cfa4183da4541a415a",
+      "lines": 220,
+      "summary": "R4 -- can a failed quadrant silently reassign scans to the wrong mouse?",
+      "symbols": [
+        {
+          "name": "_phantom",
+          "line": 77,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_segment",
+          "line": 102,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_phantom_quadrants_are_detected",
+          "line": 113,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_empty_quadrant_is_skipped_and_list_is_compacted",
+          "line": 120,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_skipped_quadrant_does_not_misassign_mouse_identity",
+          "line": 137,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_count_mismatch_is_a_hard_error",
+          "line": 174,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_current_crop_identities_follow_filename_positions_and_overrides",
+          "line": 188,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_override_requires_exact_mouse_coverage",
+          "line": 208,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run",
+          "line": 214,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/pipeline/test_tbr_strategies.py",
+      "sha256": "d1da29d2617d5b4e63cf61191014447f0fc3d80420d68b34c9b287d5ece3c33a",
+      "lines": 190,
+      "summary": "R10 -- does the spine-anchored TBR-3 strategy locate the aorta where it claims?",
+      "symbols": [
+        {
+          "name": "_phantoms",
+          "line": 57,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_spine_centroid_axes_are_not_transposed",
+          "line": 79,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_tbr3_roi_finds_the_planted_hot_spot",
+          "line": 101,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_tbr1_matches_hand_computation",
+          "line": 132,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_tbr2_matches_hand_computation",
+          "line": 146,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_tbr2_guards_against_too_few_voxels",
+          "line": 166,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_tbr2_is_sensitive_to_the_z_crop",
+          "line": 174,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/torch/test_nested_forecasts.py",
+      "sha256": "96bae7b73405c9ef547c973f000710ce6cf8cf8a01e727481d1f64fa526dbee3",
+      "lines": 46,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "fixture_data",
+          "line": 8,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_outer_future_and_labels_cannot_change_training_or_test_tokens",
+          "line": 16,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_manifest_cache_rejects_leakage_and_changed_tokens",
+          "line": 34,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/torch/test_splicing_and_truncation.py",
+      "sha256": "73c70e180efb3fa315baf65e415232c4c267a10a45c3b3905fb66f7cd7f35c8f",
+      "lines": 213,
+      "summary": "R7 and R8 -- two latent defects in how image tokens are spliced into the sequence.",
+      "symbols": [
+        {
+          "name": "_Tok",
+          "line": 44,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_model",
+          "line": 48,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_splice_expands_the_placeholder_correctly",
+          "line": 71,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_batch_with_differing_image_positions_is_rejected",
+          "line": 94,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_missing_image_token_is_rejected",
+          "line": 116,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_two_image_tokens_in_one_row_raises",
+          "line": 129,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_truncated_record_silently_changes_pooling_target",
+          "line": 146,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "pooled_index",
+          "line": 158,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_dataset_warns_when_a_record_exceeds_seq_length",
+          "line": 171,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_no_real_record_exceeds_seq_length",
+          "line": 194,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/torch/test_vlm_checkpoint_and_heads.py",
+      "sha256": "ccf6dd0edd3de8e8aa142e31b08446a0c902f123eab4130b82ad4d0c876a10f9",
+      "lines": 261,
+      "summary": "Behavioral regression checks of the production VLM adapter and head paths.",
+      "symbols": [
+        {
+          "name": "build",
+          "line": 18,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "inputs",
+          "line": 31,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "outputs",
+          "line": 38,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_roundtrip_preserves_all_outputs_and_state",
+          "line": 49,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_corrupt_checkpoint_is_rejected",
+          "line": 76,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_missing_checkpoint_never_creates_random_model",
+          "line": 102,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_known_legacy_adapter_keys_are_recoverable",
+          "line": 107,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_heads_ignore_answers_padding_and_chat_eos",
+          "line": 124,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_bad_question_boundaries_fail",
+          "line": 148,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_padding_and_image_count_fail",
+          "line": 153,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_heads_and_adapters_learn_image_signal_and_survive_reload",
+          "line": 160,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_dataset_prefix_matches_inference_and_truncation_preserves_boundary",
+          "line": 196,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "Tokenizer",
+          "line": 201,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "convert_tokens_to_ids",
+          "line": 203,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__call__",
+          "line": 204,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_trainer_resume_and_best_checkpoint_restore_all_state",
+          "line": 229,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "StopAfterTwo",
+          "line": 232,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "on_step_end",
+          "line": 233,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "args",
+          "line": 239,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_audit_statistics.py",
+      "sha256": "735d90601f4f53c4a530ca72cc5f5e18fd32f700ad02fc2164c438aefc5b3128",
+      "lines": 189,
+      "summary": "F16 -- oracle-equivalence tests for the statistics that produced every CI and",
+      "symbols": [
+        {
+          "name": "test_exact_enumeration_matches_hand_computed_p",
+          "line": 26,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_exact_enumeration_falls_back_to_monte_carlo_above_exact_max",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_n_exact_arrangements_matches_math_comb",
+          "line": 74,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_permute_labels_pure_groups_preserves_group_consistency",
+          "line": 88,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_permute_labels_mixed_groups_preserves_within_group_composition",
+          "line": 115,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_bootstrap_ci_tight_and_high_for_a_perfect_separator",
+          "line": 136,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_bootstrap_ci_wide_and_centred_for_pure_noise",
+          "line": 146,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_eval_py_and_eval_stats_py_agree_on_the_same_synthetic_case",
+          "line": 161,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_determinism.py",
+      "sha256": "64b27a1b26ec8feb6755198dc37ec2dbef95fc482917648c8a40ae8ded7f4086",
+      "lines": 138,
+      "summary": "R6 -- is any published number reproducible?",
+      "symbols": [
+        {
+          "name": "test_data_seed_is_declared_in_every_config",
+          "line": 35,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_data_seed_is_actually_consumed",
+          "line": 46,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_longitudinal_mlp_seeds_torch",
+          "line": 68,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_unseeded_train_fold_is_nondeterministic",
+          "line": 83,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_seeding_would_make_it_deterministic",
+          "line": 115,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_openai_augmentation.py",
+      "sha256": "15347201a6fcc3281262df71ded73856bccbfac46e1c211ecf1cb7f3d50e9050",
+      "lines": 196,
+      "summary": "F21 -- does GPT-paraphrased question wording still route and parse correctly?",
+      "symbols": [
+        {
+          "name": "_aug_mod",
+          "line": 34,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_pools_parse_and_cover_all_three_content_types",
+          "line": 42,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_every_paraphrase_carries_the_placeholders_its_content_type_needs",
+          "line": 50,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_fill_template_replaces_every_placeholder",
+          "line": 77,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_augment_record_fills_all_placeholders_for_every_real_paraphrase",
+          "line": 84,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_records_without_template_values_pass_through_unchanged",
+          "line": 123,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_route_uses_content_type_and_survives_every_real_paraphrase",
+          "line": 138,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_tbr_targets_identical_before_and_after_augmentation",
+          "line": 173,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_pooled_auroc_estimator.py",
+      "sha256": "b3c03e855bcf6e6c944cf6d8b7e2325a53ddc698aa426d5a36750ec4c9410dce",
+      "lines": 271,
+      "summary": "Are the reported genotype AUROCs distinguishable from noise?",
+      "symbols": [
+        {
+          "name": "_pooled_auroc",
+          "line": 65,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_null_draw",
+          "line": 72,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "null",
+          "line": 86,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_folds_are_single_class_by_construction",
+          "line": 91,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_per_fold_offsets_do_not_distort_the_estimator",
+          "line": 106,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_null_distribution_at_n32_is_very_wide",
+          "line": 128,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_reported_aurocs_clear_the_no_signal_interval",
+          "line": 145,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_headline_auroc_survives_the_sweep_multiplicity",
+          "line": 177,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_below_chance_baseline_is_anomalous_not_noise",
+          "line": 218,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_measure_per_fold_offsets_from_loso_predictions",
+          "line": 241,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_tbr_parsing.py",
+      "sha256": "fd193b6365187b14d0fc4b87f3e21fbafdb58232c05b86df19dd5e9ca1c65e32",
+      "lines": 167,
+      "summary": "R9 -- is the TBR ground truth preserved losslessly from generation to supervision?",
+      "symbols": [
+        {
+          "name": "_targets",
+          "line": 36,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_generated_answer_round_trips_to_the_right_slots",
+          "line": 59,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_eval_and_dataset_parsers_agree",
+          "line": 77,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_missing_week_becomes_na_and_not_a_number",
+          "line": 99,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_genotype_only_records_carry_no_tbr_targets",
+          "line": 110,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_negative_tbr_is_unrepresentable",
+          "line": 125,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_real_tbr_values_are_positive",
+          "line": 143,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/test_validated_pipeline.py",
+      "sha256": "4c236a1d8df05cf2eecfdb2b493bc87159912570a2cc7e0bd208851b1fe6d7e9",
+      "lines": 232,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "examples",
+          "line": 13,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_structured_targets_ignore_wording_and_normalize_unique_observations",
+          "line": 32,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_subject_weighted_metrics_pairing_and_training_mean_comparator",
+          "line": 44,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_bad_predictions_are_rejected",
+          "line": 58,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_fixed_future_query_does_not_reveal_missing_visits",
+          "line": 70,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_stale_resume_rejected_and_partial_output_never_published_as_complete",
+          "line": 83,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_loso_training_prior_demonstrates_why_fixed_score_shuffle_is_not_refitting",
+          "line": 93,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_cache_key_changes_when_file_contents_or_preprocessing_change",
+          "line": 103,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_physical_tbr3_mapping_respects_origin_and_rejects_missing_geometry",
+          "line": 113,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_fold_resume_is_idempotent_and_detects_changed_predictions",
+          "line": 127,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "Lifecycle",
+          "line": 137,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 138,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "setup",
+          "line": 139,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run",
+          "line": 140,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "evaluate",
+          "line": 147,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_aggregate_rejects_mixed_versions_across_seeds",
+          "line": 177,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_aggregate_keeps_seeds_separate_and_reproduces_paired_errors",
+          "line": 197,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "read",
+          "line": 199,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "test_completed_run_rejects_forecasts_changed_after_training",
+          "line": 217,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/data/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/data/dataset_factory.py",
+      "sha256": "87f3db7c05ae18a734ca04cefed534973cad549541ab27665fb8028865d7cf6b",
+      "lines": 12,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "get_dataset_factory",
+          "line": 4,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "MouseTrajDatasetFactory",
+          "line": 10,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "create_dataset",
+          "line": 11,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/data/eval.py",
+      "sha256": "c777862df95fc0a9bce75543c2e514cfcb6b91aefa3d780d27a24a74a48eaad5",
+      "lines": 426,
+      "summary": "Evaluation metrics for the mouse trajectory VLM.",
+      "symbols": [
+        {
+          "name": "_parse_tbr",
+          "line": 18,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_pearson",
+          "line": 23,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_r2",
+          "line": 33,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_auroc",
+          "line": 43,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_bootstrap_ci",
+          "line": 71,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_perm_p_auroc",
+          "line": 100,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_route",
+          "line": 125,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "calculate_mouse_metrics",
+          "line": 156,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/data/validated_metrics.py",
+      "sha256": "d12e5821993ee6ca9f08a27dff944204c0d55f2a336ed90b30e970190ff402b3",
+      "lines": 129,
+      "summary": "Strict, subject-weighted scoring for the repaired fixed-horizon protocol.",
+      "symbols": [
+        {
+          "name": "finite_vector",
+          "line": 16,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "regression_metrics",
+          "line": 22,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "conditional_mean_interval",
+          "line": 34,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "collapse_predictions",
+          "line": 42,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "score_predictions",
+          "line": 81,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "paired_comparison",
+          "line": 121,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/data/vqa_dataset.py",
+      "sha256": "4d8da965a1f43e6ed51ebf033f858879ce7ad74a676da8d630219639e3acb542",
+      "lines": 209,
+      "summary": "Mouse trajectory VQA dataset.",
+      "symbols": [
+        {
+          "name": "MouseTrajDataset",
+          "line": 17,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 40,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__len__",
+          "line": 64,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "__getitem__",
+          "line": 67,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_embedding",
+          "line": 135,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_tbr_targets",
+          "line": 179,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_add_prompt",
+          "line": 183,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "update_transforms_w_processor",
+          "line": 201,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "calculate_metrics",
+          "line": 204,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/model/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/model/model_factory.py",
+      "sha256": "77323a12aa11e279692157c3c395dada4ead58b501351e4cb5e22c7edbcc85aa",
+      "lines": 12,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "get_model_factory",
+          "line": 4,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "VizEmbTrainerFactory",
+          "line": 10,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "create_model",
+          "line": 11,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/model/vision_language_model.py",
+      "sha256": "eaf6e9dee46862e5d2044764c318b3ea288ea86a0967e0e9602b318e3425bb20",
+      "lines": 378,
+      "summary": "VisionLanguageModel for pre-saved embeddings.",
+      "symbols": [
+        {
+          "name": "VisionLanguageModel",
+          "line": 17,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 18,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_build_projection",
+          "line": 73,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_eos_hidden_state",
+          "line": 86,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_image_and_text_embeddings",
+          "line": 123,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "forward",
+          "line": 179,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "generate",
+          "line": 236,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_checkpoint_config",
+          "line": 271,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_other_state",
+          "line": 281,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_pretrained",
+          "line": 290,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "from_pretrained",
+          "line": 316,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/model/viz_emb_trainer.py",
+      "sha256": "dd40fc0ab10e6337038bf6c54632de3ed3c8a5a23e0964165932c478cbd3d83b",
+      "lines": 469,
+      "summary": "Trainer for the mouse trajectory VLM using pre-saved RAD-DINO embeddings.",
+      "symbols": [
+        {
+          "name": "EvalAtStartCallback",
+          "line": 24,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "on_train_begin",
+          "line": 25,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "VLMTrainer",
+          "line": 30,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "_save",
+          "line": 33,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_from_checkpoint",
+          "line": 40,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_best_model",
+          "line": 57,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_rng_state",
+          "line": 60,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_optimizer_and_scheduler",
+          "line": 74,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "VizEmbTrainer",
+          "line": 82,
+          "kind": "ClassDef"
+        },
+        {
+          "name": "__init__",
+          "line": 84,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "setup",
+          "line": 90,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run",
+          "line": 94,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_setup_exp_dir",
+          "line": 101,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_check_params",
+          "line": 112,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_required_params",
+          "line": 120,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_setup_tokenizer",
+          "line": 151,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_data_collator",
+          "line": 157,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "prepare_question",
+          "line": 161,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "apply_tokenizer",
+          "line": 164,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_llm_model",
+          "line": 167,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_training_args",
+          "line": 170,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "save_model",
+          "line": 212,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "img_token",
+          "line": 216,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "pad_token",
+          "line": 220,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_tbr_norm_stats",
+          "line": 227,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "train",
+          "line": 232,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_train_model",
+          "line": 273,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_inf_model",
+          "line": 306,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "_load_llm",
+          "line": 324,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_train_data",
+          "line": 338,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_inf_data",
+          "line": 372,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "evaluate",
+          "line": 394,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "get_eval_metrics",
+          "line": 463,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/run/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/run/run_mouse_vlm_loso.py",
+      "sha256": "d5ccb4e6a5569d361027b5d37fba21d0fbea7430f1e33187c4dc12d6ffe5e6fb",
+      "lines": 250,
+      "summary": "LOSO (Leave-One-Subject-Out) cross-validation for the mouse trajectory VLM.",
+      "symbols": [
+        {
+          "name": "parse_args",
+          "line": 48,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "write_fold_jsons",
+          "line": 67,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "pick_inner_val_subject",
+          "line": 91,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "run_fold",
+          "line": 101,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "main",
+          "line": 193,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/run/run_mouse_vlm_single.py",
+      "sha256": "97fdfde6de83eb62229cf9c5224352d90c82f462f5f6a95523225fb0749b3310",
+      "lines": 62,
+      "summary": "Single train/val run for quick metric checks \u2014 no LOSO CV.",
+      "symbols": [
+        {
+          "name": "parse_args",
+          "line": 31,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0,
+      "summary": "",
+      "symbols": []
+    },
+    {
+      "path": "vlm/utils/checkpoint_utils.py",
+      "sha256": "982f7d2be23d3d8c5e3ab1300a2bba5e1da186d586ea4d9e3ec5859a8676b7ad",
+      "lines": 77,
+      "summary": "Strict adapter-only checkpoints, including recovery of the old raw-key format.",
+      "symbols": [
+        {
+          "name": "validate_tensors",
+          "line": 11,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "canonicalize_legacy_adapter",
+          "line": 22,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "read_adapter",
+          "line": 33,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_adapter_strict",
+          "line": 49,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/huggingface_utils.py",
+      "sha256": "5559fb66bb1b3897662dc36b5e71d5fbb42b0d6dce124290efff085c90cdf6f9",
+      "lines": 54,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "load_tokenizer_from_huggingface",
+          "line": 6,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "load_llm_from_huggingface",
+          "line": 15,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "convert_meta_to_tensor",
+          "line": 50,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/image_cache.py",
+      "sha256": "40c17880478ba4ecea1f0242de5fcf967d755c90ad150bddf2eb89f38d037c6b",
+      "lines": 7,
+      "summary": "Content-addressed preprocessing identity; replacing a file invalidates its cache.",
+      "symbols": [
+        {
+          "name": "image_cache_key",
+          "line": 5,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/misc_utils.py",
+      "sha256": "9b03a6fd482b4e168e87a9df5dfce06a30b056bca03db3f59daa0ac5a7d7cb62",
+      "lines": 18,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "load_yaml",
+          "line": 4,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "assert_required_params_list",
+          "line": 10,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "format",
+          "line": 11,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "list_difference",
+          "line": 17,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/research_io.py",
+      "sha256": "73cbf1dfe995ad495090810af0fb6e1c2fdf4cc230c1e08785c59ff405bb3b1a",
+      "lines": 59,
+      "summary": "Small provenance and atomic-I/O utilities shared by the validated pipeline.",
+      "symbols": [
+        {
+          "name": "file_sha256",
+          "line": 9,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "object_sha256",
+          "line": 17,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "atomic_json",
+          "line": 21,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "verify_forecast_manifest",
+          "line": 38,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/run_contract.py",
+      "sha256": "69fb5ea42b68adfb3e600f36e0cd1876322eda82ca270535df442df1e46ded1a",
+      "lines": 103,
+      "summary": "Frozen run identities and idempotent fold aggregation for the fixed protocol.",
+      "symbols": [
+        {
+          "name": "validate_records",
+          "line": 11,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "make_run_spec",
+          "line": 25,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "freeze_run",
+          "line": 54,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "completed_fold",
+          "line": 68,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "mark_fold_complete",
+          "line": 82,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "collect_complete_folds",
+          "line": 91,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/run_utils.py",
+      "sha256": "1b1c6bc7f45fc144298e39b156af6c922f6ff7c8f8ed4b508a33eaaf61f91245",
+      "lines": 10,
+      "summary": "",
+      "symbols": [
+        {
+          "name": "get_model",
+          "line": 5,
+          "kind": "FunctionDef"
+        }
+      ]
+    },
+    {
+      "path": "vlm/utils/target_contract.py",
+      "sha256": "23de717288d8bbe989511487ff48a6dca5ff01d31a5c664b875bf21b8630cae2",
+      "lines": 67,
+      "summary": "The existing PET-proxy target, with fixed horizons and explicit missing values.",
+      "symbols": [
+        {
+          "name": "numeric_targets",
+          "line": 9,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "unique_subject_targets",
+          "line": 33,
+          "kind": "FunctionDef"
+        },
+        {
+          "name": "fold_target_statistics",
+          "line": 56,
+          "kind": "FunctionDef"
+        }
+      ]
+    }
+  ]
+}

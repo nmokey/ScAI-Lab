@@ -1,0 +1,47 @@
+{
+  "checks": [
+    {
+      "donor_subjects": {
+        "NaF_KO_01": "NaF_WT_02",
+        "NaF_KO_02": "NaF_WT_03",
+        "NaF_KO_03": "NaF_WT_04",
+        "NaF_KO_04": "NaF_WT_07",
+        "NaF_WT_02": "NaF_KO_01",
+        "NaF_WT_03": "NaF_KO_02",
+        "NaF_WT_04": "NaF_KO_03",
+        "NaF_WT_07": "NaF_KO_04"
+      },
+      "fresh_reload_exact": true,
+      "identical_image_logit_ranges": {
+        "combined": 0.0,
+        "genotype": 0.0,
+        "tbr": 0.0
+      },
+      "image_swap_donor_logit_max_error": 0.0,
+      "objective": "combined"
+    },
+    {
+      "donor_subjects": {
+        "NaF_KO_01": "NaF_WT_02",
+        "NaF_KO_02": "NaF_WT_03",
+        "NaF_KO_03": "NaF_WT_04",
+        "NaF_KO_04": "NaF_WT_07",
+        "NaF_WT_02": "NaF_KO_01",
+        "NaF_WT_03": "NaF_KO_02",
+        "NaF_WT_04": "NaF_KO_03",
+        "NaF_WT_07": "NaF_KO_04"
+      },
+      "fresh_reload_exact": true,
+      "identical_image_logit_ranges": {
+        "combined": 0.0,
+        "genotype": 0.0,
+        "tbr": 0.0
+      },
+      "image_swap_donor_logit_max_error": 0.0,
+      "objective": "genotype_only"
+    }
+  ],
+  "diagnostic_only": true,
+  "interpretation": "Outputs follow swapped images; identical images remove between-mouse score differences while questions, answer tokens, masks and labels remain unchanged",
+  "status": "passed"
+}

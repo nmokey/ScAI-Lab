@@ -1,0 +1,19 @@
+{
+  "protocol": "fixed_horizon_nested_v1",
+  "population": "32 existing NaF mice, 96 fixed-template records",
+  "identity": "Accepted filename position order plus existing quadrant overrides",
+  "endpoint": "Existing PET intensity proxy; original numerical values and observation masks preserved",
+  "input_visit": "Week 12",
+  "future_visits": ["Week 15", "Week 18", "Week 20"],
+  "arms": ["observed baseline token", "observed baseline plus three nested normalized forecast tokens"],
+  "vlm_seeds": [0, 1, 2],
+  "requested_training_epochs": 20,
+  "checkpoint_selection": "final training state; no test-based selection",
+  "forecaster": {"architecture": "existing 512-hidden MLP", "epochs": 300, "lr": 0.001, "seed": 0, "inner_folds": 5, "genotype_conditioning": false},
+  "primary_comparison": "Longitudinal minus baseline MAE, averaged across valid horizons within each mouse, then across mice",
+  "secondary": ["per-horizon MAE/MSE/R2", "actual training-fold mean comparator", "genotype AUROC per seed", "fixed-threshold genotype accuracy"],
+  "seed_reporting": "Per-seed paired differences and initialization SD; seeds are not additional animals",
+  "uncertainty": "Fixed-prediction descriptive subject resampling; no full-refit VLM permutation significance claim",
+  "extension_rule": "No hyperparameter or endpoint search; any reduction in complete seed pairs must be based on runtime/resources and disclosed",
+  "limitations": ["Unvalidated anatomical/biological meaning of the PET proxy", "Three NaF acquisition components, only one WT component", "A gain would not by itself establish personalized future modeling"]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "complete",
+  "diagnostic_only": true,
+  "independent_arithmetic": "passed",
+  "identical_initial_parameters": true,
+  "identical_initial_predictions": true,
+  "interpretation": "Both objectives can learn this small set of actual image/label pairs. The combined objective does not prevent memorization under this extended budget. This weakens a gross training-plumbing failure as an explanation of the full-study result, but does not establish adequate optimization or generalization on the full dataset.",
+  "final": {
+    "combined": {
+      "accuracy": 1.0,
+      "auc": 1.0,
+      "bce": 0.00011976200748973433,
+      "minimum_true_class_probability": 0.9997222837696926,
+      "n": 8
+    },
+    "genotype_only": {
+      "accuracy": 1.0,
+      "auc": 1.0,
+      "bce": 8.651284938239277e-07,
+      "minimum_true_class_probability": 0.9999982595546657,
+      "n": 8
+    }
+  }
+}

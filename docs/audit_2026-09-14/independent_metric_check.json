@@ -1,0 +1,261 @@
+{
+  "status": "passed",
+  "method": "Independent standard-library arithmetic; no production scoring imports.",
+  "checks": [
+    {
+      "arm": "baseline",
+      "seed": 0,
+      "subject_mae": 5.758745255271593,
+      "genotype_auc": 0.3531746031746032,
+      "mean_predictor_subject_mae": 5.676471174155146,
+      "horizon_metrics": {
+        "delta_3wk": {
+          "mae": 7.0160063242912285,
+          "mse": 84.99334654384072,
+          "r2": -0.11406207314914463
+        },
+        "delta_6wk": {
+          "mae": 6.503366594950358,
+          "mse": 62.3958318123352,
+          "r2": -0.15926763591565707
+        },
+        "delta_8wk": {
+          "mae": 1.8261062850952148,
+          "mse": 5.738958825782252,
+          "r2": -0.087864363397121
+        }
+      },
+      "genotype_positive_predictions": 14,
+      "genotype_ko_mean_logit": -0.2118977622262069,
+      "genotype_wt_mean_logit": 0.1415067728764067,
+      "prediction_dispersion": {
+        "W15": {
+          "target_sd": 8.734494386482826,
+          "prediction_sd": 1.3905108649906786
+        },
+        "W18": {
+          "target_sd": 7.336449519730613,
+          "prediction_sd": 0.8265938977782541
+        },
+        "W20": {
+          "target_sd": 2.2968317308849597,
+          "prediction_sd": 0.213870166505556
+        }
+      },
+      "prediction_sha256": "68255964571381bd3aeae9339fec1971fd58777c019084953f994714cdeaa059"
+    },
+    {
+      "arm": "longitudinal",
+      "seed": 0,
+      "subject_mae": 5.752219664255778,
+      "genotype_auc": 0.06349206349206349,
+      "mean_predictor_subject_mae": 5.676471174155146,
+      "horizon_metrics": {
+        "delta_3wk": {
+          "mae": 7.02547827720642,
+          "mse": 81.98189144480699,
+          "r2": -0.07458900793580403
+        },
+        "delta_6wk": {
+          "mae": 6.350010551452637,
+          "mse": 59.21425282070403,
+          "r2": -0.10015629067066811
+        },
+        "delta_8wk": {
+          "mae": 1.8819016208648682,
+          "mse": 5.822421432354457,
+          "r2": -0.10368535081355557
+        }
+      },
+      "genotype_positive_predictions": 2,
+      "genotype_ko_mean_logit": -0.3198359342558043,
+      "genotype_wt_mean_logit": -0.14570807479321957,
+      "prediction_dispersion": {
+        "W15": {
+          "target_sd": 8.734494386482826,
+          "prediction_sd": 0.5547811668648632
+        },
+        "W18": {
+          "target_sd": 7.336449519730613,
+          "prediction_sd": 0.46675232287877977
+        },
+        "W20": {
+          "target_sd": 2.2968317308849597,
+          "prediction_sd": 0.17704923929751734
+        }
+      },
+      "prediction_sha256": "4d4045c6280368d08564c48232262635e32fbc5e24c13e217bd48d6fe5f9700f"
+    },
+    {
+      "arm": "baseline",
+      "seed": 1,
+      "subject_mae": 5.648882314364116,
+      "genotype_auc": 0.14682539682539683,
+      "mean_predictor_subject_mae": 5.676471174155146,
+      "horizon_metrics": {
+        "delta_3wk": {
+          "mae": 6.882627967596053,
+          "mse": 82.7331130977502,
+          "r2": -0.0844357498997852
+        },
+        "delta_6wk": {
+          "mae": 6.417213755289713,
+          "mse": 61.36702854609056,
+          "r2": -0.14015324484753489
+        },
+        "delta_8wk": {
+          "mae": 1.8253819580078123,
+          "mse": 5.824484015968127,
+          "r2": -0.1040763296091789
+        }
+      },
+      "genotype_positive_predictions": 14,
+      "genotype_ko_mean_logit": -0.27863393269944936,
+      "genotype_wt_mean_logit": 0.058172053683342204,
+      "prediction_dispersion": {
+        "W15": {
+          "target_sd": 8.734494386482826,
+          "prediction_sd": 1.1995083207678254
+        },
+        "W18": {
+          "target_sd": 7.336449519730613,
+          "prediction_sd": 0.6584879728003067
+        },
+        "W20": {
+          "target_sd": 2.2968317308849597,
+          "prediction_sd": 0.18313433662063786
+        }
+      },
+      "prediction_sha256": "0e2da7665bed8c5e0e7b773424481bdc39d37a0cfcbe1d0a2994cefbb1355110"
+    },
+    {
+      "arm": "longitudinal",
+      "seed": 1,
+      "subject_mae": 5.6662291409571965,
+      "genotype_auc": 0.09126984126984126,
+      "mean_predictor_subject_mae": 5.676471174155146,
+      "horizon_metrics": {
+        "delta_3wk": {
+          "mae": 6.935638729333877,
+          "mse": 82.44758723703207,
+          "r2": -0.08069318009562743
+        },
+        "delta_6wk": {
+          "mae": 6.241142779032389,
+          "mse": 58.442776843418166,
+          "r2": -0.08582284713162247
+        },
+        "delta_8wk": {
+          "mae": 1.844090913772583,
+          "mse": 5.799530075243215,
+          "r2": -0.09934611570365348
+        }
+      },
+      "genotype_positive_predictions": 15,
+      "genotype_ko_mean_logit": -0.09705977604192283,
+      "genotype_wt_mean_logit": 0.08481936622411013,
+      "prediction_dispersion": {
+        "W15": {
+          "target_sd": 8.734494386482826,
+          "prediction_sd": 0.48198621483921555
+        },
+        "W18": {
+          "target_sd": 7.336449519730613,
+          "prediction_sd": 0.4970983763675133
+        },
+        "W20": {
+          "target_sd": 2.2968317308849597,
+          "prediction_sd": 0.13200261988186549
+        }
+      },
+      "prediction_sha256": "5fc4c786fa718814aefce73f21b3ce334c7ac0026db13a920bf50652d9a6db73"
+    },
+    {
+      "arm": "baseline",
+      "seed": 2,
+      "subject_mae": 5.426114230553309,
+      "genotype_auc": 0.1626984126984127,
+      "mean_predictor_subject_mae": 5.676471174155146,
+      "horizon_metrics": {
+        "delta_3wk": {
+          "mae": 6.482996764183044,
+          "mse": 80.50947962737244,
+          "r2": -0.05528916590623667
+        },
+        "delta_6wk": {
+          "mae": 6.301054061889648,
+          "mse": 62.03070558763661,
+          "r2": -0.15248386522100188
+        },
+        "delta_8wk": {
+          "mae": 1.8618117923736572,
+          "mse": 6.094591240548943,
+          "r2": -0.15527725870410447
+        }
+      },
+      "genotype_positive_predictions": 7,
+      "genotype_ko_mean_logit": -0.7386257029803736,
+      "genotype_wt_mean_logit": -0.02877808962431219,
+      "prediction_dispersion": {
+        "W15": {
+          "target_sd": 8.734494386482826,
+          "prediction_sd": 1.6801965510725467
+        },
+        "W18": {
+          "target_sd": 7.336449519730613,
+          "prediction_sd": 0.7253454009541145
+        },
+        "W20": {
+          "target_sd": 2.2968317308849597,
+          "prediction_sd": 0.284921051047694
+        }
+      },
+      "prediction_sha256": "c02bbd1c6f000a4d69a09965f74aaca26545238397eb5e0fcc5c0d81a6e394d1"
+    },
+    {
+      "arm": "longitudinal",
+      "seed": 2,
+      "subject_mae": 5.529656431476275,
+      "genotype_auc": 0.21031746031746032,
+      "mean_predictor_subject_mae": 5.676471174155146,
+      "horizon_metrics": {
+        "delta_3wk": {
+          "mae": 6.649939702749252,
+          "mse": 80.46962070923433,
+          "r2": -0.05476670961077201
+        },
+        "delta_6wk": {
+          "mae": 6.091128346761067,
+          "mse": 59.107868549792705,
+          "r2": -0.09817975091383135
+        },
+        "delta_8wk": {
+          "mae": 1.887738763809204,
+          "mse": 5.8940460402639285,
+          "r2": -0.11726235334177693
+        }
+      },
+      "genotype_positive_predictions": 4,
+      "genotype_ko_mean_logit": -0.21136786629046714,
+      "genotype_wt_mean_logit": -0.10464867485117996,
+      "prediction_dispersion": {
+        "W15": {
+          "target_sd": 8.734494386482826,
+          "prediction_sd": 0.7446004915336426
+        },
+        "W18": {
+          "target_sd": 7.336449519730613,
+          "prediction_sd": 0.5506060021430441
+        },
+        "W20": {
+          "target_sd": 2.2968317308849597,
+          "prediction_sd": 0.1592612612112621
+        }
+      },
+      "prediction_sha256": "09f46fa38757a34d41e05b6c3eaf9abf923e93144fb8e5e5e1c58d41883e92d9"
+    }
+  ],
+  "truth_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2",
+  "paired_results_sha256": "b1c116e46d99fd3ddbdde4a66bfe52434386e6c41b76df5459f45639a5890fc9",
+  "checker_sha256": "3db63609e6850fd874acb21b4ccf16bd14349a85d6f901e44a9ab501cb842da4"
+}

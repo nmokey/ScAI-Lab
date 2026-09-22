@@ -1,0 +1,489 @@
+<frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/monai/utils/deprecate_utils.py:321: FutureWarning: monai.transforms.spatial.dictionary Orientationd.__init__:labels: Current default value of argument `labels=(('L', 'R'), ('P', 'A'), ('I', 'S'))` was changed in version None from `labels=(('L', 'R'), ('P', 'A'), ('I', 'S'))` to `labels=None`. Default value changed to None meaning that the transform now uses the 'space' of a meta-tensor, if applicable, to determine appropriate axis labels.
+  warn_deprecated(argname, msg, warning_category)
+[i] Using device: cuda
+[i] Loading Merlin model (stanfordmimi/Merlin, ImageEmbedding=True)...
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Some weights of LongformerModel were not initialized from the model checkpoint at yikuan8/Clinical-Longformer and are newly initialized: ['longformer.pooler.dense.bias', 'longformer.pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Loading checkpoint for 'default' task from /home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/merlin/models/checkpoints/i3_resnet_clinical_longformer_best_clip_04-02-2024_23-21-36_epoch_99.pt
+[i] Model ready.
+
+[i] Found 229 CT-Hi crops in mouse_manifest.csv.
+[i] Processing 229 volumes...
+
+Size of dataset: 229
+
+[1/229] NaF_WT_01 | Week 12
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/torch/_dynamo/eval_frame.py:1181: UserWarning: torch.utils.checkpoint: the use_reentrant parameter should be passed explicitly. Starting in PyTorch 2.9, calling checkpoint without use_reentrant will raise an exception. use_reentrant=False is recommended, but if you need to preserve the current default behavior, you can pass use_reentrant=True. Refer to docs for more details on the differences between the two variants.
+  return fn(*args, **kwargs)
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/torch/utils/checkpoint.py:232: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  check_backward_validity(args)
+    [+] OK  (embedding shape: (2048,))
+[2/229] NaF_WT_02 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[3/229] NaF_WT_03 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[4/229] NaF_WT_04 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[5/229] NaF_WT_05 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[6/229] NaF_WT_06 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[7/229] NaF_WT_07 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[8/229] NaF_WT_08 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[9/229] NaF_WT_09 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[10/229] NaF_WT_10 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[11/229] NaF_WT_11 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[12/229] NaF_WT_12 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[13/229] NaF_WT_13 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[14/229] NaF_WT_14 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[15/229] NaF_WT_15 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[16/229] NaF_WT_16 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[17/229] NaF_WT_17 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[18/229] NaF_WT_18 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[19/229] NaF_KO_01 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[20/229] NaF_KO_02 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[21/229] NaF_KO_03 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[22/229] NaF_KO_04 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[23/229] NaF_KO_09 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[24/229] NaF_KO_10 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[25/229] NaF_KO_11 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[26/229] NaF_KO_12 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[27/229] NaF_KO_13 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[28/229] NaF_KO_14 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[29/229] NaF_KO_15 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[30/229] NaF_KO_16 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[31/229] NaF_WT_19 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[32/229] NaF_WT_20 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[33/229] NaF_KO_17 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[34/229] NaF_KO_18 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[35/229] NaF_KO_19 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[36/229] NaF_KO_20 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[37/229] FDG_WT_01 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[38/229] FDG_WT_02 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[39/229] FDG_WT_03 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[40/229] FDG_WT_04 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[41/229] FDG_WT_05 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[42/229] FDG_WT_06 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[43/229] FDG_WT_07 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[44/229] FDG_WT_08 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[45/229] FDG_WT_09 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[46/229] FDG_WT_10 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[47/229] FDG_WT_11 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[48/229] FDG_WT_12 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[49/229] FDG_WT_13 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[50/229] FDG_WT_14 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[51/229] FDG_WT_15 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[52/229] FDG_WT_16 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[53/229] FDG_KO_01 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[54/229] FDG_KO_02 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[55/229] FDG_KO_03 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[56/229] FDG_KO_04 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[57/229] FDG_KO_05 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[58/229] FDG_KO_06 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[59/229] FDG_KO_07 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[60/229] FDG_KO_08 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[61/229] FDG_KO_09 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[62/229] FDG_KO_10 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[63/229] FDG_KO_11 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[64/229] FDG_KO_12 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[65/229] FDG_KO_13 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[66/229] FDG_KO_14 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[67/229] FDG_KO_15 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[68/229] FDG_KO_16 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[69/229] FDG_KO_17 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[70/229] FDG_KO_18 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[71/229] FDG_KO_19 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[72/229] FDG_KO_20 | Week 12
+    [+] OK  (embedding shape: (2048,))
+[73/229] NaF_WT_01 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[74/229] NaF_WT_02 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[75/229] NaF_WT_03 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[76/229] NaF_WT_04 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[77/229] NaF_WT_05 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[78/229] NaF_WT_06 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[79/229] NaF_WT_07 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[80/229] NaF_WT_08 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[81/229] NaF_WT_09 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[82/229] NaF_WT_10 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[83/229] NaF_WT_11 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[84/229] NaF_WT_12 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[85/229] NaF_WT_13 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[86/229] NaF_WT_14 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[87/229] NaF_WT_15 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[88/229] NaF_WT_16 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[89/229] NaF_WT_17 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[90/229] NaF_WT_18 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[91/229] NaF_KO_01 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[92/229] NaF_KO_02 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[93/229] NaF_KO_03 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[94/229] NaF_KO_04 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[95/229] NaF_KO_05 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[96/229] NaF_KO_06 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[97/229] NaF_KO_07 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[98/229] NaF_KO_08 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[99/229] NaF_KO_12 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[100/229] NaF_KO_13 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[101/229] NaF_KO_14 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[102/229] NaF_KO_15 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[103/229] NaF_KO_16 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[104/229] NaF_KO_17 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[105/229] NaF_KO_18 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[106/229] FDG_KO_01 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[107/229] FDG_KO_02 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[108/229] FDG_KO_03 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[109/229] FDG_KO_04 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[110/229] FDG_KO_05 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[111/229] FDG_KO_06 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[112/229] FDG_KO_07 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[113/229] FDG_KO_08 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[114/229] FDG_KO_09 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[115/229] FDG_KO_10 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[116/229] FDG_KO_11 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[117/229] FDG_KO_12 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[118/229] FDG_KO_13 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[119/229] FDG_KO_14 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[120/229] FDG_KO_15 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[121/229] FDG_KO_16 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[122/229] FDG_KO_17 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[123/229] FDG_KO_18 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[124/229] FDG_WT_03 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[125/229] FDG_WT_04 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[126/229] FDG_WT_05 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[127/229] FDG_WT_06 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[128/229] FDG_WT_07 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[129/229] FDG_WT_08 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[130/229] FDG_WT_09 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[131/229] FDG_WT_10 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[132/229] FDG_WT_11 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[133/229] FDG_WT_12 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[134/229] FDG_WT_13 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[135/229] FDG_WT_14 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[136/229] FDG_WT_15 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[137/229] FDG_WT_16 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[138/229] FDG_WT_17 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[139/229] FDG_WT_18 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[140/229] NaF_WT_01 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[141/229] NaF_WT_02 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[142/229] NaF_WT_03 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[143/229] NaF_WT_04 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[144/229] NaF_WT_05 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[145/229] NaF_WT_06 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[146/229] NaF_WT_07 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[147/229] NaF_WT_12 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[148/229] NaF_WT_13 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[149/229] NaF_WT_14 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[150/229] NaF_WT_15 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[151/229] NaF_KO_12 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[152/229] NaF_KO_13 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[153/229] NaF_KO_14 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[154/229] NaF_KO_15 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[155/229] FDG_WT_01 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[156/229] FDG_WT_02 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[157/229] FDG_WT_03 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[158/229] FDG_WT_04 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[159/229] FDG_WT_05 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[160/229] FDG_WT_06 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[161/229] FDG_WT_07 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[162/229] FDG_WT_08 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[163/229] FDG_WT_13 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[164/229] FDG_WT_14 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[165/229] FDG_WT_15 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[166/229] FDG_WT_16 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[167/229] FDG_KO_01 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[168/229] FDG_KO_02 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[169/229] FDG_KO_03 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[170/229] FDG_KO_04 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[171/229] FDG_KO_05 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[172/229] FDG_KO_06 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[173/229] FDG_KO_07 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[174/229] FDG_KO_08 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[175/229] FDG_KO_13 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[176/229] FDG_KO_14 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[177/229] FDG_KO_15 | Week 18
+    [+] OK  (embedding shape: (2048,))
+[178/229] NaF_WT_01 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[179/229] NaF_WT_02 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[180/229] NaF_WT_03 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[181/229] NaF_WT_04 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[182/229] NaF_WT_05 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[183/229] NaF_WT_06 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[184/229] NaF_WT_07 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[185/229] NaF_WT_08 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[186/229] NaF_WT_09 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[187/229] NaF_WT_10 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[188/229] NaF_WT_11 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[189/229] NaF_WT_12 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[190/229] NaF_KO_01 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[191/229] NaF_KO_02 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[192/229] NaF_KO_03 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[193/229] NaF_KO_04 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[194/229] NaF_KO_05 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[195/229] NaF_KO_06 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[196/229] NaF_KO_07 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[197/229] NaF_KO_08 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[198/229] NaF_KO_09 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[199/229] NaF_KO_10 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[200/229] NaF_KO_11 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[201/229] NaF_KO_12 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[202/229] FDG_KO_01 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[203/229] FDG_KO_02 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[204/229] FDG_KO_03 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[205/229] FDG_KO_04 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[206/229] FDG_KO_05 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[207/229] FDG_KO_06 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[208/229] FDG_KO_07 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[209/229] FDG_KO_08 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[210/229] FDG_KO_09 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[211/229] FDG_KO_11 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[212/229] FDG_KO_12 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[213/229] FDG_WT_01 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[214/229] FDG_WT_02 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[215/229] FDG_WT_03 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[216/229] FDG_WT_04 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[217/229] FDG_WT_05 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[218/229] FDG_WT_06 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[219/229] FDG_WT_07 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[220/229] FDG_WT_08 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[221/229] FDG_WT_09 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[222/229] FDG_WT_10 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[223/229] FDG_WT_11 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[224/229] FDG_WT_12 | Week 20
+    [+] OK  (embedding shape: (2048,))
+[225/229] NaF_KO_09 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[226/229] NaF_KO_10 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[227/229] NaF_KO_11 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[228/229] FDG_WT_01 | Week 15
+    [+] OK  (embedding shape: (2048,))
+[229/229] FDG_WT_02 | Week 15
+    [+] OK  (embedding shape: (2048,))
+
+[+] Saved 229 embeddings → /data1/Processed_NIfTI_Test/embeddings/merlin_validated_20260914/merlin_embeddings.npz
+    Array shape: (229, 2048)  (N crops × 2048 dimensions)
+
+    To evaluate, run:
+    python scripts/evaluate_embeddings.py \
+        --embeddings /data1/Processed_NIfTI_Test/embeddings/merlin_validated_20260914/merlin_embeddings.npz \
+        --output-dir /data1/Processed_NIfTI_Test/embeddings/merlin_validated_20260914

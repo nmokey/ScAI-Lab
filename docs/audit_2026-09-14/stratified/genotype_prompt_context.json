@@ -1,0 +1,3415 @@
+{
+  "definition": "Saved eval-mode genotype outputs by training question type; bias gradients are BCE-only at fixed features, without training dropout",
+  "diagnostic_only": true,
+  "folds": [
+    {
+      "all_questions_genotype_bias_bce_gradient": -0.019233112734380386,
+      "fold": "fold_00",
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 0,
+          "score": -0.5891284346580505
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 1,
+          "score": -0.46760475635528564
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 2,
+          "score": -0.5466030240058899
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 3,
+          "score": 0.29897966980934143
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 4,
+          "score": -0.03788035362958908
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 5,
+          "score": -0.16833746433258057
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 6,
+          "score": -0.5120719075202942
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 7,
+          "score": -0.42865806818008423
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 8,
+          "score": -0.5173953175544739
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 9,
+          "score": -0.6879609227180481
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 10,
+          "score": -0.5115184187889099
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 11,
+          "score": -0.5883582234382629
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 15,
+          "score": -0.11905404180288315
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 16,
+          "score": -0.2476590871810913
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 17,
+          "score": -0.3508063554763794
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 18,
+          "score": -0.5030526518821716
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 19,
+          "score": -0.426048219203949
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 20,
+          "score": -0.5106059908866882
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 24,
+          "score": -0.41780510544776917
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 25,
+          "score": -0.3720110058784485
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 26,
+          "score": -0.4724465608596802
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 27,
+          "score": -0.35202357172966003
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 28,
+          "score": -0.35766175389289856
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 29,
+          "score": -0.46116963028907776
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 36,
+          "score": -0.5476683974266052
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 37,
+          "score": -0.4468059837818146
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 38,
+          "score": -0.5271453261375427
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 39,
+          "score": 0.2552414536476135
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 40,
+          "score": -0.08467011898756027
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 41,
+          "score": -0.1922539472579956
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 45,
+          "score": -0.5831148624420166
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 46,
+          "score": -0.4717199504375458
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 47,
+          "score": -0.5400550961494446
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 48,
+          "score": -0.24262017011642456
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 49,
+          "score": -0.2947126626968384
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 50,
+          "score": -0.40633875131607056
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 51,
+          "score": -0.21473130583763123
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 52,
+          "score": -0.2969430685043335
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 53,
+          "score": -0.3843876123428345
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 60,
+          "score": -0.5934690833091736
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 61,
+          "score": -0.4720483422279358
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 62,
+          "score": -0.5494537949562073
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 63,
+          "score": -0.3815035820007324
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 64,
+          "score": -0.365495502948761
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 65,
+          "score": -0.4588124752044678
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 66,
+          "score": -0.5983014106750488
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 67,
+          "score": -0.47936153411865234
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 68,
+          "score": -0.5558055639266968
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 69,
+          "score": -0.5551561713218689
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 70,
+          "score": -0.4531186819076538
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 71,
+          "score": -0.5352627635002136
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 72,
+          "score": -0.39206331968307495
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 73,
+          "score": -0.3756136894226074
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 74,
+          "score": -0.46752554178237915
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 75,
+          "score": -0.2550364136695862
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 76,
+          "score": -0.31877750158309937
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 77,
+          "score": -0.40305882692337036
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 78,
+          "score": -0.662200391292572
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 79,
+          "score": -0.5060958862304688
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 80,
+          "score": -0.5827087759971619
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 81,
+          "score": -0.582049548625946
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 82,
+          "score": -0.47091707587242126
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 83,
+          "score": -0.5450324416160583
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 84,
+          "score": -0.5034230947494507
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 85,
+          "score": -0.4345186948776245
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 86,
+          "score": -0.5085899829864502
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 87,
+          "score": -0.40796035528182983
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 88,
+          "score": -0.3723689317703247
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 89,
+          "score": -0.4687446653842926
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 93,
+          "score": -0.5666436553001404
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 94,
+          "score": -0.4508652985095978
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 95,
+          "score": -0.5364834666252136
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_09",
+          "qid": 12,
+          "score": -0.5820105075836182
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_09",
+          "qid": 13,
+          "score": -0.4584346115589142
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_09",
+          "qid": 14,
+          "score": -0.535228967666626
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_12",
+          "qid": 21,
+          "score": -0.6170926690101624
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_12",
+          "qid": 22,
+          "score": -0.4795922636985779
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_12",
+          "qid": 23,
+          "score": -0.5674115419387817
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_15",
+          "qid": 30,
+          "score": -0.6026011109352112
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_15",
+          "qid": 31,
+          "score": -0.4762933850288391
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_15",
+          "qid": 32,
+          "score": -0.5474816560745239
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_16",
+          "qid": 33,
+          "score": -0.6241075396537781
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_16",
+          "qid": 34,
+          "score": -0.48718249797821045
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_16",
+          "qid": 35,
+          "score": -0.5674991011619568
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_01",
+          "qid": 42,
+          "score": -0.6058678030967712
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_01",
+          "qid": 43,
+          "score": -0.4778349995613098
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_01",
+          "qid": 44,
+          "score": -0.5630007386207581
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_05",
+          "qid": 54,
+          "score": -0.6155634522438049
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_05",
+          "qid": 55,
+          "score": -0.4793384075164795
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_05",
+          "qid": 56,
+          "score": -0.5640369057655334
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_06",
+          "qid": 57,
+          "score": -0.6189454197883606
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_06",
+          "qid": 58,
+          "score": -0.4805522561073303
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_06",
+          "qid": 59,
+          "score": -0.563563883304596
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_17",
+          "qid": 90,
+          "score": -0.5692872405052185
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_17",
+          "qid": 91,
+          "score": -0.4637832045555115
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_17",
+          "qid": 92,
+          "score": -0.5418100953102112
+        }
+      ],
+      "training_all_questions": {
+        "accuracy": 0.6111111111111112,
+        "auc": 0.6031746031746033,
+        "bce": 0.6606363765104496,
+        "fn": 28,
+        "fp": 0,
+        "logit_ko_minus_wt": 0.09516269099854291,
+        "logit_sd": 0.1760265289128445,
+        "n": 72,
+        "positive_predictions": 2,
+        "probability_ko_minus_wt": 0.02334423081524989,
+        "probability_max": 0.5741930696905321,
+        "probability_mean": 0.3974335539322863,
+        "probability_min": 0.3344868295452825,
+        "probability_sd": 0.04278822046948919,
+        "tn": 42,
+        "tp": 2
+      },
+      "training_by_question": {
+        "combined": {
+          "accuracy": 0.5833333333333334,
+          "auc": 0.6,
+          "bce": 0.6675396499293335,
+          "fn": 10,
+          "fp": 0,
+          "genotype_bias_bce_gradient": -0.031748165619568613,
+          "logit_ko_minus_wt": 0.06236351302691867,
+          "logit_sd": 0.10656618311892171,
+          "n": 24,
+          "positive_predictions": 0,
+          "probability_ko_minus_wt": 0.015121167457776252,
+          "probability_max": 0.4580147335862646,
+          "probability_mean": 0.38491850104709807,
+          "probability_min": 0.35701164268613494,
+          "probability_sd": 0.02560437846085093,
+          "tn": 14,
+          "tp": 0
+        },
+        "genotype": {
+          "accuracy": 0.6666666666666666,
+          "auc": 0.6142857142857143,
+          "bce": 0.6510989505635701,
+          "fn": 8,
+          "fp": 0,
+          "genotype_bias_bce_gradient": -0.01545129547400309,
+          "logit_ko_minus_wt": 0.14956513504896846,
+          "logit_sd": 0.25148737173605606,
+          "n": 24,
+          "positive_predictions": 2,
+          "probability_ko_minus_wt": 0.03685195374659039,
+          "probability_max": 0.5741930696905321,
+          "probability_mean": 0.4012153711926636,
+          "probability_min": 0.3344868295452825,
+          "probability_sd": 0.06123541104965274,
+          "tn": 14,
+          "tp": 2
+        },
+        "tbr": {
+          "accuracy": 0.5833333333333334,
+          "auc": 0.65,
+          "bce": 0.6632705290384452,
+          "fn": 10,
+          "fp": 0,
+          "genotype_bias_bce_gradient": -0.0104998771095694,
+          "logit_ko_minus_wt": 0.07355942491974149,
+          "logit_sd": 0.1187989053754784,
+          "n": 24,
+          "positive_predictions": 0,
+          "probability_ko_minus_wt": 0.018059571241383132,
+          "probability_max": 0.4905310438326803,
+          "probability_mean": 0.4061667895570973,
+          "probability_min": 0.374837640233252,
+          "probability_sd": 0.028981676539876173,
+          "tn": 14,
+          "tp": 0
+        }
+      },
+      "training_positive_fraction": 0.4166666666666667
+    },
+    {
+      "all_questions_genotype_bias_bce_gradient": 0.0006762997276959504,
+      "fold": "fold_01",
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 0,
+          "score": -0.09605930000543594
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 1,
+          "score": -0.03400499373674393
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 2,
+          "score": -0.08913177996873856
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 9,
+          "score": -0.38622546195983887
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 10,
+          "score": -0.30907899141311646
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 11,
+          "score": -0.3760036528110504
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 12,
+          "score": 0.03560086339712143
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 13,
+          "score": 0.09839924424886703
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 14,
+          "score": 0.03162094205617905
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 15,
+          "score": -0.18228483200073242
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 16,
+          "score": -0.13866174221038818
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 17,
+          "score": -0.22784247994422913
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 18,
+          "score": -0.5021765828132629
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 19,
+          "score": -0.4288252294063568
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 20,
+          "score": -0.4637649953365326
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 21,
+          "score": -0.48119091987609863
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 22,
+          "score": -0.38888680934906006
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 23,
+          "score": -0.4329545199871063
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 27,
+          "score": -0.25071269273757935
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 28,
+          "score": -0.2081131935119629
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 29,
+          "score": -0.27044299244880676
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 30,
+          "score": -0.4333100914955139
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 31,
+          "score": -0.3639434278011322
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 32,
+          "score": -0.41992712020874023
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 33,
+          "score": -0.30175283551216125
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 34,
+          "score": -0.24795854091644287
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 35,
+          "score": -0.3160971999168396
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 39,
+          "score": -0.15892809629440308
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 40,
+          "score": -0.1306115686893463
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 41,
+          "score": -0.22322684526443481
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 42,
+          "score": -0.6656774878501892
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 43,
+          "score": -0.5908308029174805
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 44,
+          "score": -0.6294970512390137
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 45,
+          "score": -0.5550337433815002
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 46,
+          "score": -0.5036376714706421
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 47,
+          "score": -0.5614195466041565
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 48,
+          "score": -0.17309358716011047
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 49,
+          "score": -0.12903085350990295
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 50,
+          "score": -0.19724801182746887
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 51,
+          "score": -0.21959295868873596
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 52,
+          "score": -0.16370335221290588
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 53,
+          "score": -0.23283103108406067
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 54,
+          "score": -0.5749033689498901
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 55,
+          "score": -0.5007176995277405
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 56,
+          "score": -0.5366387963294983
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 57,
+          "score": -0.5011222958564758
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 58,
+          "score": -0.4298458993434906
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 59,
+          "score": -0.45628905296325684
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 63,
+          "score": -0.2003779411315918
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 64,
+          "score": -0.17476516962051392
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 65,
+          "score": -0.2699826657772064
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 66,
+          "score": -0.5941047072410583
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 67,
+          "score": -0.49812930822372437
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 68,
+          "score": -0.5270615220069885
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 69,
+          "score": -0.5708948969841003
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 70,
+          "score": -0.5159136652946472
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 71,
+          "score": -0.550258457660675
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 75,
+          "score": -0.18471702933311462
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 76,
+          "score": -0.15724030137062073
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 77,
+          "score": -0.2564805746078491
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 78,
+          "score": -0.4274187684059143
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 79,
+          "score": -0.3646336793899536
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 80,
+          "score": -0.4121010899543762
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 81,
+          "score": -0.367268830537796
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 82,
+          "score": -0.296337753534317
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 83,
+          "score": -0.3434906303882599
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 90,
+          "score": -0.4220268130302429
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 91,
+          "score": -0.3534950911998749
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 92,
+          "score": -0.410361111164093
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 93,
+          "score": -0.3315648138523102
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 94,
+          "score": -0.29803138971328735
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 95,
+          "score": -0.345480352640152
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_02",
+          "qid": 3,
+          "score": -0.3488128185272217
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_02",
+          "qid": 4,
+          "score": -0.31244146823883057
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_02",
+          "qid": 5,
+          "score": -0.3632040023803711
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_03",
+          "qid": 6,
+          "score": -0.4909081757068634
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_03",
+          "qid": 7,
+          "score": -0.4177583158016205
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_03",
+          "qid": 8,
+          "score": -0.4505043029785156
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_13",
+          "qid": 24,
+          "score": -0.003047442063689232
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_13",
+          "qid": 25,
+          "score": 0.03383510559797287
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_13",
+          "qid": 26,
+          "score": -0.03741023689508438
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_17",
+          "qid": 36,
+          "score": 0.06378185003995895
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_17",
+          "qid": 37,
+          "score": 0.105170838534832
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_17",
+          "qid": 38,
+          "score": 0.03160851448774338
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_07",
+          "qid": 60,
+          "score": -0.03457693010568619
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_07",
+          "qid": 61,
+          "score": -0.007291054353117943
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_07",
+          "qid": 62,
+          "score": -0.07196352630853653
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_11",
+          "qid": 72,
+          "score": 0.07308550924062729
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_11",
+          "qid": 73,
+          "score": 0.0962449237704277
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_11",
+          "qid": 74,
+          "score": 0.02930050529539585
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_15",
+          "qid": 84,
+          "score": 0.0021613482385873795
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_15",
+          "qid": 85,
+          "score": 0.046344660222530365
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_15",
+          "qid": 86,
+          "score": -0.023844456300139427
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_16",
+          "qid": 87,
+          "score": -0.22488290071487427
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_16",
+          "qid": 88,
+          "score": -0.21851083636283875
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_16",
+          "qid": 89,
+          "score": -0.26350921392440796
+        }
+      ],
+      "training_all_questions": {
+        "accuracy": 0.625,
+        "auc": 0.7111111111111111,
+        "bce": 0.6496241467819392,
+        "fn": 27,
+        "fp": 0,
+        "logit_ko_minus_wt": 0.13614656165951777,
+        "logit_sd": 0.17024102677634284,
+        "n": 72,
+        "positive_predictions": 3,
+        "probability_ko_minus_wt": 0.03298595360804857,
+        "probability_max": 0.5245799814711679,
+        "probability_mean": 0.41734296639436264,
+        "probability_min": 0.3394653982224229,
+        "probability_sd": 0.04132076033823953,
+        "tn": 42,
+        "tp": 3
+      },
+      "training_by_question": {
+        "combined": {
+          "accuracy": 0.625,
+          "auc": 0.7071428571428572,
+          "bce": 0.6504449494561871,
+          "fn": 9,
+          "fp": 0,
+          "genotype_bias_bce_gradient": -0.003986969284611064,
+          "logit_ko_minus_wt": 0.13044721377747398,
+          "logit_sd": 0.155074640754349,
+          "n": 24,
+          "positive_predictions": 1,
+          "probability_ko_minus_wt": 0.03156218160024993,
+          "probability_max": 0.5079045768867063,
+          "probability_mean": 0.4126796973820556,
+          "probability_min": 0.3476245886564723,
+          "probability_sd": 0.03758785900034004,
+          "tn": 14,
+          "tp": 1
+        },
+        "genotype": {
+          "accuracy": 0.625,
+          "auc": 0.7142857142857143,
+          "bce": 0.6496580653791869,
+          "fn": 9,
+          "fp": 0,
+          "genotype_bias_bce_gradient": -0.004090250242645421,
+          "logit_ko_minus_wt": 0.13771009381328314,
+          "logit_sd": 0.1792418065070273,
+          "n": 24,
+          "positive_predictions": 1,
+          "probability_ko_minus_wt": 0.03322020570296291,
+          "probability_max": 0.5088992759413481,
+          "probability_mean": 0.41257641642402126,
+          "probability_min": 0.3394653982224229,
+          "probability_sd": 0.043337305795263494,
+          "tn": 14,
+          "tp": 1
+        },
+        "tbr": {
+          "accuracy": 0.625,
+          "auc": 0.7214285714285715,
+          "bce": 0.6487694255104435,
+          "fn": 9,
+          "fp": 0,
+          "genotype_bias_bce_gradient": 0.010106118710344225,
+          "logit_ko_minus_wt": 0.14028237738779614,
+          "logit_sd": 0.16879492531915105,
+          "n": 24,
+          "positive_predictions": 1,
+          "probability_ko_minus_wt": 0.034175473520932975,
+          "probability_max": 0.5245799814711679,
+          "probability_mean": 0.4267727853770109,
+          "probability_min": 0.35644425225122217,
+          "probability_sd": 0.04120508372061204,
+          "tn": 14,
+          "tp": 1
+        }
+      },
+      "training_positive_fraction": 0.4166666666666667
+    },
+    {
+      "all_questions_genotype_bias_bce_gradient": 0.01116075166282482,
+      "fold": "fold_02",
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 3,
+          "score": -0.380874365568161
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 4,
+          "score": -0.3950490653514862
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 5,
+          "score": -0.426160603761673
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 6,
+          "score": -0.10596828162670135
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 7,
+          "score": -0.06025535985827446
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 8,
+          "score": -0.0821937769651413
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 9,
+          "score": -0.0689188688993454
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 10,
+          "score": -0.0011617355048656464
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_04",
+          "qid": 11,
+          "score": -0.02849174663424492
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 12,
+          "score": 0.5395202040672302
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 13,
+          "score": 0.5113649964332581
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 14,
+          "score": 0.4751110374927521
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 15,
+          "score": 0.8023460507392883
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 16,
+          "score": 0.7683069109916687
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_10",
+          "qid": 17,
+          "score": 0.7334131598472595
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 21,
+          "score": 0.020555395632982254
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 22,
+          "score": 0.06995557248592377
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 23,
+          "score": 0.05296458676457405
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 24,
+          "score": 0.8416088223457336
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 25,
+          "score": 0.8069136142730713
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 26,
+          "score": 0.7914931178092957
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 30,
+          "score": -0.3717317283153534
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 31,
+          "score": -0.38307926058769226
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 32,
+          "score": -0.4030406177043915
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 33,
+          "score": 0.1459493786096573
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 34,
+          "score": 0.1658829301595688
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 35,
+          "score": 0.11745823919773102
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 36,
+          "score": 0.7700613737106323
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 37,
+          "score": 0.7230787873268127
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 38,
+          "score": 0.7101255059242249
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 39,
+          "score": 0.016674835234880447
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 40,
+          "score": -0.03786436840891838
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_18",
+          "qid": 41,
+          "score": -0.05763332173228264
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 42,
+          "score": -0.7289772629737854
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 43,
+          "score": -0.6956556439399719
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 44,
+          "score": -0.7340417504310608
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 45,
+          "score": -0.6490844488143921
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 46,
+          "score": -0.6191678047180176
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_02",
+          "qid": 47,
+          "score": -0.6530815958976746
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 48,
+          "score": -0.39991164207458496
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 49,
+          "score": -0.4077615439891815
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_03",
+          "qid": 50,
+          "score": -0.40836864709854126
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 54,
+          "score": -0.5975807309150696
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 55,
+          "score": -0.5588236451148987
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 56,
+          "score": -0.5912320613861084
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 57,
+          "score": -0.6634939312934875
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 58,
+          "score": -0.6375271677970886
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 59,
+          "score": -0.6784766316413879
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 60,
+          "score": 0.22811277210712433
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 61,
+          "score": 0.21768726408481598
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 62,
+          "score": 0.18478943407535553
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 66,
+          "score": -0.23915855586528778
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 67,
+          "score": -0.17484231293201447
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_09",
+          "qid": 68,
+          "score": -0.19341497123241425
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 72,
+          "score": -0.335603803396225
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 73,
+          "score": -0.4801713824272156
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 74,
+          "score": -0.4731528162956238
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 75,
+          "score": -1.370576024055481
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 76,
+          "score": -1.5619572401046753
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_12",
+          "qid": 77,
+          "score": -1.5259404182434082
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 81,
+          "score": -0.2471397966146469
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 82,
+          "score": -0.230452761054039
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_14",
+          "qid": 83,
+          "score": -0.27029386162757874
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 84,
+          "score": -0.09070418775081635
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 85,
+          "score": -0.09326790273189545
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 86,
+          "score": -0.13620488345623016
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 87,
+          "score": -0.009129684418439865
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 88,
+          "score": -0.042425673454999924
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 89,
+          "score": -0.08026359975337982
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 90,
+          "score": 0.0764942318201065
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 91,
+          "score": 0.10158683359622955
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 92,
+          "score": 0.06768180429935455
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_01",
+          "qid": 0,
+          "score": 0.5799393653869629
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_01",
+          "qid": 1,
+          "score": 0.5476941466331482
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_01",
+          "qid": 2,
+          "score": 0.5211250185966492
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_11",
+          "qid": 18,
+          "score": -0.2095421403646469
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_11",
+          "qid": 19,
+          "score": -0.1803373545408249
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_11",
+          "qid": 20,
+          "score": -0.19459907710552216
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_14",
+          "qid": 27,
+          "score": -0.4813995659351349
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_14",
+          "qid": 28,
+          "score": -0.48152226209640503
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_14",
+          "qid": 29,
+          "score": -0.4935600161552429
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_04",
+          "qid": 51,
+          "score": -0.7224141955375671
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_04",
+          "qid": 52,
+          "score": -0.7494383454322815
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_04",
+          "qid": 53,
+          "score": -0.755456268787384
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_08",
+          "qid": 63,
+          "score": -0.7789183855056763
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_08",
+          "qid": 64,
+          "score": -0.7589445114135742
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_08",
+          "qid": 65,
+          "score": -0.7344068884849548
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_10",
+          "qid": 69,
+          "score": -0.21201680600643158
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_10",
+          "qid": 70,
+          "score": -0.16375090181827545
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_10",
+          "qid": 71,
+          "score": -0.17943499982357025
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_13",
+          "qid": 78,
+          "score": 0.03624512627720833
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_13",
+          "qid": 79,
+          "score": 0.07228432595729828
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_13",
+          "qid": 80,
+          "score": 0.023233074694871902
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_18",
+          "qid": 93,
+          "score": 0.1908789426088333
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_18",
+          "qid": 94,
+          "score": 0.23062537610530853
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_18",
+          "qid": 95,
+          "score": 0.18073131144046783
+        }
+      ],
+      "training_all_questions": {
+        "accuracy": 0.7222222222222222,
+        "auc": 0.8337218337218337,
+        "bce": 0.5748927766091783,
+        "fn": 14,
+        "fp": 6,
+        "logit_ko_minus_wt": 0.5923113074926507,
+        "logit_sd": 0.5174708175653229,
+        "n": 72,
+        "positive_predictions": 25,
+        "probability_ko_minus_wt": 0.13924998925860343,
+        "probability_max": 0.6988039443559549,
+        "probability_mean": 0.46949408499615813,
+        "probability_min": 0.17336597517684202,
+        "probability_sd": 0.12016427775158706,
+        "tn": 33,
+        "tp": 19
+      },
+      "training_by_question": {
+        "combined": {
+          "accuracy": 0.7083333333333334,
+          "auc": 0.8391608391608392,
+          "bce": 0.5741884555306506,
+          "fn": 5,
+          "fp": 2,
+          "genotype_bias_bce_gradient": 0.00673897956701669,
+          "logit_ko_minus_wt": 0.5936475002004967,
+          "logit_sd": 0.5160653349174197,
+          "n": 24,
+          "positive_predictions": 8,
+          "probability_ko_minus_wt": 0.13947904047201087,
+          "probability_max": 0.688151841981572,
+          "probability_mean": 0.46507231290035,
+          "probability_min": 0.17858842767901806,
+          "probability_sd": 0.11954797344724098,
+          "tn": 11,
+          "tp": 6
+        },
+        "genotype": {
+          "accuracy": 0.75,
+          "auc": 0.8181818181818182,
+          "bce": 0.575849132919462,
+          "fn": 4,
+          "fp": 2,
+          "genotype_bias_bce_gradient": 0.013948920178033286,
+          "logit_ko_minus_wt": 0.5875117504461245,
+          "logit_sd": 0.5128416550128929,
+          "n": 24,
+          "positive_predictions": 9,
+          "probability_ko_minus_wt": 0.13854355448043898,
+          "probability_max": 0.6988039443559549,
+          "probability_mean": 0.4722822535113666,
+          "probability_min": 0.20252679702087198,
+          "probability_sd": 0.12013086186687627,
+          "tn": 11,
+          "tp": 7
+        },
+        "tbr": {
+          "accuracy": 0.7083333333333334,
+          "auc": 0.8461538461538461,
+          "bce": 0.5746407413774222,
+          "fn": 5,
+          "fp": 2,
+          "genotype_bias_bce_gradient": 0.012794355243424538,
+          "logit_ko_minus_wt": 0.595774671831331,
+          "logit_sd": 0.5228850822028062,
+          "n": 24,
+          "positive_predictions": 8,
+          "probability_ko_minus_wt": 0.13972737282336023,
+          "probability_max": 0.6914514245430377,
+          "probability_mean": 0.47112768857675785,
+          "probability_min": 0.17336597517684202,
+          "probability_sd": 0.12068647149397452,
+          "tn": 11,
+          "tp": 6
+        }
+      },
+      "training_positive_fraction": 0.4583333333333333
+    },
+    {
+      "all_questions_genotype_bias_bce_gradient": -0.03329408054987304,
+      "fold": "fold_03",
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 0,
+          "score": -0.20962272584438324
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 1,
+          "score": -0.2309359461069107
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_01",
+          "qid": 2,
+          "score": -0.3893428444862366
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 3,
+          "score": -0.9749196171760559
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 4,
+          "score": -0.9224570989608765
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_02",
+          "qid": 5,
+          "score": -1.0683870315551758
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 6,
+          "score": 0.12451250851154327
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 7,
+          "score": 0.04664651304483414
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_03",
+          "qid": 8,
+          "score": -0.09236329048871994
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 12,
+          "score": 0.3825545310974121
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 13,
+          "score": 0.268461138010025
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_09",
+          "qid": 14,
+          "score": 0.13476796448230743
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 18,
+          "score": 0.09634925425052643
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 19,
+          "score": 0.005066683515906334
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_11",
+          "qid": 20,
+          "score": -0.14428335428237915
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 21,
+          "score": 0.2596851587295532
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 22,
+          "score": 0.1491692066192627
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_12",
+          "qid": 23,
+          "score": -0.00047613121569156647
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 24,
+          "score": 0.3950549364089966
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 25,
+          "score": 0.26447242498397827
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_13",
+          "qid": 26,
+          "score": 0.1276024430990219
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 27,
+          "score": -0.7594398856163025
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 28,
+          "score": -0.7328101396560669
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_14",
+          "qid": 29,
+          "score": -0.8892419934272766
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 30,
+          "score": -0.3179686665534973
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 31,
+          "score": -0.35612839460372925
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_15",
+          "qid": 32,
+          "score": -0.5230814814567566
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 33,
+          "score": 0.12332941591739655
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 34,
+          "score": 0.025818897411227226
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_16",
+          "qid": 35,
+          "score": -0.12201641499996185
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 36,
+          "score": 0.0930103212594986
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 37,
+          "score": 0.020283600315451622
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "train",
+          "pid": "NaF_KO_17",
+          "qid": 38,
+          "score": -0.13438399136066437
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 42,
+          "score": -0.40901967883110046
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 43,
+          "score": -0.41753512620925903
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_01",
+          "qid": 44,
+          "score": -0.5946575403213501
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 51,
+          "score": -1.0467723608016968
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 52,
+          "score": -0.9960917234420776
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_04",
+          "qid": 53,
+          "score": -1.1398228406906128
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 54,
+          "score": -0.43194830417633057
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 55,
+          "score": -0.43488335609436035
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_05",
+          "qid": 56,
+          "score": -0.6107026934623718
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 57,
+          "score": -0.2613452076911926
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 58,
+          "score": -0.2999187707901001
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_06",
+          "qid": 59,
+          "score": -0.4637475609779358
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 60,
+          "score": -0.4199739098548889
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 61,
+          "score": -0.4154905676841736
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_07",
+          "qid": 62,
+          "score": -0.5904085636138916
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 63,
+          "score": -1.0928095579147339
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 64,
+          "score": -1.02152419090271
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_08",
+          "qid": 65,
+          "score": -1.170522689819336
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 69,
+          "score": 0.08616818487644196
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 70,
+          "score": 0.005752114579081535
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_10",
+          "qid": 71,
+          "score": -0.1481575220823288
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 72,
+          "score": -0.02352123148739338
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 73,
+          "score": -0.07406441122293472
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_11",
+          "qid": 74,
+          "score": -0.2356378585100174
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 78,
+          "score": 0.0823683887720108
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 79,
+          "score": -0.013702871277928352
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_13",
+          "qid": 80,
+          "score": -0.17271046340465546
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 84,
+          "score": 0.30506646633148193
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 85,
+          "score": 0.21251215040683746
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_15",
+          "qid": 86,
+          "score": 0.06883891671895981
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 87,
+          "score": -1.3210010528564453
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 88,
+          "score": -1.236830711364746
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_16",
+          "qid": 89,
+          "score": -1.3699222803115845
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 90,
+          "score": -0.17182855308055878
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 91,
+          "score": -0.21991033852100372
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_17",
+          "qid": 92,
+          "score": -0.399042546749115
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 93,
+          "score": -0.3749302327632904
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 94,
+          "score": -0.3884001672267914
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "train",
+          "pid": "NaF_WT_18",
+          "qid": 95,
+          "score": -0.5584896802902222
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_04",
+          "qid": 9,
+          "score": -0.07821927964687347
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_04",
+          "qid": 10,
+          "score": -0.1470123678445816
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_04",
+          "qid": 11,
+          "score": -0.32567036151885986
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_10",
+          "qid": 15,
+          "score": -0.41572389006614685
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_10",
+          "qid": 16,
+          "score": -0.4391500949859619
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_10",
+          "qid": 17,
+          "score": -0.5807150602340698
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_18",
+          "qid": 39,
+          "score": -0.8273852467536926
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_18",
+          "qid": 40,
+          "score": -0.7966182231903076
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "membership": "test",
+          "pid": "NaF_KO_18",
+          "qid": 41,
+          "score": -0.9468624591827393
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_02",
+          "qid": 45,
+          "score": -0.271989643573761
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_02",
+          "qid": 46,
+          "score": -0.3101194500923157
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_02",
+          "qid": 47,
+          "score": -0.4736217260360718
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_03",
+          "qid": 48,
+          "score": -0.07586203515529633
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_03",
+          "qid": 49,
+          "score": -0.13815388083457947
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_03",
+          "qid": 50,
+          "score": -0.28275221586227417
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_09",
+          "qid": 66,
+          "score": -0.2957024872303009
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_09",
+          "qid": 67,
+          "score": -0.3166016936302185
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_09",
+          "qid": 68,
+          "score": -0.48335909843444824
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_12",
+          "qid": 75,
+          "score": -0.6718264818191528
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_12",
+          "qid": 76,
+          "score": -0.6776240468025208
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_12",
+          "qid": 77,
+          "score": -0.8228851556777954
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_14",
+          "qid": 81,
+          "score": -0.06083028018474579
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_14",
+          "qid": 82,
+          "score": -0.12227396667003632
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "membership": "test",
+          "pid": "NaF_WT_14",
+          "qid": 83,
+          "score": -0.2876792550086975
+        }
+      ],
+      "training_all_questions": {
+        "accuracy": 0.6805555555555556,
+        "auc": 0.7171717171717171,
+        "bce": 0.6437392330948574,
+        "fn": 17,
+        "fp": 6,
+        "logit_ko_minus_wt": 0.29334927654644966,
+        "logit_sd": 0.45079748482356785,
+        "n": 72,
+        "positive_predictions": 22,
+        "probability_ko_minus_wt": 0.06847050842289532,
+        "probability_max": 0.5974989777717409,
+        "probability_mean": 0.4250392527834603,
+        "probability_min": 0.20263240350624592,
+        "probability_sd": 0.10390894818078258,
+        "tn": 33,
+        "tp": 16
+      },
+      "training_by_question": {
+        "combined": {
+          "accuracy": 0.5833333333333334,
+          "auc": 0.7552447552447553,
+          "bce": 0.6481948270808907,
+          "fn": 9,
+          "fp": 1,
+          "genotype_bias_bce_gradient": -0.06078833403187678,
+          "logit_ko_minus_wt": 0.286147810662022,
+          "logit_sd": 0.4228813114599325,
+          "n": 24,
+          "positive_predictions": 3,
+          "probability_ko_minus_wt": 0.06583611169121995,
+          "probability_max": 0.5336410896044078,
+          "probability_mean": 0.39754499930145654,
+          "probability_min": 0.20263240350624592,
+          "probability_sd": 0.09543018309560158,
+          "tn": 12,
+          "tp": 2
+        },
+        "genotype": {
+          "accuracy": 0.7083333333333334,
+          "auc": 0.7482517482517482,
+          "bce": 0.6387808615825564,
+          "fn": 4,
+          "fp": 3,
+          "genotype_bias_bce_gradient": -0.014595109795089378,
+          "logit_ko_minus_wt": 0.31914759123815106,
+          "logit_sd": 0.48166448175138676,
+          "n": 24,
+          "positive_predictions": 10,
+          "probability_ko_minus_wt": 0.0748930026159843,
+          "probability_max": 0.5974989777717409,
+          "probability_mean": 0.44373822353824394,
+          "probability_min": 0.21065179258286976,
+          "probability_sd": 0.11169205774507286,
+          "tn": 10,
+          "tp": 7
+        },
+        "tbr": {
+          "accuracy": 0.75,
+          "auc": 0.7412587412587412,
+          "bce": 0.6442420106211248,
+          "fn": 4,
+          "fp": 2,
+          "genotype_bias_bce_gradient": -0.024498797822653184,
+          "logit_ko_minus_wt": 0.27475242773917585,
+          "logit_sd": 0.42188838036825466,
+          "n": 24,
+          "positive_predictions": 9,
+          "probability_ko_minus_wt": 0.0646824109614817,
+          "probability_max": 0.5667150776555473,
+          "probability_mean": 0.43383453551068013,
+          "probability_min": 0.2249881280371518,
+          "probability_sd": 0.09811335509016232,
+          "tn": 11,
+          "tp": 7
+        }
+      },
+      "training_positive_fraction": 0.4583333333333333
+    }
+  ],
+  "status": "complete"
+}

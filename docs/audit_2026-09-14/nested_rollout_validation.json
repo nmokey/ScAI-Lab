@@ -1,0 +1,696 @@
+{
+  "interpretation": "Actual autoregressive baseline-only exports. Rescaling occurs before recurrent feedback; it changes later directions as well as token magnitudes. Centroids use all eligible training-week observations and are a practical diagnostic, not an identical-pair ablation.",
+  "observations": [
+    {
+      "forecast_cosine": 0.9952356219291687,
+      "forecast_norm": 13.966897010803223,
+      "norm_reference": 13.966897010803223,
+      "observed_baseline_norm": 13.895628929138184,
+      "persistence_cosine": 0.9858610033988953,
+      "subject": "NaF_KO_01",
+      "train_week_centroid_cosine": 0.9847466945648193,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9827080368995667,
+      "forecast_norm": 13.966897010803223,
+      "norm_reference": 13.966897010803223,
+      "observed_baseline_norm": 13.895628929138184,
+      "persistence_cosine": 0.9896641969680786,
+      "subject": "NaF_KO_01",
+      "train_week_centroid_cosine": 0.9826939702033997,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9976680278778076,
+      "forecast_norm": 13.971586227416992,
+      "norm_reference": 13.971586227416992,
+      "observed_baseline_norm": 13.939716339111328,
+      "persistence_cosine": 0.9850376844406128,
+      "subject": "NaF_KO_02",
+      "train_week_centroid_cosine": 0.9836910367012024,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9755749106407166,
+      "forecast_norm": 13.971586227416992,
+      "norm_reference": 13.971586227416992,
+      "observed_baseline_norm": 13.939716339111328,
+      "persistence_cosine": 0.9838635921478271,
+      "subject": "NaF_KO_02",
+      "train_week_centroid_cosine": 0.981219470500946,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9982649087905884,
+      "forecast_norm": 13.964897155761719,
+      "norm_reference": 13.964897155761719,
+      "observed_baseline_norm": 13.958653450012207,
+      "persistence_cosine": 0.9882751107215881,
+      "subject": "NaF_KO_03",
+      "train_week_centroid_cosine": 0.9931035041809082,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9946309924125671,
+      "forecast_norm": 13.964897155761719,
+      "norm_reference": 13.964897155761719,
+      "observed_baseline_norm": 13.958653450012207,
+      "persistence_cosine": 0.991273820400238,
+      "subject": "NaF_KO_03",
+      "train_week_centroid_cosine": 0.9923253655433655,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9921512603759766,
+      "forecast_norm": 13.968863487243652,
+      "norm_reference": 13.968863487243652,
+      "observed_baseline_norm": 13.977092742919922,
+      "persistence_cosine": 0.9830871820449829,
+      "subject": "NaF_KO_04",
+      "train_week_centroid_cosine": 0.9874293208122253,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9954302906990051,
+      "forecast_norm": 13.968862533569336,
+      "norm_reference": 13.968863487243652,
+      "observed_baseline_norm": 13.977092742919922,
+      "persistence_cosine": 0.9904157519340515,
+      "subject": "NaF_KO_04",
+      "train_week_centroid_cosine": 0.9911919236183167,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.977969229221344,
+      "forecast_norm": 13.97175407409668,
+      "norm_reference": 13.971753120422363,
+      "observed_baseline_norm": 14.133481979370117,
+      "persistence_cosine": 0.9460254907608032,
+      "subject": "NaF_KO_09",
+      "train_week_centroid_cosine": 0.97651207447052,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9935083389282227,
+      "forecast_norm": 13.971752166748047,
+      "norm_reference": 13.971753120422363,
+      "observed_baseline_norm": 14.133481979370117,
+      "persistence_cosine": 0.9889881610870361,
+      "subject": "NaF_KO_09",
+      "train_week_centroid_cosine": 0.991695761680603,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9810633063316345,
+      "forecast_norm": 13.967284202575684,
+      "norm_reference": 13.96728515625,
+      "observed_baseline_norm": 13.684611320495605,
+      "persistence_cosine": 0.9666069746017456,
+      "subject": "NaF_KO_10",
+      "train_week_centroid_cosine": 0.9900156855583191,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.967818558216095,
+      "forecast_norm": 13.96728515625,
+      "norm_reference": 13.96728515625,
+      "observed_baseline_norm": 13.684611320495605,
+      "persistence_cosine": 0.9811817407608032,
+      "subject": "NaF_KO_10",
+      "train_week_centroid_cosine": 0.9720793962478638,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9921380281448364,
+      "forecast_norm": 13.967753410339355,
+      "norm_reference": 13.967753410339355,
+      "observed_baseline_norm": 14.098993301391602,
+      "persistence_cosine": 0.9876323342323303,
+      "subject": "NaF_KO_11",
+      "train_week_centroid_cosine": 0.9915047287940979,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9860352873802185,
+      "forecast_norm": 13.967753410339355,
+      "norm_reference": 13.967753410339355,
+      "observed_baseline_norm": 14.098993301391602,
+      "persistence_cosine": 0.9877071976661682,
+      "subject": "NaF_KO_11",
+      "train_week_centroid_cosine": 0.9900650382041931,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9897078275680542,
+      "forecast_norm": 13.966564178466797,
+      "norm_reference": 13.966564178466797,
+      "observed_baseline_norm": 13.617976188659668,
+      "persistence_cosine": 0.9738942980766296,
+      "subject": "NaF_KO_12",
+      "train_week_centroid_cosine": 0.9871143102645874,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9902162551879883,
+      "forecast_norm": 13.966564178466797,
+      "norm_reference": 13.966564178466797,
+      "observed_baseline_norm": 13.617976188659668,
+      "persistence_cosine": 0.9805771112442017,
+      "subject": "NaF_KO_12",
+      "train_week_centroid_cosine": 0.9895370006561279,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9947714805603027,
+      "forecast_norm": 13.966564178466797,
+      "norm_reference": 13.966564178466797,
+      "observed_baseline_norm": 13.617976188659668,
+      "persistence_cosine": 0.9923649430274963,
+      "subject": "NaF_KO_12",
+      "train_week_centroid_cosine": 0.9911606907844543,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9570165872573853,
+      "forecast_norm": 13.976439476013184,
+      "norm_reference": 13.976438522338867,
+      "observed_baseline_norm": 14.114256858825684,
+      "persistence_cosine": 0.9604464173316956,
+      "subject": "NaF_KO_13",
+      "train_week_centroid_cosine": 0.9831881523132324,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.942959189414978,
+      "forecast_norm": 13.976439476013184,
+      "norm_reference": 13.976438522338867,
+      "observed_baseline_norm": 14.114256858825684,
+      "persistence_cosine": 0.933285117149353,
+      "subject": "NaF_KO_13",
+      "train_week_centroid_cosine": 0.9656200408935547,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9957225918769836,
+      "forecast_norm": 13.970182418823242,
+      "norm_reference": 13.970183372497559,
+      "observed_baseline_norm": 13.633794784545898,
+      "persistence_cosine": 0.9692193865776062,
+      "subject": "NaF_KO_14",
+      "train_week_centroid_cosine": 0.993459165096283,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.992629885673523,
+      "forecast_norm": 13.970183372497559,
+      "norm_reference": 13.970183372497559,
+      "observed_baseline_norm": 13.633794784545898,
+      "persistence_cosine": 0.9674065709114075,
+      "subject": "NaF_KO_14",
+      "train_week_centroid_cosine": 0.9890550374984741,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9942085146903992,
+      "forecast_norm": 13.97994613647461,
+      "norm_reference": 13.97994613647461,
+      "observed_baseline_norm": 13.675639152526855,
+      "persistence_cosine": 0.9894499778747559,
+      "subject": "NaF_KO_15",
+      "train_week_centroid_cosine": 0.9917182326316833,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9905858039855957,
+      "forecast_norm": 13.979948043823242,
+      "norm_reference": 13.97994613647461,
+      "observed_baseline_norm": 13.675639152526855,
+      "persistence_cosine": 0.9884182810783386,
+      "subject": "NaF_KO_15",
+      "train_week_centroid_cosine": 0.9918119311332703,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9608483910560608,
+      "forecast_norm": 13.965258598327637,
+      "norm_reference": 13.965258598327637,
+      "observed_baseline_norm": 13.734930038452148,
+      "persistence_cosine": 0.9729614853858948,
+      "subject": "NaF_KO_16",
+      "train_week_centroid_cosine": 0.984765350818634,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9703875184059143,
+      "forecast_norm": 13.971691131591797,
+      "norm_reference": 13.971691131591797,
+      "observed_baseline_norm": 13.935495376586914,
+      "persistence_cosine": 0.9429172873497009,
+      "subject": "NaF_KO_17",
+      "train_week_centroid_cosine": 0.9816499352455139,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9578604102134705,
+      "forecast_norm": 13.972161293029785,
+      "norm_reference": 13.972161293029785,
+      "observed_baseline_norm": 13.81201457977295,
+      "persistence_cosine": 0.962553858757019,
+      "subject": "NaF_KO_18",
+      "train_week_centroid_cosine": 0.989102840423584,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9597381949424744,
+      "forecast_norm": 13.961854934692383,
+      "norm_reference": 13.961853981018066,
+      "observed_baseline_norm": 13.759160995483398,
+      "persistence_cosine": 0.9687274694442749,
+      "subject": "NaF_WT_01",
+      "train_week_centroid_cosine": 0.983354926109314,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.987804114818573,
+      "forecast_norm": 13.96185302734375,
+      "norm_reference": 13.961853981018066,
+      "observed_baseline_norm": 13.759160995483398,
+      "persistence_cosine": 0.9686627984046936,
+      "subject": "NaF_WT_01",
+      "train_week_centroid_cosine": 0.985713541507721,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9822630882263184,
+      "forecast_norm": 13.961854934692383,
+      "norm_reference": 13.961853981018066,
+      "observed_baseline_norm": 13.759160995483398,
+      "persistence_cosine": 0.9698216319084167,
+      "subject": "NaF_WT_01",
+      "train_week_centroid_cosine": 0.9857186079025269,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.971902072429657,
+      "forecast_norm": 13.973234176635742,
+      "norm_reference": 13.973234176635742,
+      "observed_baseline_norm": 13.862021446228027,
+      "persistence_cosine": 0.9619656205177307,
+      "subject": "NaF_WT_02",
+      "train_week_centroid_cosine": 0.9823765158653259,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9772971272468567,
+      "forecast_norm": 13.973234176635742,
+      "norm_reference": 13.973234176635742,
+      "observed_baseline_norm": 13.862021446228027,
+      "persistence_cosine": 0.9597453474998474,
+      "subject": "NaF_WT_02",
+      "train_week_centroid_cosine": 0.9795348048210144,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9626289010047913,
+      "forecast_norm": 13.973234176635742,
+      "norm_reference": 13.973234176635742,
+      "observed_baseline_norm": 13.862021446228027,
+      "persistence_cosine": 0.9537888169288635,
+      "subject": "NaF_WT_02",
+      "train_week_centroid_cosine": 0.9721371531486511,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9781398177146912,
+      "forecast_norm": 13.976146697998047,
+      "norm_reference": 13.976147651672363,
+      "observed_baseline_norm": 14.16356086730957,
+      "persistence_cosine": 0.9842525124549866,
+      "subject": "NaF_WT_03",
+      "train_week_centroid_cosine": 0.9882478713989258,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9963458776473999,
+      "forecast_norm": 13.97614860534668,
+      "norm_reference": 13.976147651672363,
+      "observed_baseline_norm": 14.16356086730957,
+      "persistence_cosine": 0.9704245924949646,
+      "subject": "NaF_WT_03",
+      "train_week_centroid_cosine": 0.9930524826049805,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9957090020179749,
+      "forecast_norm": 13.97614860534668,
+      "norm_reference": 13.976147651672363,
+      "observed_baseline_norm": 14.16356086730957,
+      "persistence_cosine": 0.9709811806678772,
+      "subject": "NaF_WT_03",
+      "train_week_centroid_cosine": 0.9935360550880432,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9939022064208984,
+      "forecast_norm": 13.974725723266602,
+      "norm_reference": 13.974726676940918,
+      "observed_baseline_norm": 13.488592147827148,
+      "persistence_cosine": 0.981751561164856,
+      "subject": "NaF_WT_04",
+      "train_week_centroid_cosine": 0.9815161228179932,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9884147644042969,
+      "forecast_norm": 13.974725723266602,
+      "norm_reference": 13.974726676940918,
+      "observed_baseline_norm": 13.488592147827148,
+      "persistence_cosine": 0.9723227024078369,
+      "subject": "NaF_WT_04",
+      "train_week_centroid_cosine": 0.9918390512466431,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9904580116271973,
+      "forecast_norm": 13.974725723266602,
+      "norm_reference": 13.974726676940918,
+      "observed_baseline_norm": 13.488592147827148,
+      "persistence_cosine": 0.969524085521698,
+      "subject": "NaF_WT_04",
+      "train_week_centroid_cosine": 0.9928079843521118,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9869475364685059,
+      "forecast_norm": 13.958037376403809,
+      "norm_reference": 13.958037376403809,
+      "observed_baseline_norm": 13.633566856384277,
+      "persistence_cosine": 0.9891599416732788,
+      "subject": "NaF_WT_05",
+      "train_week_centroid_cosine": 0.9933895468711853,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9946014285087585,
+      "forecast_norm": 13.958037376403809,
+      "norm_reference": 13.958037376403809,
+      "observed_baseline_norm": 13.633566856384277,
+      "persistence_cosine": 0.9713608622550964,
+      "subject": "NaF_WT_05",
+      "train_week_centroid_cosine": 0.9818158149719238,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9883455038070679,
+      "forecast_norm": 13.958037376403809,
+      "norm_reference": 13.958037376403809,
+      "observed_baseline_norm": 13.633566856384277,
+      "persistence_cosine": 0.9680115580558777,
+      "subject": "NaF_WT_05",
+      "train_week_centroid_cosine": 0.9836165308952332,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.997231125831604,
+      "forecast_norm": 13.971115112304688,
+      "norm_reference": 13.971115112304688,
+      "observed_baseline_norm": 13.756637573242188,
+      "persistence_cosine": 0.9878328442573547,
+      "subject": "NaF_WT_06",
+      "train_week_centroid_cosine": 0.9922818541526794,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9589012265205383,
+      "forecast_norm": 13.971115112304688,
+      "norm_reference": 13.971115112304688,
+      "observed_baseline_norm": 13.756637573242188,
+      "persistence_cosine": 0.949591338634491,
+      "subject": "NaF_WT_06",
+      "train_week_centroid_cosine": 0.9739772081375122,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9565516114234924,
+      "forecast_norm": 13.971115112304688,
+      "norm_reference": 13.971115112304688,
+      "observed_baseline_norm": 13.756637573242188,
+      "persistence_cosine": 0.9494137763977051,
+      "subject": "NaF_WT_06",
+      "train_week_centroid_cosine": 0.9715810418128967,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9952980279922485,
+      "forecast_norm": 13.963821411132812,
+      "norm_reference": 13.963821411132812,
+      "observed_baseline_norm": 14.096314430236816,
+      "persistence_cosine": 0.9853857755661011,
+      "subject": "NaF_WT_07",
+      "train_week_centroid_cosine": 0.9802537560462952,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9807906150817871,
+      "forecast_norm": 13.963821411132812,
+      "norm_reference": 13.963821411132812,
+      "observed_baseline_norm": 14.096314430236816,
+      "persistence_cosine": 0.9740383625030518,
+      "subject": "NaF_WT_07",
+      "train_week_centroid_cosine": 0.9861876964569092,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9968115091323853,
+      "forecast_norm": 13.963821411132812,
+      "norm_reference": 13.963821411132812,
+      "observed_baseline_norm": 14.096314430236816,
+      "persistence_cosine": 0.9853901863098145,
+      "subject": "NaF_WT_07",
+      "train_week_centroid_cosine": 0.9941636919975281,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9900610446929932,
+      "forecast_norm": 13.96495246887207,
+      "norm_reference": 13.96495246887207,
+      "observed_baseline_norm": 13.928277969360352,
+      "persistence_cosine": 0.9884411096572876,
+      "subject": "NaF_WT_08",
+      "train_week_centroid_cosine": 0.9736517667770386,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9951497316360474,
+      "forecast_norm": 13.964951515197754,
+      "norm_reference": 13.96495246887207,
+      "observed_baseline_norm": 13.928277969360352,
+      "persistence_cosine": 0.9617234468460083,
+      "subject": "NaF_WT_08",
+      "train_week_centroid_cosine": 0.993385374546051,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9882997870445251,
+      "forecast_norm": 13.966026306152344,
+      "norm_reference": 13.966026306152344,
+      "observed_baseline_norm": 13.835718154907227,
+      "persistence_cosine": 0.9899251461029053,
+      "subject": "NaF_WT_09",
+      "train_week_centroid_cosine": 0.9922288656234741,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.987480878829956,
+      "forecast_norm": 13.966026306152344,
+      "norm_reference": 13.966026306152344,
+      "observed_baseline_norm": 13.835718154907227,
+      "persistence_cosine": 0.9661189317703247,
+      "subject": "NaF_WT_09",
+      "train_week_centroid_cosine": 0.9793524146080017,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9978426694869995,
+      "forecast_norm": 13.966914176940918,
+      "norm_reference": 13.966914176940918,
+      "observed_baseline_norm": 13.685426712036133,
+      "persistence_cosine": 0.9898017644882202,
+      "subject": "NaF_WT_10",
+      "train_week_centroid_cosine": 0.992036759853363,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9706113934516907,
+      "forecast_norm": 13.966913223266602,
+      "norm_reference": 13.966914176940918,
+      "observed_baseline_norm": 13.685426712036133,
+      "persistence_cosine": 0.9589169025421143,
+      "subject": "NaF_WT_10",
+      "train_week_centroid_cosine": 0.979407787322998,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9810789227485657,
+      "forecast_norm": 13.968412399291992,
+      "norm_reference": 13.968412399291992,
+      "observed_baseline_norm": 14.013298988342285,
+      "persistence_cosine": 0.988166093826294,
+      "subject": "NaF_WT_11",
+      "train_week_centroid_cosine": 0.9844561815261841,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9969055652618408,
+      "forecast_norm": 13.968413352966309,
+      "norm_reference": 13.968412399291992,
+      "observed_baseline_norm": 14.013298988342285,
+      "persistence_cosine": 0.9637272953987122,
+      "subject": "NaF_WT_11",
+      "train_week_centroid_cosine": 0.9920463562011719,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.977749228477478,
+      "forecast_norm": 13.96444320678711,
+      "norm_reference": 13.96444320678711,
+      "observed_baseline_norm": 14.003594398498535,
+      "persistence_cosine": 0.9854604005813599,
+      "subject": "NaF_WT_12",
+      "train_week_centroid_cosine": 0.9810689687728882,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9816126823425293,
+      "forecast_norm": 13.96444320678711,
+      "norm_reference": 13.96444320678711,
+      "observed_baseline_norm": 14.003594398498535,
+      "persistence_cosine": 0.9642066955566406,
+      "subject": "NaF_WT_12",
+      "train_week_centroid_cosine": 0.984413743019104,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9952216148376465,
+      "forecast_norm": 13.964441299438477,
+      "norm_reference": 13.96444320678711,
+      "observed_baseline_norm": 14.003594398498535,
+      "persistence_cosine": 0.9672849774360657,
+      "subject": "NaF_WT_12",
+      "train_week_centroid_cosine": 0.9940922856330872,
+      "week": "Week 20"
+    },
+    {
+      "forecast_cosine": 0.9955792427062988,
+      "forecast_norm": 13.96885871887207,
+      "norm_reference": 13.96885871887207,
+      "observed_baseline_norm": 13.758662223815918,
+      "persistence_cosine": 0.9883797764778137,
+      "subject": "NaF_WT_13",
+      "train_week_centroid_cosine": 0.9932118654251099,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9737300872802734,
+      "forecast_norm": 13.968859672546387,
+      "norm_reference": 13.96885871887207,
+      "observed_baseline_norm": 13.758662223815918,
+      "persistence_cosine": 0.9632450342178345,
+      "subject": "NaF_WT_13",
+      "train_week_centroid_cosine": 0.9840625524520874,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9954754710197449,
+      "forecast_norm": 13.962194442749023,
+      "norm_reference": 13.962194442749023,
+      "observed_baseline_norm": 13.641401290893555,
+      "persistence_cosine": 0.98927241563797,
+      "subject": "NaF_WT_14",
+      "train_week_centroid_cosine": 0.9930413961410522,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9931031465530396,
+      "forecast_norm": 13.962194442749023,
+      "norm_reference": 13.962194442749023,
+      "observed_baseline_norm": 13.641401290893555,
+      "persistence_cosine": 0.9802983999252319,
+      "subject": "NaF_WT_14",
+      "train_week_centroid_cosine": 0.9906493425369263,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9971168637275696,
+      "forecast_norm": 13.964441299438477,
+      "norm_reference": 13.964441299438477,
+      "observed_baseline_norm": 14.095161437988281,
+      "persistence_cosine": 0.9844805598258972,
+      "subject": "NaF_WT_15",
+      "train_week_centroid_cosine": 0.984481155872345,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9956018328666687,
+      "forecast_norm": 13.96444034576416,
+      "norm_reference": 13.964441299438477,
+      "observed_baseline_norm": 14.095161437988281,
+      "persistence_cosine": 0.9780306816101074,
+      "subject": "NaF_WT_15",
+      "train_week_centroid_cosine": 0.9924104809761047,
+      "week": "Week 18"
+    },
+    {
+      "forecast_cosine": 0.9916966557502747,
+      "forecast_norm": 13.970120429992676,
+      "norm_reference": 13.970121383666992,
+      "observed_baseline_norm": 13.872041702270508,
+      "persistence_cosine": 0.9902186393737793,
+      "subject": "NaF_WT_16",
+      "train_week_centroid_cosine": 0.9840900301933289,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9979555010795593,
+      "forecast_norm": 13.966354370117188,
+      "norm_reference": 13.966355323791504,
+      "observed_baseline_norm": 13.813124656677246,
+      "persistence_cosine": 0.989326536655426,
+      "subject": "NaF_WT_17",
+      "train_week_centroid_cosine": 0.9935808181762695,
+      "week": "Week 15"
+    },
+    {
+      "forecast_cosine": 0.9939286112785339,
+      "forecast_norm": 13.968230247497559,
+      "norm_reference": 13.968230247497559,
+      "observed_baseline_norm": 13.878634452819824,
+      "persistence_cosine": 0.9922060966491699,
+      "subject": "NaF_WT_18",
+      "train_week_centroid_cosine": 0.9932416081428528,
+      "week": "Week 15"
+    }
+  ],
+  "status": "passed",
+  "summary": {
+    "Week 15": {
+      "forecast_cosine": 0.9859432876110077,
+      "n": 32,
+      "persistence_cosine": 0.9796475861221552,
+      "train_week_centroid_cosine": 0.9870159700512886
+    },
+    "Week 18": {
+      "forecast_cosine": 0.9829729358355205,
+      "n": 15,
+      "persistence_cosine": 0.9681075930595398,
+      "train_week_centroid_cosine": 0.9853120485941569
+    },
+    "Week 20": {
+      "forecast_cosine": 0.9854307353496552,
+      "n": 20,
+      "persistence_cosine": 0.9745081096887589,
+      "train_week_centroid_cosine": 0.9862138450145721
+    }
+  }
+}

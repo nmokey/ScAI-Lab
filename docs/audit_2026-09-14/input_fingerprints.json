@@ -1,0 +1,254 @@
+[
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_f22_qeos.yml",
+    "size": 3674,
+    "mtime_ns": 1789369243361972086,
+    "sha256": "f5fa3171dba113f6249760ffb3297acf72ffa0ce03bfe568c7e87554be7092a0"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base_seed3.yml",
+    "size": 3587,
+    "mtime_ns": 1789285358811708892,
+    "sha256": "4b3b745d4ea4243d4587d1751f504f8a914620349413b8bca285b276cd3d0b3f"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base_seed4.yml",
+    "size": 3587,
+    "mtime_ns": 1789285359192714943,
+    "sha256": "0792da6cb5219808424eeb2a48b74a4bbe429434d64bdfa1e7e590d510bb4cf2"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse.yml",
+    "size": 3635,
+    "mtime_ns": 1789360762247619349,
+    "sha256": "33a54248bcbdb356842463d31837289543b2da73a3f54d2f0ba5c2d47f9b33e1"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_long_ep40.yml",
+    "size": 2625,
+    "mtime_ns": 1783932247022948737,
+    "sha256": "df5d14f750ba417f7884db1476bcbc5f3e6d608e7fa470bf01ce17f0f630c1f5"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_seed1.yml",
+    "size": 3662,
+    "mtime_ns": 1789285358742707796,
+    "sha256": "7c7cc8c348de7ba61e120eafcd24ccc38ad4f5d89b5ade1ed4cebbc1276b6349"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_exp2_freeze_llm.yml",
+    "size": 2618,
+    "mtime_ns": 1783932246682943307,
+    "sha256": "5007824bfb3e201fcb32be77d3db9e212ff4bf197430249792040654c463e2c3"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_base_ep20.yml",
+    "size": 2534,
+    "mtime_ns": 1783932245438923441,
+    "sha256": "2bf0ec21ea783151c3ec41f9791e8d221c352cde6d49e0a9b1142c04fa8f972c"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_base_ep15.yml",
+    "size": 2534,
+    "mtime_ns": 1783932245092917915,
+    "sha256": "e28a5819cfda045695b1fd169676a5175dae034e7072a27b7dc8d5fbead96e03"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_base_ep30.yml",
+    "size": 2534,
+    "mtime_ns": 1783932246040933054,
+    "sha256": "88f619c0b023d98240f185e4407499c2983128ccff2db2fb20e3a0901062e8ae"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_ep50.yml",
+    "size": 2511,
+    "mtime_ns": 1783932246257936520,
+    "sha256": "c7fd135d19b08a6946a18e12544e83f51851215c9e5f7ba9511387f5df5d2a7f"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_f22.yml",
+    "size": 3662,
+    "mtime_ns": 1789369041687732021,
+    "sha256": "43b67023dbb5e489806afdf26746f3e5a2fd3887e991ce1e7343ea8453a33fd1"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_ep100.yml",
+    "size": 2520,
+    "mtime_ns": 1783932246146934748,
+    "sha256": "33430bf6405ec46738a9ee5a62ec21bb5da6ef1cb1e1b049b8362186b7e0e982"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base_seed2.yml",
+    "size": 3587,
+    "mtime_ns": 1789285358764708146,
+    "sha256": "28630aaa9184b966370db7744f9277654f48aa1f8142b2aba0cf667999599a3f"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_long_ep25.yml",
+    "size": 2625,
+    "mtime_ns": 1783932246912946979,
+    "sha256": "1da5e831e283267bad5d4ee5595939add92808aa4712831b02ea6537de704312"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_qeos.yml",
+    "size": 3674,
+    "mtime_ns": 1789364455818564814,
+    "sha256": "5a9a0c392736175de1c8da993d7d0fa1e2239e14e3c2300411e2f93e751dc9db"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_exp3_combined.yml",
+    "size": 2544,
+    "mtime_ns": 1783932246747944345,
+    "sha256": "f9ca6048babc0719c41691a079da2f8746c2ee82da7d4d90e555630cc9fce764"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_base_ep25.yml",
+    "size": 2534,
+    "mtime_ns": 1783932245608926156,
+    "sha256": "4b7862db79a718e7f1a0c09d282a32f537760a653aae1ffe187b1355f625b859"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_exp1_multitask_wt5.yml",
+    "size": 2598,
+    "mtime_ns": 1783932246534940944,
+    "sha256": "84bbe3147e8bdb674f493923c6841f7305a72fbc9b3960c143e9eee91cfa0275"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_seed4.yml",
+    "size": 3662,
+    "mtime_ns": 1789285359374717834,
+    "sha256": "7b18172377b0a43e4998c6da1e0690eef7c01a634435868511da1cf392563d29"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_seed3.yml",
+    "size": 3662,
+    "mtime_ns": 1789285359123713856,
+    "sha256": "166226996d422a7f62d7226f276fdbcd259c4292ac930c35086f4a02fb5f756f"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long.yml",
+    "size": 3650,
+    "mtime_ns": 1788945353529527555,
+    "sha256": "218739e8753733c790b498b46d01b6ad86e9f630bbeab21b0ba349c30130dac0"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_long_ep30.yml",
+    "size": 2625,
+    "mtime_ns": 1783932246965947827,
+    "sha256": "16d6544a9813c8de199aeeddc0aed7030ad7360c323f939e770f6225a6a43902"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base.yml",
+    "size": 3575,
+    "mtime_ns": 1788945353551527905,
+    "sha256": "2c1767ed7d2ab358deaf118afeff42fc7ff79d4e3c6c4e7fb172cdffdeaad5cf"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base_seed1.yml",
+    "size": 3587,
+    "mtime_ns": 1789285358709707272,
+    "sha256": "08507838ffe87dc10fb966a87bd9afdcfde313d7e64c5c9f3728b73ec463aa48"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_aug.yml",
+    "size": 4327,
+    "mtime_ns": 1789361366541332001,
+    "sha256": "7d072d2706d37b71bd9b01fb4a04bc35cb109b663917e372ce85e195c250f362"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base_f20.yml",
+    "size": 3583,
+    "mtime_ns": 1789362205138780201,
+    "sha256": "fb6cc84375489893857a21d04bd9061f071bf6c308c5c1f6cf483475bd7356fd"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_tinyllama.yml",
+    "size": 2631,
+    "mtime_ns": 1783932247085949743,
+    "sha256": "54e546ab639b728593459ec3baaa560e117a53a89fbacf751d0ee7e2b63b53bc"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_long_ep15.yml",
+    "size": 2625,
+    "mtime_ns": 1783932246801945207,
+    "sha256": "cb466f95b158fe23b56e409ab62cdd59ba9293b15ca23691471dca42291b200f"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_base_aug.yml",
+    "size": 4249,
+    "mtime_ns": 1789361348859047890,
+    "sha256": "d980f4db87e2db0506f11f34a2068838cdf92cab40094d2a789cf06474b975f9"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_ep20.yml",
+    "size": 2511,
+    "mtime_ns": 1783932246202935642,
+    "sha256": "73f652c922fa3393061a36b62b6a5dc9733efd3b8560cec24e1825863d105128"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_f20.yml",
+    "size": 3662,
+    "mtime_ns": 1789362205105779671,
+    "sha256": "5c8797b7bdefd51b76d9e8ae48d3995895297918a3990583332d0ab274326449"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_base_ep40.yml",
+    "size": 2534,
+    "mtime_ns": 1783932246098933980,
+    "sha256": "48579889e5ba61ff9512f93baf96874d73ef18920b355b92daceeab9eee69c3a"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/vlm/yaml/viz_emb_params_mouse_nogeno_long_seed2.yml",
+    "size": 3662,
+    "mtime_ns": 1789285358783708448,
+    "sha256": "ebe04e9f8173d1f92749cfd194c9a4249837cdb27a608acfd0bfe79911a7eade"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/manifest.csv",
+    "size": 15836,
+    "mtime_ns": 1789360761615609191,
+    "sha256": "4e35716349d8b9292d237d689ba658cf8d59b9a8ae87f04d34cd4d33670fb74e"
+  },
+  {
+    "path": "/home/ryab/ScAI-Lab/quadrant_overrides.yaml",
+    "size": 1632,
+    "mtime_ns": 1789358512009481234,
+    "sha256": "636a843284ae0f1bf55cb4d4aa9e1887d32962bec748712ee09af466dd0d0ccc"
+  },
+  {
+    "path": "/data1/Processed_NIfTI_Test/mouse_manifest.csv",
+    "size": 44369,
+    "mtime_ns": 1789358873788991719,
+    "sha256": "49f2d881ca51e65ff7cdb15be2b0ca6489bb58787d6502e209704150e77f3bfc"
+  },
+  {
+    "path": "/data1/Processed_NIfTI_Test/embeddings/vlm/mouse_all_vqa_traj.json",
+    "size": 91468,
+    "mtime_ns": 1789361454710486651,
+    "sha256": "149df8b74d13caea8115bc2116bd5a28e2b1c08c91c8cd27a2cc681772647822"
+  },
+  {
+    "path": "/data1/Processed_NIfTI_Test/embeddings/colipri/colipri_embeddings.npz",
+    "size": 784444,
+    "mtime_ns": 1789361904741215099,
+    "sha256": "33ee328aafd7b1628dd48f0c8718e0abb2f662bedc06aac192da04a40904a094"
+  },
+  {
+    "path": "/data1/Processed_NIfTI_Test/embeddings/merlin/merlin_embeddings.npz",
+    "size": 1956924,
+    "mtime_ns": 1789359054219552337,
+    "sha256": "524b6e65f9fcf6c2864d11685ee80da531de5c58ae0e69d68a3afd3b7992ef38"
+  },
+  {
+    "path": "/data1/Processed_NIfTI_Test/embeddings/raddino/raddino_embeddings.npz",
+    "size": 784444,
+    "mtime_ns": 1789360648514585694,
+    "sha256": "7932df600782298d2f1b19f703413e329c6611b6e1c43da2a4792670c5d53739"
+  },
+  {
+    "path": "/data1/Processed_NIfTI_Test/embeddings/m3d/m3d_embeddings.npz",
+    "size": 784444,
+    "mtime_ns": 1789360659714741375,
+    "sha256": "ebc74c52f088ac4daa404906e330e87c2c2bc68b7cebf8d468d89550b7238198"
+  }
+]

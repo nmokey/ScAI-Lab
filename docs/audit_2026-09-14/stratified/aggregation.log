@@ -1,0 +1,1 @@
+{"truth_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2", "mean_delta_genotype_auc": -0.03763440860215054, "mean_delta_subject_mae": 0.11243690609931918, "status": "complete", "interpretation": "Evaluation amendment after original LOSO results; no parameter search"}

@@ -1,0 +1,123 @@
+{
+  "configs": [
+    {
+      "arm": "base",
+      "changes": [
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed0/mouse_vlm_mdl",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_checkpoint_qhead/mouse_vlm_mdl",
+          "key": "inf.model_name"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed0",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_checkpoint_qhead",
+          "key": "exp.output_dir"
+        }
+      ],
+      "seed": 0,
+      "training_settings_unchanged": true
+    },
+    {
+      "arm": "base",
+      "changes": [
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed1/mouse_vlm_mdl",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_checkpoint_qhead/mouse_vlm_mdl",
+          "key": "inf.model_name"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed1",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_checkpoint_qhead",
+          "key": "exp.output_dir"
+        }
+      ],
+      "seed": 1,
+      "training_settings_unchanged": true
+    },
+    {
+      "arm": "base",
+      "changes": [
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed2/mouse_vlm_mdl",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_checkpoint_qhead/mouse_vlm_mdl",
+          "key": "inf.model_name"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_base_seed2",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_checkpoint_qhead",
+          "key": "exp.output_dir"
+        }
+      ],
+      "seed": 2,
+      "training_settings_unchanged": true
+    },
+    {
+      "arm": "long",
+      "changes": [
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0/mouse_vlm_mdl",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead/mouse_vlm_mdl",
+          "key": "inf.model_name"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_nested_20260914",
+          "key": "data.nested_forecast_root"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead",
+          "key": "exp.output_dir"
+        }
+      ],
+      "seed": 0,
+      "training_settings_unchanged": true
+    },
+    {
+      "arm": "long",
+      "changes": [
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed1/mouse_vlm_mdl",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead/mouse_vlm_mdl",
+          "key": "inf.model_name"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_nested_20260914",
+          "key": "data.nested_forecast_root"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed1",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead",
+          "key": "exp.output_dir"
+        }
+      ],
+      "seed": 1,
+      "training_settings_unchanged": true
+    },
+    {
+      "arm": "long",
+      "changes": [
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed2/mouse_vlm_mdl",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead/mouse_vlm_mdl",
+          "key": "inf.model_name"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/longitudinal_nested_20260914",
+          "key": "data.nested_forecast_root"
+        },
+        {
+          "after": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed2",
+          "before": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_checkpoint_qhead",
+          "key": "exp.output_dir"
+        }
+      ],
+      "seed": 2,
+      "training_settings_unchanged": true
+    }
+  ],
+  "original_training_sources_unchanged": true,
+  "status": "passed"
+}

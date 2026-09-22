@@ -1,0 +1,21 @@
+Preflight passed: all six comparators verified; 128 four-token dataset inputs match saved residual forecasts; three run specs matched.
+{
+  "base": {
+    "genotype_auc_within_fold_pair_weighted": 0.478494623655914,
+    "genotype_accuracy": 0.5,
+    "subject_mae": 5.550649497177866,
+    "train_mean_subject_mae": 5.610645134051641
+  },
+  "long": {
+    "genotype_auc_within_fold_pair_weighted": 0.44086021505376344,
+    "genotype_accuracy": 0.53125,
+    "subject_mae": 5.663086403277184,
+    "train_mean_subject_mae": 5.610645134051641
+  },
+  "residual": {
+    "genotype_auc_within_fold_pair_weighted": 0.5483870967741935,
+    "genotype_accuracy": 0.5208333333333334,
+    "subject_mae": 5.656379073858261,
+    "train_mean_subject_mae": 5.610645134051641
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "preserved": true,
+  "policy": "Original logs, configs, predictions and retained weights are preserved. No historical aggregate is corrected by relabeling it.",
+  "recovery_ledger": "adapter_recovery.json",
+  "runs": [
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep15",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep15/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep20",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep20/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep25",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep25/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep30",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep30/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep40",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_base_ep40/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_baseline_loso",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_baseline_loso/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep100",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep100/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep20",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep20/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep50",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_ep50/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp1_mtwt5",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp1_mtwt5/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp2_freeze_llm",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp2_freeze_llm/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp3_combined",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_exp3_combined/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep15",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep15/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep25",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep25/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep30",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep30/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep40",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_long_ep40/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_loso",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_loso/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_no_multitask",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_no_multitask/vqa.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_f20",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_f20/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed1",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed1/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed2",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed2/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed3",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed3/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed4",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_base_ep20_seed4/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_f20",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_f20/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_f22",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_f22/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_f22_qeos",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_f22_qeos/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_qeos_seed0",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_qeos_seed0/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed1",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed1/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed2",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed2/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed3",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed3/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed4",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed4/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_tinyllama",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_tinyllama/vqa_loso.json"
+      ],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/repaired_checkpoints_20260914",
+      "disposition": "Recovered legacy checkpoints; original protocol limitations retained",
+      "predictions": [],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/seed_sweep_logs",
+      "disposition": "Historical/debugging only; not eligible for corrected VLM comparison",
+      "predictions": [],
+      "completed_fold_count": 0,
+      "run_manifest": null
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0",
+      "disposition": "Corrected fixed protocol; complete and eligible for paired scoring",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0/vqa_loso.json"
+      ],
+      "completed_fold_count": 32,
+      "run_manifest": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0/run_manifest.json",
+      "partial_prediction_files": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0/vqa_loso_partial.json"
+      ]
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed1",
+      "disposition": "Corrected fixed protocol; complete and eligible for paired scoring",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed1/vqa_loso.json"
+      ],
+      "completed_fold_count": 32,
+      "run_manifest": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed1/run_manifest.json",
+      "partial_prediction_files": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed1/vqa_loso_partial.json"
+      ]
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed2",
+      "disposition": "Corrected fixed protocol; complete and eligible for paired scoring",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed2/vqa_loso.json"
+      ],
+      "completed_fold_count": 32,
+      "run_manifest": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed2/run_manifest.json",
+      "partial_prediction_files": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed2/vqa_loso_partial.json"
+      ]
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0",
+      "disposition": "Corrected fixed protocol; complete and eligible for paired scoring",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0/vqa_loso.json"
+      ],
+      "completed_fold_count": 32,
+      "run_manifest": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0/run_manifest.json",
+      "partial_prediction_files": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0/vqa_loso_partial.json"
+      ]
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed1",
+      "disposition": "Corrected fixed protocol; complete and eligible for paired scoring",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed1/vqa_loso.json"
+      ],
+      "completed_fold_count": 32,
+      "run_manifest": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed1/run_manifest.json",
+      "partial_prediction_files": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed1/vqa_loso_partial.json"
+      ]
+    },
+    {
+      "directory": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed2",
+      "disposition": "Corrected fixed protocol; complete and eligible for paired scoring",
+      "predictions": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed2/vqa_loso.json"
+      ],
+      "completed_fold_count": 32,
+      "run_manifest": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed2/run_manifest.json",
+      "partial_prediction_files": [
+        "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed2/vqa_loso_partial.json"
+      ]
+    }
+  ],
+  "final_verified_package": "paired_vlm_results.json"
+}

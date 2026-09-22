@@ -1,0 +1,11 @@
+[i] Loaded 229 embeddings across 78 subjects
+[i] Loaded TBR for 40 subjects  (column: tbr2_p95_median)
+[i] Eligible subjects (NaF, ≥2 timepoints): 36
+[+] Exported 229 .safetensors → /data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/embeddings
+[i] Total records: 96
+    By input week : {'Week 12': 96}
+[i] Train: 84 records (28 subjects) | Val: 6 records (2 subjects) | Test: 6 records (2 subjects)
+[+] mouse_train_vqa_traj.json  (84 records)
+[+] mouse_val_vqa_traj.json  (6 records)
+[+] mouse_test_vqa_traj.json  (6 records)
+[+] mouse_all_vqa_traj.json  (96 records)

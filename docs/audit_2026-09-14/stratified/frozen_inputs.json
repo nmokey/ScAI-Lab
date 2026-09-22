@@ -1,0 +1,43 @@
+{
+  "configs": {
+    "base_seed0.yml": "fd5e0a5a391382b3b7b8ca46c11ce440d6c18e87b4b942654506269733c8a8df",
+    "base_seed1.yml": "b504c74126df6d70110dc458eac57cc7f827ed8975a9896a98a01bb8b45cce66",
+    "base_seed2.yml": "d1cca8138004a84c2b7140675061c128ab89f2b8f4f0a62b3f3b84fe0e062a25",
+    "long_seed0.yml": "ad38289cdb19d8731f09382e367df02a3914e91e2109daa639ef9776b7689f3f",
+    "long_seed1.yml": "716ab657977ebdae9524dca99f392c3b766ed91197dd7457a1dc27a09c511a45",
+    "long_seed2.yml": "20baa5a10c608650a9c210ce6c8c8db37ea28f9f037ee00d47cd639fbe215341"
+  },
+  "protocol_sha256": "87e35383932c168b10a06f743cbff07cd9b29fb38e7f03c1247c36acd9d3b392",
+  "sources": {
+    "scripts/aggregate_stratified_vlm.py": "2147665f9b53354bb3e6311cbf10b9473ae1866edc813fd377a3340793087bde",
+    "scripts/build_nested_forecasts.py": "80518ae566d16b7cdd40736bd6dc7347a18414f2dc3c5e9268619dd26f31a3a9",
+    "scripts/build_stratified_forecasts.py": "96f43e525905b9645b7618f7b65c3fa1e6c25187305c01a12bc38b3868ce4e50",
+    "scripts/create_mouse_traj_dataset.py": "f3a0ae08c2971c027fa3dce5d4ef4f473915b77617feb0435b42d1f7fc39e57c",
+    "scripts/run_stratified_vlm.py": "aa915a6d06458b5c907deb690ebc82ba551bd9e5f99f777f7cf66d24c13cb988",
+    "scripts/stratified_vlm_protocol.py": "ade445f73a235bcb2138badecd8c20e33ba2a8ef095ae253c09af81feb0d2285",
+    "scripts/train_longitudinal.py": "c942d72589398bff7fee03e041d049c6230bc94be6d78a3e41d45d650637971e",
+    "vlm/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vlm/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vlm/data/dataset_factory.py": "87f3db7c05ae18a734ca04cefed534973cad549541ab27665fb8028865d7cf6b",
+    "vlm/data/eval.py": "c777862df95fc0a9bce75543c2e514cfcb6b91aefa3d780d27a24a74a48eaad5",
+    "vlm/data/validated_metrics.py": "d12e5821993ee6ca9f08a27dff944204c0d55f2a336ed90b30e970190ff402b3",
+    "vlm/data/vqa_dataset.py": "4d8da965a1f43e6ed51ebf033f858879ce7ad74a676da8d630219639e3acb542",
+    "vlm/model/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vlm/model/model_factory.py": "77323a12aa11e279692157c3c395dada4ead58b501351e4cb5e22c7edbcc85aa",
+    "vlm/model/vision_language_model.py": "eaf6e9dee46862e5d2044764c318b3ea288ea86a0967e0e9602b318e3425bb20",
+    "vlm/model/viz_emb_trainer.py": "dd40fc0ab10e6337038bf6c54632de3ed3c8a5a23e0964165932c478cbd3d83b",
+    "vlm/run/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vlm/run/run_mouse_vlm_loso.py": "d5ccb4e6a5569d361027b5d37fba21d0fbea7430f1e33187c4dc12d6ffe5e6fb",
+    "vlm/run/run_mouse_vlm_single.py": "97fdfde6de83eb62229cf9c5224352d90c82f462f5f6a95523225fb0749b3310",
+    "vlm/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vlm/utils/checkpoint_utils.py": "982f7d2be23d3d8c5e3ab1300a2bba5e1da186d586ea4d9e3ec5859a8676b7ad",
+    "vlm/utils/huggingface_utils.py": "5559fb66bb1b3897662dc36b5e71d5fbb42b0d6dce124290efff085c90cdf6f9",
+    "vlm/utils/image_cache.py": "40c17880478ba4ecea1f0242de5fcf967d755c90ad150bddf2eb89f38d037c6b",
+    "vlm/utils/misc_utils.py": "9b03a6fd482b4e168e87a9df5dfce06a30b056bca03db3f59daa0ac5a7d7cb62",
+    "vlm/utils/research_io.py": "73cbf1dfe995ad495090810af0fb6e1c2fdf4cc230c1e08785c59ff405bb3b1a",
+    "vlm/utils/run_contract.py": "69fb5ea42b68adfb3e600f36e0cd1876322eda82ca270535df442df1e46ded1a",
+    "vlm/utils/run_utils.py": "1b1c6bc7f45fc144298e39b156af6c922f6ff7c8f8ed4b508a33eaaf61f91245",
+    "vlm/utils/target_contract.py": "23de717288d8bbe989511487ff48a6dca5ff01d31a5c664b875bf21b8630cae2"
+  },
+  "truth_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "complete",
+  "completed_utc": "2026-09-16T07:22:54.631341+00:00",
+  "forecaster_fits": 24,
+  "exact_checkpoint_reloads": 24,
+  "forecast_tokens": 384,
+  "classifier_fits": 20,
+  "observed_future_scans": 67,
+  "focused_tests_passed": 4,
+  "independent_verification": "passed",
+  "advance_criterion_passed": false,
+  "outcome": "Improved descriptive genotype ranking; worse forecast fidelity; no VLM rerun",
+  "files_sha256": {
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_rollout_experiment/PROTOCOL.json": "04182d934ec6aecceab9e80399e51fe44440691418ca04bd2a7c573075496ef9",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_rollout_experiment/results.json": "29120cf142fd9ae02366fbaa19757e1ac87cc750217435a182b55ea5f7c4bd49",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_rollout_experiment/RESULTS.md": "737df4bf6390bbca188bad99f869e0c5f770f025aa90383ba882fd8bd1229c82",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_rollout_experiment/README.md": "5f90337574f0be0cc3ad7bcabfe1d808dc756e08f7abfccc02d07e6bf480163d",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_rollout_experiment/independent_verification.json": "0efcd990970b0748b4ba2b2e8f5551f68d3e40210067887d5649e09a78f4b678",
+    "/home/ryab/ScAI-Lab/scripts/check_residual_rollout_experiment.py": "92199c754c8383926e5b4398369e87bedc565608f7d31fcb20c173256198d111",
+    "/home/ryab/ScAI-Lab/tests/torch/test_residual_rollout.py": "a827bffb483b2a214083be4b9bb29cff7f554c695a148765aa84c735634b1ddd",
+    "/data1/Processed_NIfTI_Test/embeddings/longitudinal_residual_rollout_20260915/fold_00/manifest.json": "f8ad870a4a2b9c04af354a4f3eb318b927ece7192595cd4209b91eb5d5937006",
+    "/data1/Processed_NIfTI_Test/embeddings/longitudinal_residual_rollout_20260915/fold_01/manifest.json": "3b3c43518a6609e09a7e9a14595a7b83a32dc9f4e8733b06efb57d11fa3c0748",
+    "/data1/Processed_NIfTI_Test/embeddings/longitudinal_residual_rollout_20260915/fold_02/manifest.json": "6e2629f3316684b0ed889664cb677c02669759e784f7136e042e3d9570243483",
+    "/data1/Processed_NIfTI_Test/embeddings/longitudinal_residual_rollout_20260915/fold_03/manifest.json": "83c59de163f9c7e6f9d7abb2008accfd8653d919966e101ccd7586774bba2384"
+  }
+}

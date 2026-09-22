@@ -1,0 +1,24 @@
+/home/ryab/.config/matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /tmp/matplotlib-nbqi0na_ because there was an issue with the default path (/home/ryab/.config/matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+<frozen importlib._bootstrap_external>:1184: FutureWarning: The cuda.cudart module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.runtime module instead.
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/monai/utils/deprecate_utils.py:321: FutureWarning: monai.transforms.spatial.dictionary Orientationd.__init__:labels: Current default value of argument `labels=(('L', 'R'), ('P', 'A'), ('I', 'S'))` was changed in version None from `labels=(('L', 'R'), ('P', 'A'), ('I', 'S'))` to `labels=None`. Default value changed to None meaning that the transform now uses the 'space' of a meta-tensor, if applicable, to determine appropriate axis labels.
+  warn_deprecated(argname, msg, warning_category)
+{
+  "source": "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_15/ct_hi.nii.gz",
+  "cache": "/data1/Processed_NIfTI_Test/embeddings/merlin/cache/62cf9e33b5b11d5f56478860aa6fad9c.pt",
+  "cached_shape": [
+    1,
+    224,
+    224,
+    160
+  ],
+  "fresh_shape": [
+    1,
+    224,
+    224,
+    160
+  ],
+  "max_abs_difference": 1.0,
+  "mean_abs_difference": 0.0005308072431944311,
+  "different_voxels": 20768
+}

@@ -1,0 +1,13 @@
+{
+  "files_sha256": {
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/genotype_vlm_variants/PROTOCOL.json": "e31b28370766078876e9ef4c981e374f7901f34a3be251615fae94a86c8e44e9",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/genotype_vlm_variants/RESULTS.md": "2fdc094c38100635ed6cc897138e80687b90a290bcb6404f6172a8e9429d2cd8",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/genotype_vlm_variants/independent_metrics.json": "410a3788bbb3fc05fb3e68c0fffc591b71507d3b70e777d79d719f61b6e9fc6d",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/genotype_vlm_variants/paired_results.json": "42d7bfd588a74aa447b97ae3c98c871d916de32285e14a1a8626e656e794508b",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/genotype_vlm_variants/runtime_checks.json": "7d3dabf12d2841a13b48d9219c9937e0ff0c567b35867d25b0b431f3effdbfda"
+  },
+  "independent_runs_verified": 12,
+  "new_vlm_fits": 24,
+  "status": "complete",
+  "verified_variant_checkpoint_reloads": 24
+}

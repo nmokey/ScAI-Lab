@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "initial_precision_mismatch": 0.05601215362548828,
+      "objective": "combined",
+      "ordinary_inference": {
+        "accuracy": 1.0,
+        "auc": 1.0,
+        "bce": 0.00011996162022601662,
+        "minimum_true_class_probability": 0.9997205701629971,
+        "n": 8
+      },
+      "reload_max_logit_error": 0.0
+    },
+    {
+      "initial_precision_mismatch": 0.054691314697265625,
+      "objective": "genotype_only",
+      "ordinary_inference": {
+        "accuracy": 1.0,
+        "auc": 1.0,
+        "bce": 8.532230474514445e-07,
+        "minimum_true_class_probability": 0.9999981999143022,
+        "n": 8
+      },
+      "reload_max_logit_error": 0.0
+    }
+  ],
+  "status": "passed",
+  "training_rerun": false
+}

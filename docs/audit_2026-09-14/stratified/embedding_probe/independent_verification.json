@@ -1,0 +1,25 @@
+{
+  "status": "complete",
+  "arms": {
+    "baseline": {
+      "auc": 0.6290322580645161,
+      "accuracy": 0.65625,
+      "correct": 21,
+      "balanced_accuracy": 0.6468253968253967
+    },
+    "baseline_and_predicted": {
+      "auc": 0.5967741935483871,
+      "accuracy": 0.625,
+      "correct": 20,
+      "balanced_accuracy": 0.6349206349206349
+    },
+    "predicted_only": {
+      "auc": 0.45161290322580644,
+      "accuracy": 0.46875,
+      "correct": 15,
+      "balanced_accuracy": 0.4642857142857143
+    }
+  },
+  "max_score_error": 1.0658141036401503e-14,
+  "verified_fits": 12
+}

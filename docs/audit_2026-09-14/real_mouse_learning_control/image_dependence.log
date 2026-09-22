@@ -1,0 +1,54 @@
+params: {'data': {'base_dir': '', 'data_path': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/training_subset.json', 'data_seed': 0, 'eval_data_path': None, 'height': 224, 'img_dir': '', 'img_tokens': 4, 'inf_data_path': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/training_subset.json', 'inf_dataset': 'mouse_traj_vqa', 'inf_img_dir': '', 'nested_forecast_root': '/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914', 'num_channels': 3, 'predicted_emb_dir': '/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914/fold_00', 'prompt_type': 'standard', 'seq_length': 150, 'test_size': 0.2, 'tokenizer_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'train_dataset': 'mouse_traj_vqa', 'width': 224}, 'exp': {'output_dir': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/combined'}, 'inf': {'beg_prompt': '', 'bias': 'none', 'decoding_kwargs': {'do_sample': False, 'num_beams': 1}, 'end_prompt': '', 'include_img': True, 'llm_model_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'load_projection_matrix': False, 'lora_alpha': 16, 'lora_dropout': 0.1, 'max_new_tokens': 100, 'mid_prompt': '', 'model_name': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/combined/final_model', 'r': 4, 'replace_prompt': None, 'results_file': 'val.json', 'save_file': 'vqa.json', 'target_modules': ['q_proj', 'v_proj'], 'task_type': 'CAUSAL_LM', 'train_gt_file': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/training_subset.json', 'use_quantization': True}, 'train': {'add_multitask': True, 'add_multitask_unknown': False, 'bf16': True, 'bias': 'none', 'eval_steps': None, 'evaluate_start': False, 'evaluation_strategy': 'no', 'fp16': False, 'freeze_llm_model': False, 'freeze_vision_model': True, 'gradient_accumulation_steps': 4, 'label_names': ['labels', 'tbr_targets', 'genotype_label'], 'learning_rate': 0.0002, 'llm_model_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'load_best_model_at_end': False, 'load_projection_matrix': False, 'logging_steps': 10, 'lora_alpha': 16, 'lora_dropout': 0.1, 'lr_scheduler_type': 'cosine', 'model_name': None, 'multitask_wt': 5.0, 'num_proj_layers': 1, 'num_train_epochs': 100, 'optim': 'adamw_torch_fused', 'per_device_eval_batch_size': 2, 'per_device_train_batch_size': 2, 'pool_at': 'question_eos', 'pretrained': False, 'r': 4, 'report_to': 'none', 'resume_from_checkpoint': False, 'save_model_name': 'mouse_vlm_mdl', 'save_steps': 150, 'save_strategy': 'steps', 'save_total_limit': 1, 'target_modules': ['q_proj', 'v_proj'], 'task_type': 'CAUSAL_LM', 'use_quantization': True, 'vision_model_name': 'None', 'warmup_ratio': 0.05}}
+[!] eval_dataset == inference set (the held-out subject). Fine while load_best_model_at_end is false, but eval_loss is a TEST-set curve. Use run_mouse_vlm_loso.py --inner-val for an honest validation curve.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:14,  4.68s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:09<00:09,  4.56s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:13<00:04,  4.55s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.23s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.72s/it]
+VisionLanguageModel: vision_dim=768, llm_dim=4096, img_tokens=4, multitask=True
+params: {'data': {'base_dir': '', 'data_path': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/training_subset.json', 'data_seed': 0, 'eval_data_path': None, 'height': 224, 'img_dir': '', 'img_tokens': 4, 'inf_data_path': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/training_subset.json', 'inf_dataset': 'mouse_traj_vqa', 'inf_img_dir': '', 'nested_forecast_root': '/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914', 'num_channels': 3, 'predicted_emb_dir': '/data1/Processed_NIfTI_Test/embeddings/longitudinal_stratified_20260914/fold_00', 'prompt_type': 'standard', 'seq_length': 150, 'test_size': 0.2, 'tokenizer_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'train_dataset': 'mouse_traj_vqa', 'width': 224}, 'exp': {'output_dir': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/genotype_only'}, 'inf': {'beg_prompt': '', 'bias': 'none', 'decoding_kwargs': {'do_sample': False, 'num_beams': 1}, 'end_prompt': '', 'include_img': True, 'llm_model_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'load_projection_matrix': False, 'lora_alpha': 16, 'lora_dropout': 0.1, 'max_new_tokens': 100, 'mid_prompt': '', 'model_name': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/genotype_only/final_model', 'r': 4, 'replace_prompt': None, 'results_file': 'val.json', 'save_file': 'vqa.json', 'target_modules': ['q_proj', 'v_proj'], 'task_type': 'CAUSAL_LM', 'train_gt_file': '/home/ryab/ScAI-Lab/docs/audit_2026-09-14/real_mouse_learning_control/training_subset.json', 'use_quantization': True}, 'train': {'add_multitask': True, 'add_multitask_unknown': False, 'bf16': True, 'bias': 'none', 'eval_steps': None, 'evaluate_start': False, 'evaluation_strategy': 'no', 'fp16': False, 'freeze_llm_model': False, 'freeze_vision_model': True, 'gradient_accumulation_steps': 4, 'label_names': ['labels', 'tbr_targets', 'genotype_label'], 'learning_rate': 0.0002, 'llm_model_name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'load_best_model_at_end': False, 'load_projection_matrix': False, 'logging_steps': 10, 'lora_alpha': 16, 'lora_dropout': 0.1, 'lr_scheduler_type': 'cosine', 'model_name': None, 'multitask_wt': 5.0, 'num_proj_layers': 1, 'num_train_epochs': 100, 'optim': 'adamw_torch_fused', 'per_device_eval_batch_size': 2, 'per_device_train_batch_size': 2, 'pool_at': 'question_eos', 'pretrained': False, 'r': 4, 'report_to': 'none', 'resume_from_checkpoint': False, 'save_model_name': 'mouse_vlm_mdl', 'save_steps': 150, 'save_strategy': 'steps', 'save_total_limit': 1, 'target_modules': ['q_proj', 'v_proj'], 'task_type': 'CAUSAL_LM', 'use_quantization': True, 'vision_model_name': 'None', 'warmup_ratio': 0.05}}
+[!] eval_dataset == inference set (the held-out subject). Fine while load_best_model_at_end is false, but eval_loss is a TEST-set curve. Use run_mouse_vlm_loso.py --inner-val for an honest validation curve.
+VisionLanguageModel: vision_dim=768, llm_dim=4096, img_tokens=4, multitask=True
+{
+  "status": "passed",
+  "diagnostic_only": true,
+  "checks": [
+    {
+      "objective": "combined",
+      "fresh_reload_exact": true,
+      "image_swap_donor_logit_max_error": 0.0,
+      "identical_image_logit_ranges": {
+        "genotype": 0.0,
+        "tbr": 0.0,
+        "combined": 0.0
+      },
+      "donor_subjects": {
+        "NaF_KO_01": "NaF_WT_02",
+        "NaF_KO_02": "NaF_WT_03",
+        "NaF_KO_03": "NaF_WT_04",
+        "NaF_KO_04": "NaF_WT_07",
+        "NaF_WT_02": "NaF_KO_01",
+        "NaF_WT_03": "NaF_KO_02",
+        "NaF_WT_04": "NaF_KO_03",
+        "NaF_WT_07": "NaF_KO_04"
+      }
+    },
+    {
+      "objective": "genotype_only",
+      "fresh_reload_exact": true,
+      "image_swap_donor_logit_max_error": 0.0,
+      "identical_image_logit_ranges": {
+        "genotype": 0.0,
+        "tbr": 0.0,
+        "combined": 0.0
+      },
+      "donor_subjects": {
+        "NaF_KO_01": "NaF_WT_02",
+        "NaF_KO_02": "NaF_WT_03",
+        "NaF_KO_03": "NaF_WT_04",
+        "NaF_KO_04": "NaF_WT_07",
+        "NaF_WT_02": "NaF_KO_01",
+        "NaF_WT_03": "NaF_KO_02",
+        "NaF_WT_04": "NaF_KO_03",
+        "NaF_WT_07": "NaF_KO_04"
+      }
+    }
+  ],
+  "interpretation": "Outputs follow swapped images; identical images remove between-mouse score differences while questions, answer tokens, masks and labels remain unchanged"
+}

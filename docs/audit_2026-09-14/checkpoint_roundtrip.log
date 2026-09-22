@@ -1,0 +1,37 @@
+Failed to load CPU gemm_4bit_forward from kernels-community: No module named 'kernels'. Please make sure you already `pip install kernels` and the kernels >= 0.11.1
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/peft/utils/save_and_load.py:295: UserWarning: Could not find a config file in  - will assume that the vocabulary was not modified.
+  warnings.warn(
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/peft/tuners/tuners_utils.py:285: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+  warnings.warn(
+/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/peft/peft_model.py:598: UserWarning: Found missing adapter keys while loading the checkpoint: ['base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight', 'base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight', 'base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight', 'base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight'].
+  warnings.warn(warn_message)
+VisionLanguageModel: vision_dim=768, llm_dim=32, img_tokens=4, multitask=True
+VisionLanguageModel: vision_dim=768, llm_dim=32, img_tokens=4, multitask=True
+VisionLanguageModel: vision_dim=768, llm_dim=32, img_tokens=4, multitask=True
+{
+  "torch": "2.10.0+cu128",
+  "transformers": "4.46.3",
+  "peft": "0.18.1",
+  "adapter_tensor_count": 4,
+  "production_adapter_max_errors": {
+    "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight": 0.5331438183784485,
+    "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": 0.4142831563949585,
+    "base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight": 0.3774205446243286,
+    "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": 0.36989322304725647
+  },
+  "stock_peft_adapter_max_error": 0.0,
+  "production_output_max_errors": {
+    "language_logits": 0.19359397888183594,
+    "genotype_head": 0.014438778162002563,
+    "tbr_head": 0.07178446650505066
+  },
+  "loaded_lora_B_norms": {
+    "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": 0.0,
+    "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": 0.0
+  },
+  "correctly_serialized_checkpoint_output_max_errors": {
+    "language_logits": 0.0,
+    "genotype_head": 0.0,
+    "tbr_head": 0.0
+  }
+}

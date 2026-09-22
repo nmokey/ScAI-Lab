@@ -1,0 +1,49 @@
+{
+  "classifier": {
+    "C": 1.0,
+    "class_weight": null,
+    "max_iter": 2000,
+    "penalty": "l2",
+    "random_state": 0,
+    "solver": "lbfgs",
+    "tol": 0.0001,
+    "type": "LogisticRegression"
+  },
+  "feature_order": "Concatenate the indicated 768-dimensional tokens in time order",
+  "forecast_policy": "Reuse verified outer-nested, inner-cross-fitted, genotype-unconditioned forecasts",
+  "genotype_positive": "KO=1",
+  "limits": [
+    "32 mice, subject holdout, acquisition and diet confounding",
+    "No independent-group significance test or population confidence interval",
+    "Linear readout diagnostic cannot exclude nonlinear information",
+    "Training and test forecast tokens come from different fitted forecasters",
+    "Adding dimensions changes the effective regularized feature geometry"
+  ],
+  "metric": "Within-fold KO-WT pair-weighted AUROC; no cross-model ranking",
+  "preprocessing": "StandardScaler, fitted only on the 24 training mice in each outer fold",
+  "purpose": "Post-audit diagnostic of linearly readable genotype information in corrected VLM inputs",
+  "records_path": "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914/mouse_all_vqa_traj.json",
+  "records_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2",
+  "representations": {
+    "baseline": [
+      0
+    ],
+    "baseline_and_predicted": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "predicted_only": [
+      1,
+      2,
+      3
+    ]
+  },
+  "selection": "Three representations fixed before fitting; all reported; no tuning or model selection",
+  "sklearn_version": "1.7.2",
+  "source_sha256": "1cb62ef9fe278d80a555f79d25e639ae1b06ef9acce775e194f796efabf16566",
+  "split_path": "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/stratified/PROTOCOL.json",
+  "split_sha256": "87e35383932c168b10a06f743cbff07cd9b29fb38e7f03c1247c36acd9d3b392",
+  "threshold": 0.0
+}

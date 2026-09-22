@@ -1,0 +1,58 @@
+{
+  "embedding_path": "/data1/Processed_NIfTI_Test/embeddings/merlin_validated_20260914/merlin_embeddings.npz",
+  "embedding_sha256": "69b1e64994dfdba005d6500e055247429ceff4d9e5fe91d7d67d51d086639520",
+  "evaluator_sha256": "9ca006926cd0145baaebb97404dec3576f7c9f08f88bc894bf9ea9d04aef3e27",
+  "limitations": [
+    "Off-the-shelf human-scale preprocessing; not an isolated architecture comparison.",
+    "Genotype and diet are confounded; no disease localization or confirmatory encoder-selection claim.",
+    "Week and acquisition date coincide."
+  ],
+  "metrics": {
+    "T2a_accuracy": 0.7729257641921398,
+    "T2a_chance": 0.25,
+    "T2a_macro_f1": 0.7451726201726201,
+    "T2a_ovr_auc": 0.9184730333312752,
+    "T2d_accuracy": 0.5502183406113537,
+    "T2d_auc": 0.5508474576271186,
+    "T3a_pairwise_ordering_acc": 0.7704280155642024,
+    "T3b_mrr": 0.09304368383684473,
+    "T3b_recall_at_1": 0.039301310043668124,
+    "T3b_recall_at_3": 0.07860262008733625,
+    "T3c_map_at_5": 0.6956149927219797,
+    "early_late_mousegroup": {
+      "accuracy": 0.8907563025210085,
+      "auc": 0.9580378250591016,
+      "n": 119
+    },
+    "early_late_subject": {
+      "accuracy": 0.8907563025210085,
+      "auc": 0.9580378250591017,
+      "n": 119
+    },
+    "genotype_mousegroup": {
+      "accuracy": 0.4890829694323144,
+      "auc": 0.4463712757830405,
+      "exact_refit_p": 0.11666666666666667,
+      "n": 229,
+      "permutation": {
+        "method": "exact",
+        "n_arrangements": 120,
+        "resolution": 0.008333333333333333
+      },
+      "refit_null95": [
+        0.17840819391973817,
+        0.506994588213292
+      ]
+    },
+    "genotype_subject": {
+      "accuracy": 0.6200873362445415,
+      "auc": 0.6340718105423988,
+      "n": 229
+    }
+  },
+  "n_groups": 10,
+  "n_scans": 229,
+  "n_subjects": 78,
+  "source_manifest_sha256": "49f2d881ca51e65ff7cdb15be2b0ca6489bb58787d6502e209704150e77f3bfc",
+  "status": "passed"
+}

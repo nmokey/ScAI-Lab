@@ -1,0 +1,12 @@
+{
+  "files_sha256": {
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_vlm/PROTOCOL.json": "fa4af18c7154ac021089b9975faef6dbfa9af9c3617a6f6b71b958ac9a0b7494",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_vlm/RESULTS.md": "014fa6f088e6558a115c6cf126125a9424fc4e09da587a3a4abdfbb748cf357a",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_vlm/independent_metrics.json": "6fb309791bd0dca5d7b23cddb20a1a8d038c8e7ad59f853d7bb09e113364bec7",
+    "/home/ryab/ScAI-Lab/docs/audit_2026-09-14/residual_vlm/paired_results.json": "21d3aac29859b672d28bae77f368db2b94efdee2d18a539f4dd3d5e216eb998a"
+  },
+  "independent_runs_verified": 9,
+  "new_vlm_fits": 12,
+  "status": "complete",
+  "total_compared_vlm_fits": 36
+}

@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "records": 96,
+  "subjects": 32,
+  "embedding_rows": 229,
+  "baseline_max_abs_error": 0.0,
+  "numerical_targets_equal_historical": true,
+  "proxy_recomputed_rows": 111,
+  "proxy_max_abs_error": 0.0,
+  "acquisition_group_sizes": {
+    "group00": 4,
+    "group01": 10,
+    "group02": 18
+  },
+  "identity_rule": "Filename order lower-left, lower-right, upper-left, upper-right; explicit tube/phantom overrides",
+  "data_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2",
+  "limitations": [
+    "Filename mapping is an accepted heuristic, not externally confirmed identity.",
+    "Proxy computation is verified; aortic/histology biological validity is not established."
+  ]
+}

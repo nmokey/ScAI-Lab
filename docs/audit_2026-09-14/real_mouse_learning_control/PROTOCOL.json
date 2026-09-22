@@ -1,0 +1,55 @@
+{
+  "arm": "longitudinal",
+  "batch_size": 2,
+  "diagnostic_only": true,
+  "excluded_outer_test_subjects": [
+    "NaF_KO_09",
+    "NaF_KO_12",
+    "NaF_KO_15",
+    "NaF_KO_16",
+    "NaF_WT_01",
+    "NaF_WT_05",
+    "NaF_WT_06",
+    "NaF_WT_17"
+  ],
+  "genotype_loss_weight": 5.0,
+  "gradient_accumulation_steps": 4,
+  "learning_rate": 0.0002,
+  "measured_steps": [
+    0,
+    30,
+    60,
+    120,
+    180,
+    240,
+    300
+  ],
+  "n_records": 24,
+  "n_subjects": 8,
+  "objectives": [
+    "combined",
+    "genotype_only"
+  ],
+  "parent_training_split": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0/fold_00/splits/train.json",
+  "parent_training_split_sha256": "a37567dc6f4e9dc83d4bacb05885e7b00cf8c75bfe900d4d2c87b87e6600a399",
+  "preserved_inputs": "Existing nested forecast tokens from the parent training fold; each query excluded from its own forecaster fit",
+  "primary_capacity_criterion": "All eight genotype-question labels correct at zero logit and mean BCE <= 0.1; no held-out performance claim",
+  "scheduler": "cosine",
+  "script_sha256": "da8807dc2c3d7b443b4955cb66e4d4cb87035af43ea6cf777f186c7763aff949",
+  "seed": 0,
+  "selected_records_sha256": "b96c6b2fe1d8d67b5f7f2ed844ebe39af3f3b4d5209dbd8204869664f161f583",
+  "selected_subjects": [
+    "NaF_KO_01",
+    "NaF_KO_02",
+    "NaF_KO_03",
+    "NaF_KO_04",
+    "NaF_WT_02",
+    "NaF_WT_03",
+    "NaF_WT_04",
+    "NaF_WT_07"
+  ],
+  "selection": "First four KO and first four WT in sorted subject order from amended fold_00 training only",
+  "subset_epochs": 100,
+  "updates": 300,
+  "warmup_ratio": 0.05
+}

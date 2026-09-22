@@ -1,0 +1,10 @@
+........................................................................ [ 53%]
+...............................................................          [100%]
+=============================== warnings summary ===============================
+tests/control/test_loso_selection_leakage.py::test_load_best_model_at_end_is_config_driven_and_defaults_off
+  /home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/transformers/training_args.py:1568: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+135 passed, 18 deselected, 1 warning in 162.24s (0:02:42)
+sys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute

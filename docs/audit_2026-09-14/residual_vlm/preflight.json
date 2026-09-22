@@ -1,0 +1,8 @@
+{
+  "exact_dataset_token_rows": 128,
+  "experiment_protocol_sha256": "0a2d5043cb580aeacb294503c991fd8b097a6ce1e11fa15049c3a92074433eef",
+  "matched_reference_runs": 6,
+  "new_vlm_fits": 12,
+  "residual_forecast_folds": 4,
+  "status": "passed"
+}

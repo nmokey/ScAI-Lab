@@ -1,0 +1,212 @@
+[
+  {
+    "arm": "base",
+    "seed": 0,
+    "n_between_04_06": 10,
+    "probability_range": [
+      0.23559930245896335,
+      0.6771820455027954
+    ],
+    "tp": 2,
+    "fp": 4,
+    "tn": 14,
+    "fn": 12,
+    "folds": [
+      {
+        "fold": "fold_00",
+        "positive_mean": 0.3062918501329119,
+        "negative_mean": 0.2659209057846729
+      },
+      {
+        "fold": "fold_01",
+        "positive_mean": 0.45878195009941736,
+        "negative_mean": 0.4779972509992832
+      },
+      {
+        "fold": "fold_02",
+        "positive_mean": 0.47033183944779383,
+        "negative_mean": 0.4880438507830827
+      },
+      {
+        "fold": "fold_03",
+        "positive_mean": 0.3770054370362743,
+        "negative_mean": 0.4171283764659912
+      }
+    ]
+  },
+  {
+    "arm": "base",
+    "seed": 1,
+    "n_between_04_06": 17,
+    "probability_range": [
+      0.29488349047948226,
+      0.5710102233331596
+    ],
+    "tp": 2,
+    "fp": 4,
+    "tn": 14,
+    "fn": 12,
+    "folds": [
+      {
+        "fold": "fold_00",
+        "positive_mean": 0.3772880073157207,
+        "negative_mean": 0.37500537680682516
+      },
+      {
+        "fold": "fold_01",
+        "positive_mean": 0.46281482007519037,
+        "negative_mean": 0.515924249545741
+      },
+      {
+        "fold": "fold_02",
+        "positive_mean": 0.4349606054641931,
+        "negative_mean": 0.43773499588910797
+      },
+      {
+        "fold": "fold_03",
+        "positive_mean": 0.36111422186481723,
+        "negative_mean": 0.40110136272028313
+      }
+    ]
+  },
+  {
+    "arm": "base",
+    "seed": 2,
+    "n_between_04_06": 8,
+    "probability_range": [
+      0.1628059410680947,
+      0.9083167468461919
+    ],
+    "tp": 2,
+    "fp": 4,
+    "tn": 14,
+    "fn": 12,
+    "folds": [
+      {
+        "fold": "fold_00",
+        "positive_mean": 0.36476534827904306,
+        "negative_mean": 0.36407551682376516
+      },
+      {
+        "fold": "fold_01",
+        "positive_mean": 0.5265335151830515,
+        "negative_mean": 0.7066055497406998
+      },
+      {
+        "fold": "fold_02",
+        "positive_mean": 0.41492011709892407,
+        "negative_mean": 0.42383500946335034
+      },
+      {
+        "fold": "fold_03",
+        "positive_mean": 0.3470700863803553,
+        "negative_mean": 0.37744515340027673
+      }
+    ]
+  },
+  {
+    "arm": "long",
+    "seed": 0,
+    "n_between_04_06": 16,
+    "probability_range": [
+      0.304198229688332,
+      0.641053454191817
+    ],
+    "tp": 2,
+    "fp": 4,
+    "tn": 14,
+    "fn": 12,
+    "folds": [
+      {
+        "fold": "fold_00",
+        "positive_mean": 0.352877433367632,
+        "negative_mean": 0.35380404330117315
+      },
+      {
+        "fold": "fold_01",
+        "positive_mean": 0.45213204654812456,
+        "negative_mean": 0.48854380778159534
+      },
+      {
+        "fold": "fold_02",
+        "positive_mean": 0.49026015070054724,
+        "negative_mean": 0.429048750192407
+      },
+      {
+        "fold": "fold_03",
+        "positive_mean": 0.3940646036363377,
+        "negative_mean": 0.43259115343821725
+      }
+    ]
+  },
+  {
+    "arm": "long",
+    "seed": 1,
+    "n_between_04_06": 20,
+    "probability_range": [
+      0.2654218065165229,
+      0.6198286577591666
+    ],
+    "tp": 2,
+    "fp": 3,
+    "tn": 15,
+    "fn": 12,
+    "folds": [
+      {
+        "fold": "fold_00",
+        "positive_mean": 0.26999833278451923,
+        "negative_mean": 0.2703779308747064
+      },
+      {
+        "fold": "fold_01",
+        "positive_mean": 0.4853736971650484,
+        "negative_mean": 0.543262499850521
+      },
+      {
+        "fold": "fold_02",
+        "positive_mean": 0.4729092132630784,
+        "negative_mean": 0.4688657345961648
+      },
+      {
+        "fold": "fold_03",
+        "positive_mean": 0.4289186067189597,
+        "negative_mean": 0.4443265721280672
+      }
+    ]
+  },
+  {
+    "arm": "long",
+    "seed": 2,
+    "n_between_04_06": 17,
+    "probability_range": [
+      0.3041919974111449,
+      0.5185722718397238
+    ],
+    "tp": 1,
+    "fp": 1,
+    "tn": 17,
+    "fn": 13,
+    "folds": [
+      {
+        "fold": "fold_00",
+        "positive_mean": 0.3218965241126286,
+        "negative_mean": 0.32023616025930335
+      },
+      {
+        "fold": "fold_01",
+        "positive_mean": 0.43084901066482406,
+        "negative_mean": 0.45785189584487224
+      },
+      {
+        "fold": "fold_02",
+        "positive_mean": 0.4227675920134216,
+        "negative_mean": 0.4070385433971733
+      },
+      {
+        "fold": "fold_03",
+        "positive_mean": 0.40688843771031385,
+        "negative_mean": 0.45446439420901596
+      }
+    ]
+  }
+]

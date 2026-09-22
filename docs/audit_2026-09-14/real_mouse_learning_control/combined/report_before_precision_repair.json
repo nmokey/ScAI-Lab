@@ -1,0 +1,1568 @@
+{
+  "config_sha256": "7b3236b999a2a3dbdc12a894d7258f223842268c460d8b0db8b8f7110bd1fbff",
+  "diagnostic_only": true,
+  "gpu": "NVIDIA L40S",
+  "gradient_checks": [
+    {
+      "component_gradient_norms": {
+        "genotype_head": 0.46998852990140183,
+        "language_projection": 0.7634782736286516,
+        "lora_A": 0.0,
+        "lora_B": 0.20397949519158656,
+        "tbr_regression_head": 0.3931971916605499
+      },
+      "step": 1
+    },
+    {
+      "component_gradient_norms": {
+        "genotype_head": 0.9381191133132328,
+        "language_projection": 0.29061661083160234,
+        "lora_A": 0.043922137066271814,
+        "lora_B": 0.11824281961727282,
+        "tbr_regression_head": 0.13987125951406026
+      },
+      "step": 60
+    },
+    {
+      "component_gradient_norms": {
+        "genotype_head": 0.02173029585488227,
+        "language_projection": 0.3692545942726245,
+        "lora_A": 0.06668268462719096,
+        "lora_B": 0.22872415760246725,
+        "tbr_regression_head": 0.89800745444029
+      },
+      "step": 180
+    },
+    {
+      "component_gradient_norms": {
+        "genotype_head": 0.029100000430088913,
+        "language_projection": 0.5595106088658457,
+        "lora_A": 0.11477600403189282,
+        "lora_B": 0.23586488369579933,
+        "tbr_regression_head": 0.7856810915924198
+      },
+      "step": 300
+    }
+  ],
+  "initial_trainable_sha256": "efc8c9a2fbc674237d67e484d4d25f4758593860742608e57992bf4684c617b8",
+  "initial_trainable_tensors": 136,
+  "learning_curve": [
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 0.5,
+          "auc": 0.4236111111111111,
+          "bce": 0.8334961096998438,
+          "minimum_true_class_probability": 0.16656782502101905,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 0.5,
+          "auc": 0.625,
+          "bce": 0.7801369040218518,
+          "minimum_true_class_probability": 0.2809367530411687,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 0.5,
+          "auc": 0.25,
+          "bce": 0.9274967340998342,
+          "minimum_true_class_probability": 0.16656782502101905,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 0.5,
+          "auc": 0.375,
+          "bce": 0.7928546909778457,
+          "minimum_true_class_probability": 0.25380079055892846,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 1.4493166208267212,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.7289559245109558,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 0.8187874555587769,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 0.22010917961597443,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.1644381433725357,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 0.28507480025291443,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 1.102970004081726,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.6672337055206299,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 0.9624705910682678,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 1.1447837352752686,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.840473473072052,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 1.0334481000900269,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 1.2304874658584595,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.5979319214820862,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": 0.8134787082672119,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 1.4498672485351562,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.9431861639022827,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": 0.8513895869255066,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 0.7210337519645691,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.3485831618309021,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": 0.5888347029685974,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 1.6101497411727905,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 1.078442931175232,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": 0.9398197531700134,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 0
+    },
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 0.625,
+          "auc": 0.7152777777777778,
+          "bce": 0.6580859645940264,
+          "minimum_true_class_probability": 0.3778320651072171,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 0.75,
+          "auc": 0.875,
+          "bce": 0.6545701657628293,
+          "minimum_true_class_probability": 0.48437912967261426,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 0.625,
+          "auc": 0.8125,
+          "bce": 0.6574407061380824,
+          "minimum_true_class_probability": 0.3778320651072171,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 0.5,
+          "auc": 0.9375,
+          "bce": 0.6622470218811676,
+          "minimum_true_class_probability": 0.42715679200044987,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 0.3015233278274536,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.23281674087047577,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": -0.06160200387239456,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 0.49017637968063354,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.36343836784362793,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": -0.06250382214784622,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 0.5508086681365967,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.3691921830177307,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 0.04605840891599655,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 0.6490717530250549,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.406188428401947,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 0.10427611321210861,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 0.4987602233886719,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.2934609055519104,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -0.026656338945031166,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -0.03254706412553787,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.05223952978849411,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -0.33794474601745605,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 0.3074844479560852,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.17531447112560272,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -0.16893114149570465,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 0.2809872627258301,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.19564251601696014,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -0.10090882331132889,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 30
+    },
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 0.7916666666666666,
+          "auc": 0.9305555555555556,
+          "bce": 0.4188091384222919,
+          "minimum_true_class_probability": 0.3110035370060036,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 0.875,
+          "auc": 0.9375,
+          "bce": 0.41649754649982457,
+          "minimum_true_class_probability": 0.37322546407697627,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 0.75,
+          "auc": 0.9375,
+          "bce": 0.3894757202819128,
+          "minimum_true_class_probability": 0.42844488799336256,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 0.75,
+          "auc": 0.9375,
+          "bce": 0.45045414848513843,
+          "minimum_true_class_probability": 0.3110035370060036,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": -0.2881987988948822,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 0.3616155683994293,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 0.2730274498462677,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 1.9759894609451294,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 3.044313430786133,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 2.603842258453369,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 1.1556639671325684,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 1.6847866773605347,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 1.4818897247314453,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 1.290246844291687,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 1.8241100311279297,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 1.5586766004562378,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": 0.16646233201026917,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.7954318523406982,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": 0.5184041857719421,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -2.7937698364257812,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -2.0645689964294434,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -2.203228712081909,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -0.8216149806976318,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": 0.0949457585811615,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -0.3226516544818878,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -0.6563351154327393,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -0.027241915464401245,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -0.05945548415184021,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 60
+    },
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.03392196738143185,
+          "minimum_true_class_probability": 0.8642532351902618,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.037001284313529295,
+          "minimum_true_class_probability": 0.8642532351902618,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.029600818641429646,
+          "minimum_true_class_probability": 0.905670337790265,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.03516379918933662,
+          "minimum_true_class_probability": 0.8816627960471332,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 2.2618796825408936,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 2.0082714557647705,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 1.8510746955871582,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 5.918351650238037,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 5.918189525604248,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 5.549527645111084,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 6.316058158874512,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 5.979482173919678,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 5.720669269561768,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 4.683838367462158,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 4.45192289352417,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 4.27081298828125,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -4.9724225997924805,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -5.1409406661987305,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -5.014023303985596,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -10.33687686920166,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -10.607538223266602,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -10.480905532836914,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -3.4340078830718994,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -3.606109857559204,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -3.5037074089050293,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -2.4180009365081787,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -2.191765785217285,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -2.330538272857666,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 120
+    },
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.0006402078516044806,
+          "minimum_true_class_probability": 0.9976732583130304,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.000698854834666996,
+          "minimum_true_class_probability": 0.9978489116138214,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.0006387447498780703,
+          "minimum_true_class_probability": 0.9976732583130304,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.0005830239702683753,
+          "minimum_true_class_probability": 0.9983200574370296,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 6.060956954956055,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 6.387314319610596,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 6.139627933502197,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 7.03152322769165,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 7.146937847137451,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 6.428861141204834,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 13.094802856445312,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 12.94837474822998,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 12.648242950439453,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 10.55401611328125,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 10.137367248535156,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 9.933537483215332,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -10.787432670593262,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -10.57022762298584,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -10.717395782470703,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -15.718757629394531,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -15.81842041015625,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -15.64100456237793,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -6.4831929206848145,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -6.4601335525512695,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -6.682824611663818,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -8.045135498046875,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -7.478835582733154,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -7.60276460647583,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 180
+    },
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00014627574686018586,
+          "minimum_true_class_probability": 0.9995751012294667,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.0001658728752165123,
+          "minimum_true_class_probability": 0.9995751012294667,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00013704077056966643,
+          "minimum_true_class_probability": 0.999632867131848,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00013591359479437883,
+          "minimum_true_class_probability": 0.9996286343920192,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 9.153696060180664,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 9.125560760498047,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 8.635623931884766,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 8.322049140930176,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 8.340391159057617,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 7.763234615325928,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 14.376623153686523,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 14.412118911743164,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 13.946941375732422,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 10.224507331848145,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 10.015705108642578,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 9.616327285766602,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -10.586104393005371,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -10.420368194580078,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -10.332282066345215,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -17.446908950805664,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -17.825708389282227,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -17.626733779907227,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -8.052970886230469,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -8.134157180786133,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -8.25191879272461,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -7.909419536590576,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -7.897952079772949,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -7.9194655418396,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 240
+    },
+    {
+      "by_question": {
+        "all": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00012334893574459047,
+          "minimum_true_class_probability": 0.9996534625613136,
+          "n": 24
+        },
+        "combined": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00014195811101700478,
+          "minimum_true_class_probability": 0.9996534625613136,
+          "n": 8
+        },
+        "genotype": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00011976200748973433,
+          "minimum_true_class_probability": 0.9997222837696926,
+          "n": 8
+        },
+        "tbr": {
+          "accuracy": 1.0,
+          "auc": 1.0,
+          "bce": 0.00010832668872703225,
+          "minimum_true_class_probability": 0.999784853544181,
+          "n": 8
+        }
+      },
+      "rows": [
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 8.623106002807617,
+          "pid": "NaF_KO_01",
+          "qid": 0
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 8.636242866516113,
+          "pid": "NaF_KO_01",
+          "qid": 1
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 8.187479019165039,
+          "pid": "NaF_KO_01",
+          "qid": 2
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 8.432480812072754,
+          "pid": "NaF_KO_02",
+          "qid": 3
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 8.555988311767578,
+          "pid": "NaF_KO_02",
+          "qid": 4
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 7.967173099517822,
+          "pid": "NaF_KO_02",
+          "qid": 5
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 14.191368103027344,
+          "pid": "NaF_KO_03",
+          "qid": 6
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 14.35104751586914,
+          "pid": "NaF_KO_03",
+          "qid": 7
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 13.907878875732422,
+          "pid": "NaF_KO_03",
+          "qid": 8
+        },
+        {
+          "kind": "genotype",
+          "label": 1,
+          "logit": 10.027196884155273,
+          "pid": "NaF_KO_04",
+          "qid": 9
+        },
+        {
+          "kind": "tbr",
+          "label": 1,
+          "logit": 9.867938995361328,
+          "pid": "NaF_KO_04",
+          "qid": 10
+        },
+        {
+          "kind": "combined",
+          "label": 1,
+          "logit": 9.471334457397461,
+          "pid": "NaF_KO_04",
+          "qid": 11
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -11.040090560913086,
+          "pid": "NaF_WT_02",
+          "qid": 45
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -10.959602355957031,
+          "pid": "NaF_WT_02",
+          "qid": 46
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -10.83884048461914,
+          "pid": "NaF_WT_02",
+          "qid": 47
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -17.77485466003418,
+          "pid": "NaF_WT_03",
+          "qid": 48
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -18.322612762451172,
+          "pid": "NaF_WT_03",
+          "qid": 49
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -18.115577697753906,
+          "pid": "NaF_WT_03",
+          "qid": 50
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -8.18863296508789,
+          "pid": "NaF_WT_04",
+          "qid": 51
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -8.443976402282715,
+          "pid": "NaF_WT_04",
+          "qid": 52
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -8.56117057800293,
+          "pid": "NaF_WT_04",
+          "qid": 53
+        },
+        {
+          "kind": "genotype",
+          "label": 0,
+          "logit": -8.413317680358887,
+          "pid": "NaF_WT_07",
+          "qid": 60
+        },
+        {
+          "kind": "tbr",
+          "label": 0,
+          "logit": -8.460039138793945,
+          "pid": "NaF_WT_07",
+          "qid": 61
+        },
+        {
+          "kind": "combined",
+          "label": 0,
+          "logit": -8.412532806396484,
+          "pid": "NaF_WT_07",
+          "qid": 62
+        }
+      ],
+      "step": 300
+    }
+  ],
+  "objective": "combined",
+  "objective_check": {
+    "actual": 5.897364616394043,
+    "expected": 5.897364616394043,
+    "status": "passed"
+  },
+  "protocol": {
+    "arm": "longitudinal",
+    "batch_size": 2,
+    "diagnostic_only": true,
+    "excluded_outer_test_subjects": [
+      "NaF_KO_09",
+      "NaF_KO_12",
+      "NaF_KO_15",
+      "NaF_KO_16",
+      "NaF_WT_01",
+      "NaF_WT_05",
+      "NaF_WT_06",
+      "NaF_WT_17"
+    ],
+    "genotype_loss_weight": 5.0,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.0002,
+    "measured_steps": [
+      0,
+      30,
+      60,
+      120,
+      180,
+      240,
+      300
+    ],
+    "n_records": 24,
+    "n_subjects": 8,
+    "objectives": [
+      "combined",
+      "genotype_only"
+    ],
+    "parent_training_split": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/stratified_long_seed0/fold_00/splits/train.json",
+    "parent_training_split_sha256": "a37567dc6f4e9dc83d4bacb05885e7b00cf8c75bfe900d4d2c87b87e6600a399",
+    "preserved_inputs": "Existing nested forecast tokens from the parent training fold; each query excluded from its own forecaster fit",
+    "primary_capacity_criterion": "All eight genotype-question labels correct at zero logit and mean BCE <= 0.1; no held-out performance claim",
+    "scheduler": "cosine",
+    "script_sha256": "da8807dc2c3d7b443b4955cb66e4d4cb87035af43ea6cf777f186c7763aff949",
+    "seed": 0,
+    "selected_records_sha256": "b96c6b2fe1d8d67b5f7f2ed844ebe39af3f3b4d5209dbd8204869664f161f583",
+    "selected_subjects": [
+      "NaF_KO_01",
+      "NaF_KO_02",
+      "NaF_KO_03",
+      "NaF_KO_04",
+      "NaF_WT_02",
+      "NaF_WT_03",
+      "NaF_WT_04",
+      "NaF_WT_07"
+    ],
+    "selection": "First four KO and first four WT in sorted subject order from amended fold_00 training only",
+    "subset_epochs": 100,
+    "updates": 300,
+    "warmup_ratio": 0.05
+  },
+  "script_sha256": "da8807dc2c3d7b443b4955cb66e4d4cb87035af43ea6cf777f186c7763aff949",
+  "status": "running",
+  "target_statistics": {
+    "counts": [
+      8,
+      4,
+      8,
+      0
+    ],
+    "ddof": 0,
+    "mean": [
+      25.8825,
+      30.080000000000002,
+      23.2825,
+      0.0
+    ],
+    "std": [
+      8.45380498651347,
+      8.295980954655091,
+      2.9621687578529348,
+      1.0
+    ],
+    "subjects": [
+      "NaF_KO_01",
+      "NaF_KO_02",
+      "NaF_KO_03",
+      "NaF_KO_04",
+      "NaF_WT_02",
+      "NaF_WT_03",
+      "NaF_WT_04",
+      "NaF_WT_07"
+    ]
+  },
+  "torch": "2.10.0+cu128",
+  "transformers": "4.46.3"
+}

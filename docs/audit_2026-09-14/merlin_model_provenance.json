@@ -1,0 +1,25 @@
+{
+  "captured_utc": "2026-09-15T01:00:29.170527+00:00",
+  "merlin_version": "0.0.6",
+  "architecture": "3D inflated ResNet-152",
+  "task": "ImageEmbedding",
+  "files": {
+    "/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/merlin/models/load.py": {
+      "sha256": "daf5d0908c1577f02e6dde8913aa333d066f3032b7f95565ea605a6f909cca46",
+      "modified_utc": "2026-03-07T23:02:06.158013+00:00"
+    },
+    "/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/merlin/models/build.py": {
+      "sha256": "f751475fc71916553701a1c4fc01b9998f308e92cbb57cb8de07360d04763698",
+      "modified_utc": "2026-03-07T23:02:06.084012+00:00"
+    },
+    "/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/merlin/models/i3res.py": {
+      "sha256": "65e614f5e804761c5f2c9c0b284dbf11d9a5b328e57de7d67617fe1f2a2059e6",
+      "modified_utc": "2026-03-07T23:02:06.110012+00:00"
+    },
+    "/home/ryab/miniconda3/envs/vlm_env/lib/python3.10/site-packages/merlin/models/checkpoints/i3_resnet_clinical_longformer_best_clip_04-02-2024_23-21-36_epoch_99.pt": {
+      "sha256": "e274ec09ba6cf86ab4e5b9923a346e1ef35b4150607896264941875975674ff6",
+      "modified_utc": "2026-03-07T23:17:41.415640+00:00"
+    }
+  },
+  "note": "Captured after regeneration; the extraction log records this checkpoint path. Its modification time predates the run. Future extractions record these fingerprints directly in input_manifest.json."
+}

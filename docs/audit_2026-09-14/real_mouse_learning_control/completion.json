@@ -1,0 +1,26 @@
+{
+  "diagnostic_only": true,
+  "files": {
+    "RESULTS.md": "fa8ce728284158db2f0ee5f7dab7b0c2aee1761cb9b9d0611f41126eaa2c577f",
+    "combined/final_model/lora_adapter/README.md": "7cd2b49344d57f7ae183ef312431e9ab37c44cb913d6b8d17b422eb34686a892",
+    "combined/final_model/lora_adapter/adapter_config.json": "ee074a7600bbb46423c9868eb84ed4ebad90d681f471127899fe6212248515d0",
+    "combined/final_model/lora_adapter/adapter_model.safetensors": "9f544cd12c38cf1f19f56cbfea948fae169060276898812518e40f23ebc31d70",
+    "combined/final_model/other_weights.bin": "399d1b742c92a74f40e3eee1e9710e03a796880ed485fba92af473230cd47f2f",
+    "combined/final_model/vlm_config.json": "eee6110a863b951714954134d3d682218b64904c689bd537cb3dc56349f903e3",
+    "combined/report.json": "0557d89bbc4156e5f9105487c36d3fabb968e023b605f016386caaf02f389bd1",
+    "genotype_only/final_model/lora_adapter/README.md": "7cd2b49344d57f7ae183ef312431e9ab37c44cb913d6b8d17b422eb34686a892",
+    "genotype_only/final_model/lora_adapter/adapter_config.json": "f46e03947bbb421ef1fd9843b93df427c6752db5f6c19b09af7cab812db89f4e",
+    "genotype_only/final_model/lora_adapter/adapter_model.safetensors": "aea7b6ba65d6ea6cbb9423e551a964df66e2d3cf7cf1559d8d5a16a037e75e61",
+    "genotype_only/final_model/other_weights.bin": "81d36f2876e3fffa9e75a4b8dcc1caef78d6ea4b91750dfbcc989df43863e0d2",
+    "genotype_only/final_model/vlm_config.json": "eee6110a863b951714954134d3d682218b64904c689bd537cb3dc56349f903e3",
+    "genotype_only/report.json": "3d7b3fdb3afa7146e6bc66405be2c650b69969413b6a7e8956d592c1c66af6c4",
+    "image_dependence.json": "f20a8a37a6aefdfc73f0355e12f8f1847aa8015e5a2a4d5ae678ca5e9d907109",
+    "precision_repair.json": "11f36489aaee0977d76750f1f52727960c195aae5ede387c4dd4ed641651faef",
+    "summary.json": "80482b9d80cb615a9bad65babd7628405cd048d7b88c4f36f75358b75d0af412"
+  },
+  "objective_count": 2,
+  "original_execution_source_preserved": true,
+  "selected_mice": 8,
+  "status": "complete",
+  "training_updates_per_objective": 300
+}

@@ -1,0 +1,1200 @@
+{
+  "acquisition_group_sizes": {
+    "group00": 4,
+    "group01": 10,
+    "group02": 18
+  },
+  "baseline_max_abs_error": 0.0,
+  "ct_source_sha256": {
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_01/week_12/ct_hi.nii.gz": "3ece74fb46ad86acee3d196adee159d35d273b7e2099fe1f95c05cb9404d159b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_01/week_15/ct_hi.nii.gz": "85851c80b8ee33e6d0ca7297108bec75b652a581b9eee53d917c8eb5a82bb063",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_01/week_18/ct_hi.nii.gz": "eed96ce62779bb3cfd5821950e0c66fc25ed9cd3e2d9c4b55a2ccc33e0c0416b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_01/week_20/ct_hi.nii.gz": "a574d0b274a891ea7a6b4a667634e2021eb90a0817e5bded4b79e625e7d05310",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_02/week_12/ct_hi.nii.gz": "49a7431eb2f9801e6412cc4de231d03a21953ada02bdb26c0cb45220c60f7e7b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_02/week_15/ct_hi.nii.gz": "c4b5de65d746275efac27d1e010db698d23afa11efefd83a3bb3beeb5e14193c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_02/week_18/ct_hi.nii.gz": "d5171d5364344373a7ee6a26cff81ba63cb0af22d6dde004f120623e7fae7d38",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_02/week_20/ct_hi.nii.gz": "7462b0baa243bccebd4c8a8f66e87d64c451484f38f01afd57ea19290852b526",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_03/week_12/ct_hi.nii.gz": "fdc1e3e5d3bdac3a462b7a643a7bb7ccc4faea6e52dd63be88b8d62bdd86e1cb",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_03/week_15/ct_hi.nii.gz": "1e881a19978fb9098620154cc35a8a8cb73c34f36f437be13fa0e587a3b95286",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_03/week_18/ct_hi.nii.gz": "406e417a670a1da9a6d6f8205e0493ea8dda31fbc35732cf01f6482dd10a0ac1",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_03/week_20/ct_hi.nii.gz": "92aed6c732986e3321017cff9d3b299e3f0f568ceebd68ff6e6198a65fbb01a6",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_04/week_12/ct_hi.nii.gz": "b5aa033b9a04a0567329d733d3cb1299af47e8327e08d01e8ea4d56c8ab8de82",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_04/week_15/ct_hi.nii.gz": "3596caba10a70effa011e5af824a4a51272360270c078a0dd735c3d3d6ebb76c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_04/week_18/ct_hi.nii.gz": "199d94e864d25c93b2e40da3ca1634756860fb11c2b36183587f108324130f7b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_04/week_20/ct_hi.nii.gz": "f07afb455416035b333c626a3201502f845e3cf48fc4a2851aa7fd664ad34778",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_05/week_12/ct_hi.nii.gz": "fbf97b102a8eff982aab5ac586697429bd16950e622a77ef12e1cd0d95b269ae",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_05/week_15/ct_hi.nii.gz": "e2b10f7c91b728b2a887d263ba9f89bdd2cb581528f163db3f88f03f797726f4",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_05/week_18/ct_hi.nii.gz": "b71cefd544f2901fdcf8230e61a3db6b9148ac1730c9013f4bb182416d6e8a91",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_05/week_20/ct_hi.nii.gz": "28443c3578c35cc202f18dfc6c0130c59dbbbacb56a925600f064ad91136d8c2",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_06/week_12/ct_hi.nii.gz": "d3e167a4b5d2d14b78d6a9402824718b22478fef116640d1febe71840006918c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_06/week_15/ct_hi.nii.gz": "7384523dfce39c4b04884df202a59fb7d1df7de50091c70d9d024bf443fdfbdb",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_06/week_18/ct_hi.nii.gz": "11b527f73298b32d290a55dabbf69a8e60e246b667dd543917fe957141c0c273",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_06/week_20/ct_hi.nii.gz": "d98937ca5d059337bcb75b256004ae5f55b60c34956157c1f58dab170337dfac",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_07/week_12/ct_hi.nii.gz": "435ad6a7fd727ae017b739d45a1e9e1e067c757f24fb659f425e3d5161d1ae73",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_07/week_15/ct_hi.nii.gz": "d89a42b67c8f0c60fef361c9b4f3d6303a165907dc9fc35e46670d1974d46357",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_07/week_18/ct_hi.nii.gz": "4d438377145de7bf32e89294612d5fb1ab7bcd9a3e1cfdd8ede43071c5a0f12d",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_07/week_20/ct_hi.nii.gz": "378e260fa3ea56d087050b3eee2cc3531b424f289f659b4a7046093a5f1c3409",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_08/week_12/ct_hi.nii.gz": "7b69fe770e1c9f82b36855380a78f32a24ebf4738530bbaafca101b6f9eac947",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_08/week_15/ct_hi.nii.gz": "ece3dc915798bfbf06509a77dce0a6954d3fe3f127a062afeb94215a232b5428",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_08/week_18/ct_hi.nii.gz": "aaf5f256c168a42982c7baa07099ba0fd8e7ffd3657bc90dda67dd8cc910b562",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_08/week_20/ct_hi.nii.gz": "096b791b261e9d5245c8df9239cdfffa733b36931b1ec4cb553bb94e77acd161",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_09/week_12/ct_hi.nii.gz": "590b7b97a18f24d855448104a15086d2c7ae25c1b9c9a74cefc7d1b0f445c5eb",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_09/week_15/ct_hi.nii.gz": "c518a347aca95554434f6d1a15f6610b9e24b373bf52cb588c27274473305e25",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_09/week_20/ct_hi.nii.gz": "b9fafb422ce92a6de2df17997743cb2936857b7a0c5949a86cd4f933ac72b543",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_10/week_12/ct_hi.nii.gz": "b6e8ba4bce54875fa8e187c824fd42c084e2e36c88fac4e172fae1a816af3b29",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_10/week_15/ct_hi.nii.gz": "a8236d11e86919bc4c3981deb7a2dbd586eea37d9db7d2d773787235c2c98a11",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_11/week_12/ct_hi.nii.gz": "1c9e173cc49057d150053f2f97b6b04bdfe3b363de68f5e3b8940fe97971485d",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_11/week_15/ct_hi.nii.gz": "95911e13df6cc3bffb0e47cffe8528fad86a20fdb737de2e1b0e67738a5964f0",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_11/week_20/ct_hi.nii.gz": "76373a9e23c648b0043874102de29ace69b0525bd89799eec1b584ce125580cf",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_12/week_12/ct_hi.nii.gz": "517c633e74a3978cca57f3e6d172d2f51ad58012b82d6a63410d6b06307c0099",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_12/week_15/ct_hi.nii.gz": "faca50124732221b706f5e3bf8845325fd88e1656980e1b9f7e27b05c1138a72",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_12/week_20/ct_hi.nii.gz": "af6b1afdd7ef048176378942eecf68218f483d478c9e20434857f19be90fcd7d",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_13/week_12/ct_hi.nii.gz": "09dfdfd46486cff7103150a0d39054af5b48d2c496d3845867670ff15a1e0994",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_13/week_15/ct_hi.nii.gz": "e59e96250a0d63247f4594f8c42030e80211c2ff5045bb109cee08dfb7687be4",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_13/week_18/ct_hi.nii.gz": "8587ea735fd6fa3d1ec30db24ffba402c8a344cbb42d33d4a93a40d50d520022",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_14/week_12/ct_hi.nii.gz": "621ce66fa688debc6a8b1669485987f5a6f542b5b78e0dd304c9a39896f8a89c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_14/week_15/ct_hi.nii.gz": "7460fd6d06316b81e668705ee024c77888c3312df393743d10b2d33af4d98932",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_14/week_18/ct_hi.nii.gz": "0c5a6f20ceeb4a2c780cbc1639b26247036c60a803335ad6e8ac33106f63558f",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_15/week_12/ct_hi.nii.gz": "e1455b3f37a31dbebc56c8df535d1358a1bc130902cc6bc243a9bc6a69a43909",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_15/week_15/ct_hi.nii.gz": "b27feb0016e61f4e86074c676f12435529a3d47c2eda2cf2ceed52c04a66133f",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_15/week_18/ct_hi.nii.gz": "bf07900971ddae29f614010dce1fc098eaae0782414f1465ace030f76cbdf006",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_16/week_12/ct_hi.nii.gz": "ff94d2928511aaf3f441bf2123f0c4551986937d37b20f6bf8ddf816a84c394f",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_16/week_15/ct_hi.nii.gz": "1c23481702c1c82bbc4ca614199235902e528788ceb993df0245f58699edf0c0",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_17/week_12/ct_hi.nii.gz": "77b02185f88fca219d5dedc7444831093ec3019b6a92bf267aa6f526a2e9d234",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_17/week_15/ct_hi.nii.gz": "11c9beed1a25399b6d6d8a06de34cf9a091298b8891e3c6512a7124c50fec2fe",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_18/week_12/ct_hi.nii.gz": "fc979d63e3a27ff42e22a82fe2adca269638c7459ff0f7ef7dc525f02ba9f30f",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_18/week_15/ct_hi.nii.gz": "4d2230b76c5fb94b0506273f055db387a2d5d04c75ba827aff60c892bb0fdf49",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_19/week_12/ct_hi.nii.gz": "b6268dcb9604011b7dead35952f6872e0846687fe1243402f36627838588f274",
+    "/data1/Processed_NIfTI_Test/mice/FDG_KO_20/week_12/ct_hi.nii.gz": "79aae1361049088d89fdaa8ee14ce64fcc7ba6a1eead59db336b2de6ddb2c504",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_01/week_12/ct_hi.nii.gz": "675cac91b25ad5a533ff8f94d20cd9d4b622d251f1026388504f119c59d09af0",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_01/week_15/ct_hi.nii.gz": "ad56565d6f29cbde909350b886611aa0d9b6d6d5a8cf767341eba7cea3bfad87",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_01/week_18/ct_hi.nii.gz": "470ff46b849db5381e3891278b6ea1e8cb5bc0d244af7eef2f6d31af63ec093c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_01/week_20/ct_hi.nii.gz": "f39a4134eae8cb9494fa3cb5f9ccf8ab62db90296b43438f2deb413af5fe7792",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_02/week_12/ct_hi.nii.gz": "92b3b7b9e503ec949680ac8662c61d21119dbf4179385edb28cf0abe26c5f8e1",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_02/week_15/ct_hi.nii.gz": "01710cfb46f17ed361f71ee5fe4ccb72d9e87f653b963a64c20bd7af6e19da4e",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_02/week_18/ct_hi.nii.gz": "e0391508bbe1919c2e544fbe44ea473f1757d58d99ad7981ec154ab836705b87",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_02/week_20/ct_hi.nii.gz": "30c8569d829f2dbcd29f2ace380e6cf0b88b2fc38af93de7b32b5c94314c914d",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_03/week_12/ct_hi.nii.gz": "e2b04e51871290532ad1a5352420608e2da772a94b7e8cd6c87bcc1c986b0285",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_03/week_15/ct_hi.nii.gz": "3d3762b8c756908f90630f59f1ef86d11f43c23da8798c2de3946569b279a157",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_03/week_18/ct_hi.nii.gz": "74c3abcbb4acf3bb599092b598e48da0c0d00c9fdbb0ccdec7369be341fdfaa5",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_03/week_20/ct_hi.nii.gz": "67b8efae76e65d2c6840ababf471d00b7163e8ceed9e7ad106918ddc3829ba3b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_04/week_12/ct_hi.nii.gz": "16e72bebb324fde5114cf446b2a66d80cde2d0efcaa11ee8b8f78a1e9db2a547",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_04/week_15/ct_hi.nii.gz": "9a1239c33fb9ae5e79311dbda0e2eda285f8d04aedf0edeec51810985d82ea87",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_04/week_18/ct_hi.nii.gz": "f6f0851ba3fc06c9d4fed0c842943f62811d494054505dbc9fb5a670cd1a3587",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_04/week_20/ct_hi.nii.gz": "39a589314ddd1dedee4c5faa862929cf26c26c752137934b6c5fbf8d3409e567",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_05/week_12/ct_hi.nii.gz": "b7f3178e2a5e20654663796f069a938ee859ce69f51cf59d29bd1007953f3834",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_05/week_15/ct_hi.nii.gz": "a875a12b457d49bd5c3f22265b9d258bd62c25c1b94b7ad2496c0dcd110b70db",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_05/week_18/ct_hi.nii.gz": "a25da27f78144dc9263071ca69058106cd742469c123bc2479ff14821ad00a65",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_05/week_20/ct_hi.nii.gz": "5bf44b7affecf06ce85837f2ba7d41d8673d31d93ea12462637f83747b1dff91",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_06/week_12/ct_hi.nii.gz": "7e76bb2cff70c4aba4e031467f7d9faee70426a5f270b16309272d134ec144fb",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_06/week_15/ct_hi.nii.gz": "7502de3ebb32e1f6fb616ed05cc99e318016136a0ce0b1d6f2365f4bfa3df88a",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_06/week_18/ct_hi.nii.gz": "bcb2add6786983bfb9b19772e56db26b7198f8e06e246f177da01fed4865112e",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_06/week_20/ct_hi.nii.gz": "628698f9caed48331cc27dc239de3226d1914a317fc70a2d4e31ff6ef13c5083",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_07/week_12/ct_hi.nii.gz": "4642e505d126a54b447c4ef4898932996925c3c858b96a989c63298766a389e6",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_07/week_15/ct_hi.nii.gz": "cb53eaa11e9e4e6de4797c8a8ab4521f07541dc030abe95a2ce5a9bca5958029",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_07/week_18/ct_hi.nii.gz": "a626b2b80a90fd926bbc7ac464cf20788fac73775e2d142856ab1695da6d16ad",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_07/week_20/ct_hi.nii.gz": "ad525802d1e2a4447b199ee58cfbea255b0feda911553bf6d69b2537cf7516a6",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_08/week_12/ct_hi.nii.gz": "f2d235e757894fd63b31992d67800d7378be468fdb3ec1fdcf4bc065fbc26449",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_08/week_15/ct_hi.nii.gz": "75205769352a286771d0bc5edd706c717181891fb8623cd6938b6fc36421d256",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_08/week_18/ct_hi.nii.gz": "47ff044fbabdb4753d894bf06f91d8b4bc154866cf0e1bb53753526d31e0a976",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_08/week_20/ct_hi.nii.gz": "0f0f20ca448f3a89192151da60e648a8e578e30bbd429b1c388f43922e5d7911",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_09/week_12/ct_hi.nii.gz": "2827a1d15d4f2fbdec7f72632ad78c60fb4b16335f814d0fa1fbaf0eb3de9c5a",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_09/week_15/ct_hi.nii.gz": "b4f1a3870c76e2f8e082a9de714ae3d6ed61497355e29c3d04515e0b4dba78a7",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_09/week_20/ct_hi.nii.gz": "93e42c5388bec1e3b5ee9c185371a68587732f8b8a95bd64107e7be31bf2acb8",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_10/week_12/ct_hi.nii.gz": "74f4f348d6d1ce6780d2e323a10c05052021ec4aef15221fde85052ef62c858b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_10/week_15/ct_hi.nii.gz": "3ebf630538aedfcce66f6865a21a559af3dcbab98daa2d013c2dd58b9f7dd93b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_10/week_20/ct_hi.nii.gz": "5996a04d27861f87887e4b3684f1b7f6079719a50fa6d22fa3124502c2afc7ad",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_11/week_12/ct_hi.nii.gz": "ba99b0ec99d1a2fd12f432ab39c05484b4219caa237a0fb0c60a6fe4046740b2",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_11/week_15/ct_hi.nii.gz": "fd1aabb898fe452f8d5b869a714be8f06338f04bf4bfe26ef0a5e24f8b03a307",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_11/week_20/ct_hi.nii.gz": "621af969c3a7172b790db0642c3910f7422dafffe0f9f07c50a77bafe3840919",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_12/week_12/ct_hi.nii.gz": "5231844fb6881f7a7ae2c4cc197279fc4bbb210dc0b0f53f04104d0ef722c38b",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_12/week_15/ct_hi.nii.gz": "47bcfe127dc34a3bf7bbdc0a2a8eefbad891b2af7051f23c067e23d853fcc645",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_12/week_20/ct_hi.nii.gz": "787714ab9d0f0380cd8370e9c3728102dcbbd0c8546a0d42e3be8dacb0086bd5",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_13/week_12/ct_hi.nii.gz": "ad00b603c0ae89ea6d64ef4c20961ef9862757fc9807f31f53784013374f66f9",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_13/week_15/ct_hi.nii.gz": "93e9865fc07aff3889a6005ac069a7f27af286c0ff51ab4b081b8e38f6445dec",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_13/week_18/ct_hi.nii.gz": "6c10e98970e1a4372bf9dc974df20defb255de3053de630a765afa439c57b63c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_14/week_12/ct_hi.nii.gz": "d079becac980a67f2acd4b2ac50ebcf11545e97935bf67c1f2a3ea54429e271c",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_14/week_15/ct_hi.nii.gz": "5b1b59e1db23c5d5e01443d96c4b5b43fdbfc24661aef5c7712ccc298270dbbc",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_14/week_18/ct_hi.nii.gz": "397dcaf9d21519f50f7f5f4a4e5dc031f5e39ce8ade57e2a162c14a3bac4b335",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_15/week_12/ct_hi.nii.gz": "7835616893651a234b1c9ddddd1734772213c9a874a9c24996ec914c676cf5d8",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_15/week_15/ct_hi.nii.gz": "ba9dc928a780ef675f8abd106219d4f8ada7b4f6ce5dfa545672964396bbc947",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_15/week_18/ct_hi.nii.gz": "aff685978c01ee931c8ab085207e8cbf649fac3b702668deae80e7314037a1fd",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_16/week_12/ct_hi.nii.gz": "4455a7820403cfc67dc4281c603bc4a591c569ff83e23916f922fc1847b3898a",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_16/week_15/ct_hi.nii.gz": "aeef884231e61403495b830a222164682c2e26e97aaedb02e6c776c398e022d1",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_16/week_18/ct_hi.nii.gz": "4b000f36ec655e4f226179f68c26a1fa58cf35d9142dae6072a42ea26c17f50a",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_17/week_15/ct_hi.nii.gz": "215cebaed52e1e930287c1dcc66691475cf5a60a254fd3f54c4bf2aad6ea0bcc",
+    "/data1/Processed_NIfTI_Test/mice/FDG_WT_18/week_15/ct_hi.nii.gz": "a435a65922b60d2830236d8254ccc23b5d3ac1a801345c24fe318ce39544287c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_01/week_12/ct_hi.nii.gz": "8b9ff933b24f28f0c93fd2ebe15f7d2c78f9bbe1f15d1e1f69be97830b7b391f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_01/week_15/ct_hi.nii.gz": "40aaadf0d0f0e2b04b75b4af99394ec10fc7d3c3897320551ee5b0c054e57c35",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_01/week_20/ct_hi.nii.gz": "d15b552fdcf4d023319976f02099958a20b8fd757148bc027e5de2658b0f8954",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_02/week_12/ct_hi.nii.gz": "39a34365292d3e20bd49b4cb3291214ffbe7139706714e6ba625f034300335e1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_02/week_15/ct_hi.nii.gz": "7a89bc3184eed7e350000cbbbea80830e8238fc568126c680f4abb4f0f0bf645",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_02/week_20/ct_hi.nii.gz": "78bb247d26f0486ffb34a3e9a583ffa88484d6aac3155aff201f91d49eb7505e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_03/week_12/ct_hi.nii.gz": "5c3fa5ff70f631d17123ced35cd0098d68a68464a8024bc43b4641c547bca15b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_03/week_15/ct_hi.nii.gz": "ee34b7330f1c3fa523cae2697a13aaea8a9ebe2600b00164c9054f8c52292696",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_03/week_20/ct_hi.nii.gz": "d54230f837a4cc9300e9a8c7145138f49732d6d51ead605332749ff503a6ddd8",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_04/week_12/ct_hi.nii.gz": "f983b9964ed955bd4e57228bec62cb5b6d06468a5b1f9951b060a74376d5c870",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_04/week_15/ct_hi.nii.gz": "e120fd5074c1377921c4cd8acf41598be83f06c2609980fa0064502c0dac34c3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_04/week_20/ct_hi.nii.gz": "1ed2e0c57737e0e7e09983a801bc85d3bd510af0158f498c93e9174311347211",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_05/week_15/ct_hi.nii.gz": "ab355ee85d3ddf8113aeaadf35a9ed10e43f8e43eb5fc93996d593f89901dcb3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_05/week_20/ct_hi.nii.gz": "53e4e20f4ba577644877cb3885a2823e8c428a901b5e08b4b2e295c52b2a88aa",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_06/week_15/ct_hi.nii.gz": "6250922d1ac1a856057cfb2b76ac82795a06e0722755f9a0d01f261daa19998f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_06/week_20/ct_hi.nii.gz": "25dec16703ab693e0348b2082b7caccea1600d5622afc5b68b2678e1972a1d41",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_07/week_15/ct_hi.nii.gz": "00b0d9c33a29fc4c74be8d5a03c92d9e936ffecf5112397a4daa921020e8e3a7",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_07/week_20/ct_hi.nii.gz": "61bd2d94f0c102302ce263f0ed2224214a4c6b967212d96d5b897d43c46b95ea",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_08/week_15/ct_hi.nii.gz": "f620c61b7817e98ef57d5a233cf214a6f1c652035085de64aa8ee24338a15b33",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_08/week_20/ct_hi.nii.gz": "48984be6ac56a1630c941ffbb55666e3f27fbf07484a51a863f0405440af1826",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_12/ct_hi.nii.gz": "42d6498fb8e4a3528f500448d424a95669b60a65fbbb18ce9fb03f01fbf9462a",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_15/ct_hi.nii.gz": "7904fe9864eab90cb3ea736aa109b39cc22e0ade72c9bdb5de01572166d05ac6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_09/week_20/ct_hi.nii.gz": "80478d2e4fa8cbea90801e1e2318001800a15a2a3635bca61bc14bb7ce23282d",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_10/week_12/ct_hi.nii.gz": "84ee71737f48f8b50e1240e21bdbdd76f052975ba057d7573395031db3fc3ffa",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_10/week_15/ct_hi.nii.gz": "2f609edf198b70a840afc1a3352917d473aa9d8293c591f9410fcd747165f34e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_10/week_20/ct_hi.nii.gz": "705982d40b2a55e6224ef1e46189e4f6ab10d842957b7e601dcb3ef4ac6a1ae6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_11/week_12/ct_hi.nii.gz": "6c692ba605f9a4c7204aea031d752ca59d32d2cc7655aca0332b9415a2585d24",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_11/week_15/ct_hi.nii.gz": "8c11837cb9875fd58a1158e84e516c3cbf4f7214204fcc2de17d421de1dab304",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_11/week_20/ct_hi.nii.gz": "6b03c6ffd48a79bee71c86f6feadcf2ea6f0ccebec7877b721c2bbcb4fe24432",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_12/ct_hi.nii.gz": "7af9def8519ae649a3f80078e5ea81b9443632ff3ae19e1a3b0ce0f1480e1206",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_15/ct_hi.nii.gz": "c2ad29f4604aed0ffb8379a51bbe7683f7103b62220f4a1599120746dc5f4a9f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_18/ct_hi.nii.gz": "24d81767d7b2f4fd349a3e995afa75278ca86c7fd76d008c317bceb44abfc7da",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_12/week_20/ct_hi.nii.gz": "2c3e4cd42a0b8c08ac3ded3b7a79bca8a57c79a98cf02a400ecacb5aa8786171",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_13/week_12/ct_hi.nii.gz": "cc57967bffcb2e57b135f38f30c9919439106c76270e49fc7a439067feacfb1b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_13/week_15/ct_hi.nii.gz": "bf7ccc3d175f2ea2838c47773cd5678aac81aa572193a44175d25f7794986fa3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_13/week_18/ct_hi.nii.gz": "6b5e8a817f7b3e47cd80828c3cabf91767545e4f5287da425d19d3078db83a57",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_14/week_12/ct_hi.nii.gz": "a809166a4ed42ba19e2fc17c2a36f06cf1f66af0f5fa397499d6a194c965b871",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_14/week_15/ct_hi.nii.gz": "17b2a1838ffc27e8bdf347e036059e5bb52ac72bf3304ba85f8b0f9658f4aa1a",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_14/week_18/ct_hi.nii.gz": "5f2a14b8ed91ef67a4c7a4b43058eafe729361f5cd81af386763108c93a7914f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_15/week_12/ct_hi.nii.gz": "972d0a2e4ee9d51285c4f32ffc38ed2bc22b2d32ab37b79ec233b40ff8de2bb1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_15/week_15/ct_hi.nii.gz": "5a647ce7283fa7993288cb3bcedcea431653d1081ca7bfd1384ae97db08ee0a1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_15/week_18/ct_hi.nii.gz": "7bd927a02e3b428274aecf02f7ae90b7d1882d8bf11d22027806d8ce7458184c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_16/week_12/ct_hi.nii.gz": "0d7b11e109c8f2afff8e21eecd092674f55049872b37224a5c7757bc70ee3f88",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_16/week_15/ct_hi.nii.gz": "9f359f6b071734878019e91edb91ef7b3069019716ee6db602ee4be9fda2293c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_17/week_12/ct_hi.nii.gz": "aff75f2d199df7f45d215cdebcacada0fb95ce4cc892a533065fb5a2f113c1d7",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_17/week_15/ct_hi.nii.gz": "f13ece9491d390fb4da2e55f5a84e61104fb3df00d0b4e7ec5c09a6e9fce14e8",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_18/week_12/ct_hi.nii.gz": "a549b44888bf34975c3966610743511c82a3c3ad52ff04d02fd67e8a9d579bab",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_18/week_15/ct_hi.nii.gz": "dbf12314d09a54043b224417a2054ebff571c7ee192d1953bd3c40261014b7fb",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_19/week_12/ct_hi.nii.gz": "b085c51365fa9b4151994e1512549ce3193c181f26eb0ec894cea98eafb702a7",
+    "/data1/Processed_NIfTI_Test/mice/NaF_KO_20/week_12/ct_hi.nii.gz": "9682293e7d0233cb976e6af21c17f7d9e52a5b78406a8f36f88cf79980db6728",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_12/ct_hi.nii.gz": "a9986bc2015f38f40636d8743e61779044df20863bab292b2d4d555a8b771fed",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_15/ct_hi.nii.gz": "2000ba2712d2465176fb266c7f13558d01eae76915969bbaa26ae1c31b3dd2f3",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_18/ct_hi.nii.gz": "063d1c9be21e290a26d21f2e6886e9b1473bb1c0223a8518099bf9b3901bf242",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_01/week_20/ct_hi.nii.gz": "ebadd5ef39eaa6f4273970edc6dcdaec94b41f98c23c8f2b69a6927385f7f520",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_12/ct_hi.nii.gz": "ff58b85bb657a4c89fdf946f457079fed01f348bd1251053ecdad6baad2f6e85",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_15/ct_hi.nii.gz": "dbc873e3989e6b5ae1dcde41d4da506b783e04b155cd6ffaf607983faa0c347b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_18/ct_hi.nii.gz": "7b50dc3fac6a9539169e051d8dc987f54429f9e6f2471272dd8ab2f026cf039e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_02/week_20/ct_hi.nii.gz": "4c4c724da3b5d72cf4c55a9a214983f6ccc23cc6a1a97586b8bdd4176b2b4b14",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_12/ct_hi.nii.gz": "f96a7032d48c129608bb87dea2bab58ca2b4e0bbfe91dd5d26ba9d152836739d",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_15/ct_hi.nii.gz": "f57ffcc395f0a7e8a0d6d5a9b987b2d22930b312bd48aefb8a2d07bde1dbbee6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_18/ct_hi.nii.gz": "d6a9b22ce17fe336d43465b94bd88542cccb43e890e963010bb853c1bb216417",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_03/week_20/ct_hi.nii.gz": "e2075401fe3fadab7240baf5430c115045b73acf229d95f1064aaa662814a9e6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_12/ct_hi.nii.gz": "b5b794430234af38bd5d6d1bfc60ba3789a24a63d107ce0b37ee4fba95d12f1a",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_15/ct_hi.nii.gz": "fc947e277cbb2ce16f92bfc302524c80afbf882eb978e56787cfbdfb36b02c56",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_18/ct_hi.nii.gz": "316842205bae5c251435e0ede1a91e830b4f366585c469af4cfc64f159fea690",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_04/week_20/ct_hi.nii.gz": "b6e2043eeacaa340518aa3ae630c56ef350167f58f96312e251b3046fc897999",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_12/ct_hi.nii.gz": "ab6161c1ab735ddc43857fd1ce897b4d8fe03a68afa9bd3579483e6570e0d65e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_15/ct_hi.nii.gz": "eaa4ef97966366db863b6ef384fa9ccc9a98d0fb055a9707603f1499819889b2",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_18/ct_hi.nii.gz": "cf69be1bb40f344ad2109e1aca87feec4ffa02ebf2ed476976f5ce5f860841a5",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_05/week_20/ct_hi.nii.gz": "cf5c4cbdc577a0ee06947b3990e7bb906e6c35f310f53b13c0b5a7b437d7e3c7",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_12/ct_hi.nii.gz": "5b08e45f91c5b0df94493d25bec24adefc94414ecd0e40145d24480e71577874",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_15/ct_hi.nii.gz": "738f2d4f4f755a73880c92391494f43395923cb60c6c728d730c92d282808981",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_18/ct_hi.nii.gz": "9c58fceceed39669087559a69b8ca7b22d89a1530a738c80ccc42aabf76af509",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_06/week_20/ct_hi.nii.gz": "577a4aba91b292911442fcea6b194233813e5e7a9bf110b11a16f8dc9df94f7d",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_12/ct_hi.nii.gz": "b1d63b0111bbf72cc9145d6b647e9988dd58d633e9cddf6e2c119ab4bf9b7def",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_15/ct_hi.nii.gz": "72796d686b92daabbe9c1fe4f7c4af4514e6f5e4fee2a2d880dc1e64490b135f",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_18/ct_hi.nii.gz": "c926915f7977f4eb956d9aa27755f78ee3b2e9b7aea56941a0a24c8a81cc4d03",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_07/week_20/ct_hi.nii.gz": "ae2c99f11dd58e207d7d40cfbaa4a90f684a50e3cfff94da5fb469a16d76494d",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_08/week_12/ct_hi.nii.gz": "7ce830d6fb84d4e4d3b3333bd38d6125533318afadb31ff21ecaa78d1fb0993d",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_08/week_15/ct_hi.nii.gz": "44c1825aa50c30bc7cd39bb584169eba1ae844859d902c5596f951bdca8cd57b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_08/week_20/ct_hi.nii.gz": "0c9a323385b417211464b78fbdc7214c6455a8e342a572982dde83ce15e6ff37",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_09/week_12/ct_hi.nii.gz": "15c1871c678a2629048196d8c7a21ef33c12f872ac68aa944befa282974e9177",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_09/week_15/ct_hi.nii.gz": "91aebbecb5927ea99767f59162c18869a2b1a3102328d7313a617976d83b5676",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_09/week_20/ct_hi.nii.gz": "76fbb0d8fb0e8866f035815b3c1e08f515b27e5dfbc82aaa5a01d7ceb79fe8e7",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_10/week_12/ct_hi.nii.gz": "5d74a7baec70377ffa36ce2d177252c7b8235359bca04f570ba8044552b002f5",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_10/week_15/ct_hi.nii.gz": "04672ca75f38709f6526e7cf87891e50670401647eea5d0c701efa7ab53bf55c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_10/week_20/ct_hi.nii.gz": "340b27f4f000e86d314261db6ce6488e04de55519b3f09b51abd6132480046c6",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_11/week_12/ct_hi.nii.gz": "62af5d3c4663fe62875c93d8218006c27799f0b7c244b34d884f44054594baf4",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_11/week_15/ct_hi.nii.gz": "4c25fc785a193a7629d23f0e795de58a7f0d336758acaedac758cf94e550c1db",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_11/week_20/ct_hi.nii.gz": "0345f2717110a44de54f3cb0dbc76fe0c7400709542707d7de92a13dbbe6d02b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_12/ct_hi.nii.gz": "2b5d2a03db49ac54bf2a5686598dd65d18405883e7a517890d673a237d065f52",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_15/ct_hi.nii.gz": "6352aad2ad48da5a47ced4c3942a22f3dd4253770edab3e120f4d86f3efc9e42",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_18/ct_hi.nii.gz": "b5f3cad613d7a2be111f4c8ce3eb904f4e19c6d85ccb3681eebf8aa24816464b",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_12/week_20/ct_hi.nii.gz": "51a49384f5b8da05bc500fccab2bf0b86d90ae4cdb2005934d76b06b64693533",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_13/week_12/ct_hi.nii.gz": "13801ca22a87796224dd7571a2226709c431cb96752f5345bd0978b22d2238e4",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_13/week_15/ct_hi.nii.gz": "0ca0a37113345824f0bf48743aac3e7ec027b05a544461a6e58c54a9f3833edc",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_13/week_18/ct_hi.nii.gz": "3c50931809219a1fe3868c1056442c08b6098663f12bbcf10b8b84112d6b2a93",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_14/week_12/ct_hi.nii.gz": "ad06e2d8d3f316bd8c11dd43e361512a729639fd6b0ccd80bc13303451b700d1",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_14/week_15/ct_hi.nii.gz": "59e6336dff623d7ef13a91c830c2adba4ab600cbeb0e4e8d3ad812594f4658ed",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_14/week_18/ct_hi.nii.gz": "c2682f887edc10778129499edb6e0b410cc7cede2fb15c21ebd22633019a0a84",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_15/week_12/ct_hi.nii.gz": "f4f3cac4a18ecf53989f552460327f380573a89338b024a678c4f4f82d625bc4",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_15/week_15/ct_hi.nii.gz": "149bc56030c5a30269b1fc8ca716096ec7c52de6b53e43e6edfca2e2aa16cd42",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_15/week_18/ct_hi.nii.gz": "f096120e214f35525b694f0f0dd1b77ad4ec076a423f60e31a24389eeb1f108c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_16/week_12/ct_hi.nii.gz": "5b1a4a1094bd87ac993ddf3b40ba66bd4eb44a477a6ee7927731f92ba68b0a5c",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_16/week_15/ct_hi.nii.gz": "726ddf261aa2fca849795262534cdb93be76d0bc96535977ed7513fb1d47da3e",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_17/week_12/ct_hi.nii.gz": "09aa36306c8ade2f9990832a647a15a0952d447e2cee41b7f23d505459d7d11a",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_17/week_15/ct_hi.nii.gz": "5ba67d8b9e9cd2843d51eae31b476a983228c0fb32514eb26bd622ba6795f141",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_18/week_12/ct_hi.nii.gz": "61986716c3246b72ae40f3080db4cf059487b681505610d8822e5f010b6c3b39",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_18/week_15/ct_hi.nii.gz": "95c6a83f2ab322d653fa1f5023a4324fa98b41642eb19797fe5da5d78031200a",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_19/week_12/ct_hi.nii.gz": "121b5ded8c99ba182119942dd0debd7ea1e1900a8947a262727cbf065a5bc608",
+    "/data1/Processed_NIfTI_Test/mice/NaF_WT_20/week_12/ct_hi.nii.gz": "4a848f6c62306914fc3aa0a7f39f6b7a800838912f61fe30d4e4464d7df7859f"
+  },
+  "data_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2",
+  "embedding_rows": 229,
+  "identity_checks": [
+    {
+      "mouse_numbers": [
+        1,
+        2
+      ],
+      "override": false,
+      "positions": [
+        3,
+        4
+      ],
+      "scan": "m54225"
+    },
+    {
+      "mouse_numbers": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54226"
+    },
+    {
+      "mouse_numbers": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54227"
+    },
+    {
+      "mouse_numbers": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54228"
+    },
+    {
+      "mouse_numbers": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54229"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54231"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54233"
+    },
+    {
+      "mouse_numbers": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54234"
+    },
+    {
+      "mouse_numbers": [
+        19,
+        20
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2
+      ],
+      "scan": "m54244"
+    },
+    {
+      "mouse_numbers": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54302"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54263"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54264"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54265"
+    },
+    {
+      "mouse_numbers": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54266"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54268"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54269"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54270"
+    },
+    {
+      "mouse_numbers": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54271"
+    },
+    {
+      "mouse_numbers": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54272"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2
+      ],
+      "scan": "m54399"
+    },
+    {
+      "mouse_numbers": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54400_2"
+    },
+    {
+      "mouse_numbers": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54401"
+    },
+    {
+      "mouse_numbers": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54402"
+    },
+    {
+      "mouse_numbers": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54403_1"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54404_1"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54405"
+    },
+    {
+      "mouse_numbers": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54407_2"
+    },
+    {
+      "mouse_numbers": [
+        16,
+        17,
+        18
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3
+      ],
+      "scan": "m54408_1"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54503"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54504"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54505"
+    },
+    {
+      "mouse_numbers": [
+        13,
+        14,
+        15
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3
+      ],
+      "scan": "m54506"
+    },
+    {
+      "mouse_numbers": [
+        16,
+        17,
+        18
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3
+      ],
+      "scan": "m54507"
+    },
+    {
+      "mouse_numbers": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54521"
+    },
+    {
+      "mouse_numbers": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54522"
+    },
+    {
+      "mouse_numbers": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54523"
+    },
+    {
+      "mouse_numbers": [
+        15,
+        16,
+        17,
+        18
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54524"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54636"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3
+      ],
+      "scan": "m54637"
+    },
+    {
+      "mouse_numbers": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54639"
+    },
+    {
+      "mouse_numbers": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54647"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54683"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54684"
+    },
+    {
+      "mouse_numbers": [
+        13,
+        14,
+        15,
+        16
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54686"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54687"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54688_1"
+    },
+    {
+      "mouse_numbers": [
+        13,
+        14,
+        15
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3
+      ],
+      "scan": "m54690"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54765"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54766"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54767"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54771"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54772"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54773"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54787"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54788"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3
+      ],
+      "scan": "m54789"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54790"
+    },
+    {
+      "mouse_numbers": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54791"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "override": false,
+      "positions": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "scan": "m54792"
+    },
+    {
+      "mouse_numbers": [
+        9,
+        10,
+        11
+      ],
+      "override": true,
+      "positions": [
+        2,
+        3,
+        4
+      ],
+      "scan": "m54406"
+    },
+    {
+      "mouse_numbers": [
+        1,
+        2
+      ],
+      "override": true,
+      "positions": [
+        3,
+        4
+      ],
+      "scan": "m54520"
+    }
+  ],
+  "identity_rule": "Filename order lower-left, lower-right, upper-left, upper-right; explicit tube/phantom overrides",
+  "limitations": [
+    "Filename mapping is an accepted heuristic, not externally confirmed identity.",
+    "Proxy computation is verified; aortic/histology biological validity is not established."
+  ],
+  "numerical_targets_equal_historical": true,
+  "proxy_max_abs_error": 0.0,
+  "proxy_recomputed_rows": 111,
+  "records": 96,
+  "status": "passed",
+  "subjects": 32
+}

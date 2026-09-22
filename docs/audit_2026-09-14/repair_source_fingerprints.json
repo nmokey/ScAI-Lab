@@ -1,0 +1,16 @@
+{
+  "vlm/utils/checkpoint_utils.py": "982f7d2be23d3d8c5e3ab1300a2bba5e1da186d586ea4d9e3ec5859a8676b7ad",
+  "vlm/model/vision_language_model.py": "eaf6e9dee46862e5d2044764c318b3ea288ea86a0967e0e9602b318e3425bb20",
+  "vlm/model/viz_emb_trainer.py": "8760c18f372c5399e1b0f064b729813ca613f941be70d8b2bf2ebb697709022a",
+  "vlm/data/vqa_dataset.py": "337a24b78433917c19387ef141a8011147d40a1e4286e8901d4b58a1c3a328b4",
+  "vlm/data/eval.py": "c9cb5ded9b72c0d72af02fac8893cd83d53b08406ff62f386bb35927b0ec195e",
+  "vlm/run/run_mouse_vlm_loso.py": "18b0def95e15109d0261d8a09f3de43bd1f3e3b3904d35b6f86f95b3d7159d1e",
+  "vlm/run/run_mouse_vlm_single.py": "361ae126eebd8436a72d887310b183237872818fe856efa5db881de7cdef3e94",
+  "tests/torch/test_vlm_checkpoint_and_heads.py": "ccf6dd0edd3de8e8aa142e31b08446a0c902f123eab4130b82ad4d0c876a10f9",
+  "tests/control/test_head_shortcut.py": "eaa18d71cdf6da962a85968f50780dc38e37f4ae85bb29ba3d1c619486d7ceaa",
+  "scripts/audit_checkpoint_roundtrip.py": "4aaf0b0308824d77dcfb0772800ba125dfba35f84c58b2b64fa44a473ef89585",
+  "scripts/repair_vlm_checkpoint.py": "91897b67e75d12a45f50002fa5d209a2f54b94e16792ec5ba79bb959df15b23a",
+  "scripts/validate_vlm_quantized_checkpoint.py": "58cb6a96d96172e727782a219750f2961095eff118896df43959ea83b1c651d7",
+  "vlm/yaml/viz_emb_params_mouse_nogeno_base_repaired.yml": "adaf72067ed3b0702a24649c1a5d619ce31141922cffc046c1f06184f270d2ef",
+  "vlm/yaml/viz_emb_params_mouse_nogeno_long_repaired.yml": "12a56e3780f5397fe662b0defa5a78bac6e34cdd98cfc2a5204a24c8fbf6af96"
+}

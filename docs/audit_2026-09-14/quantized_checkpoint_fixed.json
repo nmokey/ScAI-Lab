@@ -1,0 +1,47 @@
+{
+  "torch": "2.10.0+cu128",
+  "transformers": "4.46.3",
+  "peft": "0.18.1",
+  "gpu": "NVIDIA L40S",
+  "training_updates": 2,
+  "losses": [
+    7.950438976287842,
+    14.540005683898926
+  ],
+  "gradient_max_norms": {
+    "language_projection": 582.093017578125,
+    "genotype_head": 96.82306671142578,
+    "tbr_regression_head": 559.6798706054688,
+    "lora_A": 7.8752593994140625,
+    "lora_B": 107.04793548583984
+  },
+  "adapter_tensors": 128,
+  "nonzero_B": 64,
+  "repeated_eval_max_errors": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "reload_max_errors": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "answer_perturbation_head_max_errors": [
+    0.0,
+    0.0
+  ],
+  "repaired_checkpoints": [
+    {
+      "checkpoint": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/repaired_checkpoints_20260914/mouse_vlm_nogeno_long_ep20_f20/fold_11_NaF_KO_16/checkpoint-112",
+      "strict_reload": "passed",
+      "pool_at": "answer_eos"
+    },
+    {
+      "checkpoint": "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/repaired_checkpoints_20260914/mouse_vlm_nogeno_long_ep20_qeos_seed0/fold_08_NaF_KO_13/checkpoint-67",
+      "strict_reload": "passed",
+      "pool_at": "question_eos"
+    }
+  ],
+  "status": "passed"
+}

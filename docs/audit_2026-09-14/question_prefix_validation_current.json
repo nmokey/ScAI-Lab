@@ -1,0 +1,10 @@
+{
+  "all_image_tokens_equal": true,
+  "all_training_prefixes_equal_inference": true,
+  "data_sha256": "a1b7a4df404f7e7f209afb13686c078541653bb7048b5110d1762f8dd34f78d2",
+  "max_combined_tokens": 81,
+  "records": 96,
+  "seq_length": 150,
+  "status": "passed",
+  "truncated_records": 0
+}

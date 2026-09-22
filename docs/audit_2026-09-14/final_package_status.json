@@ -1,0 +1,13 @@
+{
+  "paired_results_sha256": "b1c116e46d99fd3ddbdde4a66bfe52434386e6c41b76df5459f45639a5890fc9",
+  "results_md_sha256": "4459f11af0db1c5513bc7c984913b2b390f9a44cbeeb93116b8ca33b7c274263",
+  "runs": [
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed0",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed1",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_base_seed2",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed0",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed1",
+    "/data1/Processed_NIfTI_Test/embeddings/vlm/runs/validated_long_seed2"
+  ],
+  "status": "complete"
+}

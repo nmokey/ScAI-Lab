@@ -1,0 +1,20 @@
+{
+  "Week 15": {
+    "n": 32,
+    "forecast_cosine": 0.9859432876110077,
+    "persistence_cosine": 0.9796475861221552,
+    "train_week_centroid_cosine": 0.9870159700512886
+  },
+  "Week 18": {
+    "n": 15,
+    "forecast_cosine": 0.9829729358355205,
+    "persistence_cosine": 0.9681075930595398,
+    "train_week_centroid_cosine": 0.9853120485941569
+  },
+  "Week 20": {
+    "n": 20,
+    "forecast_cosine": 0.9854307353496552,
+    "persistence_cosine": 0.9745081096887589,
+    "train_week_centroid_cosine": 0.9862138450145721
+  }
+}

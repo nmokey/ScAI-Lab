@@ -1,0 +1,19 @@
+{
+  "source_sha256": {
+    "docs/audit_2026-09-14/FINAL_INTERPRETATION.md": "5f267b7ec8b30b845700ab7b1aac23a88b796c6bd13114fbfa5e0aaf91bf822d",
+    "docs/audit_2026-09-14/PIPELINE_CLOSURE.md": "80233b9b02afe0fe88689c4d4ac840851b49a8d160b8570947eb0c879c3f09ce",
+    "docs/audit_2026-09-14/genotype_vlm_variants/paired_results.json": "42d7bfd588a74aa447b97ae3c98c871d916de32285e14a1a8626e656e794508b",
+    "docs/audit_2026-09-14/genotype_vlm_variants/score_diagnostics.json": "b43c257d1c5ceedf1731fb89f1fa01988d795d4607d048f67b3907e86fdd1d78",
+    "docs/audit_2026-09-14/group_refit.log": "48f4d29f875d61597f5681f5b366122725a266b958fe4965e319c63d6db4ebee",
+    "docs/audit_2026-09-14/merlin_regenerated_metrics.json": "50537a9c5e045b088cfe628e9500c26f3bc0b26f3041857f61328463bd2d30e5",
+    "docs/audit_2026-09-14/paired_vlm_results.json": "b1c116e46d99fd3ddbdde4a66bfe52434386e6c41b76df5459f45639a5890fc9",
+    "docs/audit_2026-09-14/real_mouse_learning_control/RESULTS.md": "fa8ce728284158db2f0ee5f7dab7b0c2aee1761cb9b9d0611f41126eaa2c577f",
+    "docs/audit_2026-09-14/residual_rollout_experiment/results.json": "29120cf142fd9ae02366fbaa19757e1ac87cc750217435a182b55ea5f7c4bd49",
+    "docs/audit_2026-09-14/residual_vlm/paired_results.json": "21d3aac29859b672d28bae77f368db2b94efdee2d18a539f4dd3d5e216eb998a",
+    "docs/audit_2026-09-14/stratified/GENOTYPE_MECHANISM.md": "bab0041672233216ca569087645e2cfcb1e9c554c72f01f971b016d6060400db",
+    "docs/audit_2026-09-14/stratified/GENOTYPE_MECHANISM_FOLLOWUPS.md": "6b57133758fe58b0f99d28bdb848897a8b4d8a23618256b62034483ca2ebdf14",
+    "docs/audit_2026-09-14/stratified/genotype_separation.json": "2894c2942047f1aef728d5ec1a1c02f567735dbf68be8e1d3df670d43fbc0315"
+  },
+  "summary": "docs/POST_AUDIT_RESULTS.md",
+  "summary_sha256": "e155fb343a16b3d7f8b0c2bcce55e5f22d0f9a9c5c32676a186ad2307016e629"
+}

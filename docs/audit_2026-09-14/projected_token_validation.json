@@ -1,0 +1,1082 @@
+{
+  "arithmetic": "Float32 diagnostic with the saved trained projection; not an attention-mechanism causal test.",
+  "checkpoint_weights_sha256": "ec57a0193b3b64b711427b9c8c232de68b6844c6c6da2ee1ae1f7b1f4c4ab4ff",
+  "held_out": "NaF_KO_01",
+  "observations": [
+    {
+      "held_out": true,
+      "norm_reference": null,
+      "projected_norm": 29.283817291259766,
+      "raw_norm": 13.895628929138184,
+      "subject": "NaF_KO_01",
+      "tag": 0
+    },
+    {
+      "held_out": true,
+      "norm_reference": 13.966897010803223,
+      "projected_norm": 29.728811264038086,
+      "raw_norm": 13.966897964477539,
+      "subject": "NaF_KO_01",
+      "tag": 1
+    },
+    {
+      "held_out": true,
+      "norm_reference": 13.966897010803223,
+      "projected_norm": 29.793752670288086,
+      "raw_norm": 13.966896057128906,
+      "subject": "NaF_KO_01",
+      "tag": 2
+    },
+    {
+      "held_out": true,
+      "norm_reference": 13.966897010803223,
+      "projected_norm": 29.798484802246094,
+      "raw_norm": 13.966897964477539,
+      "subject": "NaF_KO_01",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.520450592041016,
+      "raw_norm": 13.939716339111328,
+      "subject": "NaF_KO_02",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.406387329101562,
+      "raw_norm": 13.977176666259766,
+      "subject": "NaF_KO_02",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.810483932495117,
+      "raw_norm": 13.977176666259766,
+      "subject": "NaF_KO_02",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.972734451293945,
+      "raw_norm": 13.977176666259766,
+      "subject": "NaF_KO_02",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.693052291870117,
+      "raw_norm": 13.95865249633789,
+      "subject": "NaF_KO_03",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.84173011779785,
+      "raw_norm": 13.955608367919922,
+      "subject": "NaF_KO_03",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.839189529418945,
+      "raw_norm": 13.955606460571289,
+      "subject": "NaF_KO_03",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.835697174072266,
+      "raw_norm": 13.955608367919922,
+      "subject": "NaF_KO_03",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.731142044067383,
+      "raw_norm": 13.977092742919922,
+      "subject": "NaF_KO_04",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.821149826049805,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_KO_04",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.847408294677734,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_KO_04",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.8596134185791,
+      "raw_norm": 13.945913314819336,
+      "subject": "NaF_KO_04",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.778675079345703,
+      "raw_norm": 14.133481979370117,
+      "subject": "NaF_KO_09",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.877878189086914,
+      "raw_norm": 13.977173805236816,
+      "subject": "NaF_KO_09",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.952560424804688,
+      "raw_norm": 13.977176666259766,
+      "subject": "NaF_KO_09",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.995529174804688,
+      "raw_norm": 13.977174758911133,
+      "subject": "NaF_KO_09",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.06627655029297,
+      "raw_norm": 13.684610366821289,
+      "subject": "NaF_KO_10",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.871992111206055,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_KO_10",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.866947174072266,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_KO_10",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.94255828857422,
+      "raw_norm": 13.988966941833496,
+      "subject": "NaF_KO_10",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.984256744384766,
+      "raw_norm": 14.098992347717285,
+      "subject": "NaF_KO_11",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.949424743652344,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_KO_11",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.82003402709961,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_KO_11",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.822101593017578,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_KO_11",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 28.9869441986084,
+      "raw_norm": 13.617977142333984,
+      "subject": "NaF_KO_12",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.871782302856445,
+      "raw_norm": 13.955608367919922,
+      "subject": "NaF_KO_12",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.837860107421875,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_KO_12",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.83502197265625,
+      "raw_norm": 13.955606460571289,
+      "subject": "NaF_KO_12",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.820602416992188,
+      "raw_norm": 14.114256858825684,
+      "subject": "NaF_KO_13",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.588912963867188,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_KO_13",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.823225021362305,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_KO_13",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.957000732421875,
+      "raw_norm": 13.98896598815918,
+      "subject": "NaF_KO_13",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 28.947330474853516,
+      "raw_norm": 13.633793830871582,
+      "subject": "NaF_KO_14",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.892370223999023,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_KO_14",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.853572845458984,
+      "raw_norm": 13.966595649719238,
+      "subject": "NaF_KO_14",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.836366653442383,
+      "raw_norm": 13.966598510742188,
+      "subject": "NaF_KO_14",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.01886558532715,
+      "raw_norm": 13.675639152526855,
+      "subject": "NaF_KO_15",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.905963897705078,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_KO_15",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.82381248474121,
+      "raw_norm": 13.98896598815918,
+      "subject": "NaF_KO_15",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.920372009277344,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_KO_15",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.13007926940918,
+      "raw_norm": 13.734930038452148,
+      "subject": "NaF_KO_16",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.7371768951416,
+      "raw_norm": 13.94591236114502,
+      "subject": "NaF_KO_16",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.86391830444336,
+      "raw_norm": 13.945910453796387,
+      "subject": "NaF_KO_16",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.863204956054688,
+      "raw_norm": 13.945913314819336,
+      "subject": "NaF_KO_16",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.276561737060547,
+      "raw_norm": 13.935495376586914,
+      "subject": "NaF_KO_17",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.779212951660156,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_KO_17",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.931241989135742,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_KO_17",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.90435791015625,
+      "raw_norm": 13.966598510742188,
+      "subject": "NaF_KO_17",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.28050422668457,
+      "raw_norm": 13.812015533447266,
+      "subject": "NaF_KO_18",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.452442169189453,
+      "raw_norm": 13.977176666259766,
+      "subject": "NaF_KO_18",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.814918518066406,
+      "raw_norm": 13.97717571258545,
+      "subject": "NaF_KO_18",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.97187614440918,
+      "raw_norm": 13.977176666259766,
+      "subject": "NaF_KO_18",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.327865600585938,
+      "raw_norm": 13.759161949157715,
+      "subject": "NaF_WT_01",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.821462631225586,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_WT_01",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.842988967895508,
+      "raw_norm": 13.94590950012207,
+      "subject": "NaF_WT_01",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.854524612426758,
+      "raw_norm": 13.94590950012207,
+      "subject": "NaF_WT_01",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.526824951171875,
+      "raw_norm": 13.862021446228027,
+      "subject": "NaF_WT_02",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.865278244018555,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_02",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.83771324157715,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_02",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.834407806396484,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_02",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.922452926635742,
+      "raw_norm": 14.16356086730957,
+      "subject": "NaF_WT_03",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.927467346191406,
+      "raw_norm": 13.977174758911133,
+      "subject": "NaF_WT_03",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.945987701416016,
+      "raw_norm": 13.97717571258545,
+      "subject": "NaF_WT_03",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.99540901184082,
+      "raw_norm": 13.977174758911133,
+      "subject": "NaF_WT_03",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 28.646800994873047,
+      "raw_norm": 13.488592147827148,
+      "subject": "NaF_WT_04",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.879911422729492,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_WT_04",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.845863342285156,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_WT_04",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.837648391723633,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_WT_04",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 28.973182678222656,
+      "raw_norm": 13.63356876373291,
+      "subject": "NaF_WT_05",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.84903335571289,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_WT_05",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.932117462158203,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_WT_05",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.901657104492188,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_WT_05",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.24230194091797,
+      "raw_norm": 13.756638526916504,
+      "subject": "NaF_WT_06",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.943326950073242,
+      "raw_norm": 13.988964080810547,
+      "subject": "NaF_WT_06",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.828935623168945,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_WT_06",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.875036239624023,
+      "raw_norm": 13.98896598815918,
+      "subject": "NaF_WT_06",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.847408294677734,
+      "raw_norm": 14.096314430236816,
+      "subject": "NaF_WT_07",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.81812286376953,
+      "raw_norm": 13.988964080810547,
+      "subject": "NaF_WT_07",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.8145809173584,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_WT_07",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.94477081298828,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_WT_07",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.51591682434082,
+      "raw_norm": 13.928277015686035,
+      "subject": "NaF_WT_08",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.80247688293457,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_08",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.845399856567383,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_08",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.843503952026367,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_08",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.480884552001953,
+      "raw_norm": 13.835718154907227,
+      "subject": "NaF_WT_09",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.871822357177734,
+      "raw_norm": 13.97717571258545,
+      "subject": "NaF_WT_09",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.91890525817871,
+      "raw_norm": 13.977174758911133,
+      "subject": "NaF_WT_09",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.997295379638672,
+      "raw_norm": 13.977173805236816,
+      "subject": "NaF_WT_09",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.095176696777344,
+      "raw_norm": 13.685426712036133,
+      "subject": "NaF_WT_10",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.868288040161133,
+      "raw_norm": 13.945910453796387,
+      "subject": "NaF_WT_10",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.839582443237305,
+      "raw_norm": 13.94591236114502,
+      "subject": "NaF_WT_10",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.856407165527344,
+      "raw_norm": 13.94591236114502,
+      "subject": "NaF_WT_10",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.503278732299805,
+      "raw_norm": 14.013298988342285,
+      "subject": "NaF_WT_11",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.542747497558594,
+      "raw_norm": 13.966597557067871,
+      "subject": "NaF_WT_11",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.733551025390625,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_WT_11",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.966597557067871,
+      "projected_norm": 29.827295303344727,
+      "raw_norm": 13.966596603393555,
+      "subject": "NaF_WT_11",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.710527420043945,
+      "raw_norm": 14.003593444824219,
+      "subject": "NaF_WT_12",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.826168060302734,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_12",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.843746185302734,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_12",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.84279441833496,
+      "raw_norm": 13.955608367919922,
+      "subject": "NaF_WT_12",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.19353675842285,
+      "raw_norm": 13.758662223815918,
+      "subject": "NaF_WT_13",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.83742904663086,
+      "raw_norm": 13.945910453796387,
+      "subject": "NaF_WT_13",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.871614456176758,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_WT_13",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.865148544311523,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_WT_13",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 28.945409774780273,
+      "raw_norm": 13.641402244567871,
+      "subject": "NaF_WT_14",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.9884090423584,
+      "raw_norm": 13.97717571258545,
+      "subject": "NaF_WT_14",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.929136276245117,
+      "raw_norm": 13.97717571258545,
+      "subject": "NaF_WT_14",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.97717571258545,
+      "projected_norm": 29.985416412353516,
+      "raw_norm": 13.977174758911133,
+      "subject": "NaF_WT_14",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.737001419067383,
+      "raw_norm": 14.095161437988281,
+      "subject": "NaF_WT_15",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.711389541625977,
+      "raw_norm": 13.94591236114502,
+      "subject": "NaF_WT_15",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.891374588012695,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_WT_15",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.888872146606445,
+      "raw_norm": 13.94591236114502,
+      "subject": "NaF_WT_15",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.44205665588379,
+      "raw_norm": 13.872041702270508,
+      "subject": "NaF_WT_16",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.723583221435547,
+      "raw_norm": 13.98896598815918,
+      "subject": "NaF_WT_16",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.879127502441406,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_WT_16",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.988965034484863,
+      "projected_norm": 29.961942672729492,
+      "raw_norm": 13.988965034484863,
+      "subject": "NaF_WT_16",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.33226776123047,
+      "raw_norm": 13.813125610351562,
+      "subject": "NaF_WT_17",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.90309715270996,
+      "raw_norm": 13.94591236114502,
+      "subject": "NaF_WT_17",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.87250328063965,
+      "raw_norm": 13.94590950012207,
+      "subject": "NaF_WT_17",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.945911407470703,
+      "projected_norm": 29.86905288696289,
+      "raw_norm": 13.945911407470703,
+      "subject": "NaF_WT_17",
+      "tag": 3
+    },
+    {
+      "held_out": false,
+      "norm_reference": null,
+      "projected_norm": 29.55389404296875,
+      "raw_norm": 13.878634452819824,
+      "subject": "NaF_WT_18",
+      "tag": 0
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.850872039794922,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_18",
+      "tag": 1
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.84000015258789,
+      "raw_norm": 13.955608367919922,
+      "subject": "NaF_WT_18",
+      "tag": 2
+    },
+    {
+      "held_out": false,
+      "norm_reference": 13.955607414245605,
+      "projected_norm": 29.836288452148438,
+      "raw_norm": 13.955607414245605,
+      "subject": "NaF_WT_18",
+      "tag": 3
+    }
+  ],
+  "status": "passed",
+  "summary": {
+    "ts0": {
+      "projected_norm": {
+        "max": 29.984256744384766,
+        "mean": 29.391104578971863,
+        "min": 28.646800994873047
+      },
+      "raw_norm": {
+        "max": 14.16356086730957,
+        "mean": 13.859296351671219,
+        "min": 13.488592147827148
+      }
+    },
+    "ts1": {
+      "projected_norm": {
+        "max": 29.9884090423584,
+        "mean": 29.804878771305084,
+        "min": 29.406387329101562
+      },
+      "raw_norm": {
+        "max": 13.98896598815918,
+        "mean": 13.966198444366455,
+        "min": 13.945910453796387
+      }
+    },
+    "ts2": {
+      "projected_norm": {
+        "max": 29.952560424804688,
+        "mean": 29.856001675128937,
+        "min": 29.733551025390625
+      },
+      "raw_norm": {
+        "max": 13.98896598815918,
+        "mean": 13.966198235750198,
+        "min": 13.94590950012207
+      }
+    },
+    "ts3": {
+      "projected_norm": {
+        "max": 29.997295379638672,
+        "mean": 29.891637206077576,
+        "min": 29.798484802246094
+      },
+      "raw_norm": {
+        "max": 13.988966941833496,
+        "mean": 13.966198682785034,
+        "min": 13.94590950012207
+      }
+    }
+  }
+}
