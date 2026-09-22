@@ -11,6 +11,7 @@ import torch
 from torch.utils.data import Dataset
 from safetensors.torch import load_file
 from utils.huggingface_utils import load_tokenizer_from_huggingface
+from utils.target_contract import numeric_targets
 
 
 class MouseTrajDataset(Dataset):
@@ -76,8 +77,15 @@ class MouseTrajDataset(Dataset):
 
         item = {}
         if self.mode in ("train", "val"):
-            tok_qa = self.tokenizer(question_text + answer_text)["input_ids"]
-            tok_q  = self.tokenizer(question_text)["input_ids"]
+            # Tokenize the prefix identically to inference. Separately tokenizing
+            # the answer prevents BPE merges across the question/answer boundary.
+            tok_q = self.tokenizer(question_text)["input_ids"]
+            tok_a = self.tokenizer(answer_text, add_special_tokens=False)["input_ids"]
+            tok_qa = tok_q + tok_a
+            if not tok_q or not tok_a:
+                raise ValueError(f"Record {idx} has an empty question or answer")
+            if len(tok_q) >= self.seq_length:
+                raise ValueError(f"Record {idx}: question boundary leaves no answer within seq_length={self.seq_length}")
 
             ignore  = [self.ignore_token_id] * len(tok_q)
             labels  = ignore + tok_qa[len(tok_q):]
@@ -89,26 +97,18 @@ class MouseTrajDataset(Dataset):
                 mask   = np.pad(mask,   (0, pad), constant_values=0)
                 labels = np.pad(labels, (0, pad), constant_values=self.ignore_token_id)
             elif len(tok_qa) > self.seq_length:
-                # F8: right-truncation removes the answer's terminal EOS, and
-                # VisionLanguageModel._eos_hidden_state then pools this record at the
-                # QUESTION EOS while intact records in the same batch pool at the answer
-                # EOS -- two different pooling semantics inside one batch. Previously
-                # silent; warn once per dataset so the count is visible.
-                trunc  = len(tok_qa) - self.seq_length
-                self._n_truncated = getattr(self, "_n_truncated", 0) + 1
-                if self._n_truncated == 1:
-                    import warnings
-                    warnings.warn(
-                        f"Record {idx} is {len(tok_qa)} tokens, over seq_length="
-                        f"{self.seq_length}; truncating from the right drops the answer's "
-                        f"EOS and changes which position the multitask heads pool from. "
-                        f"Raise seq_length or shorten the prompt.",
-                        RuntimeWarning, stacklevel=2,
-                    )
+                trunc = len(tok_qa) - self.seq_length
+                import warnings
+                warnings.warn(
+                    f"Record {idx} exceeds seq_length={self.seq_length}; truncating answer tokens. "
+                    "Question head boundary is preserved. Raise seq_length to retain full language supervision.",
+                    RuntimeWarning, stacklevel=2,
+                )
                 tok_qa = tok_qa[:-trunc]
                 mask   = mask[:-trunc]
                 labels = labels[:-trunc]
 
+            item["question_end_index"] = len(tok_q) - 1
             item["image_features"]  = image_features
             item["input_ids"]       = tok_qa
             item["attention_mask"]  = mask
@@ -124,9 +124,10 @@ class MouseTrajDataset(Dataset):
             item["image_features"] = image_features.unsqueeze(0)
             # Augment answer_vqa_numeric with parsed TBR targets so the evaluator
             # can compute regression-head metrics at inference time.
-            tbr_t = self._tbr_targets(record)
             avq   = dict(item.get("answer_vqa_numeric") or {})
-            avq["tbr"] = tbr_t.tolist()
+            # Preserve the source decimals in evaluation JSON; float32 training
+            # targets must not introduce artificial disagreements with ground truth.
+            avq["tbr"] = numeric_targets(record)
             item["answer_vqa_numeric"] = avq
 
         return item
@@ -144,8 +145,14 @@ class MouseTrajDataset(Dataset):
         """
         ts0 = load_file(record["embedding_path_ts0"])["embeddings"]  # (1, 768)
 
+        if ts0.shape != (1,768) or not torch.isfinite(ts0).all():
+            raise ValueError(f"Invalid baseline embedding for {record['pid']}")
         if self.predicted_emb_dir is None:
+            if self.img_tokens != 1:
+                raise ValueError("Multi-token input requires forecast files")
             return ts0
+        if self.img_tokens != 4:
+            raise ValueError("Forecast input requires exactly four image tokens")
 
         emb_dim  = ts0.shape[-1]
         tokens   = [ts0.squeeze(0)]  # list of (768,) tensors
@@ -155,10 +162,12 @@ class MouseTrajDataset(Dataset):
         for week, tag in week_tag.items():
             path = os.path.join(self.predicted_emb_dir, f"{pid}_{tag}.npy")
             if os.path.exists(path):
-                arr = np.load(path).astype(np.float32)
+                arr = np.load(path, allow_pickle=False).astype(np.float32)
+                if arr.shape != (emb_dim,) or not np.isfinite(arr).all() or np.linalg.norm(arr) <= 0:
+                    raise ValueError(f"Invalid forecast token: {path}")
                 tokens.append(torch.from_numpy(arr))
             else:
-                tokens.append(torch.zeros(emb_dim))
+                raise FileNotFoundError(f"Missing required forecast token: {path}")
 
         # Pad or trim to exactly img_tokens
         while len(tokens) < self.img_tokens:
@@ -169,19 +178,7 @@ class MouseTrajDataset(Dataset):
 
     def _tbr_targets(self, record):
         """Pack future TBR values into a fixed-length (4,) tensor, padded with -1."""
-        import re
-        answer = record.get("answer", "")
-        # Only TBR and combined questions have numeric TBR in the answer
-        if "TBR" not in record.get("question", ""):
-            return torch.full((4,), -1.0)
-        week_to_slot = {3: 0, 6: 1, 8: 2}
-        tbr_re_wk = re.compile(r"Week\s+(\d+):\s*(\d+(?:\.\d+)?)")
-        t = torch.full((4,), -1.0)
-        for m in tbr_re_wk.finditer(answer):
-            wk_delta = int(m.group(1))
-            if wk_delta in week_to_slot:
-                t[week_to_slot[wk_delta]] = float(m.group(2))
-        return t
+        return torch.tensor(numeric_targets(record), dtype=torch.float32)
 
     def _add_prompt(self, question, answer):
         bos = self.tokenizer.bos_token or ""

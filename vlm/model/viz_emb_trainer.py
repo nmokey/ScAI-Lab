@@ -9,12 +9,15 @@ exists, so the intermediate base classes are not needed.
 import os
 import json
 import shutil
+import numpy as np
 import torch
 import transformers
 from transformers import TrainerCallback
 from model.vision_language_model import VisionLanguageModel
 from data.dataset_factory import get_dataset_factory
 from utils.misc_utils import load_yaml, assert_required_params_list
+from utils.target_contract import fold_target_statistics
+from utils.research_io import atomic_json
 from utils.huggingface_utils import load_tokenizer_from_huggingface, load_llm_from_huggingface
 
 
@@ -22,6 +25,58 @@ class EvalAtStartCallback(TrainerCallback):
     def on_train_begin(self, args, state, control, **kwargs):
         print("Running evaluation at start of training...")
         self.trainer.evaluate()
+
+
+class VLMTrainer(transformers.Trainer):
+    """Use the same strict compact checkpoint format for final, resume and best loads."""
+
+    def _save(self, output_dir=None, state_dict=None):
+        output_dir = output_dir or self.args.output_dir
+        self.model.save_pretrained(output_dir)
+        if self.tokenizer is not None:
+            self.tokenizer.save_pretrained(output_dir)
+        torch.save(self.args, os.path.join(output_dir, "training_args.bin"))
+
+    def _load_from_checkpoint(self, resume_from_checkpoint, model=None):
+        target = model if model is not None else self.model
+        loaded = VisionLanguageModel.from_pretrained(
+            resume_from_checkpoint, target.vision_model, target.language_model,
+            target.img_token_id, img_tokens=target.img_tokens,
+            num_proj_layers=target.num_proj_layers, add_multitask=target.add_multitask,
+            add_multitask_unknown=target.add_multitask_unknown,
+            multitask_wt=target.multitask_wt, pool_at=target.pool_at,
+            tokenizer=target.tokenizer,
+        )
+        # Preserve Parameter identities held by Trainer's optimizer.
+        for name in ("language_projection", "tbr_regression_head", "genotype_head"):
+            if getattr(target, name) is not None:
+                getattr(target, name).load_state_dict(getattr(loaded, name).state_dict(), strict=True)
+        target.tbr_mean.copy_(loaded.tbr_mean)
+        target.tbr_std.copy_(loaded.tbr_std)
+
+    def _load_best_model(self):
+        self._load_from_checkpoint(self.state.best_model_checkpoint)
+
+    def _load_rng_state(self, checkpoint):
+        if checkpoint is None:
+            return
+        filename = (f"rng_state_{self.args.process_index}.pth"
+                    if self.args.world_size > 1 else "rng_state.pth")
+        if not os.path.isfile(os.path.join(checkpoint, filename)):
+            raise FileNotFoundError(f"Cannot resume reproducibly without {filename}")
+        # Transformers 4.46 predates torch's weights_only=True default. Allow
+        # only the NumPy objects needed by its saved RNG state, not arbitrary pickle.
+        core = getattr(np, "_core", None) or np.core
+        with torch.serialization.safe_globals([
+                core.multiarray._reconstruct, np.ndarray, np.dtype, type(np.dtype(np.uint32))]):
+            super()._load_rng_state(checkpoint)
+
+    def _load_optimizer_and_scheduler(self, checkpoint):
+        if checkpoint is not None:
+            for name in ("optimizer.pt", "scheduler.pt"):
+                if not os.path.isfile(os.path.join(checkpoint, name)):
+                    raise FileNotFoundError(f"Cannot resume training without {name}")
+        super()._load_optimizer_and_scheduler(checkpoint)
 
 
 class VizEmbTrainer:
@@ -118,6 +173,16 @@ class VizEmbTrainer:
         # doesn't wipe them along with checkpoints.
         tb_log_dir = os.path.join(self.output_dir, "tb_logs")
         seed = int(self.params["data"].get("data_seed", 0))
+        # F2: this was hardcoded True. Under LOSO the Trainer's eval_dataset IS the
+        # held-out subject (get_train_data builds it from inf_data_path), so
+        # selecting the best checkpoint by eval loss selected on the test set --
+        # measured inflation +0.14 AUROC at 10 epochs rising to +0.20 at 100.
+        # Default False: take the final epoch. Set true in the yaml only if you
+        # have first carved a validation subject out of the training fold.
+        load_best = bool(p.get("load_best_model_at_end", False))
+        if load_best:
+            print("[!] load_best_model_at_end=True — this selects on eval_dataset. "
+                  "Under LOSO that is the held-out subject (finding F2).")
         return transformers.TrainingArguments(
             output_dir=self.output_dir,
             seed=seed,
@@ -139,7 +204,7 @@ class VizEmbTrainer:
             optim=p["optim"],
             lr_scheduler_type=p["lr_scheduler_type"],
             warmup_ratio=p["warmup_ratio"],
-            load_best_model_at_end=True,
+            load_best_model_at_end=load_best,
             report_to=p.get("report_to", "tensorboard"),
             logging_dir=tb_log_dir,
         )
@@ -160,17 +225,9 @@ class VizEmbTrainer:
     # ------------------------------------------------------------------
 
     def _tbr_norm_stats(self, train_dataset):
-        """Compute per-slot mean and std of valid TBR targets across the training fold."""
-        import torch
-        all_tbr = torch.stack([train_dataset[i]["tbr_targets"] for i in range(len(train_dataset))])
-        mean = torch.zeros(4)
-        std  = torch.ones(4)
-        for slot in range(4):
-            valid = all_tbr[:, slot][all_tbr[:, slot] >= 0]
-            if len(valid) > 1:
-                mean[slot] = valid.mean()
-                std[slot]  = valid.std().clamp(min=1e-6)
-        return mean, std
+        """Population statistics over unique training subject/horizon observations."""
+        stats = fold_target_statistics(train_dataset.data)
+        return torch.tensor(stats["mean"],dtype=torch.float32), torch.tensor(stats["std"],dtype=torch.float32)
 
     def train(self):
         # F6: the declared data_seed previously reached nothing. Seed here, before
@@ -184,13 +241,14 @@ class VizEmbTrainer:
         data_collator = self.get_data_collator()
         model, image_processor = self.load_train_model()
         tbr_mean, tbr_std = self._tbr_norm_stats(data["train"])
+        atomic_json(os.path.join(self.output_dir,"target_statistics.json"), fold_target_statistics(data["train"].data))
         model.tbr_mean = tbr_mean
         model.tbr_std  = tbr_std
         print(f"TBR norm stats — mean: {tbr_mean.tolist()}, std: {tbr_std.tolist()}")
         data["train"].update_transforms_w_processor(image_processor)
         data["test"].update_transforms_w_processor(image_processor)
         training_args = self.get_training_args()
-        trainer = transformers.Trainer(
+        trainer = VLMTrainer(
             model=model,
             tokenizer=self.tokenizer,
             train_dataset=data["train"],
@@ -226,6 +284,7 @@ class VizEmbTrainer:
                 add_multitask_unknown=p["add_multitask_unknown"],
                 multitask_wt=p["multitask_wt"],
                 tokenizer=self.tokenizer,
+                pool_at=p.get("pool_at", "question_eos"),
             )
         else:
             model = VisionLanguageModel(
@@ -237,6 +296,7 @@ class VizEmbTrainer:
                 add_multitask_unknown=p["add_multitask_unknown"],
                 multitask_wt=p["multitask_wt"],
                 tokenizer=self.tokenizer,
+                pool_at=p.get("pool_at", "question_eos"),
             )
         if p["freeze_llm_model"]:
             for param in model.language_model.parameters():
@@ -257,6 +317,7 @@ class VizEmbTrainer:
             add_multitask_unknown=p["add_multitask_unknown"],
             multitask_wt=p["multitask_wt"],
             tokenizer=self.tokenizer,
+            pool_at=p.get("pool_at", "question_eos"),
         )
         return model, None
 
@@ -279,7 +340,10 @@ class VizEmbTrainer:
         shared_kw  = dict(
             tokenizer=self.tokenizer,
             prompt_type=self.params["data"]["prompt_type"],
-            beg_prompt="", mid_prompt="", end_prompt="",
+            beg_prompt=self.params["inf"]["beg_prompt"],
+            mid_prompt=self.params["inf"]["mid_prompt"],
+            end_prompt=self.params["inf"]["end_prompt"],
+            replace_prompt=self.params["inf"]["replace_prompt"],
             img_dir=self.params["data"]["img_dir"],
             img_tokens=self.params["data"]["img_tokens"],
             pad_token_str=self.pad_token,
@@ -290,8 +354,18 @@ class VizEmbTrainer:
         train_data = factory.create_dataset(
             data_path=self.params["data"]["data_path"], mode="train", **shared_kw
         )
+        # F2: the Trainer's eval set. Prefer a dedicated eval_data_path (an inner
+        # validation subject carved out of the training fold by the LOSO runner's
+        # --inner-val). Fall back to inf_data_path -- the held-out TEST subject --
+        # only with a loud note, since any eval_loss curve is then a test-set curve.
+        eval_path = self.params["data"].get("eval_data_path") or None
+        if eval_path is None:
+            eval_path = self.params["data"]["inf_data_path"]
+            print("[!] eval_dataset == inference set (the held-out subject). Fine while "
+                  "load_best_model_at_end is false, but eval_loss is a TEST-set curve. "
+                  "Use run_mouse_vlm_loso.py --inner-val for an honest validation curve.")
         val_data   = factory.create_dataset(
-            data_path=self.params["data"]["inf_data_path"], mode="val", **shared_kw
+            data_path=eval_path, mode="val", **shared_kw
         )
         return {"train": train_data, "test": val_data}
 
@@ -346,6 +420,11 @@ class VizEmbTrainer:
 
             result = {
                 "qid":                      qid,
+                "head_pool_at":             model.pool_at,
+                "target_schema_version":    sample.get("target_schema_version"),
+                "target_name":              sample.get("target_name"),
+                "train_mean_prediction":    model.tbr_mean.detach().cpu().tolist(),
+                "checkpoint_format_version": 2,
                 "pid":                      sample.get("pid"),
                 "input_week":               sample.get("input_week"),
                 "future_weeks":             sample.get("future_weeks"),
@@ -372,8 +451,7 @@ class VizEmbTrainer:
             print(f"[{i+1}/{len(inf_data)}] {answer_clean[:80]}")
 
         save_path = os.path.join(self.output_dir, self.params["inf"]["save_file"])
-        with open(save_path, "w") as f:
-            json.dump(content, f, indent=2)
+        atomic_json(save_path, content)
         print(f"[+] Predictions saved → {save_path}")
 
         self.get_eval_metrics(

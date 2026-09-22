@@ -64,7 +64,7 @@ def test_generated_answer_round_trips_to_the_right_slots(scripts, future_weeks, 
     mod = scripts("create_mouse_traj_dataset")
     tbr_map = {"NaF_KO_01": dict(zip(future_weeks, values))}
 
-    _q, answer = mod.format_tbr_qa("NaF_KO_01", "Week 12", future_weeks, tbr_map)
+    _q, answer, _tv = mod.format_tbr_qa("NaF_KO_01", "Week 12", future_weeks, tbr_map)
     assert answer is not None
     got = _targets(answer).tolist()
 
@@ -84,7 +84,7 @@ def test_eval_and_dataset_parsers_agree(scripts):
     mod = scripts("create_mouse_traj_dataset")
     weeks = ["Week 15", "Week 18", "Week 20"]
     tbr_map = {"NaF_WT_02": dict(zip(weeks, [19.5, 20.0, 21.75]))}
-    _q, answer = mod.format_tbr_qa("NaF_WT_02", "Week 12", weeks, tbr_map)
+    _q, answer, _tv = mod.format_tbr_qa("NaF_WT_02", "Week 12", weeks, tbr_map)
 
     from_eval = _parse_tbr(answer)
     from_dataset = _targets(answer).tolist()
@@ -102,7 +102,7 @@ def test_missing_week_becomes_na_and_not_a_number(scripts):
     weeks = ["Week 15", "Week 18", "Week 20"]
     tbr_map = {"NaF_KO_03": {"Week 15": 21.0, "Week 20": 24.0}}  # Week 18 absent
 
-    _q, answer = mod.format_tbr_qa("NaF_KO_03", "Week 12", weeks, tbr_map)
+    _q, answer, _tv = mod.format_tbr_qa("NaF_KO_03", "Week 12", weeks, tbr_map)
     assert "NA" in answer, f"expected an NA placeholder, got {answer!r}"
     assert _targets(answer).tolist() == pytest.approx([21.0, -1.0, 24.0, -1.0])
 
@@ -113,7 +113,7 @@ def test_genotype_only_records_carry_no_tbr_targets(scripts):
     contributes nothing for those records.
     """
     mod = scripts("create_mouse_traj_dataset")
-    _q, answer = mod.format_genotype_qa("NaF_KO_01")
+    _q, answer, _tv = mod.format_genotype_qa("NaF_KO_01")
     got = _targets(answer, question=_q).tolist()
     assert got == [-1.0, -1.0, -1.0, -1.0], f"genotype record produced TBR targets: {got}"
 

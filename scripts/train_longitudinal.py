@@ -43,11 +43,8 @@ import torch.nn as nn
 from torch.optim import Adam
 from torch.utils.data import DataLoader, TensorDataset
 
-try:
-    import umap
-    UMAP_AVAILABLE = True
-except ImportError:
-    UMAP_AVAILABLE = False
+import importlib.util
+UMAP_AVAILABLE = importlib.util.find_spec("umap") is not None
 
 try:
     import yaml
@@ -55,6 +52,9 @@ except ImportError:
     yaml = None
 
 WEEK_ORDER = ["Week 12", "Week 15", "Week 18", "Week 20"]
+# Week → VLM image-token slot. ts0 is the observed baseline; ts1/ts2/ts3 are the
+# predicted future tokens MouseTrajDataset loads from predicted_embeddings/.
+WEEK_TAG = {"Week 12": "ts0", "Week 15": "ts1", "Week 18": "ts2", "Week 20": "ts3"}
 WEEK_COLORS = {
     "Week 12": "#2196F3",
     "Week 15": "#4CAF50",
@@ -93,7 +93,34 @@ def parse_args():
     p.add_argument("--linear", action="store_true",
                    help="Single linear layer instead of MLP")
     p.add_argument("--no-conditioning", action="store_true",
-                   help="Disable genotype+cohort+step one-hot conditioning")
+                   help="Disable genotype+cohort+step one-hot conditioning entirely")
+    gg = p.add_mutually_exclusive_group()
+    gg.add_argument("--no-geno-conditioning", dest="geno_conditioning", action="store_false", default=False,
+                    help="(default) Condition on cohort + step only. The genotype one-hot is the "
+                         "held-out subject's own label and survives into the exported embedding: "
+                         "a LOSO probe recovers genotype from ts1 at AUROC 0.869 with it, 0.369 "
+                         "without (F10). Prediction quality is unchanged either way.")
+    gg.add_argument("--geno-conditioning", dest="geno_conditioning", action="store_true",
+                    help="Legacy: include the genotype one-hot in the conditioning vector. Kept "
+                         "only to reproduce pre-2026-09 runs; leaks the label into the VLM tokens.")
+    g = p.add_mutually_exclusive_group()
+    g.add_argument("--rollout", dest="rollout", action="store_true", default=True,
+                   help="(default) Export ts1/ts2/ts3 autoregressively from Week 12 "
+                        "(W12 -> pred W15 -> pred W18 -> pred W20), so no exported token is a "
+                        "function of a future observed scan (F13).")
+    g.add_argument("--one-step", dest="rollout", action="store_false",
+                   help="Legacy export: ts2 from the OBSERVED Week 15 scan, ts3 from the "
+                        "OBSERVED Week 18 scan. Contradicts the 'from a single baseline scan' "
+                        "framing; kept only to reproduce pre-2026-09 runs. LOSO evaluation "
+                        "metrics are identical either way -- only the exported files differ.")
+    p.add_argument("--export-scale", choices=["observed", "raw"], default="observed",
+                   help="(default: observed) Rescale every exported embedding to the mean norm of "
+                        "the REAL embeddings in the training fold. The MLP is trained with cosine "
+                        "loss, which is scale-invariant, so its raw output magnitude is arbitrary: "
+                        "in practice ~37 against ~14 for observed RAD-DINO embeddings. The VLM "
+                        "projects all tokens with one shared Linear, so unscaled forecast tokens "
+                        "entered the LLM at 2.7x the magnitude of the observed token (F24). "
+                        "'raw' reproduces pre-2026-09-14 exports.")
     p.add_argument("--seed", type=int, default=0,
                    help="Random seed. Every fold is seeded as seed+fold_index so a rerun "
                         "reproduces the predicted embeddings exactly (finding F6).")
@@ -128,7 +155,29 @@ def parse_subject_meta(subject_id):
     return cohort, genotype
 
 
-def build_pairs(embs, subject_ids, weeks, use_conditioning=True):
+# One-hot step encoding: which of the 3 possible transitions is this?
+# Module level so make_input() and build_pairs() cannot drift apart.
+STEP_TO_ONEHOT = {
+    ("Week 12", "Week 15"): np.array([1, 0, 0], dtype=np.float32),
+    ("Week 15", "Week 18"): np.array([0, 1, 0], dtype=np.float32),
+    ("Week 18", "Week 20"): np.array([0, 0, 1], dtype=np.float32),
+}
+
+
+def make_input(tk, cohort, genotype, w0, w1, use_conditioning=True, use_genotype=True):
+    """Assemble one MLP input row. Must match build_pairs' layout exactly."""
+    if not use_conditioning:
+        return np.asarray(tk, dtype=np.float32)
+    geno_vec   = np.array([1, 0], dtype=np.float32) if genotype == "KO" else np.array([0, 1], dtype=np.float32)
+    cohort_vec = np.array([1, 0], dtype=np.float32) if cohort   == "NaF" else np.array([0, 1], dtype=np.float32)
+    parts = [np.asarray(tk, dtype=np.float32)]
+    if use_genotype:
+        parts.append(geno_vec)
+    parts += [cohort_vec, STEP_TO_ONEHOT[(w0, w1)]]
+    return np.concatenate(parts)
+
+
+def build_pairs(embs, subject_ids, weeks, use_conditioning=True, use_genotype=True):
     """
     Build all consecutive (T_k, T_{k+1}) pairs across all subjects.
 
@@ -145,24 +194,14 @@ def build_pairs(embs, subject_ids, weeks, use_conditioning=True):
     for i, (sid, wk) in enumerate(zip(subject_ids, weeks)):
         idx.setdefault(str(sid), {})[str(wk)] = embs[i]
 
-    # One-hot step encoding: which of the 3 possible transitions is this?
-    step_to_onehot = {
-        ("Week 12", "Week 15"): np.array([1, 0, 0], dtype=np.float32),
-        ("Week 15", "Week 18"): np.array([0, 1, 0], dtype=np.float32),
-        ("Week 18", "Week 20"): np.array([0, 0, 1], dtype=np.float32),
-    }
-
     X_list, Y_list, sids, geno_list, meta = [], [], [], [], []
 
     for sid in sorted(idx):
         week_map = idx[sid]
         cohort, genotype = parse_subject_meta(sid)
 
-        # One-hot encoding: [KO, WT] and [NaF, FDG] — index 0 is the positive class.
-        # Note: scalar genotype elsewhere uses 1=KO; this one-hot is consistent (KO→[1,0]).
-        geno_vec   = np.array([1, 0], dtype=np.float32) if genotype == "KO" else np.array([0, 1], dtype=np.float32)
-        cohort_vec = np.array([1, 0], dtype=np.float32) if cohort   == "NaF" else np.array([0, 1], dtype=np.float32)
-
+        # One-hot layout ([KO, WT], [NaF, FDG], step) is built by make_input().
+        # Note: scalar genotype elsewhere uses 1=KO; the one-hot is consistent (KO→[1,0]).
         for w0, w1 in zip(WEEK_ORDER, WEEK_ORDER[1:]):
             if w0 not in week_map or w1 not in week_map:
                 continue
@@ -170,11 +209,10 @@ def build_pairs(embs, subject_ids, weeks, use_conditioning=True):
             tk  = week_map[w0]
             tk1 = week_map[w1]
 
-            if use_conditioning:
-                step_vec = step_to_onehot[(w0, w1)]
-                x = np.concatenate([tk, geno_vec, cohort_vec, step_vec])
-            else:
-                x = tk
+            # F10: the genotype one-hot is the held-out subject's own label and is
+            # recoverable downstream from the predicted embedding. --no-geno-conditioning
+            # keeps the useful cohort/step conditioning without injecting the label.
+            x = make_input(tk, cohort, genotype, w0, w1, use_conditioning, use_genotype)
 
             X_list.append(x)
             Y_list.append(tk1)
@@ -445,6 +483,7 @@ def plot_umap(embs, weeks, subject_ids, Y_pred, meta, plots_dir):
     if not UMAP_AVAILABLE:
         print("    [!] umap-learn not available — skipping UMAP.")
         return
+    import umap
 
     pred_arr = np.stack(Y_pred)
     all_vecs = np.concatenate([embs, pred_arr], axis=0)
@@ -488,15 +527,37 @@ def save_predicted_embeddings(Y_pred, meta, output_dir):
     emb_dir = os.path.join(output_dir, "predicted_embeddings")
     os.makedirs(emb_dir, exist_ok=True)
 
-    week_tag = {"Week 12": "ts0", "Week 15": "ts1", "Week 18": "ts2", "Week 20": "ts3"}
     saved = 0
     for i, m in enumerate(meta):
-        tag  = week_tag.get(m["week_to"], m["week_to"].replace(" ", "_").lower())
+        tag  = WEEK_TAG.get(m["week_to"], m["week_to"].replace(" ", "_").lower())
         path = os.path.join(emb_dir, f"{m['sid']}_{tag}.npy")
         np.save(path, Y_pred[i])
         saved += 1
 
     print(f"[+] Saved {saved} predicted embeddings → {emb_dir}/")
+    print(f"    NOTE: ts2/ts3 here are one-step predictions from the OBSERVED Week 15/18 "
+          f"scans, not forecasts from Week 12. Use --rollout for baseline-only forecasts.")
+
+
+def save_rollout_embeddings(rollout_preds, output_dir):
+    """
+    Save autoregressively rolled-out embeddings, one per (subject, week_to).
+
+    Unlike save_predicted_embeddings, every value here descends from the subject's
+    observed Week 12 scan alone, so a subject with no observed Week 15/18 scan
+    still gets ts2/ts3 — and no exported token is a function of a future scan.
+    """
+    emb_dir = os.path.join(output_dir, "predicted_embeddings")
+    os.makedirs(emb_dir, exist_ok=True)
+
+    saved = 0
+    for (sid, week_to), vec in sorted(rollout_preds.items()):
+        tag  = WEEK_TAG.get(week_to, week_to.replace(" ", "_").lower())
+        np.save(os.path.join(emb_dir, f"{sid}_{tag}.npy"), vec)
+        saved += 1
+
+    print(f"[+] Saved {saved} rolled-out embeddings → {emb_dir}/")
+    print(f"    Each descends from the observed Week 12 scan only.")
 
 
 def save_metrics(metrics, output_dir):
@@ -561,14 +622,21 @@ def main():
     os.makedirs(plots_dir, exist_ok=True)
 
     use_conditioning = not args.no_conditioning
+    use_genotype     = use_conditioning and args.geno_conditioning
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"[i] Device: {device}")
 
     embs, subject_ids, weeks = load_embeddings(args.embeddings, cohort_filter="NaF")
 
     X, Y, subjects, genotypes, meta = build_pairs(
-        embs, subject_ids, weeks, use_conditioning=use_conditioning
+        embs, subject_ids, weeks,
+        use_conditioning=use_conditioning, use_genotype=use_genotype,
     )
+
+    # subject → week → observed embedding, for the autoregressive rollout
+    emb_lookup = {}
+    for i, (sid, wk) in enumerate(zip(subject_ids, weeks)):
+        emb_lookup.setdefault(str(sid), {})[str(wk)] = embs[i]
 
     n_pairs    = len(X)
     n_subjects = len(set(subjects))
@@ -583,13 +651,23 @@ def main():
 
     in_dim  = X.shape[1]
     out_dim = Y.shape[1]
-    model_desc   = "linear" if args.linear else f"MLP (hidden={args.hidden})"
-    cond_desc    = "genotype + cohort + step" if use_conditioning else "none (imaging only)"
+    model_desc = "linear" if args.linear else f"MLP (hidden={args.hidden})"
+    if not use_conditioning:
+        cond_desc = "none (imaging only)"
+    elif use_genotype:
+        cond_desc = "genotype + cohort + step"
+    else:
+        cond_desc = "cohort + step (genotype ablated)"
+    print(f"[i] Conditioning: {cond_desc}")
+    print(f"[i] Exported embeddings: "
+          f"{'autoregressive rollout from Week 12' if args.rollout else 'one-step-ahead from observed T_k'}")
 
     # ---- LOSO CV ----
     print(f"\n[i] LOSO CV — {n_subjects} subjects, {args.epochs} epochs per fold...")
     logo   = LeaveOneGroupOut()
     Y_pred = np.zeros_like(Y)
+    Y_pred_export = np.zeros_like(Y)   # F22: magnitude-corrected copy for the one-step export
+    rollout_preds = {}  # (sid, week_to) -> embedding, filled only with --rollout
 
     for fold, (train_idx, test_idx) in enumerate(logo.split(X, Y, subjects)):
         # F6: seed per fold, not once globally, so each fold is reproducible
@@ -606,6 +684,36 @@ def main():
         with torch.no_grad():
             pred = model(torch.tensor(X[test_idx], device=device)).cpu().numpy()
         Y_pred[test_idx] = pred
+        if args.export_scale == "observed":
+            # Kept separately so LOSO metrics (cosine-based) are unchanged; only the
+            # exported files are rescaled. Rollout export below rescales inline.
+            fn = float(np.linalg.norm(Y[train_idx], axis=1).mean())
+            Y_pred_export[test_idx] = pred * (fn / (np.linalg.norm(pred, axis=1, keepdims=True) + 1e-8))
+        else:
+            Y_pred_export[test_idx] = pred
+
+        if args.rollout:
+            # Chain forward from the OBSERVED Week 12 scan only, feeding each
+            # prediction back in as the next step's input. The default export path
+            # instead predicts Week 18 from the observed Week 15 scan and Week 20
+            # from the observed Week 18 scan, which are future information relative
+            # to the Week 12 baseline the VLM is supposed to forecast from.
+            sid     = str(subjects[test_idx][0])
+            wk_map  = emb_lookup.get(sid, {})
+            if WEEK_ORDER[0] in wk_map:
+                cohort, genotype = parse_subject_meta(sid)
+                cur = np.asarray(wk_map[WEEK_ORDER[0]], dtype=np.float32)
+                # F22: magnitude reference from the TRAINING fold's real target embeddings
+                # (the held-out subject contributes nothing to it).
+                fold_norm = float(np.linalg.norm(Y[train_idx], axis=1).mean())
+                for w0, w1 in zip(WEEK_ORDER, WEEK_ORDER[1:]):
+                    xi = make_input(cur, cohort, genotype, w0, w1,
+                                    use_conditioning, use_genotype)
+                    with torch.no_grad():
+                        cur = model(torch.tensor(xi[None, :], device=device)).cpu().numpy()[0]
+                    if args.export_scale == "observed":
+                        cur = cur * (fold_norm / (np.linalg.norm(cur) + 1e-8))
+                    rollout_preds[(sid, w1)] = cur
 
         if (fold + 1) % 10 == 0 or fold == n_subjects - 1:
             print(f"    Fold {fold+1:3d}/{n_subjects}")
@@ -622,8 +730,14 @@ def main():
     plot_cosine_improvement(Y, Y_pred, X, meta, plots_dir)
     plot_umap(embs, weeks, subject_ids, list(Y_pred), meta, plots_dir)
 
-    save_predicted_embeddings(Y_pred, meta, args.output_dir)
+    if args.rollout:
+        save_rollout_embeddings(rollout_preds, args.output_dir)
+    else:
+        save_predicted_embeddings(Y_pred_export, meta, args.output_dir)
     metrics["seed"] = args.seed
+    metrics["export_scale"] = args.export_scale
+    metrics["conditioning"] = cond_desc
+    metrics["export_mode"]  = "rollout_from_week12" if args.rollout else "one_step_from_observed"
     save_metrics(metrics, args.output_dir)
     save_report(metrics, args.output_dir, n_pairs, n_subjects, model_desc, cond_desc)
 

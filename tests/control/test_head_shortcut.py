@@ -99,6 +99,7 @@ def _build_model(seed=0):
         vision_model=None, language_model=LlamaForCausalLM(cfg),
         img_token_id=IMG_TOKEN_ID, img_tokens=IMG_TOKENS,
         add_multitask=True, multitask_wt=5.0, tokenizer=_Tok(),
+        pool_at="answer_eos",  # Preserve the historical shortcut diagnostic explicitly.
     )
 
 

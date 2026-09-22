@@ -34,11 +34,16 @@ Usage
 import argparse
 import json
 import os
+import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from safetensors.torch import save_file
 import torch
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "vlm"))
+from utils.research_io import atomic_json, file_sha256
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -52,7 +57,7 @@ WEEK_NUM = {"Week 12": 12, "Week 15": 15, "Week 18": 18, "Week 20": 20}
 
 DEFAULT_EMB_NPZ  = "/data1/Processed_NIfTI_Test/embeddings/raddino/raddino_embeddings.npz"
 DEFAULT_TBR_CSV  = "/data1/Processed_NIfTI_Test/embeddings/longitudinal/tbr_features_NaF.csv"
-DEFAULT_OUT_DIR  = "/data1/Processed_NIfTI_Test/embeddings/vlm"
+DEFAULT_OUT_DIR  = "/data1/Processed_NIfTI_Test/embeddings/vlm/validated_20260914"
 
 TEST_FRAC = 0.1
 VAL_FRAC  = 0.1
@@ -68,6 +73,7 @@ def parse_args():
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--embeddings",     default=DEFAULT_EMB_NPZ)
     p.add_argument("--tbr-csv",        default=DEFAULT_TBR_CSV)
+    p.add_argument("--manifest", default="/data1/Processed_NIfTI_Test/mouse_manifest.csv")
     p.add_argument("--output-dir",     default=DEFAULT_OUT_DIR)
     p.add_argument("--min-timepoints", type=int, default=2,
                    help="Minimum total timepoints a subject must have (default 2)")
@@ -89,6 +95,8 @@ def load_embeddings(npz_path):
 
     emb_map = {}
     for emb, sid, wk in zip(embeddings, subject_ids, weeks):
+        if wk in emb_map.get(sid, {}) or emb.shape != (768,) or not np.isfinite(emb).all():
+            raise ValueError(f"Duplicate or invalid embedding: {sid}/{wk}")
         emb_map.setdefault(sid, {})[wk] = emb
 
     print(f"[i] Loaded {len(embeddings)} embeddings across {len(emb_map)} subjects")
@@ -100,7 +108,14 @@ def load_tbr(csv_path):
     df = pd.read_csv(csv_path)
     tbr_map = {}
     for _, row in df.iterrows():
-        tbr_map.setdefault(str(row["subject_id"]), {})[str(row["week"])] = float(row[TBR_COL])
+        sid, week, value = str(row["subject_id"]), str(row["week"]), float(row[TBR_COL])
+        if week in tbr_map.get(sid, {}):
+            raise ValueError(f"Duplicate PET target: {sid}/{week}")
+        if not np.isfinite(value):
+            continue  # Missing measurements remain masked, never numerical labels.
+        if value < 0:
+            raise ValueError(f"Negative PET target: {sid}/{week}")
+        tbr_map.setdefault(sid, {})[week] = value
     print(f"[i] Loaded TBR for {len(tbr_map)} subjects  (column: {TBR_COL})")
     return tbr_map
 
@@ -135,8 +150,8 @@ def export_safetensors(emb_map, out_emb_dir, dry_run=False):
 
 INPUT_WEEK = "Week 12"   # fixed input timepoint for all VQA records
 
-LONG_FEATURE  = "aortic TBR"
-SHORT_FEATURE = "atherosclerosis"
+LONG_FEATURE  = "PET intensity proxy (TBR-2)"
+SHORT_FEATURE = "genotype"
 
 
 def _tbr_str(val):
@@ -172,58 +187,63 @@ def format_tbr_qa(sid, input_wk, future_weeks, tbr_map):
     tbr_by_week = tbr_map.get(sid, {})
     # Require at least one future week with actual TBR data
     if not any(wk in tbr_by_week for wk in future_weeks):
-        return None, None
+        return None, None, None
 
     n_weeks  = _max_delta_weeks(input_wk, future_weeks)
     traj_str = _tbr_trajectory_str(input_wk, future_weeks, tbr_by_week)
     question = f"Predict the mouse's trajectory of {LONG_FEATURE} over the next {n_weeks} weeks?"
     answer   = f"The predicted trajectory for {LONG_FEATURE} - {traj_str}."
-    return question, answer
+    # Raw slot-fill values, kept alongside the rendered text so a paraphrase
+    # bank (crump_aug_dataset.csv) can re-fill a different template without
+    # having to regex the values back out of the rendered answer.
+    template_values = {"long_feature": LONG_FEATURE, "n_weeks": n_weeks, "trajectory": traj_str}
+    return question, answer, template_values
 
 
 def format_genotype_qa(sid):
     """Short topic: eventual atherosclerosis status."""
     geno     = _genotype(sid)
+    status   = geno
     question = f"What will be the eventual mouse status for {SHORT_FEATURE}?"
-    if geno == "KO":
-        answer = f"The eventual mouse status: the mouse will develop {SHORT_FEATURE}."
-    else:
-        answer = f"The eventual mouse status: the mouse will not develop {SHORT_FEATURE}."
-    return question, answer
+    answer   = f"The mouse genotype is {status}."
+    template_values = {"short_feature": SHORT_FEATURE, "status": status}
+    return question, answer, template_values
 
 
 def format_combined_qa(sid, input_wk, future_weeks, tbr_map):
     """Combined: TBR trajectory + eventual atherosclerosis status."""
     tbr_by_week = tbr_map.get(sid, {})
     if not any(wk in tbr_by_week for wk in future_weeks):
-        return None, None
+        return None, None, None
 
     geno     = _genotype(sid)
+    status   = geno
     n_weeks  = _max_delta_weeks(input_wk, future_weeks)
     traj_str = _tbr_trajectory_str(input_wk, future_weeks, tbr_by_week)
 
     question = (f"Predict the mouse's trajectory of {LONG_FEATURE} over the next {n_weeks} weeks "
                 f"and the eventual status of {SHORT_FEATURE}?")
-
-    if geno == "KO":
-        status_str = f"the mouse will develop {SHORT_FEATURE}."
-    else:
-        status_str = f"the mouse will not develop {SHORT_FEATURE}."
-
     answer = (f"The predicted trajectory for {LONG_FEATURE} - {traj_str}. "
-              f"The eventual status: {status_str}")
-    return question, answer
+              f"The mouse genotype is {status}.")
+    template_values = {
+        "long_feature": LONG_FEATURE, "n_weeks": n_weeks, "trajectory": traj_str,
+        "short_feature": SHORT_FEATURE, "status": status,
+    }
+    return question, answer, template_values
 
 
 # ---------------------------------------------------------------------------
 # Record builder
 # ---------------------------------------------------------------------------
 
-def build_record(pid, input_wk, future_weeks, question, answer, path_map, qid):
+def build_record(pid, input_wk, future_weeks, question, answer, path_map, qid,
+                 content_type="trajectory", template_values=None, tbr_values=None):
     def _path(wk):
         return path_map.get((pid, wk), "")
 
     return {
+        "target_schema_version": 1,
+        "target_name": "pet_midband_p95_trimmed_median_proxy",
         "pid":                pid,
         "qid":                qid,
         "input_week":         input_wk,
@@ -236,9 +256,17 @@ def build_record(pid, input_wk, future_weeks, question, answer, path_map, qid):
         "embedding_path_ts3": _path(future_weeks[2]) if len(future_weeks) > 2 else "",
         "question":           question,
         "answer":             answer,
-        "content_type":       "trajectory",
+        # "genotype" | "tbr" | "combined". Previously hardcoded to "trajectory" for
+        # every record, which left question-text matching as the only way to tell
+        # the three question types apart downstream.
+        "content_type":       content_type,
+        # Raw slot-fill values (short_feature/status/long_feature/n_weeks/trajectory)
+        # so a paraphrase bank can re-render question/answer without parsing them
+        # back out of rendered text. See scripts/dataset/create_mouse_vqa_dataset_from_openai.py.
+        "template_values":    template_values or {},
         "answer_vqa_numeric": {
             "genotype": 1 if _genotype(pid) == "KO" else 0,
+            "tbr": list(tbr_values) if tbr_values is not None else [-1.0]*4,
         },
     }
 
@@ -257,8 +285,12 @@ def get_records_for_subject(sid, emb_map, tbr_map, path_map, qid):
     if INPUT_WEEK not in emb_map[sid]:
         return [], qid
 
-    available_weeks = [wk for wk in WEEK_ORDER if wk in emb_map[sid]]
-    future_weeks    = [wk for wk in available_weeks if wk != INPUT_WEEK]
+    future_weeks = WEEK_ORDER[1:]  # Query horizons never depend on future attendance.
+    # Preserve the existing eligible observation mask, including availability of
+    # the visit in the embedding cohort. Missingness affects targets only.
+    observed = {wk: value for wk,value in tbr_map.get(sid,{}).items() if wk in emb_map[sid]}
+    tbr_map = {sid: observed}
+    target_values = [float(_tbr_str(observed[w])) if w in observed else -1.0 for w in future_weeks] + [-1.0]
 
     if not future_weeks:
         return [], qid
@@ -266,20 +298,23 @@ def get_records_for_subject(sid, emb_map, tbr_map, path_map, qid):
     records = []
 
     # 1. Genotype / eventual status (always)
-    q, a = format_genotype_qa(sid)
-    records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid))
+    q, a, tv = format_genotype_qa(sid)
+    records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid,
+                                content_type="genotype", template_values=tv))
     qid += 1
 
     # 2. TBR trajectory (only if future TBR data exists)
-    q, a = format_tbr_qa(sid, INPUT_WEEK, future_weeks, tbr_map)
+    q, a, tv = format_tbr_qa(sid, INPUT_WEEK, future_weeks, tbr_map)
     if q is not None:
-        records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid))
+        records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid,
+                                    content_type="tbr", template_values=tv, tbr_values=target_values))
         qid += 1
 
     # 3. Combined TBR trajectory + eventual status
-    q, a = format_combined_qa(sid, INPUT_WEEK, future_weeks, tbr_map)
+    q, a, tv = format_combined_qa(sid, INPUT_WEEK, future_weeks, tbr_map)
     if q is not None:
-        records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid))
+        records.append(build_record(sid, INPUT_WEEK, future_weeks, q, a, path_map, qid,
+                                    content_type="combined", template_values=tv, tbr_values=target_values))
         qid += 1
 
     return records, qid
@@ -333,6 +368,15 @@ def main():
 
     emb_map = load_embeddings(args.embeddings)
     tbr_map = load_tbr(args.tbr_csv)
+    if not args.dry_run:
+        atomic_json(Path(out_dir)/"input_manifest.json", dict(
+            target_schema_version=1, embeddings_path=str(Path(args.embeddings).resolve()),
+            embeddings_sha256=file_sha256(args.embeddings), tbr_csv_path=str(Path(args.tbr_csv).resolve()),
+            mouse_manifest_sha256=file_sha256(args.manifest),
+            tbr_csv_sha256=file_sha256(args.tbr_csv), builder_sha256=file_sha256(__file__),
+            target_column=TBR_COL, target_rounding_decimals=2,
+            future_weeks=WEEK_ORDER[1:], identity_rule="filename order LL, LR, UL, UR plus quadrant_overrides.yaml",
+            overrides_sha256=file_sha256(Path(__file__).resolve().parents[1]/"quadrant_overrides.yaml")))
 
     # NaF subjects with enough timepoints to form at least one (input → future) pair
     valid_sids = sorted([
@@ -368,6 +412,11 @@ def main():
         all_records.extend(records)
 
     print(f"[i] Total records: {len(all_records)}")
+    from eval_stats import join_mouse_group_ids
+    groups = join_mouse_group_ids([r['pid'] for r in all_records],
+                                  [r['input_week'] for r in all_records],args.manifest)
+    for record, group in zip(all_records,groups):
+        record['acquisition_group'] = str(group)
 
     # Count by question type and input week
     from collections import Counter
@@ -375,7 +424,7 @@ def main():
     print(f"    By input week : {dict(week_counts)}")
 
     # Split
-    train_sids, val_sids, test_sids = make_random_splits(valid_sids)
+    train_sids, val_sids, test_sids = make_random_splits(sorted({r['pid'] for r in all_records}))
     train_records, val_records, test_records = split_records(
         all_records, train_sids, val_sids, test_sids
     )
@@ -391,8 +440,7 @@ def main():
         ("mouse_all_vqa_traj.json",   all_records),
     ]:
         fpath = os.path.join(out_dir, fname)
-        with open(fpath, "w") as f:
-            json.dump(records, f, indent=2)
+        atomic_json(fpath, records)
         print(f"[+] {fname}  ({len(records)} records)")
 
 

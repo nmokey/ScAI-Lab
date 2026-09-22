@@ -5,13 +5,13 @@ Adapted from NephrologyKG/model/vision_language_model.py with one key change:
 """
 
 import os
+import json
 import torch
 import torch.nn as nn
 import torch.nn.functional as F  # noqa: F401 — used in forward
-from safetensors.torch import save_file as safetensors_save_file
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from peft import PeftModel
-from utils.huggingface_utils import convert_meta_to_tensor
+from utils.checkpoint_utils import load_adapter_strict, validate_tensors
 
 
 class VisionLanguageModel(nn.Module):
@@ -21,7 +21,7 @@ class VisionLanguageModel(nn.Module):
                  num_attn_layers=1, num_attn_heads=12, add_attn_mlp=True,
                  num_x_attn_heads=12, add_x_attn_mlp=True, x_attn_query="text",
                  add_multitask=False, add_multitask_unknown=False, multitask_wt=1.0,
-                 tokenizer=None, image_size=(1, 3, 224, 224)):
+                 tokenizer=None, image_size=(1, 3, 224, 224), pool_at="question_eos"):
         super().__init__()
         self.vision_model   = vision_model
         self.language_model = language_model
@@ -32,6 +32,11 @@ class VisionLanguageModel(nn.Module):
         self.add_multitask_unknown = add_multitask_unknown
         self.multitask_wt   = multitask_wt
         self.tokenizer      = tokenizer
+        if pool_at not in ("answer_eos", "question_eos"):
+            raise ValueError(f"pool_at must be 'answer_eos' or 'question_eos', got {pool_at!r}")
+        self.pool_at        = pool_at
+        self.num_proj_layers = num_proj_layers
+        self.create_projection_layer = create_projection_layer
 
         # Per-fold TBR normalization stats (shape: 4,). Set by the trainer after
         # computing mean/std over valid training-fold TBR slots. Registered as
@@ -47,8 +52,7 @@ class VisionLanguageModel(nn.Module):
             self._build_projection(num_proj_layers)
 
         # Multitask heads: trained jointly with the language model.
-        # Both heads operate on the LLM last-hidden-state at the EOS token position,
-        # following the pattern in NephrologyKG/nlst_trainer.
+        # Both heads read the same explicit question boundary used at inference.
         self.tbr_regression_head  = None
         self.genotype_head        = None
         if add_multitask:
@@ -79,33 +83,47 @@ class VisionLanguageModel(nn.Module):
         else:
             raise ValueError(f"num_proj_layers must be 1 or 2, got {num_proj_layers}")
 
-    def _eos_hidden_state(self, input_ids, hidden_states):
+    def _eos_hidden_state(self, input_ids, hidden_states, question_end_index=None,
+                          attention_mask=None):
+        """Pool at an explicit question boundary (before image expansion).
+
+        The historical name ``question_eos`` is retained in configs, but the
+        boundary is the final question-prefix token, including any chat header.
+        Legacy answer pooling is available only for explicit reproduction.
         """
-        Extract the LLM last-hidden-state at each sequence's LAST EOS token.
-
-        During training input_ids is question+answer, each wrapped with bos+eos by
-        _add_prompt, so there are two EOS tokens per sequence — one at the question
-        end and one at the answer end. We want the answer-end EOS so the heads see
-        the full processed context, not just the question.
-
-        During inference input_ids is question-only (single EOS), so last == first.
-
-        The combined sequence seen by the LLM has (img_tokens - 1) extra positions
-        inserted where the single <image> token was, so the EOS position in the
-        combined sequence is offset accordingly.
-
-        Returns feat: (B, llm_dim)
-        """
-        eos_mask = (input_ids == self.tokenizer.eos_token_id)        # (B, L)
-        # argmax on reversed mask → position of last EOS in original sequence
-        L             = input_ids.size(1)
-        last_eos_idx  = (L - 1 - eos_mask.flip(dims=[1]).float().argmax(dim=1) +
-                         (self.img_tokens - 1)).long()
-        batch_idx     = torch.arange(input_ids.size(0), device=input_ids.device)
-        return hidden_states[-1][batch_idx, last_eos_idx]            # (B, llm_dim)
+        valid = torch.ones_like(input_ids, dtype=torch.bool) if attention_mask is None else attention_mask.bool()
+        if valid.shape != input_ids.shape:
+            raise ValueError("Pooling requires the original, unspliced attention mask")
+        batch = torch.arange(input_ids.size(0), device=input_ids.device)
+        if self.pool_at == "question_eos":
+            if question_end_index is None:
+                raise ValueError("question_end_index is required for question-only head supervision")
+            index = torch.as_tensor(question_end_index, device=input_ids.device)
+            if index.dtype not in (torch.int32, torch.int64) or index.shape != (input_ids.size(0),):
+                raise ValueError("question_end_index must be an integer vector with one index per sequence")
+            if ((index < 0) | (index >= input_ids.size(1))).any():
+                raise ValueError("question_end_index is outside the sequence (possibly truncated)")
+            if not valid[batch, index].all():
+                raise ValueError("question_end_index points into padding")
+        else:
+            eos = (input_ids == self.tokenizer.eos_token_id) & valid
+            if not eos.any(dim=1).all():
+                raise ValueError("Legacy answer pooling requires an unmasked EOS in every sequence")
+            positions = torch.arange(input_ids.size(1), device=input_ids.device)
+            index = positions.expand_as(input_ids).masked_fill(~eos, -1).max(dim=1).values
+        image_mask = input_ids == self.img_token_id
+        if not (image_mask.sum(dim=1) == 1).all():
+            raise ValueError("Each sequence must contain exactly one image token")
+        image_index = image_mask.long().argmax(dim=1)
+        if (index <= image_index).any():
+            raise ValueError("Head pooling boundary must follow the image token")
+        index = index + self.img_tokens - 1
+        return hidden_states[-1][batch, index]
 
     def get_image_and_text_embeddings(self, input_ids, pixel_values=None,
                                       image_features=None, attention_mask=None, labels=None):
+        if image_features is None or image_features.shape != (input_ids.size(0), self.img_tokens, self.vision_hidden_dim):
+            raise ValueError(f"Expected image_features shaped (batch, {self.img_tokens}, {self.vision_hidden_dim})")
         # Project image features into LLM embedding space
         image_features = self.language_projection(image_features)
 
@@ -160,7 +178,17 @@ class VisionLanguageModel(nn.Module):
 
     def forward(self, input_ids, pixel_values=None, image_features=None,
                 attention_mask=None, labels=None, tbr_targets=None,
-                genotype_label=None, **kwargs):
+                genotype_label=None, question_end_index=None, **kwargs):
+        original_mask = attention_mask
+        if self.add_multitask and self.pool_at == "question_eos" and labels is not None:
+            if question_end_index is None:
+                raise ValueError("question_end_index is required for supervised heads")
+            qend = torch.as_tensor(question_end_index, device=input_ids.device)
+            if qend.shape != (input_ids.size(0),) or qend.dtype not in (torch.int32, torch.int64):
+                raise ValueError("question_end_index must be an integer vector")
+            prefix = torch.arange(input_ids.size(1), device=input_ids.device)[None, :] <= qend[:, None]
+            if ((labels != self.ignore_token_id) & prefix).any():
+                raise ValueError("Question pooling boundary overlaps supervised answer tokens")
         combined, attention_mask, labels = self.get_image_and_text_embeddings(
             input_ids=input_ids, image_features=image_features,
             attention_mask=attention_mask, labels=labels,
@@ -169,10 +197,10 @@ class VisionLanguageModel(nn.Module):
             inputs_embeds=combined, attention_mask=attention_mask, labels=labels,
             output_hidden_states=self.add_multitask,
         )
-        loss = outputs.loss
+        loss = outputs.loss if outputs.loss is not None else outputs.logits.new_zeros(())
 
         if self.add_multitask:
-            feat = self._eos_hidden_state(input_ids, outputs.hidden_states)  # (B, llm_dim)
+            feat = self._eos_hidden_state(input_ids, outputs.hidden_states, question_end_index, original_mask)  # (B, llm_dim)
 
             # TBR regression (MSE on z-scored targets, masked)
             if self.tbr_regression_head is not None and tbr_targets is not None:
@@ -186,7 +214,7 @@ class VisionLanguageModel(nn.Module):
                 mse         = mse / mask.sum().clamp(min=1)
                 loss        = loss + self.multitask_wt * mse
 
-            # Genotype classification (BCE, masked — label == -1 for non-genotype records)
+            # Genotype classification (BCE; -1 denotes an unavailable label)
             if self.genotype_head is not None and genotype_label is not None:
                 geno_logits = self.genotype_head(feat).squeeze(-1)          # (B,)
                 geno_label  = genotype_label.to(feat.device, dtype=feat.dtype)
@@ -206,7 +234,12 @@ class VisionLanguageModel(nn.Module):
         )
 
     def generate(self, input_ids, attention_mask, max_new_tokens,
-                 pixel_values=None, image_features=None, **decoding_kwargs):
+                 pixel_values=None, image_features=None, question_end_index=None, **decoding_kwargs):
+        original_mask = attention_mask
+        # generate() accepts question-only inputs; its boundary is the last valid token.
+        if question_end_index is None:
+            positions = torch.arange(input_ids.size(1), device=input_ids.device)
+            question_end_index = positions.expand_as(input_ids).masked_fill(~attention_mask.bool(), -1).max(dim=1).values
         with torch.no_grad():
             combined, attention_mask, _ = self.get_image_and_text_embeddings(
                 input_ids=input_ids, image_features=image_features,
@@ -227,7 +260,7 @@ class VisionLanguageModel(nn.Module):
                 output_hidden_states=True,
                 use_cache=False,
             )
-            feat = self._eos_hidden_state(input_ids, lm_out.hidden_states)  # (B, llm_dim)
+            feat = self._eos_hidden_state(input_ids, lm_out.hidden_states, question_end_index, original_mask)  # (B, llm_dim)
 
             return {
                 "sequences":       gen_out,
@@ -235,102 +268,111 @@ class VisionLanguageModel(nn.Module):
                 "tbr_logits":      self.tbr_regression_head(feat),          # (B, 4)
             }
 
-    def save_pretrained(self, save_directory):
-        """
-        Save the model checkpoint.
+    def _checkpoint_config(self):
+        return dict(format_version=2, img_token_id=self.img_token_id,
+                    img_tokens=self.img_tokens, num_proj_layers=self.num_proj_layers,
+                    create_projection_layer=self.create_projection_layer,
+                    add_multitask=self.add_multitask,
+                    add_multitask_unknown=self.add_multitask_unknown,
+                    multitask_wt=self.multitask_wt, pool_at=self.pool_at,
+                    hidden_size=self.language_model.config.hidden_size,
+                    base_model_name_or_path=self.language_model.config._name_or_path)
 
-        LoRA adapter weights are saved via PEFT's save_pretrained into a
-        'lora_adapter' subdirectory — this is the only reliable way to checkpoint
-        a 4-bit quantized model, because bitsandbytes quantization tensors cannot
-        be serialized and reloaded into a non-quantized shell.
-
-        The projection layer and multitask heads (non-LLM weights) are saved
-        separately in 'other_weights.bin'.
-        """
-        os.makedirs(save_directory, exist_ok=True)
-
-        # Save LoRA adapter weights only. PEFT's save_pretrained on a quantized
-        # model still emits bitsandbytes state keys (absmax, quant_map, etc.) into
-        # adapter_model.bin, which then can't be loaded into a fresh fp16/bf16 shell.
-        # We filter them out by saving only the lora_ keys manually.
-        lora_dir = os.path.join(save_directory, "lora_adapter")
-        os.makedirs(lora_dir, exist_ok=True)
-        # First let PEFT write its config files (adapter_config.json, etc.)
-        self.language_model.save_pretrained(lora_dir)
-        # Overwrite both adapter weight files with only the LoRA delta tensors,
-        # stripping the bitsandbytes quantization state keys that PEFT includes
-        # when saving a 4-bit model (absmax, quant_map, quant_state, etc.).
-        lora_state = {k: v.contiguous().cpu()
-                      for k, v in self.language_model.state_dict().items()
-                      if "lora_" in k}
-        torch.save(lora_state, os.path.join(lora_dir, "adapter_model.bin"))
-        safetensors_save_file(lora_state, os.path.join(lora_dir, "adapter_model.safetensors"))
-
-        # Save projection layer, multitask heads, and TBR normalization stats
+    def _other_state(self):
         other = {}
-        if self.language_projection is not None:
-            for k, v in self.language_projection.state_dict().items():
-                other[f"language_projection.{k}"] = v.cpu()
-        if self.tbr_regression_head is not None:
-            for k, v in self.tbr_regression_head.state_dict().items():
-                other[f"tbr_regression_head.{k}"] = v.cpu()
-        if self.genotype_head is not None:
-            for k, v in self.genotype_head.state_dict().items():
-                other[f"genotype_head.{k}"] = v.cpu()
-        other["tbr_mean"] = self.tbr_mean.cpu()
-        other["tbr_std"]  = self.tbr_std.cpu()
+        for name in ("language_projection", "tbr_regression_head", "genotype_head"):
+            module = getattr(self, name)
+            if module is not None:
+                other.update({f"{name}.{k}": v for k, v in module.state_dict().items()})
+        other.update(tbr_mean=self.tbr_mean, tbr_std=self.tbr_std)
+        return other
+
+    def save_pretrained(self, save_directory):
+        """Save canonical PEFT weights plus all projection/head state and semantics."""
+        if not isinstance(self.language_model, PeftModel):
+            raise ValueError("Adapter checkpoints require a PEFT language model")
+        if set(self.language_model.peft_config) != {"default"}:
+            raise ValueError("Only a single default adapter is supported")
+        os.makedirs(save_directory, exist_ok=True)
+        config_path = os.path.join(save_directory, "vlm_config.json")
+        # Metadata is the completion marker: an interrupted replacement must fail
+        # loading rather than mix new adapters with an older set of heads.
+        if os.path.exists(config_path):
+            os.remove(config_path)
+        lora_dir = os.path.join(save_directory, "lora_adapter")
+        self.language_model.save_pretrained(lora_dir, safe_serialization=True,
+                                            save_embedding_layers=False)
+        # A previous writer may have left a conflicting raw-state .bin alongside it.
+        old_bin = os.path.join(lora_dir, "adapter_model.bin")
+        if os.path.exists(old_bin):
+            os.remove(old_bin)
+        other = {k: v.detach().cpu().contiguous() for k, v in self._other_state().items()}
+        validate_tensors(other, other, "Projection/head state")
         torch.save(other, os.path.join(save_directory, "other_weights.bin"))
+        with open(config_path, "w") as f:
+            json.dump(self._checkpoint_config(), f, indent=2)
 
     @classmethod
     def from_pretrained(cls, save_directory, vision_model, language_model, img_token_id,
-                        img_tokens=1, num_proj_layers=1, create_self_attn_block=False,
+                        img_tokens=None, num_proj_layers=None, create_self_attn_block=False,
                         create_x_attn_block=False, num_attn_layers=1, num_attn_heads=12,
                         add_attn_mlp=True, num_x_attn_heads=12, add_x_attn_mlp=True,
-                        x_attn_query="text", add_multitask=False, add_multitask_unknown=False,
-                        multitask_wt=1.0, load_projection_matrix=False, tokenizer=None):
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-
-        lora_dir       = os.path.join(save_directory, "lora_adapter") if save_directory else None
-        other_bin      = os.path.join(save_directory, "other_weights.bin") if save_directory else None
-        use_peft_load  = lora_dir is not None and os.path.isdir(lora_dir)
-
-        if use_peft_load:
-            # Reload the LoRA adapter onto the already-quantized base model (language_model
-            # passed in is the fresh quantized+LoRA shell from _load_llm).  We discard
-            # that shell's LoRA weights and replace them with the saved adapter.
-            base_llm = language_model.base_model.model  # unwrap PeftModel → base LLM
-            language_model = PeftModel.from_pretrained(base_llm, lora_dir)
-
-        model = cls(
-            vision_model=vision_model, language_model=language_model,
-            img_token_id=img_token_id, img_tokens=img_tokens,
-            num_proj_layers=num_proj_layers, add_multitask=add_multitask,
-            add_multitask_unknown=add_multitask_unknown, multitask_wt=multitask_wt,
-            tokenizer=tokenizer,
-        )
-
-        if other_bin is not None and os.path.exists(other_bin):
-            other = torch.load(other_bin, map_location=device)
-            other = convert_meta_to_tensor(other, device=device)
-
-            proj_sd = {k[len("language_projection."):]: v
-                       for k, v in other.items() if k.startswith("language_projection.")}
-            tbr_sd  = {k[len("tbr_regression_head."):]: v
-                       for k, v in other.items() if k.startswith("tbr_regression_head.")}
-            geno_sd = {k[len("genotype_head."):]: v
-                       for k, v in other.items() if k.startswith("genotype_head.")}
-
-            if proj_sd and model.language_projection is not None:
-                model.language_projection.load_state_dict(proj_sd, strict=True)
-                model.language_projection.to(device)
-            if tbr_sd and model.tbr_regression_head is not None:
-                model.tbr_regression_head.load_state_dict(tbr_sd, strict=True)
-                model.tbr_regression_head.to(device)
-            if geno_sd and model.genotype_head is not None:
-                model.genotype_head.load_state_dict(geno_sd, strict=True)
-                model.genotype_head.to(device)
-            if "tbr_mean" in other:
-                model.tbr_mean = other["tbr_mean"].to(device)
-                model.tbr_std  = other["tbr_std"].to(device)
-
+                        x_attn_query="text", add_multitask=None, add_multitask_unknown=None,
+                        multitask_wt=None, load_projection_matrix=False, tokenizer=None,
+                        pool_at=None, allow_legacy=False):
+        if not save_directory or not os.path.isdir(save_directory):
+            raise FileNotFoundError(f"VLM checkpoint directory does not exist: {save_directory}")
+        config_path = os.path.join(save_directory, "vlm_config.json")
+        if os.path.exists(config_path):
+            with open(config_path) as f:
+                saved = json.load(f)
+            if saved.get("format_version") != 2:
+                raise ValueError("Unsupported VLM checkpoint version")
+            required = {"img_token_id", "img_tokens", "num_proj_layers", "create_projection_layer",
+                        "add_multitask", "add_multitask_unknown", "multitask_wt", "pool_at",
+                        "hidden_size", "base_model_name_or_path"}
+            if required - saved.keys():
+                raise ValueError(f"Incomplete VLM metadata: {sorted(required - saved.keys())}")
+        elif allow_legacy and pool_at is not None:
+            # Legacy files did not record pooling. Callers must supply its provenance.
+            saved = {}
+        else:
+            raise ValueError("Missing vlm_config.json; repair legacy checkpoints with their original run config first")
+        requested = dict(img_tokens=img_tokens, num_proj_layers=num_proj_layers,
+                         add_multitask=add_multitask, add_multitask_unknown=add_multitask_unknown,
+                         multitask_wt=multitask_wt, pool_at=pool_at)
+        defaults = dict(img_tokens=1, num_proj_layers=1, add_multitask=False,
+                        add_multitask_unknown=False, multitask_wt=1.0, pool_at="question_eos")
+        for key, value in requested.items():
+            if key in saved and value is not None and value != saved[key]:
+                raise ValueError(f"Checkpoint {key}={saved[key]!r} conflicts with requested {value!r}")
+            requested[key] = saved.get(key, defaults[key]) if value is None else value
+        for key, value in dict(img_token_id=img_token_id,
+                               hidden_size=language_model.config.hidden_size,
+                               base_model_name_or_path=language_model.config._name_or_path).items():
+            if key in saved and saved[key] != value:
+                raise ValueError(f"Checkpoint {key} mismatch: {saved[key]!r} != {value!r}")
+        other = torch.load(os.path.join(save_directory, "other_weights.bin"),
+                           map_location="cpu", weights_only=True)
+        language_model = load_adapter_strict(language_model,
+                                             os.path.join(save_directory, "lora_adapter"),
+                                             allow_legacy=allow_legacy)
+        model = cls(vision_model=vision_model, language_model=language_model,
+                    img_token_id=img_token_id, tokenizer=tokenizer,
+                    create_projection_layer=saved.get("create_projection_layer", True), **requested)
+        validate_tensors(other, model._other_state(), "Projection/head state")
+        if (other["tbr_std"] <= 0).any():
+            raise ValueError("TBR normalization standard deviations must be positive")
+        device = language_model.get_input_embeddings().weight.device
+        for name in ("language_projection", "tbr_regression_head", "genotype_head"):
+            module = getattr(model, name)
+            if module is not None:
+                prefix = name + "."
+                module.load_state_dict({k[len(prefix):]: v for k, v in other.items() if k.startswith(prefix)}, strict=True)
+                module.to(device)
+        model.tbr_mean = other["tbr_mean"].to(device)
+        model.tbr_std = other["tbr_std"].to(device)
+        for key, value in model._other_state().items():
+            if not torch.equal(value.detach().cpu(), other[key]):
+                raise ValueError(f"Projection/head tensor was not restored exactly: {key}")
         return model

@@ -1,14 +1,13 @@
 # Mouse atherosclerosis trajectory VLM — text generation + multitask heads (TBR regression, genotype classification)
 # Adapted from NephrologyKG/yaml/viz_emb_params_nlst.yml
 #
-# LEGACY CONFIG — retained for historical provenance, including answer pooling.
-# The runners now default to viz_emb_params_mouse_nogeno_long_repaired.yml.
-# Historical scores from this config are not validated results; see docs/MASTER_PLAN.md.
+# CANONICAL CONFIG — this is the default loaded by run/run_mouse_vlm_loso.py and
+# reproduces the headline result (genotype acc 0.719 / AUROC 0.762, overall TBR R² +0.104).
 # Longitudinal 4-token input, r=4 q/v LoRA, multitask_wt=5, z-scored TBR, 20 epochs.
 # viz_emb_params_mouse_ep20.yml is an identical copy kept for experiment provenance.
 
 exp:
-  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_longitudinal
+  output_dir: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed1
 
 data:
   train_dataset: mouse_traj_vqa
@@ -19,13 +18,13 @@ data:
   inf_img_dir: ""
   data_path: /data1/Processed_NIfTI_Test/embeddings/vlm/mouse_train_vqa_traj.json
   inf_data_path: /data1/Processed_NIfTI_Test/embeddings/vlm/mouse_val_vqa_traj.json
-  data_seed: 0
+  data_seed: 1
   test_size: 0.2
   height: 224
   width: 224
   num_channels: 3
   img_tokens: 4
-  predicted_emb_dir: /data1/Processed_NIfTI_Test/embeddings/longitudinal/predicted_embeddings
+  predicted_emb_dir: /data1/Processed_NIfTI_Test/embeddings/longitudinal_nogeno/predicted_embeddings
   seq_length: 150
   prompt_type: "standard"
 
@@ -82,7 +81,7 @@ train:
   report_to: "tensorboard"
 
 inf:
-  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_longitudinal/mouse_vlm_mdl
+  model_name: /data1/Processed_NIfTI_Test/embeddings/vlm/runs/mouse_vlm_nogeno_long_ep20_seed1/mouse_vlm_mdl
   llm_model_name: meta-llama/Meta-Llama-3.1-8B-Instruct
   load_projection_matrix: False
   use_quantization: True

@@ -101,7 +101,7 @@ def test_fold_construction_is_subject_disjoint(tmp_path):
 
     seen = set()
     for sid in subjects:
-        train_path, val_path = mod.write_fold_jsons(records, sid, str(tmp_path))
+        train_path, val_path, _inner = mod.write_fold_jsons(records, sid, str(tmp_path))
         train = json.load(open(train_path))
         val = json.load(open(val_path))
 
@@ -114,6 +114,59 @@ def test_fold_construction_is_subject_disjoint(tmp_path):
         seen |= val_pids
 
     assert seen == set(subjects), "every subject must be held out exactly once"
+
+
+@pytest.mark.torch
+def test_inner_val_split_is_three_way_disjoint(tmp_path):
+    """
+    F2 full fix: with --inner-val, each fold has train / inner-val / held-out
+    that are pairwise disjoint, cover every subject, and the inner-val subject is
+    NOT the held-out one. The Trainer's eval_dataset then never sees the test
+    subject, so eval curves are honest and load_best_model_at_end is legitimate.
+    """
+    mod = _load_loso_module()
+    records = _synthetic_records()
+    subjects = sorted({r["pid"] for r in records})
+
+    inner_seen = []
+    for fold_idx, sid in enumerate(subjects):
+        inner_sid = mod.pick_inner_val_subject(subjects, sid, fold_idx)
+        assert inner_sid != sid
+        train_path, val_path, inner_path = mod.write_fold_jsons(records, sid, str(tmp_path), inner_sid)
+        assert inner_path is not None
+        tr = {r["pid"] for r in json.load(open(train_path))}
+        va = {r["pid"] for r in json.load(open(val_path))}
+        inn = {r["pid"] for r in json.load(open(inner_path))}
+        assert va == {sid} and inn == {inner_sid}
+        assert not (tr & va) and not (tr & inn) and not (va & inn)
+        assert tr | va | inn == set(subjects)
+        assert len(tr) == len(subjects) - 2, "inner-val subject must be REMOVED from training"
+        inner_seen.append(inner_sid)
+    # Deterministic and spread across subjects, not the same one every fold.
+    assert len(set(inner_seen)) > 1
+
+
+def test_runner_refuses_selection_without_inner_val(tmp_path, monkeypatch):
+    """
+    Belt-and-braces: if someone sets load_best_model_at_end: true in a yaml and
+    runs LOSO without --inner-val, the runner must refuse rather than silently
+    select checkpoints on the test subject.
+    """
+    import yaml
+
+    mod = _load_loso_module()
+    records = _synthetic_records()
+    data_path = tmp_path / "all.json"
+    data_path.write_text(json.dumps(records))
+    bad_yaml = tmp_path / "bad.yml"
+    params = yaml.safe_load(open(CANONICAL_YAML))
+    params["train"]["load_best_model_at_end"] = True
+    bad_yaml.write_text(yaml.safe_dump(params))
+
+    monkeypatch.setattr(sys, "argv", ["x", "--yaml", str(bad_yaml), "--all-data", str(data_path),
+                                      "--output-dir", str(tmp_path / "out")])
+    with pytest.raises(SystemExit, match="inner-val"):
+        mod.main()
 
 
 # ---------------------------------------------------------------------------
@@ -138,7 +191,7 @@ def test_trainer_eval_set_is_not_the_held_out_subject(tmp_path):
     mod = _load_loso_module()
     records = _synthetic_records()
     held_out = sorted({r["pid"] for r in records})[0]
-    train_path, val_path = mod.write_fold_jsons(records, held_out, str(tmp_path))
+    train_path, val_path, _inner = mod.write_fold_jsons(records, held_out, str(tmp_path))
 
     # Replicate run_fold's parameter patching verbatim.
     base_params = yaml.safe_load(open(CANONICAL_YAML))
@@ -162,36 +215,82 @@ def test_trainer_eval_set_is_not_the_held_out_subject(tmp_path):
     print(f"\n  Trainer eval_dataset pids : {sorted(eval_pids)}")
     print(f"  held-out inference pids   : {sorted(inf_pids)}")
 
-    assert not (eval_pids & inf_pids), (
+    # The finding is "checkpoints are SELECTED on the held-out subject", which needs
+    # both an overlapping eval set and selection turned on. The register endorses two
+    # remedies -- carve a val subject out of the 31, or disable selection -- so assert
+    # the conjunction rather than one particular remedy. Encoding only disjointness
+    # would keep failing after a correct fix via the second route.
+    overlap   = eval_pids & inf_pids
+    selecting = bool(params["train"].get("load_best_model_at_end", False))
+
+    print(f"  load_best_model_at_end    : {selecting}")
+
+    assert not (overlap and selecting), (
         f"The Trainer's eval_dataset and the held-out evaluation set are the same "
-        f"subject ({sorted(eval_pids & inf_pids)}). With load_best_model_at_end=True "
-        f"and evaluation_strategy=epoch, every LOSO fold selects its checkpoint by "
-        f"loss on the subject it is then scored on. Fix: carve a val subject out of "
-        f"the 31 training subjects, or set load_best_model_at_end=False."
+        f"subject ({sorted(overlap)}) AND load_best_model_at_end is True. With "
+        f"evaluation_strategy=epoch, every LOSO fold then selects its checkpoint by "
+        f"loss on the subject it is then scored on (+0.14 to +0.20 AUROC on noise). "
+        f"Fix: carve a val subject out of the 31 training subjects, or set "
+        f"load_best_model_at_end=False."
     )
+    if overlap:
+        print("  NOTE: eval_dataset still IS the held-out subject. Harmless for the "
+              "reported metrics while selection is off, but any eval_loss curve you "
+              "read during training is a test-set curve.")
 
 
 @pytest.mark.torch
-def test_load_best_model_at_end_is_hardcoded():
+def test_load_best_model_at_end_is_config_driven_and_defaults_off():
     """
-    Supporting evidence for the test above: selection-on-eval is unconditional, not
-    a config choice a run could have turned off.
+    Regression guard on the F2 fix.
 
-    Asserted from source rather than by calling get_training_args(), because that
-    call passes `evaluation_strategy=` -- removed in transformers v5 -- so it cannot
-    be constructed under a modern stack at all. That incompatibility is itself worth
-    recording: the pipeline is pinned to transformers 4.46.3 and will not run as-is
-    on v5.
+    Was `test_load_best_model_at_end_is_hardcoded`, asserting the opposite: that
+    selection-on-eval was unconditional. It now IS a config choice, so this pins the
+    new contract instead -- read from the `train` section, defaulting to False.
+
+    Source-grepping for the literal assignment is deliberately avoided here: the
+    warning string printed when the flag is enabled also contains
+    "load_best_model_at_end=True", so a substring check silently matches the message
+    rather than the assignment. Call the real method instead.
+
+    Asserted via a stub because get_training_args() passes `evaluation_strategy=`,
+    removed in transformers v5. That incompatibility is itself worth recording: the
+    pipeline is pinned to transformers 4.46.3 and will not run as-is on v5.
     """
-    import inspect
+    import yaml
 
     from model.viz_emb_trainer import VizEmbTrainer
 
-    src = inspect.getsource(VizEmbTrainer.get_training_args)
-    assert "load_best_model_at_end=True" in src, (
-        "wiring changed -- re-derive R1 before trusting these tests"
+    params = yaml.safe_load(open(CANONICAL_YAML))
+
+    # The canonical config must not select on the eval set.
+    assert params["train"].get("load_best_model_at_end", False) is False, (
+        "The canonical yaml re-enabled load_best_model_at_end. Under LOSO the "
+        "eval_dataset is the held-out subject, so this restores the F2 leak."
     )
-    assert "evaluation_strategy=" in src, "config-key wiring changed; re-check"
+
+    # ...and the code must honour the config rather than hardcoding it.
+    trainer = object.__new__(VizEmbTrainer)
+    trainer.params = params
+    trainer.output_dir = "/tmp"
+
+    args_on  = _training_args_with(trainer, params, True)
+    args_off = _training_args_with(trainer, params, False)
+    assert args_on.load_best_model_at_end is True
+    assert args_off.load_best_model_at_end is False, (
+        "get_training_args ignores train.load_best_model_at_end -- the F2 fix is "
+        "not actually wired through."
+    )
+
+
+def _training_args_with(trainer, params, value):
+    """Build TrainingArguments with load_best_model_at_end forced to `value`."""
+    import copy
+
+    p = copy.deepcopy(params)
+    p["train"]["load_best_model_at_end"] = value
+    trainer.params = p
+    return trainer.get_training_args()
 
 
 # ---------------------------------------------------------------------------
