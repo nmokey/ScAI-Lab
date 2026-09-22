@@ -47,7 +47,12 @@ Usage
 import argparse
 import csv
 import os
+import sys
 import warnings
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from eval_stats import (join_session_ids, join_mouse_group_ids, default_manifest_path, bootstrap_auc_ci,
+                        permutation_auc_p, permutation_refit_p)
 from itertools import combinations
 
 import matplotlib
@@ -276,6 +281,14 @@ def _loso_logistic(X, y, groups, task_name, *, return_proba=False, multiclass=Fa
         y_tr, y_te = y[train_idx], y[test_idx]
         if len(set(y_tr)) < 2:
             continue
+        # Standardise per fold, fit on the training split only. Without this,
+        # C=1.0 means a different effective regularisation strength for each
+        # encoder (768-d RAD-DINO vs 2048-d Merlin have different feature
+        # scales), so the cross-encoder comparison table was not like-for-like.
+        mu, sigma = X_tr.mean(axis=0), X_tr.std(axis=0)
+        sigma = np.where(sigma < 1e-8, 1.0, sigma)
+        X_tr = (X_tr - mu) / sigma
+        X_te = (X_te - mu) / sigma
         clf = LogisticRegression(max_iter=1000, C=1.0, random_state=42,
                                  multi_class="multinomial", solver="lbfgs")
         with warnings.catch_warnings():
@@ -300,6 +313,55 @@ def _loso_logistic(X, y, groups, task_name, *, return_proba=False, multiclass=Fa
     if return_proba:
         return acc, f1, y_true_all, y_prob_all
     return acc, f1
+
+
+def _binary_probe_with_uncertainty(X, y, groups, task_name, *, n_perm, n_boot, refit):
+    """
+    LOSO/LOGO logistic probe + AUROC with subject-level bootstrap CI and a
+    permutation p-value (F1). `groups` is the CV grouping AND the resampling
+    unit: subject for the standard protocol, session for the F5 control.
+
+    refit=True re-fits the probe under each label permutation (strict, slower);
+    refit=False is a historical fixed-score diagnostic, not an inferential test
+    of the cross-validated training procedure. Pooled LOSO scores can have a null
+    distribution away from 0.5; establish that distribution through refitting.
+    Neither fixed-score shuffling nor a conditional bootstrap resolves this.
+    """
+    acc, _, y_true, y_prob = _loso_logistic(X, y, groups, task_name, return_proba=True)
+    y_true = np.asarray(y_true); y_prob = np.asarray(y_prob)
+    # _loso_logistic may skip folds; rebuild the aligned group vector the same way
+    kept = []
+    logo = LeaveOneGroupOut()
+    for tr, te in logo.split(X, y, groups=groups):
+        if len(set(y[tr])) < 2:
+            continue
+        kept.extend(groups[te].tolist())
+    kept = np.asarray(kept)
+    try:
+        auc = roc_auc_score(y_true, y_prob) if len(set(y_true.tolist())) > 1 else float("nan")
+    except ValueError:
+        auc = float("nan")
+    lo, hi = bootstrap_auc_ci(y_true, y_prob, kept, n_boot=n_boot)
+    if refit:
+        def _fp(Xp, yp, gp):
+            _, _, yt, ys = _loso_logistic(Xp, yp, gp, task_name, return_proba=True)
+            return np.asarray(yt), np.asarray(ys)
+        _, pval, null_ci, perm_meta = permutation_refit_p(_fp, X, y, groups, n_perm=n_perm)
+    else:
+        _, pval, null_ci, perm_meta = permutation_auc_p(y_true, y_prob, kept, n_perm=n_perm)
+    # F18: a small label-pure group count (e.g. F5's 10 mouse-groups) has few distinct
+    # label arrangements, so permutation_auc_p/permutation_refit_p enumerate them
+    # exactly instead of Monte Carlo sampling -- report which, and the resolution
+    # that implies, rather than letting a 4-decimal p-value imply more precision
+    # than the group count can support.
+    if perm_meta.get("method") == "exact":
+        method_str = f"exact enum, {perm_meta['n_arrangements']} arrangements, resolution 1/{perm_meta['n_arrangements']}"
+    else:
+        method_str = f"{'refit' if refit else 'fixed-score'} permutation, n={perm_meta.get('n_perm', n_perm)}"
+    print(f"    AUC-ROC = {auc:.4f}   95% CI [{lo:.3f}, {hi:.3f}]   "
+          f"perm p = {pval:.4f}   null 95% [{null_ci[0]:.3f}, {null_ci[1]:.3f}]"
+          f"   ({method_str})")
+    return acc, auc, (lo, hi), pval, null_ci
 
 
 # ---------------------------------------------------------------------------
@@ -331,7 +393,7 @@ def run_t2a_week_classification(embs, weeks, subject_ids):
 # T2b — Binary early vs. late (Week 12 vs. Week 20, LOSO)
 # ---------------------------------------------------------------------------
 
-def run_t2b_early_vs_late(embs, weeks, subject_ids):
+def run_t2b_early_vs_late(embs, weeks, subject_ids, groups=None, *, n_perm=10000, n_boot=2000, refit=False):
     print("\n[T2b] Binary early vs. late (Week 12 vs. Week 20, LOSO)...")
     mask = np.isin(weeks, ["Week 12", "Week 20"])
     if mask.sum() < 4:
@@ -340,25 +402,20 @@ def run_t2b_early_vs_late(embs, weeks, subject_ids):
 
     X_sub  = embs[mask]
     y_sub  = (weeks[mask] == "Week 20").astype(int)  # 1 = late, 0 = early
-    grp    = subject_ids[mask]
+    grp    = (groups if groups is not None else subject_ids)[mask]
 
-    acc, _, y_true, y_prob = _loso_logistic(X_sub, y_sub, grp,
-                                             "Early vs. Late (binary)",
-                                             return_proba=True)
-    try:
-        auc = roc_auc_score(y_true, y_prob) if len(set(y_true)) > 1 else float("nan")
-    except ValueError:
-        auc = float("nan")
-
-    print(f"    AUC-ROC = {auc:.4f}  (chance = 0.50)")
-    return {"T2b_accuracy": acc, "T2b_auc": auc}
+    acc, auc, ci, pval, null_ci = _binary_probe_with_uncertainty(
+        X_sub, y_sub, grp, "Early vs. Late (binary)",
+        n_perm=n_perm, n_boot=n_boot, refit=refit)
+    return {"T2b_accuracy": acc, "T2b_auc": auc, "T2b_auc_ci_lo": ci[0], "T2b_auc_ci_hi": ci[1],
+            "T2b_perm_p": pval, "T2b_null_lo": null_ci[0], "T2b_null_hi": null_ci[1]}
 
 
 # ---------------------------------------------------------------------------
 # T2c — WT vs KO genotype classification (binary LOSO)
 # ---------------------------------------------------------------------------
 
-def run_t2c_wt_vs_ko(embs, subject_ids, genotypes):
+def run_t2c_wt_vs_ko(embs, subject_ids, genotypes, groups=None, *, n_perm=10000, n_boot=2000, refit=False):
     print("\n[T2c] WT vs KO genotype classification (binary LOSO)...")
     y = (genotypes == "KO").astype(int)
     n_wt = int((y == 0).sum()); n_ko = int((y == 1).sum())
@@ -367,13 +424,11 @@ def run_t2c_wt_vs_ko(embs, subject_ids, genotypes):
         print("    [!] Only one genotype present — skipping.")
         return {"T2c_accuracy": float("nan"), "T2c_auc": float("nan")}
 
-    acc, _, y_true, y_prob = _loso_logistic(embs, y, subject_ids, "WT vs KO", return_proba=True)
-    try:
-        auc = roc_auc_score(y_true, y_prob) if len(set(y_true)) > 1 else float("nan")
-    except ValueError:
-        auc = float("nan")
-    print(f"    AUC-ROC = {auc:.4f}  (chance = 0.50)")
-    return {"T2c_accuracy": acc, "T2c_auc": auc}
+    grp = groups if groups is not None else subject_ids
+    acc, auc, ci, pval, null_ci = _binary_probe_with_uncertainty(
+        embs, y, grp, "WT vs KO", n_perm=n_perm, n_boot=n_boot, refit=refit)
+    return {"T2c_accuracy": acc, "T2c_auc": auc, "T2c_auc_ci_lo": ci[0], "T2c_auc_ci_hi": ci[1],
+            "T2c_perm_p": pval, "T2c_null_lo": null_ci[0], "T2c_null_hi": null_ci[1]}
 
 
 # ---------------------------------------------------------------------------
@@ -821,6 +876,30 @@ def main():
     parser.add_argument("--predicted-embeddings", default=None,
                         help="Optional path to longitudinal_predictions.npz from "
                              "train_longitudinal.py; enables T4a/T4b/T4c tasks.")
+    parser.add_argument("--group-by", choices=["subject", "session", "mousegroup"], default="subject",
+                        help="CV grouping for the T2b/T2c probes (F5). 'subject' is the standard "
+                             "protocol. 'session' holds out one scan session -- but the held-out "
+                             "mice remain in training at their other weeks, so it is NOT a clean "
+                             "genotype control. 'mousegroup' holds out a whole connected block of "
+                             "mice+sessions (10 on this dataset, every one genotype-pure): no mouse "
+                             "and no session of the held-out block is seen in training. That is "
+                             "the control that decides whether a genotype probe generalises across "
+                             "groups or only recognises them.")
+    parser.add_argument("--manifest", default=None,
+                        help="mouse_manifest.csv for the session join (default: from config.yaml). "
+                             "Only needed with --group-by session when the .npz lacks session_ids.")
+    parser.add_argument("--n-perm", type=int, default=10000,
+                        help="Permutations for the T2b/T2c p-values. Default permutes labels "
+                             "against the fixed pooled scores (instant). With --refit-perm the "
+                             "probe is refit under each permutation instead -- the strict test, "
+                             "but ~15 s per permutation on 229 scans, so use 100-500.")
+    parser.add_argument("--skip-unsupervised", action="store_true",
+                        help="Skip Tier 1 (t-SNE/UMAP plots, clustering, silhouette). Useful "
+                             "for the --group-by session control, which only changes Tier 2.")
+    parser.add_argument("--refit-perm", action="store_true",
+                        help="Refit the probe under each label permutation (see --n-perm).")
+    parser.add_argument("--n-boot", type=int, default=2000,
+                        help="Bootstrap resamples (by group) for the T2b/T2c AUC CIs.")
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
@@ -829,6 +908,31 @@ def main():
 
     embs, subject_ids, weeks, modalities, paths = load_embeddings(args.embeddings)
 
+    # F5: resolve the CV grouping. session_ids come from the .npz if a future encoder
+    # run wrote them, else are joined from mouse_manifest.csv on (subject_id, week).
+    groups = None
+    if args.group_by == "mousegroup":
+        manifest = args.manifest or default_manifest_path()
+        if not manifest:
+            raise SystemExit("--group-by mousegroup needs --manifest (or config.yaml output_dir)")
+        groups = join_mouse_group_ids(subject_ids, weeks, manifest)
+        from collections import Counter
+        print(f"[i] Grouping by mouse-group (connected mouse/session components from {manifest}): "
+              f"{len(set(groups))} groups, sizes {sorted(Counter(groups).values(), reverse=True)}")
+    elif args.group_by == "session":
+        npz = np.load(args.embeddings, allow_pickle=True)
+        if "session_ids" in npz:
+            groups = npz["session_ids"].astype(str)
+            print(f"[i] Grouping by session (from .npz): {len(set(groups))} sessions")
+        else:
+            manifest = args.manifest or default_manifest_path()
+            if not manifest:
+                raise SystemExit("--group-by session needs --manifest (no session_ids in .npz "
+                                 "and no config.yaml output_dir to locate mouse_manifest.csv)")
+            groups = join_session_ids(subject_ids, weeks, manifest)
+            print(f"[i] Grouping by session (joined from {manifest}): "
+                  f"{len(set(groups))} sessions, {len(groups)}/{len(groups)} rows matched")
+
     # Parse cohort / genotype from subject_id strings (e.g. "NaF_WT_03")
     cohorts   = np.array([s.split("_")[0] for s in subject_ids])
     genotypes = np.array([s.split("_")[1] for s in subject_ids])
@@ -836,15 +940,19 @@ def main():
     all_metrics = {}
 
     # Tier 1 — unsupervised
-    all_metrics.update(run_t1a_plots(embs, weeks, subject_ids, plots_dir))
-    all_metrics.update(run_t1b_cluster_alignment(embs, weeks))
-    all_metrics.update(run_t1c_silhouette(embs, weeks))
-    all_metrics.update(run_t1d_subject_consistency(embs, subject_ids))
+    if not args.skip_unsupervised:
+        all_metrics.update(run_t1a_plots(embs, weeks, subject_ids, plots_dir))
+        all_metrics.update(run_t1b_cluster_alignment(embs, weeks))
+        all_metrics.update(run_t1c_silhouette(embs, weeks))
+        all_metrics.update(run_t1d_subject_consistency(embs, subject_ids))
 
     # Tier 2 — linear probe
     all_metrics.update(run_t2a_week_classification(embs, weeks, subject_ids))
-    all_metrics.update(run_t2b_early_vs_late(embs, weeks, subject_ids))
-    all_metrics.update(run_t2c_wt_vs_ko(embs, subject_ids, genotypes))
+    all_metrics.update(run_t2b_early_vs_late(embs, weeks, subject_ids, groups,
+                                             n_perm=args.n_perm, n_boot=args.n_boot, refit=args.refit_perm))
+    all_metrics.update(run_t2c_wt_vs_ko(embs, subject_ids, genotypes, groups,
+                                        n_perm=args.n_perm, n_boot=args.n_boot, refit=args.refit_perm))
+    all_metrics["cv_grouping"] = args.group_by
     all_metrics.update(run_t2d_naf_vs_fdg(embs, subject_ids, cohorts))
     all_metrics.update(run_t2e_staging(embs, subject_ids, genotypes, weeks))
     all_metrics.update(run_conditioned_analysis(embs, subject_ids, weeks, cohorts))

@@ -156,40 +156,58 @@ def test_confound_strength_sweep():
 
 
 @pytest.mark.realdata
-def test_session_confound_realdata(data_root):
+@pytest.mark.probe
+def test_session_confound_realdata(data_root, scripts):
     """
-    The measurement that actually settles this, once session_id is recorded.
+    EXPECTED TO FAIL on this dataset -- the failure is the finding.
 
-    Skipped today for a second reason beyond missing data: the .npz contract has no
-    session field, so the grouping cannot be reconstructed from the embeddings alone.
-    Wiring it through `build_nifti_dataset` -> mouse_manifest.csv -> the encoder
-    scripts is the prerequisite.
+    Measured 2026-09-12 on RAD-DINO Week-12 scans: genotype AUROC 0.756
+    leave-one-subject-out -> 0.232 leave-one-MOUSE-GROUP-out (0.489 with per-fold
+    standardisation; chance either way). All 10 mouse-groups are genotype-pure, so
+    the by-subject number was group recognition. Genotype separability only emerges
+    at later weeks (W20 0.76, all weeks 0.82 under the same holdout) -- i.e. it
+    tracks disease progression and is absent from the baseline scan the VLM uses.
+
+    The grouping is joined from mouse_manifest.csv; no re-extraction was needed.
     """
     npz = data_root / "embeddings" / "raddino" / "raddino_embeddings.npz"
     if not npz.exists():
         pytest.skip(f"embeddings not found: {npz}")
 
     data = np.load(npz, allow_pickle=True)
-    if "session_ids" not in data:
-        pytest.skip(
-            "raddino_embeddings.npz has no `session_ids` field -- the session-confound "
-            "control cannot be run until build_nifti_dataset records the source session "
-            "per mouse and the encoder scripts propagate it into the .npz."
-        )
-
     embs = data["embeddings"].astype(np.float32)
     sids = data["subject_ids"].astype(str)
     weeks = data["weeks"].astype(str)
-    sessions = data["session_ids"].astype(str)
+    manifest = data_root / "mouse_manifest.csv"
+    es = scripts("eval_stats")
+    mgroups = es.join_mouse_group_ids(sids, weeks, str(manifest)) if manifest.exists() else None
+    if "session_ids" in data:
+        sessions = data["session_ids"].astype(str)
+    else:
+        # F5 plumbing turned out not to need re-extraction: (subject_id, week) is a
+        # unique key in mouse_manifest.csv (229/229 rows join), so the grouping is
+        # recoverable post hoc from the existing .npz.
+        if not manifest.exists():
+            pytest.skip(f"no session_ids in .npz and no manifest at {manifest}")
+        sessions = es.join_session_ids(sids, weeks, str(manifest))
+    if mgroups is None:
+        pytest.skip(f"mouse-group control needs {manifest}")
     geno = np.array([1 if "_KO_" in s else 0 for s in sids])
 
     m = weeks == "Week 12"
     by_subject = loso_auroc(embs[m], geno[m], sids[m])
     by_session = loso_auroc(embs[m], geno[m], sessions[m])
-    print(f"\n  REAL DATA  genotype AUROC: by-subject={by_subject:.3f}  by-session={by_session:.3f}")
+    # Leave-one-session-out is NOT a clean genotype control on this dataset: the
+    # held-out session's mice remain in training at their other weeks, and every
+    # session is genotype-pure. The clean unit is the mouse-GROUP (connected
+    # mouse/session component); all 10 are genotype-pure, so a probe that only
+    # recognises groups collapses here and a probe that generalises does not.
+    by_group = loso_auroc(embs[m], geno[m], mgroups[m])
+    print(f"\n  REAL DATA  Week-12 genotype AUROC: by-subject={by_subject:.3f}  "
+          f"by-session={by_session:.3f}  by-mouse-group={by_group:.3f}")
 
-    assert by_session >= by_subject - 0.15, (
+    assert by_group >= by_subject - 0.15, (
         f"Genotype AUROC collapses from {by_subject:.3f} (leave-one-subject-out) to "
-        f"{by_session:.3f} (leave-one-session-out). The reported genotype signal is "
-        f"substantially an acquisition artifact, not biology."
+        f"{by_group:.3f} (leave-one-mouse-group-out). The reported genotype signal is "
+        f"substantially group recognition, not biology."
     )
