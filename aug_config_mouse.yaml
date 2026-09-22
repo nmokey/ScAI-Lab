@@ -1,0 +1,30 @@
+# save
+exp:
+  output_dir: mouse_traj_augmentation
+openai:
+  api_key: placeholder
+# data params
+data:
+  data_dir: null
+  image_dir: null
+  prompt: 'Please produce sixty-four alternative wordings that a clinician may use for the following question and answer. Please include everything surrounded by curly braces {} as they are because they are placeholders. Please generate the reworded question starting with "Q:" and reworded answer starting with "A:" and separate each generated question/answer pair with a newline. Please do not produce any additional text.'
+  questions: null
+  debug_num_samples: null
+  num_aug_samples: 1
+  aug_prompts:
+    # 1. Genotype / eventual status (short topic) — 32 records needed, 64 requested (2x)
+    - "Q: What will be the eventual mouse status for {short_feature}? A: The eventual mouse status: the mouse {status} {short_feature}."
+    # 2. TBR trajectory (long topic) — 32 records needed, 64 requested (2x)
+    - "Q: Predict the mouse's trajectory of {long_feature} over the next {n_weeks} weeks? A: The predicted trajectory for {long_feature} - {trajectory}."
+    # 3. Combined trajectory + eventual status — 32 records needed, 64 requested (2x)
+    - "Q: Predict the mouse's trajectory of {long_feature} over the next {n_weeks} weeks and the eventual status of {short_feature}? A: The predicted trajectory for {long_feature} - {trajectory}. The eventual status: the mouse {status} {short_feature}."
+
+# inference params
+inf:
+  model_name: gpt-4o-mini-2024-07-18
+  n: 64
+  min_tokens: null
+  max_tokens: 16384
+  temperature: 1.0
+  top_p: 1
+  save_file: mouse_traj_dataset.csv
